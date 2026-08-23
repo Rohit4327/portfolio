@@ -69,4 +69,8 @@ One word per object, per the model's own rules:
   1440×900, 1366×768, 1024×768, 768 tablet and 390 phone;
 * table header and rows agree on which columns are showing at every
   breakpoint, and both stack into labelled records below 820px;
-* the three frozen shell regions render byte-identical to the original.
+* the three frozen shell regions render byte-identical to the original, and
+  their computed geometry and styling — including every tab in the strip —
+  match it exactly. (A pixel comparison of the strip while the page is
+  scrolled can differ: it carries a `backdrop-filter`, so different content
+  behind it blurs through, which is the component working as designed.)
