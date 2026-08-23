@@ -257,10 +257,16 @@ a:hover{color:#EC873A;text-decoration:underline}
 /* Column template and priority for the display estate. Secondary columns
    leave before anything truncates; the drawer still carries all of them. */
 .kp-devgrid{--kp-cols:132px minmax(170px,1.15fr) 140px 118px minmax(180px,1.35fr) 122px 122px 108px}
-@media (max-width:1560px){.kp-devgrid{--kp-cols:132px minmax(170px,1.15fr) 140px 118px minmax(180px,1.35fr) 122px 108px}.kp-p4{display:none}}
-@media (max-width:1380px){.kp-devgrid{--kp-cols:132px minmax(170px,1.15fr) 140px minmax(180px,1.35fr) 122px 108px}.kp-p3{display:none}}
-@media (max-width:1180px){.kp-devgrid{--kp-cols:126px minmax(160px,1.1fr) minmax(170px,1.3fr) 118px 104px}.kp-p2{display:none}}
-@media (max-width:960px){.kp-devgrid{--kp-cols:120px minmax(150px,1fr) minmax(150px,1.2fr) 100px}.kp-p1{display:none}}
+@media (max-width:1560px){.kp-devgrid{--kp-cols:132px minmax(170px,1.15fr) 140px 118px minmax(180px,1.35fr) 122px 108px}}
+@media (max-width:1380px){.kp-devgrid{--kp-cols:132px minmax(170px,1.15fr) 140px minmax(180px,1.35fr) 122px 108px}}
+@media (max-width:1180px){.kp-devgrid{--kp-cols:126px minmax(160px,1.1fr) minmax(170px,1.3fr) 118px 104px}}
+@media (max-width:960px){.kp-devgrid{--kp-cols:120px minmax(150px,1fr) minmax(150px,1.2fr) 100px}}
+/* The priority classes must outrank `.kp-head .kp-cell`, or the header keeps
+   columns the rows have already dropped and wraps onto a second line. */
+@media (max-width:1560px){.kp-table .kp-row .kp-p4{display:none}}
+@media (max-width:1380px){.kp-table .kp-row .kp-p3{display:none}}
+@media (max-width:1180px){.kp-table .kp-row .kp-p2{display:none}}
+@media (max-width:960px){.kp-table .kp-row .kp-p1{display:none}}
 
 .kp-schedgrid{--kp-cols:minmax(180px,1.5fr) 200px minmax(160px,1.1fr) 84px 156px 122px 124px 64px}
 @media (max-width:1560px){.kp-schedgrid{--kp-cols:minmax(180px,1.5fr) 200px minmax(160px,1.1fr) 84px 156px 124px 64px}}
@@ -277,7 +283,8 @@ a:hover{color:#EC873A;text-decoration:underline}
   .kp-body .kp-cell{padding:7px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;justify-self:stretch !important}
   .kp-label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;
     text-transform:uppercase;color:var(--kp-text-4)}
-  .kp-p1,.kp-p2,.kp-p3,.kp-p4{display:flex}
+  .kp-table .kp-row .kp-p1,.kp-table .kp-row .kp-p2,
+  .kp-table .kp-row .kp-p3,.kp-table .kp-row .kp-p4{display:flex}
 }
 
 /* ── STATUS ───────────────────────────────────────────────────────────
@@ -314,24 +321,6 @@ a:hover{color:#EC873A;text-decoration:underline}
 .kp-menu-item svg{color:var(--kp-text-4);flex:0 0 auto}
 .kp-menu-item:hover svg{color:var(--kp-accent-hover)}
 .kp-menu-sep{height:1px;margin:5px 8px;background:var(--kp-divider)}
-
-/* ── COLUMN PRIORITY ─────────────────────────────────────────────────
-   Secondary columns leave before anything truncates. Nothing is dropped
-   that the drawer does not also carry. */
-@media (max-width:1500px){.kp-p4{display:none}}
-@media (max-width:1320px){.kp-p3{display:none}}
-@media (max-width:1140px){.kp-p2{display:none}}
-/* Below tablet the table becomes a list of stacked records. */
-@media (max-width:860px){
-  .kp-table,.kp-table tbody,.kp-table tr,.kp-table td{display:block;width:auto}
-  .kp-table thead{display:none}
-  .kp-table tbody tr{border:1px solid var(--kp-border);border-radius:var(--kp-r-md);margin-bottom:10px;padding:4px 0}
-  .kp-table tbody td{border-bottom:0;padding:6px 14px}
-  .kp-table tbody td[data-label]::before{
-    content:attr(data-label) " ";display:block;
-    font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--kp-text-4);margin-bottom:2px}
-  .kp-p1,.kp-p2,.kp-p3,.kp-p4{display:block}
-}
 
 /* ── EMPTY STATE ─────────────────────────────────────────────────────── */
 .kp-empty{padding:44px 22px;border:1px dashed var(--kp-border-strong);border-radius:var(--kp-r-xl);
@@ -2402,7 +2391,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
         <div class="kp-body" role="rowgroup">
           <sc-for list="{{ devices }}" as="d" hint-placeholder-count="6">
-            <div class="kp-row" role="row">
+            <div class="kp-row" role="row" style="position:relative;z-index:{{ d.rowZ }}">
               <div class="kp-cell" role="cell"><span class="kp-label">Health</span><span class="kp-status {{ d.statusCls }}"><i></i>{{ d.status }}</span></div>
               <div class="kp-cell" role="cell">
                 <span class="kp-label">Display</span>
@@ -2543,7 +2532,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           </div>
           <div class="kp-body" role="rowgroup">
             <sc-for list="{{ schedRows }}" as="r" hint-placeholder-count="5">
-              <div style="opacity:{{ r.op }};animation:rise .35s ease-out both;animation-delay:{{ r.delay }}">
+              <div style="position:relative;z-index:{{ r.rowZ }};opacity:{{ r.op }};animation:rise .35s ease-out both;animation-delay:{{ r.delay }}">
                 <div class="kp-row" role="row">
                   <div class="kp-cell" role="cell">
                     <span class="kp-label">Schedule</span>
@@ -6133,7 +6122,7 @@ class Component extends DCLogic {
           ? {overlay:null, overlayStack:[], openFilter:null, profileOpen:false}
           : (st.builderFull && st.adminTab === 'builder'
             ? {adminTab:(st.builderFrom || {}).tab || 'library', libTab:(st.builderFrom || {}).libTab || 'scenes', builderFull:false, openFilter:null, profileOpen:false}
-            : {builderFull:false, calFull:false, openFilter:null, profileOpen:false, devMenu:null}))));
+            : {builderFull:false, calFull:false, openFilter:null, profileOpen:false, devMenu:null, schedMenu:null}))));
     };
     window.addEventListener('keydown', this._key);
 
@@ -6142,8 +6131,8 @@ class Component extends DCLogic {
     this._away = e => {
       const t = e.target;
       if (!t || !t.closest || t.closest('[data-pop],[data-pop-trigger]')) return;
-      this.setState(st => (st.profileOpen || st.openFilter || st.switcherOpen || st.devMenu
-        ? {profileOpen:false, openFilter:null, switcherOpen:false, devMenu:null} : null));
+      this.setState(st => (st.profileOpen || st.openFilter || st.switcherOpen || st.devMenu || st.schedMenu
+        ? {profileOpen:false, openFilter:null, switcherOpen:false, devMenu:null, schedMenu:null} : null));
     };
     document.addEventListener('pointerdown', this._away, true);
 
@@ -11240,7 +11229,8 @@ class Component extends DCLogic {
         nowPlaying:np ? np.pl : '', unclaimed, delay:(i * 50) + 'ms',
         seenLabel:unclaimed ? 'discovered' : (d.status === 'offline' ? 'no heartbeat' : 'screenshot'),
         editLabel:unclaimed ? 'Claim' : 'Edit', editIcon:unclaimed ? '#i-plus' : '#i-pencil',
-        menuOpen:s.devMenu === d.id, menuTop:nearBottom ? 'auto' : '42px', menuBottom:nearBottom ? '42px' : 'auto',
+        menuOpen:s.devMenu === d.id, rowZ:s.devMenu === d.id ? '40' : 'auto',
+        menuTop:nearBottom ? 'auto' : '42px', menuBottom:nearBottom ? '42px' : 'auto',
         actions,
         toggleMenu:() => this.setState(st => ({devMenu:st.devMenu === d.id ? null : d.id})),
         openDetail:() => this.open('device', {id:d.id}),
@@ -11303,7 +11293,8 @@ class Component extends DCLogic {
           nextLabel:nx ? nx.label : (x.status === 'expired' ? 'Nothing upcoming' : 'No block set'),
           nextSub:nx ? nx.sub : (x.status === 'expired' ? 'expired ' + (x.expired || '') : 'add a block to start it'),
           nextFg:nx ? (nx.today ? '#24724B' : '#16130F') : '#A7453B',
-          menuOpen:s.schedMenu === x.id, menuTop:nearEnd ? 'auto' : '42px', menuBottom:nearEnd ? '42px' : 'auto',
+          menuOpen:s.schedMenu === x.id, rowZ:s.schedMenu === x.id ? '40' : 'auto',
+          menuTop:nearEnd ? 'auto' : '42px', menuBottom:nearEnd ? '42px' : 'auto',
           toggleMenu:() => this.setState(st2 => ({schedMenu:st2.schedMenu === x.id ? null : x.id})),
           actions:[
             {label:'Open the calendar', icon:'#i-cal', act:() => this.openScheduleCalendar(x.id, 'schedules')},
