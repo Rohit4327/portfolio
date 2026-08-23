@@ -266,7 +266,7 @@ a:hover{color:#EC873A;text-decoration:underline}
   .kp-head{display:none}
   .kp-body .kp-row{display:block;border:1px solid var(--kp-border);border-radius:var(--kp-r-md);
     margin-bottom:10px;padding:6px 0;background:var(--kp-surface)}
-  .kp-body .kp-cell{padding:7px 14px;display:flex;flex-direction:column;gap:2px;justify-self:stretch !important}
+  .kp-body .kp-cell{padding:7px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;justify-self:stretch !important}
   .kp-label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;
     text-transform:uppercase;color:var(--kp-text-4)}
   .kp-p1,.kp-p2,.kp-p3,.kp-p4{display:flex}
@@ -330,6 +330,29 @@ a:hover{color:#EC873A;text-decoration:underline}
   background:var(--kp-surface);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .kp-empty h3{margin:0;font-size:15px;font-weight:700}
 .kp-empty p{margin:0;font-size:13px;color:var(--kp-text-3);max-width:380px;text-wrap:pretty}
+
+/* The scroll breadcrumb is pinned to the left of the module band while the
+   tab group is centred in it. Below ~960px the two meet, and the tabs already
+   say what the breadcrumb says. */
+@media (max-width:960px){.kp-crumb{display:none}}
+
+/* ── PHONE · the signed-off shell ─────────────────────────────────────────
+   The top bar and the module strip are sized for a desktop and physically
+   cannot fit a 390px viewport. Their controls are not ours to resize, so
+   below 720px the two bands scroll inside themselves instead of dragging the
+   whole page sideways with them. Nothing about either component changes —
+   same heights, same treatment, same targets — and above 720px these rules
+   do not apply at all. */
+@media (max-width:720px){
+  #kp-app > header{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none}
+  #kp-app > header::-webkit-scrollbar{display:none}
+  .kp-modstrip{overflow-x:auto;overflow-y:hidden;place-items:center start;scrollbar-width:none;-ms-overflow-style:none}
+  .kp-modstrip::-webkit-scrollbar{display:none}
+
+  /* Segmented controls become a scrolling row rather than an overflowing one. */
+  .kp-segrow{overflow-x:auto;scrollbar-width:none;max-width:100%}
+  .kp-segrow::-webkit-scrollbar{display:none}
+}
 
 /* Scrollable table shells never push the page sideways. */
 .kp-scroll-x{overflow-x:auto;overflow-y:visible}
@@ -505,10 +528,10 @@ a:hover{color:#EC873A;text-decoration:underline}
   </button>
 </nav>
 
-<div style="position:sticky;top:76px;z-index:45;height:70px;display:grid;place-items:center;background:{{ barBg }};backdrop-filter:{{ barBlur }};border-bottom:1px solid #EBE5DF;box-shadow:{{ barSh }};transition:background .18s,box-shadow .18s">
+<div class="kp-modstrip" style="position:sticky;top:76px;z-index:45;height:70px;display:grid;place-items:center;background:{{ barBg }};backdrop-filter:{{ barBlur }};border-bottom:1px solid #EBE5DF;box-shadow:{{ barSh }};transition:background .18s,box-shadow .18s">
   <sc-if value="{{ specPins }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;z-index:66;left:24px;top:4px;padding:2px 7px;border-radius:6px;background:#B4600F;color:#fff;font:700 10px/1.7 'Space Mono',monospace;letter-spacing:.06em;pointer-events:none">SH-02</span></sc-if>
   <sc-if value="{{ crumbOn }}" hint-placeholder-val="{{ false }}">
-    <span style="position:absolute;left:24px;top:50%;transform:translateY(-50%);font-size:12.5px;color:#8A827A;white-space:nowrap;animation:fadein .18s ease-out">{{ crumbModule }} · <strong style="font-weight:700;color:#3A342E">{{ crumbTab }}</strong></span>
+    <span class="kp-crumb" style="position:absolute;left:24px;top:50%;transform:translateY(-50%);font-size:12.5px;color:#8A827A;white-space:nowrap;animation:fadein .18s ease-out">{{ crumbModule }} · <strong style="font-weight:700;color:#3A342E">{{ crumbTab }}</strong></span>
   </sc-if>
   <div style="display:flex;align-items:stretch;border:1px solid #EAE4DE;border-radius:12px;background:#fff;overflow:hidden">
     <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
@@ -913,7 +936,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 
   <section style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
     <div style="padding:16px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:16px;font-weight:700">What is Moving</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">All six KPIs with the month-on-month change</p></div>
-    <div style="padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">
+    <div style="padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:14px">
       <sc-for list="{{ sc.kpiStrip6 }}" as="k" hint-placeholder-count="6">
         <button sc-camel-on-click="{{ k.act }}" style="text-align:left;padding:0;border:0;background:transparent;display:flex;flex-direction:column;gap:7px">
           <span style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
@@ -927,7 +950,7 @@ a:hover{color:#EC873A;text-decoration:underline}
     </div>
   </section>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:16px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:16px">
     <section style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
       <div style="padding:16px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:16px;font-weight:700">Who Was Recognised</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">Shout outs landing on this program</p></div>
       <sc-if value="{{ sc.hasShouts }}" hint-placeholder-val="{{ true }}">
@@ -1007,7 +1030,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         <h2 style="margin:0;font-size:22px;font-weight:700;letter-spacing:-.025em;text-wrap:pretty">{{ onboardTitle }}</h2>
         <p style="margin:0;font-size:13px;line-height:1.55;color:#6E665F;max-width:60ch;text-wrap:pretty">{{ onboardSub }}</p>
       </div>
-      <div style="flex:1 1 420px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+      <div style="flex:1 1 420px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:10px">
         <sc-for list="{{ onboardSteps }}" as="o" hint-placeholder-count="3">
           <button sc-camel-on-click="{{ o.act }}" style="min-height:78px;padding:13px 14px;border:1px solid #EFE3D6;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:5px;text-align:left;transition:border-color .18s,transform .18s,box-shadow .18s" style-hover="border-color:#E8C6A5;transform:translateY(-2px);box-shadow:0 10px 24px -14px rgba(116,69,31,.4)">
             <span style="display:flex;align-items:center;gap:8px;color:#CE6B1F"><svg width="15" height="15"><use href="#{{ o.icon }}"></use></svg><strong style="font-size:13px;color:#16130F">{{ o.title }}</strong></span>
@@ -1070,7 +1093,7 @@ a:hover{color:#EC873A;text-decoration:underline}
             <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">Standings</h2>
             <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ standingsSub }}</p>
           </div>
-          <div style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
+          <div class="kp-segrow" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
             <sc-if value="{{ canCompareAccounts }}" hint-placeholder-val="{{ false }}">
               <button sc-camel-on-click="{{ viewAccounts }}" style="flex:0 0 auto;height:36px;padding:0 18px;min-width:112px;border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:13px;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s;background:{{ segAc.pillBg }};color:{{ segAc.fg }};font-weight:{{ segAc.fw }};box-shadow:{{ segAc.pillSh }}">Accounts</button>
             </sc-if>
@@ -1529,7 +1552,7 @@ a:hover{color:#EC873A;text-decoration:underline}
     </div>
   </section>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(196px,100%),1fr));gap:14px">
     <sc-for list="{{ fwMetrics }}" as="m" hint-placeholder-count="4">
       <div style="position:relative;min-height:128px;padding:20px 22px;border:1px dashed {{ m.bd }};border-radius:22px;background:{{ m.bg }};display:flex;align-items:stretch;justify-content:space-between;gap:10px;overflow:hidden;animation:rise .5s ease-out both;animation-delay:{{ m.delay }}">
         <span style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:10px">
@@ -1649,7 +1672,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         <button sc-camel-on-click="{{ openAllRecognition }}" style="height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">See all</button>
       </div>
       <div style="flex:1;padding:18px;display:flex;flex-direction:column;gap:12px">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:12px">
           <sc-for list="{{ fwFeed }}" as="f" hint-placeholder-count="2">
             <article style="padding:16px;border:1px solid #EFEAE5;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:11px;animation:rise .45s ease-out both;animation-delay:{{ f.delay }};transition:border-color .18s" style-hover="border-color:#EADFD4">
               <div style="display:flex;align-items:center;gap:11px">
@@ -1729,7 +1752,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
       <button sc-camel-on-click="{{ jumpToFeed }}" style="flex:0 0 auto;height:34px;padding:0 14px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:7px" style-hover="background:#FFF6EE"><svg width="13" height="13"><use href="#i-arr-d"></use></svg>Jump to feed</button>
     </div>
-    <div style="padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px">
+    <div style="padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:10px">
       <sc-for list="{{ wallFeedPreview }}" as="x" hint-placeholder-count="3">
         <button sc-camel-on-click="{{ x.open }}" aria-label="{{ x.openLabel }}" style="min-height:76px;padding:12px 14px;border:1px solid #EFEAE5;border-radius:16px;background:#FDFCFB;display:flex;gap:11px;align-items:flex-start;min-width:0;text-align:left;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">
           <span style="width:32px;height:32px;flex:0 0 auto;border-radius:10px;display:grid;place-items:center;color:{{ x.fg }};background:{{ x.bg }}"><svg width="16" height="16"><use href="#{{ x.icon }}"></use></svg></span>
@@ -1868,7 +1891,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         </button>
       </sc-for>
     </div>
-    <div style="padding:22px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr);gap:22px;align-items:stretch">
+    <div style="padding:22px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(min(280px,100%),1fr);gap:22px;align-items:stretch">
       <div style="min-width:0;display:flex;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
           <strong style="font-size:22px;letter-spacing:-.025em;color:{{ momPanel.color }}">{{ momPanel.name }}</strong>
@@ -1936,7 +1959,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">My position</h2>
           <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ positionSub }}</p>
         </div>
-        <div style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
+        <div class="kp-segrow" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
           <sc-for list="{{ positionScopes }}" as="p" hint-placeholder-count="3">
             <button sc-camel-on-click="{{ p.pick }}" style="flex:0 0 auto;height:36px;padding:0 18px;min-width:112px;border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s;background:{{ p.pillBg }};color:{{ p.fg }};font-weight:{{ p.fw }};box-shadow:{{ p.pillSh }}">{{ p.label }}</button>
           </sc-for>
@@ -2061,7 +2084,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
       </div>
       <div style="flex:1;padding:18px;display:flex;flex-direction:column;gap:12px">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));gap:14px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(288px,100%),1fr));gap:14px">
           <sc-for list="{{ recogFeed }}" as="f" hint-placeholder-count="4">
             <article style="padding:16px;border:1px solid #EFEAE5;border-radius:16px;background:{{ f.cardBg }};display:flex;flex-direction:column;gap:11px;animation:rise .45s ease-out both;animation-delay:{{ f.delay }};transition:border-color .18s,box-shadow .18s" style-hover="border-color:#EADFD4;box-shadow:0 8px 22px -14px rgba(22,19,15,.22)">
               <div style="display:flex;align-items:center;gap:11px">
@@ -2128,7 +2151,7 @@ a:hover{color:#EC873A;text-decoration:underline}
     <sc-if value="{{ hasNeedsAction }}" hint-placeholder-val="{{ true }}">
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
         <div style="padding:14px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:15px;font-weight:700">Needs Action</h2></div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))">
           <sc-for list="{{ needsAction }}" as="n" hint-placeholder-count="3">
             <div style="padding:15px 20px;border-right:1px solid #F3EFEB;display:flex;align-items:flex-start;gap:12px;animation:rise .4s ease-out both;animation-delay:{{ n.delay }}">
               <span style="width:32px;height:32px;border-radius:10px;flex:0 0 auto;display:grid;place-items:center;background:{{ n.bg }};color:{{ n.fg }}"><svg width="16" height="16"><use href="#{{ n.icon }}"></use></svg></span>
@@ -2142,7 +2165,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
       </section>
     </sc-if>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:20px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(212px,100%),1fr));gap:20px">
       <sc-for list="{{ kpiTiles }}" as="k" hint-placeholder-count="4">
         <button sc-camel-on-click="{{ k.act }}" title="{{ k.title }}" style="text-align:left;padding:16px 18px 14px;border:1px solid {{ k.bd }};border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;flex-direction:column;gap:8px;animation:rise .45s ease-out both;animation-delay:{{ k.delay }};transition:border-color .2s,box-shadow .2s,transform .2s" style-hover="border-color:#EFC9A8;box-shadow:0 12px 26px -18px rgba(116,69,31,.4);transform:translateY(-1px)">
           <span style="display:flex;align-items:center;gap:7px">
@@ -2230,7 +2253,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       </section>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:16px;align-items:start">
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
         <div style="padding:14px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:15px;font-weight:700">Worth Knowing · Estate</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">Only facts that change something you control</p></div>
         <sc-for list="{{ worthKnowing }}" as="w" hint-placeholder-count="3">
@@ -2330,7 +2353,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         <button sc-camel-on-click="{{ openAddDevice }}" style="align-self:flex-start;margin-top:3px;border:0;background:transparent;padding:0;color:#7A736C;font-size:12px;text-decoration:underline;text-underline-offset:3px">Add a display manually — for a screen that cannot report</button>
       </span>
       <sc-if value="{{ hasUnclaimed }}" hint-placeholder-val="{{ true }}">
-        <span style="flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;min-height:28px;padding:0 11px;border-radius:999px;border:1px solid #EAD69F;background:#FFF9E9;color:#8A6512;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em"><i style="width:6px;height:6px;border-radius:999px;background:#E0B23F"></i>{{ unclaimedBadge }}</span>
+        <span style="flex:0 1 auto;min-width:0;max-width:100%;display:inline-flex;align-items:center;gap:7px;min-height:28px;padding:5px 11px;border-radius:14px;border:1px solid #EAD69F;background:#FFF9E9;color:#8A6512;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em"><i style="width:6px;height:6px;border-radius:999px;background:#E0B23F;flex:0 0 auto"></i><span style="min-width:0;overflow-wrap:anywhere">{{ unclaimedBadge }}</span></span>
       </sc-if>
       <span style="flex:0 0 auto;display:flex;gap:8px">
         <button sc-camel-on-click="{{ claimNext }}" style="height:36px;padding:0 15px;border:1px solid #EC873A;border-radius:11px;background:#EC873A;color:#fff;font-size:12px;font-weight:650;box-shadow:0 6px 16px -6px rgba(206,107,31,.6)">Claim</button>
@@ -2742,7 +2765,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
     </sc-if>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:14px">
       <sc-for list="{{ libCards }}" as="c" hint-placeholder-count="6">
         <article style="position:relative;border:1px solid #EBE5DF;border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column;animation:rise .4s ease-out both;animation-delay:{{ c.delay }};transition:border-color .2s,box-shadow .2s" style-hover="border-color:#EFC9A8;box-shadow:0 12px 28px -16px rgba(116,69,31,.32)">
           <div style="padding:16px 16px 12px;display:flex;gap:14px;align-items:flex-start">
@@ -3388,7 +3411,7 @@ a:hover{color:#EC873A;text-decoration:underline}
     </sc-if>
 
     <sc-if value="{{ atMatrix }}" hint-placeholder-val="{{ false }}">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px">
         <sc-for list="{{ roleLegend }}" as="r" hint-placeholder-count="4">
           <div style="padding:14px 16px;border:1px solid #EBE5DF;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:6px">
             <span style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
@@ -4003,7 +4026,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           </sc-if>
 
           <sc-if value="{{ b.isSteps }}" hint-placeholder-val="{{ false }}">
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:12px">
               <sc-for list="{{ b.steps }}" as="st" hint-placeholder-count="3">
                 <button sc-camel-on-click="{{ st.pick }}" style="text-align:left;padding:0;border:1px solid #EFEAE5;border-radius:14px;background:#fff;overflow:hidden;display:flex;flex-direction:column;transition:border-color .16s,box-shadow .16s" style-hover="border-color:#EFC9A8;box-shadow:0 10px 22px -16px rgba(116,69,31,.4)">
                   <span style="aspect-ratio:16 / 9;background:linear-gradient(158deg,#1B1B1F,#2C2C33 60%,#3A3A44);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:14px">
@@ -4735,7 +4758,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           </sc-if>
 
           <sc-if value="{{ b.isSteps }}" hint-placeholder-val="{{ false }}">
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:12px">
               <sc-for list="{{ b.steps }}" as="st" hint-placeholder-count="3">
                 <button sc-camel-on-click="{{ st.pick }}" style="text-align:left;padding:0;border:1px solid #EFEAE5;border-radius:14px;background:#fff;overflow:hidden;display:flex;flex-direction:column;transition:border-color .16s,box-shadow .16s" style-hover="border-color:#EFC9A8;box-shadow:0 10px 22px -16px rgba(116,69,31,.4)">
                   <span style="aspect-ratio:16 / 9;background:linear-gradient(158deg,#1B1B1F,#2C2C33 60%,#3A3A44);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:14px">
@@ -4972,7 +4995,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 
       <div style="flex:1;min-height:0;overflow-y:auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr)">
         <div style="padding:20px;border-right:1px solid #F0EBE6;background:#F7F5F3;display:flex;flex-direction:column;gap:12px">
-          <div style="display:inline-flex;align-self:flex-start;align-items:center;gap:3px;padding:3px;border-radius:11px;background:#EBE6E1">
+          <div class="kp-segrow" style="display:inline-flex;align-self:flex-start;align-items:center;gap:3px;padding:3px;border-radius:11px;background:#EBE6E1">
             <sc-for list="{{ ov.share.modes }}" as="m" hint-placeholder-count="2">
               <button sc-camel-on-click="{{ m.pick }}" style="min-width:132px;height:32px;padding:0 14px;border:0;border-radius:8px;font-size:12.5px;transition:all .18s;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.fw }};box-shadow:{{ m.sh }}">{{ m.label }}</button>
             </sc-for>
@@ -8396,7 +8419,7 @@ class Component extends DCLogic {
       x, {plain:!x.chipBg}))}); }
   // an open list has to sit above every block below it, so the section itself lifts out of document order
   bFields(h, arr) { return this.blk({heading:h, isFields:true, z:arr.some(f => f && f.isCombo && f.showList) ? '90' : 'auto',
-    fieldCols:(arr.length > 1 && !arr.some(f => f && (f.isArea || (f.isCombo && !f.single)))) ? 'repeat(auto-fit,minmax(228px,1fr))' : 'minmax(0,1fr)',
+    fieldCols:(arr.length > 1 && !arr.some(f => f && (f.isArea || (f.isCombo && !f.single)))) ? 'repeat(auto-fit,minmax(min(228px,100%),1fr))' : 'minmax(0,1fr)',
     fields:arr.map(f => Object.assign({isText:false,isArea:false,isSelect:false,isPills:false,isToggle:false,isCards:false,isCombo:false,hasShuffle:false,hint:'',placeholder:''}, f))}); }
 
   // ---- one combobox for the whole app: searchable, single or multi, clearable ----
