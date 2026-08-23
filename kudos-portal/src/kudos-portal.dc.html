@@ -280,6 +280,10 @@ a:hover{color:#EC873A;text-decoration:underline}
 .kp-status-crit{color:var(--kp-crit);background:var(--kp-crit-soft);border-color:var(--kp-crit-line)}
 .kp-status-crit i{border-radius:2px}
 .kp-status-warn i{border-radius:1px;transform:rotate(45deg)}
+.kp-status-info{color:var(--kp-info);background:var(--kp-info-soft);border-color:var(--kp-info-line)}
+.kp-status-info i{border-radius:1px}
+.kp-status-idle{color:var(--kp-text-3);background:var(--kp-surface-3);border-color:var(--kp-border-strong)}
+.kp-status-idle i{width:8px;height:2px;border-radius:1px}
 .kp-tag{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border:1px solid var(--kp-border-strong);
   border-radius:6px;background:var(--kp-surface-2);color:var(--kp-text-2);
   font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.05em;white-space:nowrap}
@@ -2118,23 +2122,6 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
     </sc-if>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:20px">
-      <sc-for list="{{ kpiTiles }}" as="k" hint-placeholder-count="4">
-        <button sc-camel-on-click="{{ k.act }}" title="{{ k.title }}" style="text-align:left;padding:16px 18px 14px;border:1px solid {{ k.bd }};border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;flex-direction:column;gap:8px;animation:rise .45s ease-out both;animation-delay:{{ k.delay }};transition:border-color .2s,box-shadow .2s,transform .2s" style-hover="border-color:#EFC9A8;box-shadow:0 12px 26px -18px rgba(116,69,31,.4);transform:translateY(-1px)">
-          <span style="display:flex;align-items:center;gap:7px">
-            <i style="width:7px;height:7px;border-radius:999px;background:{{ k.dot }};flex:0 0 auto"></i>
-            <small style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8A827A">{{ k.label }}</small>
-          </span>
-          <span style="display:flex;align-items:baseline;gap:5px">
-            <b style="font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1;color:{{ k.valueFg }};font-variant-numeric:tabular-nums">{{ k.value }}</b>
-            <sc-if value="{{ k.denom }}" hint-placeholder-val="{{ true }}"><span style="font-size:17px;font-weight:600;color:#A79E95;font-variant-numeric:tabular-nums">{{ k.denom }}</span></sc-if>
-          </span>
-          <span style="font-size:12px;font-weight:600;color:{{ k.noteFg }}">{{ k.consequence }}</span>
-          <span style="font-family:'Space Mono',monospace;font-size:12px;line-height:14px;color:rgba(22,19,15,.55)">{{ k.prov }}</span>
-        </button>
-      </sc-for>
-    </div>
-
     <sc-if value="{{ hasNeedsAction }}" hint-placeholder-val="{{ true }}">
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
         <div style="padding:14px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:15px;font-weight:700">Needs Action</h2></div>
@@ -2152,6 +2139,23 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
       </section>
     </sc-if>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:20px">
+      <sc-for list="{{ kpiTiles }}" as="k" hint-placeholder-count="4">
+        <button sc-camel-on-click="{{ k.act }}" title="{{ k.title }}" style="text-align:left;padding:16px 18px 14px;border:1px solid {{ k.bd }};border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;flex-direction:column;gap:8px;animation:rise .45s ease-out both;animation-delay:{{ k.delay }};transition:border-color .2s,box-shadow .2s,transform .2s" style-hover="border-color:#EFC9A8;box-shadow:0 12px 26px -18px rgba(116,69,31,.4);transform:translateY(-1px)">
+          <span style="display:flex;align-items:center;gap:7px">
+            <i style="width:7px;height:7px;border-radius:999px;background:{{ k.dot }};flex:0 0 auto"></i>
+            <small style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8A827A">{{ k.label }}</small>
+          </span>
+          <span style="display:flex;align-items:baseline;gap:5px">
+            <b style="font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1;color:{{ k.valueFg }};font-variant-numeric:tabular-nums">{{ k.value }}</b>
+            <sc-if value="{{ k.denom }}" hint-placeholder-val="{{ true }}"><span style="font-size:17px;font-weight:600;color:#A79E95;font-variant-numeric:tabular-nums">{{ k.denom }}</span></sc-if>
+          </span>
+          <span style="font-size:12px;font-weight:600;color:{{ k.noteFg }}">{{ k.consequence }}</span>
+          <span style="font-family:'Space Mono',monospace;font-size:12px;line-height:14px;color:rgba(22,19,15,.55)">{{ k.prov }}</span>
+        </button>
+      </sc-for>
+    </div>
+
 
     <div style="display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:16px" class="om-ovgrid">
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
@@ -2223,7 +2227,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       </section>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start">
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
         <div style="padding:14px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:15px;font-weight:700">Worth Knowing · Estate</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">Only facts that change something you control</p></div>
         <sc-for list="{{ worthKnowing }}" as="w" hint-placeholder-count="3">
@@ -2485,19 +2489,18 @@ a:hover{color:#EC873A;text-decoration:underline}
             <button sc-camel-on-click="{{ resetSched }}" style="height:36px;padding:0 16px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650">Reset filters</button>
           </div>
         </sc-if>
-        <div style="overflow-x:auto"><div style="min-width:940px">
-          <div style="display:grid;grid-template-columns:1.5fr 1.15fr 1.25fr 70px 110px 110px 110px;gap:14px;height:38px;padding:0 20px;align-items:center;background:#FAF8F6;border-bottom:1px solid #F0EBE6;color:#8A827A;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em">
-            <span>SCHEDULE</span><span>SCOPE</span><span>DISPLAYS MAPPED</span><span>BLOCKS</span><span>ACTIVE SINCE</span><span>STATUS</span><span>EXPIRED ON</span>
+        <div class="kp-scroll-x"><div style="min-width:1080px">
+          <div style="display:grid;grid-template-columns:1.5fr 1.15fr 1.25fr 70px 130px 110px 104px 52px;gap:14px;height:42px;padding:0 20px;align-items:center;background:#FAF8F6;border-bottom:1px solid #F0EBE6;color:#A79E95;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">
+            <span>Schedule</span><span>Scope</span><span>Displays mapped</span><span>Blocks</span><span>Next change</span><span>Active since</span><span>Status</span><span></span>
           </div>
           <sc-for list="{{ schedRows }}" as="r" hint-placeholder-count="5">
             <div style="border-bottom:1px solid #F3EFEB;opacity:{{ r.op }};animation:rise .35s ease-out both;animation-delay:{{ r.delay }}">
-              <div style="display:grid;grid-template-columns:1.5fr 1.15fr 1.25fr 70px 110px 110px 110px;gap:14px;min-height:62px;padding:10px 20px;align-items:center;transition:background .16s" style-hover="background:#FFFBF7">
+              <div style="display:grid;grid-template-columns:1.5fr 1.15fr 1.25fr 70px 130px 110px 104px 52px;gap:14px;min-height:62px;padding:10px 20px;align-items:center;transition:background .16s" style-hover="background:#FFFBF7">
                 <span style="display:flex;flex-direction:column;gap:4px;min-width:0">
-                  <button sc-camel-on-click="{{ r.open }}" style="border:0;background:transparent;padding:0;text-align:left;font-size:13px;font-weight:700;color:#16130F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" style-hover="color:#CE6B1F">{{ r.name }}</button>
+                  <button sc-camel-on-click="{{ r.open }}" style="border:0;background:transparent;padding:0;text-align:left;font-size:13.5px;font-weight:650;color:#16130F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" style-hover="color:#CE6B1F">{{ r.name }}</button>
                   <span style="display:flex;gap:6px;align-items:center">
                     <sc-if value="{{ r.isDefault }}" hint-placeholder-val="{{ false }}"><em style="font-style:normal;padding:1px 7px;border-radius:5px;background:#16130F;color:#fff;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em">DEFAULT</em></sc-if>
-                    <button sc-camel-on-click="{{ r.settings }}" style="border:0;background:transparent;padding:0;font-size:12.5px;color:#A79E95" style-hover="color:#CE6B1F">Settings</button>
-                    <button sc-camel-on-click="{{ r.duplicate }}" style="border:0;background:transparent;padding:0;font-size:12.5px;color:#A79E95" style-hover="color:#CE6B1F">Duplicate</button>
+                    <small style="font-size:12.5px;color:#A79E95">{{ r.ownerLine }}</small>
                   </span>
                 </span>
                 <span style="min-height:25px;width:fit-content;max-width:100%;padding:0 10px;border-radius:7px;background:{{ r.scopeBg }};color:{{ r.scopeFg }};font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;display:inline-flex;align-items:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.scopeType }} · {{ r.scopeValue }}</span>
@@ -2509,9 +2512,22 @@ a:hover{color:#EC873A;text-decoration:underline}
                   </span>
                 </button>
                 <span style="font-size:13px;font-variant-numeric:tabular-nums">{{ r.blocks }}</span>
-                <span style="font-size:12px;color:#5E564F;font-variant-numeric:tabular-nums">{{ r.since }}</span>
-                <span style="min-height:24px;width:fit-content;padding:0 10px;border-radius:999px;border:1px solid {{ r.statusBd }};background:{{ r.statusBg }};color:{{ r.statusFg }};font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:5px">{{ r.status }}</span>
-                <span style="font-size:12px;color:#A79E95;font-variant-numeric:tabular-nums">{{ r.expiredOn }}</span>
+                <span style="min-width:0;display:flex;flex-direction:column;gap:2px">
+                  <span style="font-size:13px;color:{{ r.nextFg }};font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.nextLabel }}</span>
+                  <small style="font-size:12.5px;color:#A79E95;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.nextSub }}</small>
+                </span>
+                <span style="font-size:12.5px;color:#5E564F;font-variant-numeric:tabular-nums">{{ r.since }}</span>
+                <span class="kp-status {{ r.statusCls }}"><i></i>{{ r.status }}</span>
+                <span data-pop style="position:relative;justify-self:end;display:inline-flex">
+                  <button class="kp-iconbtn" sc-camel-on-click="{{ r.toggleMenu }}" aria-label="More actions for {{ r.name }}" aria-expanded="{{ r.menuOpen }}" aria-haspopup="menu" title="More actions"><svg width="16" height="16"><use href="#i-dots"></use></svg></button>
+                  <sc-if value="{{ r.menuOpen }}" hint-placeholder-val="{{ false }}">
+                    <div class="kp-menu" role="menu" style="top:{{ r.menuTop }};bottom:{{ r.menuBottom }}">
+                      <sc-for list="{{ r.actions }}" as="a" hint-placeholder-count="4">
+                        <button class="kp-menu-item" role="menuitem" sc-camel-on-click="{{ a.act }}"><svg width="15" height="15"><use href="#{{ a.icon }}"></use></svg>{{ a.label }}</button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </span>
               </div>
               <sc-if value="{{ r.expand }}" hint-placeholder-val="{{ false }}">
                 <div style="padding:0 20px 14px;display:flex;gap:8px;flex-wrap:wrap">
@@ -2746,17 +2762,28 @@ a:hover{color:#EC873A;text-decoration:underline}
               </sc-if>
             </span>
             <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
-              <strong style="font-size:14px;line-height:1.3;text-wrap:pretty">{{ c.name }}</strong>
-              <small style="font-size:12px;color:#8A827A;line-height:1.45;text-wrap:pretty">{{ c.desc }}</small>
+              <span style="align-self:flex-start;padding:2px 8px;border-radius:6px;background:{{ c.kindBg }};color:{{ c.kindFg }};font-size:12px;font-weight:700;letter-spacing:.09em">{{ c.kind }}</span>
+              <strong style="font-size:15px;line-height:1.3;text-wrap:pretty">{{ c.name }}</strong>
+              <small style="font-size:12.5px;color:#8A827A;line-height:1.45;text-wrap:pretty">{{ c.desc }}</small>
+              <sc-if value="{{ c.source }}" hint-placeholder-val="{{ false }}">
+                <button sc-camel-on-click="{{ c.openSource }}" style="align-self:flex-start;border:0;background:transparent;padding:0;font-size:12.5px;color:#7A736C;text-align:left" style-hover="color:#CE6B1F">{{ c.source }}</button>
+              </sc-if>
               <span style="display:flex;gap:5px;flex-wrap:wrap;margin-top:2px">
                 <em style="font-style:normal;padding:2px 8px;border-radius:6px;background:#F8F4FB;color:#67499F;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em">{{ c.orient }}</em>
                 <sc-if value="{{ c.scope }}" hint-placeholder-val="{{ false }}"><em style="font-style:normal;padding:2px 8px;border-radius:6px;background:#EFF8F2;color:#24724B;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em">{{ c.scope }}</em></sc-if>
               </span>
             </span>
           </div>
+          <div style="padding:0 16px 13px;display:grid;grid-template-columns:repeat({{ c.factCols }},minmax(0,1fr));gap:10px">
+            <sc-for list="{{ c.facts }}" as="ft" hint-placeholder-count="3">
+              <span style="min-width:0;display:flex;flex-direction:column;gap:2px">
+                <small style="font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#A79E95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ ft.k }}</small>
+                <b style="font-size:14px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ ft.v }}</b>
+              </span>
+            </sc-for>
+          </div>
           <div style="margin-top:auto;padding:11px 16px;border-top:1px solid #F3EFEB;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <small style="font-size:12.5px;color:#8A827A">{{ c.metaA }}</small>
-            <small style="font-size:12.5px;color:#8A827A">· {{ c.metaB }}</small>
+            <small style="font-size:12.5px;color:{{ c.reachFg }}">{{ c.reach }}</small>
             <span style="margin-left:auto;display:flex;gap:7px">
               <button sc-camel-on-click="{{ c.open }}" style="height:32px;padding:0 12px;border:1px solid #E7E1DB;border-radius:10px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650" style-hover="border-color:#E8C6A5;background:#FFFAF6">Open</button>
               <button sc-camel-on-click="{{ c.edit }}" style="height:32px;padding:0 12px;border:1px solid #F0DCC8;border-radius:10px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650" style-hover="border-color:#EC873A;background:#FFF6EE">{{ c.editLabel }}</button>
@@ -10426,6 +10453,24 @@ class Component extends DCLogic {
     }
     return false;
   }
+  // SCH-01 · the next relevant event for a schedule: the next block boundary
+  // it will cross, looking a fortnight ahead. Nothing found means nothing is
+  // going to happen, which is what the admin needs to see.
+  nextChangeOf(schedId) {
+    const today = this.todayNum(), now = this.nowMin();
+    const blocks = this.blocksOfSchedule(schedId);
+    if (!blocks.length) return null;
+    for (let d = 0; d < 14; d++) {
+      const dn = today + d;
+      const hits = blocks.filter(b => this.blockHits(b, dn)).sort((a, b) => a.from - b.from);
+      for (const b of hits) {
+        if (d === 0 && b.from <= now) continue;
+        return {label:(d === 0 ? this.hhmm(b.from) : (d === 1 ? 'Tomorrow ' : this.dayLabel(dn) + ' ') + this.hhmm(b.from)),
+          sub:b.pl, today:d === 0};
+      }
+    }
+    return null;
+  }
   // Template mode = the schedule's own blocks. Resolved mode = inherited + this display's overrides. [SCH-05]
   blocksFor(ctx, dn) {
     const base = ctx.dev
@@ -10840,8 +10885,9 @@ class Component extends DCLogic {
         act:goDevices({versionFilter:behindN ? 'behind' : 'any'})},
       {label:'Locations live', value:String(locsLive), note:'of ' + LOC_CITIES.length + ' sites', fg:'#16130F',
         div:'1px solid #F0EBE6', title:'Open the display list', act:goDevices({deviceFilter:'online'})},
-      {label:'Last check-in', value:'2 min', note:'ago · automatic', fg:'#16130F', div:'1px solid #F0EBE6',
-        title:'Displays check in every 60 seconds', act:() => this.open('discovery')}
+      {label:'Uptime', value:upPct + '%', note:onlineN + ' of ' + claimedN + ' claimed', fg:'#16130F',
+        div:'1px solid #F0EBE6', title:'Displays check in every 60 seconds; the last sweep was 2 minutes ago',
+        act:() => this.open('discovery')}
     ];
 
     // ── Web Engagement by Location ───────────────────────────────── 4.4
@@ -10863,7 +10909,7 @@ class Component extends DCLogic {
     const engVals = engBase.map((l, i) => l.v ? Math.max(6, Math.min(100, Math.round(l.v * mW[insMetric][i]))) : 0);
     const engTop = Math.max.apply(null, engVals) || 1;
     const engRows = engBase.map((l, i) => { const v = engVals[i], dead = v === 0;
-      return {name:l.n, state:stateOf(l.n), value:dead ? 'no web activity yet' : String(v),
+      return {name:l.n, state:dead ? 'no web activity yet' : stateOf(l.n), value:dead ? '—' : String(v),
         pct:dead ? '2%' : (Math.round((v / engTop) * 100) + '%'), delay:(i * 60) + 'ms',
         op:dead ? '.4' : '1',
         color:dead ? '#D8D0C8' : (v > 80 ? '#31855D' : (v > 60 ? '#EC873A' : '#C1584C')),
@@ -11044,10 +11090,12 @@ class Component extends DCLogic {
       .filter(x => !sq || (x.name + ' ' + x.scopeValue + ' ' + x.scopeType).toLowerCase().indexOf(sq) > -1)
       .map((x, i) => {
         const devs = this.devicesOnSchedule(x.id), locs = this.locationsOnSchedule(x.id);
-        const st = ({active:{l:'Active', fg:'#24724B', bg:'#EFF8F2', bd:'#BEDBC9'},
-          scheduled:{l:'Scheduled', fg:'#376D96', bg:'#F2F7FA', bd:'#C7D9E5'},
-          expired:{l:'Expired', fg:'#7A736C', bg:'#F3EFEB', bd:'#E2DAD2'}})[x.status];
+        const st = ({active:{l:'Active', fg:'#24724B', bg:'#EFF8F2', bd:'#BEDBC9', cls:'kp-status-ok'},
+          scheduled:{l:'Scheduled', fg:'#376D96', bg:'#F2F7FA', bd:'#C7D9E5', cls:'kp-status-info'},
+          expired:{l:'Expired', fg:'#7A736C', bg:'#F3EFEB', bd:'#E2DAD2', cls:'kp-status-idle'}})[x.status];
         const open = !!(s.schedExpand || {})[x.id];
+        const nx = x.status === 'expired' ? null : this.nextChangeOf(x.id);
+        const nearEnd = i >= 3;
         return {name:x.name, isDefault:!!x.accountDefault, op:x.status === 'expired' ? '.7' : '1',
           scopeType:x.scopeType, scopeValue:x.scopeValue,
           scopeBg:x.scopeType === 'ACCOUNT' ? '#F3EFEB' : (x.scopeType === 'LOCATION' ? '#F2F7FA' : '#F8F4FB'),
@@ -11058,7 +11106,22 @@ class Component extends DCLogic {
           expand:open, devList:devs.map(d => ({name:d.name, sub:d.city + ' · ' + d.spot, act:() => this.open('device', {id:d.id})})),
           toggle:() => this.setState(st2 => ({schedExpand:Object.assign({}, st2.schedExpand, {[x.id]:!open})})),
           blocks:String(this.blocksOfSchedule(x.id).length), since:x.since,
-          status:st.l, statusFg:st.fg, statusBg:st.bg, statusBd:st.bd, expiredOn:x.expired || '—',
+          status:st.l, statusFg:st.fg, statusBg:st.bg, statusBd:st.bd, statusCls:st.cls,
+          expiredOn:x.expired || '—',
+          ownerLine:x.expired ? 'expired ' + x.expired : (x.accountDefault ? 'account fallback' : 'scoped schedule'),
+          nextLabel:nx ? nx.label : (x.status === 'expired' ? 'Nothing upcoming' : 'No block set'),
+          nextSub:nx ? nx.sub : (x.status === 'expired' ? 'expired ' + (x.expired || '') : 'add a block to start it'),
+          nextFg:nx ? (nx.today ? '#24724B' : '#16130F') : '#A7453B',
+          menuOpen:s.schedMenu === x.id, menuTop:nearEnd ? 'auto' : '42px', menuBottom:nearEnd ? '42px' : 'auto',
+          toggleMenu:() => this.setState(st2 => ({schedMenu:st2.schedMenu === x.id ? null : x.id})),
+          actions:[
+            {label:'Open the calendar', icon:'#i-cal', act:() => this.openScheduleCalendar(x.id, 'schedules')},
+            {label:'Schedule settings', icon:'#i-gear', act:() => this.open('schedule', {id:x.id})},
+            {label:devs.length ? 'Show the ' + devs.length + ' displays' : 'No displays mapped', icon:'#i-monitor',
+             act:() => this.setState(st2 => ({schedExpand:Object.assign({}, st2.schedExpand, {[x.id]:!open})}))},
+            {label:'Duplicate schedule', icon:'#i-copy',
+             act:() => this.flash('Duplicated "' + x.name + '" — the copy has no displays mapped until you scope it.')}
+          ].map(a => ({label:a.label, icon:a.icon, act:() => { this.setState({schedMenu:null}); a.act(); }})),
           delay:(i * 40) + 'ms',
           open:() => this.openScheduleCalendar(x.id, 'schedules'),
           settings:() => this.open('schedule', {id:x.id}),
@@ -11104,6 +11167,12 @@ class Component extends DCLogic {
       libCards = SCENES.filter(orientHit).filter(x => !libQ || (x.name + ' ' + x.desc).toLowerCase().indexOf(libQ) > -1)
         .map((x, i) => { const pls = this.playlistsWithScene(x.id), devs = this.devicesWithScene(x.id);
           return {name:x.name, desc:x.desc, orient:x.orient, port:x.orient === 'Portrait', stacked:false, depth:'',
+            kind:'SCENE', kindFg:'#5E564F', kindBg:'#F3EFEB', source:'', openSource:() => {},
+            factCols:'2', facts:[
+              {k:'Group', v:x.group},
+              {k:'In playlists', v:pls.length ? String(pls.length) + ' of ' + PLAYLISTS.length : 'none'}],
+            reach:devs.length ? 'Reaching ' + devs.length + ' of ' + claimed.length + ' displays' : 'Not reaching a display',
+            reachFg:devs.length ? '#24724B' : '#8A827A',
             metaA:pls.length ? pls.length + ' of ' + PLAYLISTS.length + ' playlists' : 'not in a playlist',
             metaB:devs.length + ' of ' + claimed.length + ' displays', delay:(i * 30) + 'ms',
             preview:this.miniScene(x, x.orient),
@@ -11117,6 +11186,12 @@ class Component extends DCLogic {
         .map((x, i) => { const pls = this.playlistsFromTemplate(x.name);
           const devs = pls.reduce((a, p) => a.concat(this.devicesRunning(p.name)), []).filter((d, j, arr) => arr.indexOf(d) === j);
           return {name:x.name, desc:x.desc, orient:x.orient, port:x.orient === 'Portrait', stacked:true, depth:String(x.scenes.length),
+            kind:'TEMPLATE', kindFg:'#376D96', kindBg:'#F2F7FA', source:'', openSource:() => {},
+            factCols:'2', facts:[
+              {k:'Scenes', v:String(x.scenes.length)},
+              {k:'Playlists from it', v:pls.length ? String(pls.length) : 'none yet'}],
+            reach:devs.length ? 'Reaching ' + devs.length + ' of ' + claimed.length + ' displays' : 'Not reaching a display',
+            reachFg:devs.length ? '#24724B' : '#8A827A',
             metaA:pls.length + (pls.length === 1 ? ' playlist inherits' : ' playlists inherit'),
             metaB:devs.length + ' of ' + claimed.length + ' displays', delay:(i * 30) + 'ms',
             preview:this.miniScene(sceneById(x.scenes[0]), x.orient),
@@ -11129,8 +11204,15 @@ class Component extends DCLogic {
         .filter(x => !libQ || (x.name + ' ' + x.from + ' ' + x.scopeValue).toLowerCase().indexOf(libQ) > -1)
         .map((x, i) => { const devs = this.devicesRunning(x.name), scheds = this.schedulesWithPlaylist(x.name);
           const items = this.itemsOfPlaylist(x.name);
-          return {name:x.name, desc:'From ' + x.from + ' · in ' + scheds.length + ' schedules · on ' + devs.length +
-              ' displays · loop ' + fmtDur(this.loopOf(x.name)),
+          return {name:x.name, desc:'',
+            kind:'PLAYLIST', kindFg:'#B4600F', kindBg:'#FFF4EA',
+            source:'From the ' + x.from + ' template', openSource:() => this.open('template', {id:tplByName(x.from).id}),
+            factCols:'3', facts:[
+              {k:'Scenes', v:String(items.length)},
+              {k:'Loop', v:fmtDur(this.loopOf(x.name))},
+              {k:'Schedules', v:scheds.length ? String(scheds.length) : 'none'}],
+            reach:devs.length ? 'Reaching ' + devs.length + ' of ' + claimed.length + ' displays' : 'Not on a display yet',
+            reachFg:devs.length ? '#24724B' : '#8A827A',
             orient:plOrient(x), port:plOrient(x) === 'Portrait', stacked:true, depth:String(items.length),
             scope:x.scopeType + ' · ' + x.scopeValue,
             metaA:scheds.length + (scheds.length === 1 ? ' schedule' : ' schedules'),
@@ -11356,9 +11438,9 @@ class Component extends DCLogic {
       // overview
       kpiTiles, needsAction, hasNeedsAction:!!needsAction.length,
       donut, fleetLegend, fleetFacts,
-      fleetHubValue:hovSeg ? String(hovSeg.n) : upPct + '%',
-      fleetHubLabel:hovSeg ? hovSeg.label.toUpperCase() : 'UPTIME',
-      fleetHubNote:hovSeg ? (pctOf(hovSeg.n) + '% of ' + nAll) : onlineN + ' of ' + claimedN + ' reporting',
+      fleetHubValue:hovSeg ? String(hovSeg.n) : String(onlineN),
+      fleetHubLabel:hovSeg ? hovSeg.label.toUpperCase() : 'ONLINE',
+      fleetHubNote:hovSeg ? (pctOf(hovSeg.n) + '% of ' + nAll) : 'of ' + nAll + ' displays',
       fleetHubFg:hovSeg ? hovSeg.color : '#16130F',
       fleetLeave:() => this.setState({fleetHover:null}),
       fleetSub:'Right now · ' + LOC_CITIES.length + ' locations',
