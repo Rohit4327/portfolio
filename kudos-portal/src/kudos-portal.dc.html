@@ -1677,29 +1677,42 @@ a:hover{color:#EC873A;text-decoration:underline}
 <sc-if value="{{ isWallSeasoned }}" hint-placeholder-val="{{ false }}">
 <main style="padding:20px 24px 32px;display:flex;flex-direction:column;gap:20px;animation:fadein .3s ease-out">
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px">
-    <sc-for list="{{ wallMetrics }}" as="m" hint-placeholder-count="5">
-      <button class="om-lift" sc-camel-on-click="{{ m.open }}" style="position:relative;min-height:136px;padding:20px;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;align-items:stretch;justify-content:space-between;gap:10px;text-align:left;overflow:hidden;transition:border-color .2s,box-shadow .2s,transform .2s;animation:rise .5s ease-out both;animation-delay:{{ m.delay }}" style-hover="border-color:#EFC9A8;box-shadow:0 14px 30px -14px rgba(116,69,31,.3);transform:translateY(-2px)">
-        <span style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:10px">
-          <span style="min-height:18px;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:#7A736C;white-space:nowrap">
-            <sc-if value="{{ m.live }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:999px;background:#1F9B5D;animation:breathe 2.2s ease-in-out infinite"></span></sc-if>
+  <!-- MW3-05 · My Wall opens with who you are and where you stand, not with five
+       equal tiles. Identity on the left, the signals that answer "how am I
+       doing" on the right, and the one action worth taking from here. -->
+  <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;flex-wrap:wrap;align-items:stretch">
+    <div style="flex:1 1 330px;min-width:0;padding:20px 22px;display:flex;align-items:center;gap:16px">
+      <span aria-hidden="true" style="width:58px;height:58px;flex:0 0 auto;border-radius:999px;background:linear-gradient(145deg,#F3954D,#C85B08);color:#fff;display:grid;place-items:center;font-size:19px;font-weight:700">{{ me.initials }}</span>
+      <span style="min-width:0;display:flex;flex-direction:column;gap:4px">
+        <strong style="font-size:22px;font-weight:700;letter-spacing:-.025em;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ me.name }}</strong>
+        <span style="font-size:13px;color:#7A736C;text-wrap:pretty">{{ wallWho }}</span>
+        <span style="margin-top:3px;display:flex;gap:8px;flex-wrap:wrap">
+          <button sc-camel-on-click="{{ openComposer }}" style="min-height:36px;padding:0 14px;border:1px solid #EC873A;border-radius:11px;background:#EC873A;color:#fff;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:650;box-shadow:0 6px 16px -8px rgba(206,107,31,.6);transition:background .16s" style-hover="background:#DE7A2A"><svg width="14" height="14"><use href="#i-mega"></use></svg>Write a shout out</button>
+          <button sc-camel-on-click="{{ openHelp }}" style="min-height:36px;padding:0 13px;border:1px solid #E7E1DB;border-radius:11px;background:#fff;color:#6E665F;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;transition:border-color .16s,color .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F"><svg width="14" height="14"><use href="#i-help"></use></svg>How the wall works</button>
+        </span>
+      </span>
+    </div>
+    <div style="flex:1 1 560px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(146px,1fr))">
+      <sc-for list="{{ wallMetrics }}" as="m" hint-placeholder-count="5">
+        <button sc-camel-on-click="{{ m.open }}" title="{{ m.title }}" style="min-width:0;padding:20px 16px;border:0;border-left:1px solid #F0EBE6;background:transparent;display:flex;flex-direction:column;gap:7px;text-align:left;transition:background .16s" style-hover="background:#FFFCF9">
+          <span style="display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#A79E95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+            <sc-if value="{{ m.live }}" hint-placeholder-val="{{ false }}"><i style="width:7px;height:7px;border-radius:999px;background:#1F9B5D;animation:breathe 2.2s ease-in-out infinite;flex:0 0 auto"></i></sc-if>
             {{ m.title }}
           </span>
-          <strong style="font-size:{{ m.size }};line-height:1.05;letter-spacing:-.03em;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;max-width:100%">{{ m.value }}</strong>
-          <span style="margin-top:auto;font-size:12px;line-height:1.35;color:{{ m.noteColor }}">{{ m.note }}</span>
+          <strong style="font-size:{{ m.size }};line-height:1.1;letter-spacing:-.028em;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;max-width:100%">{{ m.value }}</strong>
+          <span style="font-size:12.5px;line-height:1.4;color:{{ m.noteColor }};text-wrap:pretty">{{ m.note }}</span>
           <sc-if value="{{ m.bar }}" hint-placeholder-val="{{ false }}">
-            <span style="width:100%;display:flex;flex-direction:column;gap:6px">
-              <span style="width:100%;height:6px;border-radius:999px;background:#F3EFEB;overflow:hidden;display:block">
+            <span style="width:100%;display:flex;flex-direction:column;gap:5px">
+              <span style="width:100%;height:5px;border-radius:999px;background:#F3EFEB;overflow:hidden;display:block">
                 <span style="display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#F0954F,#CE6B1F);width:{{ m.bar.pct }};transition:width .22s cubic-bezier(.32,.72,0,1)"></span>
               </span>
               <span style="font-size:12px;font-weight:650;color:#B4600F">{{ m.bar.label }}</span>
             </span>
           </sc-if>
-        </span>
-        <sc-if value="{{ m.icon }}" hint-placeholder-val="{{ false }}"><span style="align-self:flex-end;color:#F1CBA9;flex:0 0 auto"><svg width="38" height="38"><use href="#{{ m.icon }}"></use></svg></span></sc-if>
-      </button>
-    </sc-for>
-  </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
 
   <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
     <div style="padding:16px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
@@ -1711,13 +1724,13 @@ a:hover{color:#EC873A;text-decoration:underline}
     </div>
     <div style="padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px">
       <sc-for list="{{ wallFeedPreview }}" as="x" hint-placeholder-count="3">
-        <div style="min-height:76px;padding:12px 14px;border:1px solid #EFEAE5;border-radius:16px;background:#FDFCFB;display:flex;gap:11px;align-items:flex-start;min-width:0">
+        <button sc-camel-on-click="{{ x.open }}" aria-label="{{ x.openLabel }}" style="min-height:76px;padding:12px 14px;border:1px solid #EFEAE5;border-radius:16px;background:#FDFCFB;display:flex;gap:11px;align-items:flex-start;min-width:0;text-align:left;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">
           <span style="width:32px;height:32px;flex:0 0 auto;border-radius:10px;display:grid;place-items:center;color:{{ x.fg }};background:{{ x.bg }}"><svg width="16" height="16"><use href="#{{ x.icon }}"></use></svg></span>
-          <div style="min-width:0;display:flex;flex-direction:column;gap:3px">
+          <span style="min-width:0;display:flex;flex-direction:column;gap:3px">
             <strong style="font-size:13px;line-height:1.35">{{ x.title }}</strong>
             <span style="font-size:12px;color:#8A827A">{{ x.kind }} · {{ x.time }}</span>
-          </div>
-        </div>
+          </span>
+        </button>
       </sc-for>
     </div>
   </section>
@@ -7625,6 +7638,8 @@ class Component extends DCLogic {
     const lists = this.recogLists(me);
     const aboutShouts = lists.about.reduce((a,x) => a + x.comments.length, 0);
     const viewNote = this.periodText() + ' · ' + this.accountOf(me.name);
+    // MW3-05 · the identity line: what you do, where you sit, who you sit with.
+    const wallWho = me.title + ' · ' + me.pf + ' · ' + me.loc;
 
     // MW3-04 · followers, My Wall only. Automatic team follows are split from chosen ones,
     // and neither feeds the score.
@@ -7641,21 +7656,26 @@ class Component extends DCLogic {
 
     // MW3-05 · BADGE · SCORE · ENGAGEMENT · FOLLOWERS. Ranks live in the badge panel (BD-01).
     const wallMetrics = [
-      {title:bs.holds ? 'Badge you hold' : 'Badge in reach', value:bs.family, size:'21px',
+      {title:'Score', value:String(myScore), size:'30px',
+        note:(me.change >= 0 ? '+' : '') + me.change + '% on last month · the six KPIs added up',
+        noteColor:me.change >= 0 ? '#25714A' : '#A7453B', icon:'#i-activity', delay:'0ms',
+        open:() => this.openEntity('person', me.name)},
+      {title:'Rank', value:'#' + myRank, size:'30px',
+        note:'of ' + rankedPool.length + ' in ' + this.accountOf(me.name) + ' · ' + accAvg + ' is the average',
+        noteColor:'#8A827A', icon:'#i-trophy', delay:'60ms',
+        open:() => this.openEntity('person', me.name)},
+      {title:bs.holds ? 'Badge you hold' : 'Badge in reach', value:bs.family, size:'19px',
         note:bs.holds ? (bs.countLabel + ' · earned ' + bs.since) : ('none held yet · ' + bs.next.gap + ' points away'),
-        noteColor:'#8A827A', icon:'#i-trophy', delay:'0ms',
+        noteColor:'#8A827A', icon:'#i-medal', delay:'120ms',
         bar:{pct:bs.pct + '%',
           label:bs.next ? (bs.next.gap + (bs.next.gap === 1 ? ' point from ' : ' points from ') + bs.next.label) : 'All six badges held'},
         open:() => this.open('badge')},
-      {title:'Score', value:String(myScore), size:'34px',
-        note:'your six KPIs added up, ' + this.periodText().toLowerCase(),
-        noteColor:'#8A827A', icon:'#i-activity', delay:'60ms', open:() => this.openEntity('person', me.name)},
-      {title:'Engagement', value:String(myBd.engagePts), size:'34px',
+      {title:'Engagement', value:String(myBd.engagePts), size:'30px',
         note:myBd.engageShare + '% of your score · cheers, shout outs and shares feed this KPI',
-        noteColor:'#8A827A', icon:'#i-mega', delay:'120ms', live:true, open:() => this.open('engagement')},
-      {title:'Followers', value:String(allFollowers), size:'34px',
+        noteColor:'#8A827A', icon:'#i-mega', delay:'180ms', live:true, open:() => this.open('engagement')},
+      {title:'Followers', value:String(allFollowers), size:'30px',
         note:allFollowers + ' people see your recognition · ' + chosenFollowers + ' chose to follow you',
-        noteColor:'#8A827A', icon:'#i-users', delay:'180ms', open:() => this.open('followers')}
+        noteColor:'#8A827A', icon:'#i-users', delay:'240ms', open:() => this.open('followers')}
     ];
 
     // ---- radar · RR-01 the scale is stated, RR-02 three series told apart by line style ----
@@ -7982,7 +8002,7 @@ class Component extends DCLogic {
     }));
 
     return {
-      wallMetrics, radarYou:youPts.join(' '), radarAvg:avgPts.join(' '), radarPf:pfPts.join(' '),
+      wallMetrics, wallWho, radarYou:youPts.join(' '), radarAvg:avgPts.join(' '), radarPf:pfPts.join(' '),
       radarDots:dots, radarLabels:labels, radarReadout, radarTip, radarIdle:!radarTip.show,
       radarRings, radarSeries,
       radarYouOn:!off.you, radarPfOn:!off.pf, radarAccOn:!off.acc,
