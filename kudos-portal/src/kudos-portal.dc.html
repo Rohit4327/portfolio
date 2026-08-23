@@ -513,17 +513,16 @@ a:hover{color:#EC873A;text-decoration:underline}
 </div>
 
 <sc-if value="{{ showIntro }}" hint-placeholder-val="{{ true }}">
-<div style="position:relative;z-index:60;padding:20px 24px 0">
-  <section class="om-sec" style="position:relative;border:1px solid #F0E3D6;border-radius:22px;background:linear-gradient(114deg,#FFF8F1 0%,#FFFDFB 46%,#FBF7FF 100%);box-shadow:0 1px 2px rgba(22,19,15,.04);padding:22px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+<div style="position:relative;z-index:60;padding:22px 24px 0">
+  <section class="kp-pagehead" style="position:relative;display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid #E4DDD6">
     <sc-if value="{{ specPins }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;z-index:66;right:16px;top:-9px;padding:2px 7px;border-radius:6px;background:#B4600F;color:#fff;font:700 10px/1.7 'Space Mono',monospace;letter-spacing:.06em;pointer-events:none">SH-02 · DT-01 · DT-03</span></sc-if>
-    <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:6px">
-      <strong style="font-size:21px;font-weight:700;letter-spacing:-.025em">{{ introTitle }}</strong>
-      <span style="font-size:14px;color:#7A736C;text-wrap:pretty">{{ introStrap }}</span>
+    <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:7px">
+      <h1 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1.15;text-wrap:balance">{{ headTitle }}</h1>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:#6E665F;text-wrap:pretty;max-width:66ch">{{ headSummary }}</p>
       <sc-if value="{{ showCompare }}" hint-placeholder-val="{{ true }}">
-        <span style="margin-top:2px;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:#6E665F">
-          <span style="width:7px;height:7px;border-radius:999px;background:#EC873A;flex:0 0 auto"></span>
-          <span>Comparing <strong style="font-weight:700;color:#3A342E;font-variant-numeric:tabular-nums">{{ grainCount }}</strong> {{ grainNounLabel }} {{ grainWhere }}<sc-if value="{{ grainAcc }}" hint-placeholder-val="{{ false }}"> <strong style="font-weight:700;color:#3A342E">{{ grainAcc }}</strong></sc-if>, {{ grainPeriod }}</span>
-        </span>
+        <button sc-camel-on-click="{{ openGrain }}" style="align-self:flex-start;margin-top:1px;min-height:32px;padding:0 11px 0 9px;border:1px solid #E7E1DB;border-radius:9px;background:#fff;color:#6E665F;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;transition:border-color .16s,color .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F">
+          <svg width="14" height="14"><use href="#i-swap"></use></svg>Comparing <strong style="font-weight:700;color:#3A342E;font-variant-numeric:tabular-nums">{{ grainCount }}</strong> {{ grainNounLabel }} · change
+        </button>
       </sc-if>
     </div>
     <!-- UI-1 · Account, Program, Location and Time Frame are ONE cluster, floated right,
@@ -1013,23 +1012,47 @@ a:hover{color:#EC873A;text-decoration:underline}
     </section>
   </sc-if>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px">
-    <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="5">
-      <button class="om-lift" sc-camel-on-click="{{ m.open }}" style="position:relative;min-height:136px;padding:20px;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;align-items:stretch;justify-content:space-between;gap:10px;text-align:left;overflow:hidden;transition:border-color .2s,box-shadow .2s,transform .2s;animation:rise .5s ease-out both;animation-delay:{{ m.delay }}" style-hover="border-color:#EFC9A8;box-shadow:0 14px 30px -14px rgba(116,69,31,.3);transform:translateY(-2px)">
-        <span style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:10px">
-          <span style="min-height:18px;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:#7A736C;white-space:nowrap">
-            <sc-if value="{{ m.live }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:999px;background:#1F9B5D;animation:breathe 2.2s ease-in-out infinite"></span></sc-if>
-            {{ m.title }}
-          </span>
-          <strong style="font-size:34px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums">{{ m.value }}</strong>
-          <span style="align-self:stretch;margin-top:auto;font-size:12px;line-height:1.4;color:{{ m.noteColor }};text-wrap:pretty">{{ m.note }}</span>
+  <!-- SC-01 · The executive snapshot. One number carries the state of the
+       account; the three signals beside it say what moved, how much recognition
+       is flowing and how big the population is. Four equal tiles said none of
+       that, because nothing was more important than anything else. -->
+  <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;flex-wrap:wrap">
+    <button class="kp-snap-main" sc-camel-on-click="{{ snap.open }}" style="flex:1 1 380px;min-width:0;padding:20px 24px;border:0;border-right:1px solid #F0EBE6;background:transparent;display:flex;flex-direction:column;gap:12px;text-align:left;border-radius:19px 0 0 19px;transition:background .16s" style-hover="background:#FFFCF9">
+      <span style="display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A79E95">
+        {{ snap.label }}
+        <span style="display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border-radius:7px;background:#FFF2E7;color:#B4600F;font-size:12px;font-weight:650;letter-spacing:0;text-transform:none"><svg width="12" height="12"><use href="#i-info"></use></svg>How is this built?</span>
+      </span>
+      <span style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+        <strong style="font-size:46px;font-weight:700;line-height:1;letter-spacing:-.035em;font-variant-numeric:tabular-nums">{{ snap.score }}</strong>
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:650;color:{{ snap.deltaFg }}">
+          <svg width="14" height="14"><use href="#{{ snap.deltaIcon }}"></use></svg>{{ snap.delta }}
         </span>
-        <sc-if value="{{ m.icon }}" hint-placeholder-val="{{ false }}"><span style="align-self:flex-end;color:#F1CBA9;flex:0 0 auto"><svg width="40" height="40"><use href="#{{ m.icon }}"></use></svg></span></sc-if>
-        <sc-if value="{{ m.hint }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:13px;right:13px;display:inline-flex;align-items:center;gap:5px;padding:0 9px;height:24px;border-radius:8px;background:#FFF2E7;color:#B4600F;font-size:12.5px;font-weight:650;white-space:nowrap"><svg width="12" height="12"><use href="#i-info"></use></svg>{{ m.hint }}</span></sc-if>
-        <span style="position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:10px;display:grid;place-items:center;color:#CE6B1F;background:#FFF2E7;opacity:0;transition:opacity .2s"><svg width="14" height="14"><use href="#i-arr-r"></use></svg></span>
-      </button>
-    </sc-for>
-  </div>
+      </span>
+      <span style="font-size:13px;line-height:1.45;color:#7A736C;text-wrap:pretty">{{ snap.note }}</span>
+      <span style="margin-top:2px;display:flex;flex-direction:column;gap:5px">
+        <svg viewBox="0 0 300 58" preserveAspectRatio="none" role="img" aria-label="{{ snap.sparkAria }}" style="width:100%;height:58px;display:block;overflow:visible">
+          <polyline points="{{ snap.sparkArea }}" fill="{{ snap.sparkSoft }}" stroke="none"></polyline>
+          <polyline class="om-draw" points="{{ snap.sparkLine }}" fill="none" stroke="{{ snap.sparkFg }}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></polyline>
+          <circle cx="{{ snap.sparkX }}" cy="{{ snap.sparkY }}" r="3.2" fill="{{ snap.sparkFg }}" vector-effect="non-scaling-stroke"></circle>
+        </svg>
+        <span style="display:flex;justify-content:space-between;font-size:12px;color:#A79E95;font-variant-numeric:tabular-nums">
+          <span>{{ snap.sparkFrom }}</span><span>{{ snap.sparkTo }}</span>
+        </span>
+      </span>
+    </button>
+    <div style="flex:1 1 400px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+      <sc-for list="{{ snap.signals }}" as="g" hint-placeholder-count="3">
+        <button sc-camel-on-click="{{ g.open }}" style="min-width:0;padding:20px 18px;border:0;border-left:1px solid #F0EBE6;background:transparent;display:flex;flex-direction:column;gap:8px;text-align:left;transition:background .16s" style-hover="background:#FFFCF9">
+          <span style="display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A79E95">
+            <sc-if value="{{ g.live }}" hint-placeholder-val="{{ false }}"><i style="width:7px;height:7px;border-radius:999px;background:#1F9B5D;animation:breathe 2.2s ease-in-out infinite;flex:0 0 auto"></i></sc-if>
+            {{ g.label }}
+          </span>
+          <strong style="font-size:28px;font-weight:700;line-height:1;letter-spacing:-.028em;color:{{ g.fg }};font-variant-numeric:tabular-nums">{{ g.value }}</strong>
+          <span style="font-size:12.5px;line-height:1.45;color:#8A827A;text-wrap:pretty">{{ g.note }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
 
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
     <div style="flex:0 1 calc(55% - 10px);min-width:min(100%,560px);display:flex;flex-direction:column;gap:20px">
@@ -6831,6 +6854,53 @@ class Component extends DCLogic {
     const recipientN = new Set(cheeredPosts.map(f => f.to)).size;
     const cheers = this.scopedFeed().reduce((a,f) => a + this.cheerCount(f), 0);
     const momentum = ranked.length ? Math.round(ranked.reduce((a,p) => a + p.change, 0) / ranked.length) : 0;
+    // SC-01 · the snapshot. A score is the six KPIs added up (SM-01), so the
+    // twelve-month shape comes from the KPI series themselves, anchored to the
+    // average the population actually holds today rather than invented.
+    const snapTotals = MONTHS.map((_, m) => KPIS.reduce((a, k) => a + k.series[m], 0));
+    const snapAnchor = snapTotals[snapTotals.length - 1] || 1;
+    const snapTrend = snapTotals.map(t => Math.round(avgScore * t / snapAnchor));
+    const snapLo = Math.min.apply(null, snapTrend), snapHi = Math.max.apply(null, snapTrend);
+    const snapSpan = Math.max(1, snapHi - snapLo);
+    const snapX = i => (i * (300 / Math.max(1, snapTrend.length - 1))).toFixed(1);
+    const snapY = v => (52 - ((v - snapLo) / snapSpan) * 46).toFixed(1);
+    const snapPts = snapTrend.map((v, i) => snapX(i) + ',' + snapY(v));
+    const snapUp = snapTrend[snapTrend.length - 1] >= snapTrend[0];
+    // When nothing is filtered the population IS everything reachable, so the
+    // comparison is against itself. Say that, rather than printing "+0".
+    const snapGap = avgScore - accPfAvg;
+    const snapWhole = ranked.length === reachPf.length;
+    const snap = {
+      label:'Average score', score:String(avgScore),
+      delta:snapWhole ? 'everything you can reach'
+        : (snapGap === 0 ? 'level with the reachable average'
+          : (snapGap > 0 ? '+' : '') + snapGap + ' vs the reachable average'),
+      deltaFg:snapWhole || snapGap === 0 ? '#8A827A' : (snapGap > 0 ? '#25714A' : '#A7453B'),
+      deltaIcon:snapWhole || snapGap === 0 ? 'i-target' : (snapGap > 0 ? 'i-arr-u' : 'i-arr-d'),
+      note:'Across ' + ranked.length + ' ' + grainNoun + ', ' + this.periodText().toLowerCase() + '.'
+        + (snapWhole ? '' : ' The ' + reachPf.length + ' programs you can reach average ' + accPfAvg + '.'),
+      sparkLine:snapPts.join(' '),
+      sparkArea:('0,58 ' + snapPts.join(' ') + ' 300,58'),
+      sparkFg:snapUp ? '#25714A' : '#A7453B', sparkSoft:snapUp ? 'rgba(37,113,74,.09)' : 'rgba(167,69,59,.09)',
+      sparkX:snapX(snapTrend.length - 1), sparkY:snapY(snapTrend[snapTrend.length - 1]),
+      sparkFrom:MONTHS[0] + ' · ' + snapTrend[0], sparkTo:MONTHS[MONTHS.length - 1] + ' · ' + snapTrend[snapTrend.length - 1],
+      sparkAria:'Average score over twelve months, ' + MONTHS[0] + ' ' + snapTrend[0] + ' to '
+        + MONTHS[MONTHS.length - 1] + ' ' + snapTrend[snapTrend.length - 1] + '. Low ' + snapLo + ', high ' + snapHi + '.',
+      open:() => this.drill('scoreModel'),
+      signals:[
+        {label:'Momentum', value:'+' + momentum + '%', fg:'#25714A',
+         note:'change on last month, across ' + ranked.length + ' ' + grainNoun,
+         open:() => this.openEntity('metric','momentum')},
+        {label:'Cheers posted', value:String(cheers), fg:'#16130F', live:true,
+         note:'to ' + recipientN + (recipientN === 1 ? ' person' : ' people') + ', ' + this.periodText().toLowerCase(),
+         open:() => this.openEntity('metric','cheers')},
+        {label:grainNoun.charAt(0).toUpperCase() + grainNoun.slice(1) + ' in scope', value:String(ranked.length), fg:'#16130F',
+         note:ranked.reduce((a,p) => a + (p.people || 0), 0) + ' people · '
+           + ranked.reduce((a,p) => a + (p.teams || 0), 0) + ' teams',
+         open:() => this.openEntity('metric','portfolios')}
+      ]
+    };
+
     const metrics = [
       {title:grainNoun.charAt(0).toUpperCase() + grainNoun.slice(1) + ' matching your filters', value:String(ranked.length),
         note:ranked.reduce((a,p) => a + (p.people || 0), 0) + ' people · ' + ranked.reduce((a,p) => a + (p.teams || 0), 0) + ' teams', noteColor:'#8A827A', icon:'#i-layers', delay:'0ms', open:() => this.openEntity('metric','portfolios')},
@@ -7166,6 +7236,25 @@ class Component extends DCLogic {
 
       // SH-02 · intro card, and the grain sentence DT-01 resolves from access scope
       introTitle:prod.title, introStrap:prod.strap,
+      // SH-02 · the page header names the scope the viewer is standing in and
+      // the population behind every number below it. Outside Kudos Portal the
+      // registry entry still supplies the title.
+      headTitle:isWof
+        ? (s.module === 'mywall' ? me.name
+            : (this.programsIn().length === 1
+                ? this.programsIn()[0]
+                : (s.location !== 'All locations'
+                    ? s.location
+                    : this.accountsLabel().replace(/^all /, 'All '))))
+        : prod.title,
+      headSummary:isWof
+        ? (s.module === 'mywall'
+            ? me.title + ' · ' + me.pf + ' · ' + me.loc
+            : grain.count + ' ' + grain.noun
+              + (grain.acc && grain.acc !== this.accountsLabel() ? ' ' + grain.where + ' ' + grain.acc : '')
+              + (s.location !== 'All locations' ? ' present in ' + s.location : '')
+              + ', ' + grain.period + '. A score is the six KPIs added up.')
+        : prod.strap,
       grainCount:grain.count, grainNounLabel:grain.noun, grainWhere:grain.where,
       grainAcc:grain.acc, grainPeriod:grain.period,
       openGrain:() => this.open('grain'),
@@ -7243,7 +7332,7 @@ class Component extends DCLogic {
         {icon:'#i-user', title:'See my wall', desc:'Where you start from, and what moves it', act:() => this.setState({module:'mywall'})}
       ],
       dismissOnboard:() => this.setState({onboardDone:true}),
-      metrics, podium, rows, rowCols, rowHead, standScopes,
+      metrics, snap, podium, rows, rowCols, rowHead, standScopes,
       canCompareAccounts:this.canCompareAccounts(),
       segAc:this.pillOn(this.standView() === 'account'),
       segPf:this.pillOn(this.standView() === 'portfolio'), segPp:this.pillOn(this.standView() === 'people'),
