@@ -59,6 +59,41 @@ One word per object, per the model's own rules:
 * Scene → Template → Playlist → Schedule → Display is the object chain, and
   each of the first three reads as its own kind of thing in the library.
 
+## The system, in short
+
+**One band for readings.** Showcase, My Wall and Admin's overview all use
+`.kp-snap`: label, figure, note, and a measure that closes the cell. Every
+cell in a band shares a top edge and a bottom edge, so no cell runs tall
+beside a half-empty neighbour.
+
+**One panel header.** `.kp-sec-head` carries a title, its one-line subtitle,
+and whatever control changes what the panel shows — on the same line. A
+control that drops to its own row reads as a second heading.
+
+**One table.** Both operational tables are a CSS grid with ARIA roles (a real
+`<table>` cannot hold the template's own elements), a sticky header, one row
+menu, and column-priority classes `.kp-p1`–`.kp-p4` that drop columns in the
+order a reader would give them up.
+
+**One comparison.** For "how much against what", ranked horizontal bars on a
+shared zero-based scale with a tick for the comparison series. Length is the
+measure; hue is never a second one.
+
+**Four drawer widths**, chosen by what the drawer holds: 460 a list or a short
+set of controls, 640 a form or prose read straight through, 860 a record with
+sections, 1120 a record carrying a preview, a log or a matrix.
+
+**One field.** A section of fields is one card whose rows are separated by
+hairlines. Two columns only when the fields pair evenly and are the same
+compact kind. A toggle is the row itself and states its own name; hints sit
+under the name they qualify. The drawer template and the modal template each
+hold a copy of this markup — change both.
+
+**Chart labels are HTML, not SVG text.** The template runtime wraps
+interpolated content in a `span`, and a `span` inside an SVG `text` node
+renders nothing. Any label that comes from a value belongs in an absolutely
+positioned element over the chart, keyed to a percentage of the chart box.
+
 ## Verification
 
 `Kudos_Portal.html` is checked headlessly on every change:
@@ -74,3 +109,7 @@ One word per object, per the model's own rules:
   match it exactly. (A pixel comparison of the strip while the page is
   scrolled can differ: it carries a `backdrop-filter`, so different content
   behind it blurs through, which is the component working as designed.)
+* a visual-craft pass measures what a flow test cannot: dead space inside a
+  framed box, siblings on one line whose content tops disagree, a container
+  the template fills from a list standing empty, and a chart with no viewBox
+  or a line with no points.
