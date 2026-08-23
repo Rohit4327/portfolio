@@ -162,11 +162,14 @@ a:hover{color:#EC873A;text-decoration:underline}
 @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @keyframes drawIn{from{stroke-dashoffset:1400}to{stroke-dashoffset:0}}
 @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-/* UI-3 · MOTION · one owner. The Motion preference decides, and it wins over the OS
-   hint when it is explicitly on, because a viewer who turned it on asked for it. */
+/* UI-3 · MOTION · one owner, three states. "auto" is the default and follows
+   the operating system, so a viewer who asked for reduced motion there gets it
+   without opening Preferences. Turning the switch is an explicit choice and
+   wins over the hint in both directions. */
 [data-motion="off"] *,[data-motion="off"] *::before,[data-motion="off"] *::after{animation:none !important;transition:none !important}
 @media (prefers-reduced-motion:reduce){
-  [data-motion="off"] *,[data-motion="off"] *::before,[data-motion="off"] *::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  [data-motion="auto"] *,[data-motion="auto"] *::before,[data-motion="auto"] *::after,
+  [data-motion="off"] *,[data-motion="off"] *::before,[data-motion="off"] *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 /* sections settle in, lists stagger, charts draw, panels slide */
 .om-sec{animation:riseIn .48s cubic-bezier(.2,.8,.2,1) both}
@@ -331,8 +334,8 @@ a:hover{color:#EC873A;text-decoration:underline}
 /* Scrollable table shells never push the page sideways. */
 .kp-scroll-x{overflow-x:auto;overflow-y:visible}
 @media (max-width:860px){.kp-scroll-x{overflow-x:visible}}
-[data-motion="on"] .om-sec:nth-of-type(2){animation-delay:.06s}
-[data-motion="on"] .om-sec:nth-of-type(3){animation-delay:.12s}
+[data-motion="on"] .om-sec:nth-of-type(2),[data-motion="auto"] .om-sec:nth-of-type(2){animation-delay:.06s}
+[data-motion="on"] .om-sec:nth-of-type(3),[data-motion="auto"] .om-sec:nth-of-type(3){animation-delay:.12s}
 </style>
 <!-- ══ VD-02 · SECTION GROUND PALETTE ══════════════════════════════════════
      Two grounds, no more. Which one a section sits on says what it is.
@@ -427,7 +430,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 <symbol id="i-flag" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4h12l-2.5 4.5L18 13H6"></path></symbol>
 </defs></svg>
 
-<div data-motion="{{ motionMode }}" style="min-height:100vh;background:#F1F1F1;padding-left:{{ shellPad }};padding-top:76px;transition:padding-left .22s cubic-bezier(.32,.72,0,1)">
+<div id="kp-app" data-motion="{{ motionMode }}" style="min-height:100vh;background:#F1F1F1;padding-left:{{ shellPad }};padding-top:76px;transition:padding-left .22s cubic-bezier(.32,.72,0,1)">
 
 <header aria-label="MutantX" style="position:fixed;left:0;right:0;top:0;z-index:90;height:76px;display:flex;align-items:center;gap:10px;background:#fff;border-bottom:1px solid #EBE5DF">
   <sc-if value="{{ specPins }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;z-index:66;left:96px;top:6px;padding:2px 7px;border-radius:6px;background:#B4600F;color:#fff;font:700 10px/1.7 'Space Mono',monospace;letter-spacing:.06em;pointer-events:none">SH-01</span></sc-if>
@@ -489,7 +492,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         <span style="height:28px;padding:0 15px;display:flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#A79E95;white-space:nowrap;opacity:{{ g.op }};transition:opacity .18s">{{ g.head }}</span>
       </sc-if>
       <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="4">
-        <button title="{{ r.label }}" aria-label="{{ r.label }}" sc-camel-on-click="{{ r.go }}" style="width:100%;height:48px;padding:0 12px 0 19px;border:0;border-radius:14px;display:flex;align-items:center;gap:14px;background:{{ r.bg }};color:{{ r.fg }};text-align:left;transition:background .16s,color .16s" style-hover="background:#FFF9F4;color:#CE6B1F">
+        <button title="{{ r.label }}" aria-label="{{ r.label }}" aria-current="{{ r.current }}" sc-camel-on-click="{{ r.go }}" style="width:100%;height:48px;padding:0 12px 0 19px;border:0;border-radius:14px;display:flex;align-items:center;gap:14px;background:{{ r.bg }};color:{{ r.fg }};text-align:left;transition:background .16s,color .16s" style-hover="background:#FFF9F4;color:#CE6B1F">
           <svg width="25" height="25" style="flex:0 0 auto"><use href="#{{ r.icon }}"></use></svg>
           <span style="font-size:13.5px;font-weight:{{ r.fw }};white-space:nowrap;opacity:{{ r.op }};transition:opacity .18s">{{ r.label }}</span>
         </button>
@@ -509,7 +512,7 @@ a:hover{color:#EC873A;text-decoration:underline}
   </sc-if>
   <div style="display:flex;align-items:stretch;border:1px solid #EAE4DE;border-radius:12px;background:#fff;overflow:hidden">
     <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
-      <button sc-camel-on-click="{{ t.go }}" style="min-width:168px;height:46px;padding:0 22px;border:0;border-radius:{{ t.rad }};display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:14px;transition:background .2s,color .2s;background:{{ t.bg }};color:{{ t.fg }};font-weight:{{ t.fw }};border-left:{{ t.div }};box-shadow:{{ t.sh }}">
+      <button sc-camel-on-click="{{ t.go }}" aria-current="{{ t.current }}" style="min-width:168px;height:46px;padding:0 22px;border:0;border-radius:{{ t.rad }};display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:14px;transition:background .2s,color .2s;background:{{ t.bg }};color:{{ t.fg }};font-weight:{{ t.fw }};border-left:{{ t.div }};box-shadow:{{ t.sh }}">
         <svg width="17" height="17"><use href="#{{ t.icon }}"></use></svg>{{ t.label }}
       </button>
     </sc-for>
@@ -542,7 +545,7 @@ a:hover{color:#EC873A;text-decoration:underline}
                   <svg width="15" height="15" style="color:#A79E95;flex:0 0 auto"><use href="#i-chev-d"></use></svg>
                 </button>
                 <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
-                  <div style="position:absolute;z-index:90;top:68px;left:0;width:max-content;min-width:max(100%,268px);max-width:360px;padding:8px;border:1px solid #EBE5DF;border-radius:16px;background:#fff;box-shadow:0 20px 50px -12px rgba(22,19,15,.24);animation:pop .16s ease-out">
+                  <div data-pop-list style="position:absolute;z-index:90;top:68px;left:0;width:max-content;min-width:max(100%,268px);max-width:360px;padding:8px;border:1px solid #EBE5DF;border-radius:16px;background:#fff;box-shadow:0 20px 50px -12px rgba(22,19,15,.24);animation:pop .16s ease-out">
                     <sc-if value="{{ f.listOpen }}" hint-placeholder-val="{{ true }}">
                     <sc-if value="{{ f.searchable }}" hint-placeholder-val="{{ false }}">
                       <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;margin-bottom:6px;border:1px solid #EAE4DE;border-radius:10px;background:#FAF8F6" style-focus-within="border-color:#EC873A">
@@ -681,7 +684,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-chev-d"></use></svg>
         </button>
         <sc-if value="{{ sp.accOpen }}" hint-placeholder-val="{{ false }}">
-          <div style="position:absolute;z-index:82;top:48px;left:0;min-width:max(100%,286px);padding:8px;border:1px solid #EBE5DF;border-radius:14px;background:#fff;box-shadow:0 20px 50px -12px rgba(22,19,15,.24);animation:pop .16s ease-out">
+          <div data-pop-list style="position:absolute;z-index:82;top:48px;left:0;min-width:max(100%,286px);padding:8px;border:1px solid #EBE5DF;border-radius:14px;background:#fff;box-shadow:0 20px 50px -12px rgba(22,19,15,.24);animation:pop .16s ease-out">
             <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;margin-bottom:6px;border:1px solid #EAE4DE;border-radius:10px;background:#FAF8F6" style-focus-within="border-color:#EC873A">
               <svg width="15" height="15" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
               <input value="{{ sp.accQuery }}" sc-camel-on-change="{{ sp.accSetQuery }}" placeholder="Search accounts" autofocus="{{ true }}" style="flex:1;min-width:0;height:100%;border:0;background:transparent;font-size:13px;outline:0">
@@ -713,7 +716,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-chev-d"></use></svg>
         </button>
         <sc-if value="{{ sp.progOpen }}" hint-placeholder-val="{{ false }}">
-          <div style="position:absolute;z-index:80;top:48px;left:0;min-width:max(100%,264px);max-height:300px;overflow:auto;padding:8px;border:1px solid #EBE5DF;border-radius:14px;background:#fff;box-shadow:0 20px 50px -12px rgba(22,19,15,.24);animation:pop .16s ease-out">
+          <div data-pop-list style="position:absolute;z-index:80;top:48px;left:0;min-width:max(100%,264px);max-height:300px;overflow:auto;padding:8px;border:1px solid #EBE5DF;border-radius:14px;background:#fff;box-shadow:0 20px 50px -12px rgba(22,19,15,.24);animation:pop .16s ease-out">
             <sc-for list="{{ sp.progOptions }}" as="o" hint-placeholder-count="4">
               <sc-if value="{{ o.isHead }}" hint-placeholder-val="{{ false }}">
                 <span style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:10px 10px 4px;font-size:12px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:#B4600F">{{ o.label }}<small style="font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:#B9AFA5">{{ o.meta }}</small></span>
@@ -2103,7 +2106,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 
   <div style="position:relative;display:flex;align-items:stretch;gap:2px;flex-wrap:wrap;border-bottom:1px solid #EBE5DF">
     <sc-for list="{{ adminTabs }}" as="t" hint-placeholder-count="6">
-      <button sc-camel-on-click="{{ t.pick }}" style="position:relative;height:46px;padding:0 15px;border:0;background:transparent;color:{{ t.fg }};font-size:13px;font-weight:{{ t.fw }};display:inline-flex;align-items:center;gap:8px;white-space:nowrap;box-shadow:inset 0 -2px 0 0 {{ t.bar }};transition:color .18s,box-shadow .18s" style-hover="color:#CE6B1F">
+      <button sc-camel-on-click="{{ t.pick }}" aria-current="{{ t.current }}" style="position:relative;height:46px;padding:0 15px;border:0;background:transparent;color:{{ t.fg }};font-size:13px;font-weight:{{ t.fw }};display:inline-flex;align-items:center;gap:8px;white-space:nowrap;box-shadow:inset 0 -2px 0 0 {{ t.bar }};transition:color .18s,box-shadow .18s" style-hover="color:#CE6B1F">
         <svg width="15" height="15"><use href="#{{ t.icon }}"></use></svg>{{ t.label }}
         <sc-if value="{{ t.hasBadge }}" hint-placeholder-val="{{ false }}"><em style="font-style:normal;min-width:19px;height:19px;padding:0 6px;border-radius:999px;background:#EC873A;color:#fff;font-size:12.5px;font-weight:750;display:inline-grid;place-items:center">{{ t.badge }}</em></sc-if>
       </button>
@@ -2288,7 +2291,7 @@ a:hover{color:#EC873A;text-decoration:underline}
             <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto;transform:{{ dd.caret }};transition:transform .18s"><use href="#i-chev-d"></use></svg>
           </button>
           <sc-if value="{{ dd.showList }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
+            <div data-pop-list style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
               <sc-if value="{{ dd.hasSearch }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 14px;border-bottom:1px solid #F3EFEB;background:#FDFCFB">
                   <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
@@ -2399,7 +2402,7 @@ a:hover{color:#EC873A;text-decoration:underline}
                   <span data-pop style="position:relative;display:inline-flex">
                     <button class="kp-iconbtn" sc-camel-on-click="{{ d.toggleMenu }}" aria-label="More actions for {{ d.name }}" aria-expanded="{{ d.menuOpen }}" aria-haspopup="menu" title="More actions"><svg width="16" height="16"><use href="#i-dots"></use></svg></button>
                     <sc-if value="{{ d.menuOpen }}" hint-placeholder-val="{{ false }}">
-                      <div class="kp-menu" role="menu" style="top:{{ d.menuTop }};bottom:{{ d.menuBottom }}">
+                      <div class="kp-menu" role="menu" data-pop-list style="top:{{ d.menuTop }};bottom:{{ d.menuBottom }}">
                         <sc-for list="{{ d.actions }}" as="a" hint-placeholder-count="4">
                           <button class="kp-menu-item" role="menuitem" sc-camel-on-click="{{ a.act }}"><svg width="15" height="15"><use href="#{{ a.icon }}"></use></svg>{{ a.label }}</button>
                         </sc-for>
@@ -2444,7 +2447,7 @@ a:hover{color:#EC873A;text-decoration:underline}
             <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto;transform:{{ dd.caret }};transition:transform .18s"><use href="#i-chev-d"></use></svg>
           </button>
           <sc-if value="{{ dd.showList }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
+            <div data-pop-list style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
               <sc-if value="{{ dd.hasSearch }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 14px;border-bottom:1px solid #F3EFEB;background:#FDFCFB">
                   <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
@@ -2521,7 +2524,7 @@ a:hover{color:#EC873A;text-decoration:underline}
                 <span data-pop style="position:relative;justify-self:end;display:inline-flex">
                   <button class="kp-iconbtn" sc-camel-on-click="{{ r.toggleMenu }}" aria-label="More actions for {{ r.name }}" aria-expanded="{{ r.menuOpen }}" aria-haspopup="menu" title="More actions"><svg width="16" height="16"><use href="#i-dots"></use></svg></button>
                   <sc-if value="{{ r.menuOpen }}" hint-placeholder-val="{{ false }}">
-                    <div class="kp-menu" role="menu" style="top:{{ r.menuTop }};bottom:{{ r.menuBottom }}">
+                    <div class="kp-menu" role="menu" data-pop-list style="top:{{ r.menuTop }};bottom:{{ r.menuBottom }}">
                       <sc-for list="{{ r.actions }}" as="a" hint-placeholder-count="4">
                         <button class="kp-menu-item" role="menuitem" sc-camel-on-click="{{ a.act }}"><svg width="15" height="15"><use href="#{{ a.icon }}"></use></svg>{{ a.label }}</button>
                       </sc-for>
@@ -2684,7 +2687,7 @@ a:hover{color:#EC873A;text-decoration:underline}
             <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto;transform:{{ dd.caret }};transition:transform .18s"><use href="#i-chev-d"></use></svg>
           </button>
           <sc-if value="{{ dd.showList }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
+            <div data-pop-list style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
               <sc-if value="{{ dd.hasSearch }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 14px;border-bottom:1px solid #F3EFEB;background:#FDFCFB">
                   <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
@@ -3158,7 +3161,7 @@ a:hover{color:#EC873A;text-decoration:underline}
             <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto;transform:{{ dd.caret }};transition:transform .18s"><use href="#i-chev-d"></use></svg>
           </button>
           <sc-if value="{{ dd.showList }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
+            <div data-pop-list style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
               <sc-if value="{{ dd.hasSearch }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 14px;border-bottom:1px solid #F3EFEB;background:#FDFCFB">
                   <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
@@ -3290,7 +3293,7 @@ a:hover{color:#EC873A;text-decoration:underline}
             <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto;transform:{{ dd.caret }};transition:transform .18s"><use href="#i-chev-d"></use></svg>
           </button>
           <sc-if value="{{ dd.showList }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
+            <div data-pop-list style="position:absolute;z-index:60;left:0;right:0;top:{{ dd.dropTop }};bottom:{{ dd.dropBottom }};min-width:224px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
               <sc-if value="{{ dd.hasSearch }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 14px;border-bottom:1px solid #F3EFEB;background:#FDFCFB">
                   <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
@@ -3471,7 +3474,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 </sc-if>
 
 <sc-if value="{{ isDrawer }}" hint-placeholder-val="{{ false }}">
-  <aside role="dialog" aria-modal="true" style="position:fixed;z-index:210;top:0;right:0;bottom:0;width:min({{ ov.width }},96vw);background:#fff;border-left:1px solid #EBE5DF;box-shadow:-24px 0 60px -20px rgba(22,19,15,.32);display:flex;flex-direction:column;animation:slidein .26s cubic-bezier(.2,.8,.2,1)">
+  <aside role="dialog" aria-modal="true" aria-labelledby="kp-drawer-title" data-kp-dialog style="position:fixed;z-index:210;top:0;right:0;bottom:0;width:min({{ ov.width }},96vw);background:#fff;border-left:1px solid #EBE5DF;box-shadow:-24px 0 60px -20px rgba(22,19,15,.32);display:flex;flex-direction:column;animation:slidein .26s cubic-bezier(.2,.8,.2,1)">
     <div style="flex:0 0 auto;padding:16px 24px 12px;border-bottom:{{ ov.headRule }};display:flex;align-items:flex-start;gap:13px">
       <sc-if value="{{ ov.canBack }}" hint-placeholder-val="{{ false }}">
         <button sc-camel-on-click="{{ goBack }}" aria-label="Back to {{ ov.backLabel }}" title="Back to {{ ov.backLabel }}" style="flex:0 0 auto;width:32px;height:32px;margin-top:7px;padding:0;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#7A736C;display:grid;place-items:center;transition:all .16s" style-hover="border-color:#E8C6A5;background:#FFF9F4;color:#CE6B1F"><svg width="16" height="16"><use href="#i-chev-l"></use></svg></button>
@@ -3481,7 +3484,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       </sc-if>
       <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
         <sc-if value="{{ ov.eyebrow }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:750;letter-spacing:.11em;color:#CE6B1F">{{ ov.eyebrow }}</span></sc-if>
-        <h2 style="margin:0;font-size:20px;font-weight:700;letter-spacing:-.025em;text-wrap:pretty">{{ ov.title }}</h2>
+        <h2 id="kp-drawer-title" style="margin:0;font-size:20px;font-weight:700;letter-spacing:-.025em;text-wrap:pretty">{{ ov.title }}</h2>
         <sc-if value="{{ ov.sub }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:12.5px;color:#7A736C;text-wrap:pretty">{{ ov.sub }}</p></sc-if>
       </div>
       <div style="flex:0 0 auto;display:flex;align-items:center;gap:8px">
@@ -4225,7 +4228,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 </sc-if>
 
 <sc-if value="{{ pvFull }}" hint-placeholder-val="{{ false }}">
-  <div role="dialog" aria-modal="true" aria-label="Display preview" style="position:fixed;inset:0;z-index:340;background:#100C09;display:flex;flex-direction:column;animation:fadein .2s ease-out">
+  <div role="dialog" aria-modal="true" aria-label="Display preview" data-kp-dialog style="position:fixed;inset:0;z-index:340;background:#100C09;display:flex;flex-direction:column;animation:fadein .2s ease-out">
     <div style="flex:0 0 auto;padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.09);display:flex;align-items:center;gap:14px">
       <span style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.08);color:#F0954F;display:grid;place-items:center;flex:0 0 auto"><svg width="19" height="19"><use href="#{{ pv.icon }}"></use></svg></span>
       <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
@@ -4335,7 +4338,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 </sc-if>
 
 <sc-if value="{{ isModal }}" hint-placeholder-val="{{ false }}">
-  <div role="dialog" aria-modal="true" style="position:fixed;z-index:210;inset:0;display:grid;place-items:center;padding:28px;pointer-events:none">
+  <div role="dialog" aria-modal="true" aria-labelledby="kp-modal-title" data-kp-dialog style="position:fixed;z-index:210;inset:0;display:grid;place-items:center;padding:28px;pointer-events:none">
     <div style="pointer-events:auto;width:min({{ ov.width }},94vw);max-height:88vh;background:#fff;border:1px solid #EBE5DF;border-radius:22px;box-shadow:0 34px 80px -22px rgba(22,19,15,.42);display:flex;flex-direction:column;overflow:hidden;animation:pop .22s cubic-bezier(.2,.8,.2,1)">
       <div style="flex:0 0 auto;padding:22px 24px;border-bottom:1px solid #F0EBE6;display:flex;align-items:flex-start;gap:14px">
         <sc-if value="{{ ov.canBack }}" hint-placeholder-val="{{ false }}">
@@ -4346,7 +4349,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         </sc-if>
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
           <sc-if value="{{ ov.eyebrow }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:750;letter-spacing:.09em;color:#CE6B1F">{{ ov.eyebrow }}</span></sc-if>
-          <h2 style="margin:0;font-size:20px;font-weight:700;letter-spacing:-.025em;text-wrap:pretty">{{ ov.title }}</h2>
+          <h2 id="kp-modal-title" style="margin:0;font-size:20px;font-weight:700;letter-spacing:-.025em;text-wrap:pretty">{{ ov.title }}</h2>
           <sc-if value="{{ ov.sub }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:13px;color:#7A736C;text-wrap:pretty">{{ ov.sub }}</p></sc-if>
         </div>
         <button sc-camel-on-click="{{ closeOverlay }}" aria-label="Close" style="flex:0 0 auto;width:38px;height:38px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#6E665F;display:grid;place-items:center;transition:border-color .16s,color .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F"><svg width="17" height="17"><use href="#i-x"></use></svg></button>
@@ -4954,7 +4957,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 </sc-if>
 
 <sc-if value="{{ isShare }}" hint-placeholder-val="{{ false }}">
-  <div role="dialog" aria-modal="true" style="position:fixed;z-index:210;inset:0;display:grid;place-items:center;padding:24px;pointer-events:none">
+  <div role="dialog" aria-modal="true" aria-labelledby="kp-share-title" data-kp-dialog style="position:fixed;z-index:210;inset:0;display:grid;place-items:center;padding:24px;pointer-events:none">
     <div style="pointer-events:auto;width:min(980px,95vw);max-height:90vh;background:#fff;border:1px solid #EBE5DF;border-radius:22px;box-shadow:0 34px 80px -22px rgba(22,19,15,.42);display:flex;flex-direction:column;overflow:hidden;animation:pop .22s cubic-bezier(.2,.8,.2,1)">
       <div style="flex:0 0 auto;padding:18px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;gap:14px">
         <sc-if value="{{ ov.canBack }}" hint-placeholder-val="{{ false }}">
@@ -4962,7 +4965,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         </sc-if>
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
           <span style="font-size:12px;font-weight:750;letter-spacing:.09em;color:#CE6B1F">{{ ov.eyebrow }}</span>
-          <h2 style="margin:0;font-size:20px;font-weight:700;letter-spacing:-.025em">{{ ov.title }}</h2>
+          <h2 id="kp-share-title" style="margin:0;font-size:20px;font-weight:700;letter-spacing:-.025em">{{ ov.title }}</h2>
         </div>
         <button sc-camel-on-click="{{ closeOverlay }}" aria-label="Close share" style="flex:0 0 auto;width:38px;height:38px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#6E665F;display:grid;place-items:center;transition:all .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F"><svg width="17" height="17"><use href="#i-x"></use></svg></button>
       </div>
@@ -5114,7 +5117,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 </sc-if>
 
 <sc-if value="{{ isSearch }}" hint-placeholder-val="{{ false }}">
-  <div role="dialog" aria-modal="true" style="position:fixed;z-index:210;inset:0;display:flex;justify-content:center;padding:86px 24px 24px;pointer-events:none">
+  <div role="dialog" aria-modal="true" aria-label="Search everything you can reach" data-kp-dialog style="position:fixed;z-index:210;inset:0;display:flex;justify-content:center;padding:86px 24px 24px;pointer-events:none">
     <div style="position:relative;pointer-events:auto;width:min(680px,94vw);max-height:74vh;background:#fff;border:1px solid #EBE5DF;border-radius:22px;box-shadow:0 18px 44px -14px rgba(22,19,15,.22),0 2px 8px rgba(22,19,15,.06);display:flex;flex-direction:column;overflow:hidden;animation:pop .2s cubic-bezier(.2,.8,.2,1)">
       <sc-if value="{{ specPins }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;z-index:66;right:14px;top:-9px;padding:2px 7px;border-radius:6px;background:#B4600F;color:#fff;font:700 10px/1.7 'Space Mono',monospace;letter-spacing:.06em;pointer-events:none">SH-03</span></sc-if>
       <div style="flex:0 0 auto;height:64px;padding:0 20px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;gap:12px">
@@ -6002,7 +6005,7 @@ class Component extends DCLogic {
     accessTab:'people', matrixDraft:null, matrixEditing:false,
     selectedPlaylist:null, adminModal:null, adminSearch:'',
     builderScene:'clash', builderSel:null,
-    prefs:{density:'comfortable', motion:true},
+    prefs:{density:'comfortable', motion:true, motionSet:false},
     shareAudience:'team', shareAck:false, composer:{who:[], q:'', multi:false, cat:'Engagement', text:''},
     searchQuery:'',
     feedOrder:'latest', pendingFeed:[], stackOpen:{},   // FF-01 · FF-02 · FF-04
@@ -6047,6 +6050,7 @@ class Component extends DCLogic {
     this._enter = setTimeout(() => this.setState({entered:true}), 900);
   }
   componentDidUpdate(pp, ps) {
+    this.syncDialogFocus();
     // a new screen earns a fresh entrance; everything else paints settled
     if (!ps) return;
     if (ps.module !== this.state.module || ps.product !== this.state.product) {
@@ -6081,6 +6085,51 @@ class Component extends DCLogic {
         ? {profileOpen:false, openFilter:null, switcherOpen:false, devMenu:null} : null));
     };
     document.addEventListener('pointerdown', this._away, true);
+
+    // Tab is constrained to the topmost open dialog. The dialogs re-render on
+    // every state change, so the element is looked up per keystroke rather
+    // than captured once.
+    this._trap = e => {
+      if (e.key !== 'Tab') return;
+      const dialogs = document.querySelectorAll('[data-kp-dialog]');
+      const dlg = dialogs[dialogs.length - 1];
+      if (!dlg) return;
+      const items = this.focusablesIn(dlg);
+      if (!items.length) { e.preventDefault(); dlg.focus(); return; }
+      const first = items[0], last = items[items.length - 1];
+      if (!dlg.contains(document.activeElement)) { e.preventDefault(); first.focus(); return; }
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+    window.addEventListener('keydown', this._trap, true);
+
+    // ── A11Y-04 · One keyboard contract for every popover list. ────────────
+    // Down/Up walk the options, Home/End jump to the ends, and Down from the
+    // trigger steps into the list. Enter and Space are the button's own, and
+    // Escape is handled with the rest of the dismissals above.
+    this._listKeys = e => {
+      const KEYS = ['ArrowDown', 'ArrowUp', 'Home', 'End'];
+      if (KEYS.indexOf(e.key) < 0) return;
+      const from = document.activeElement;
+      if (!from || !from.closest) return;
+      const host = from.closest('[data-pop]');
+      if (!host) return;
+      const list = host.querySelector('[data-pop-list]');
+      if (!list) return;
+      const items = this.focusablesIn(list).filter(el => el.tagName !== 'INPUT');
+      if (!items.length) return;
+      e.preventDefault();
+      const at = items.indexOf(from);
+      let next;
+      if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = items.length - 1;
+      else if (at < 0) next = e.key === 'ArrowDown' ? 0 : items.length - 1;
+      else next = (at + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      items[next].focus();
+      if (items[next].scrollIntoView) items[next].scrollIntoView({block:'nearest'});
+    };
+    window.addEventListener('keydown', this._listKeys, true);
+    this.syncDialogFocus();
 
     // SH-02 · the sticky handoff. Past roughly 96px the tab bar takes a translucent
     // ground and the breadcrumb fades in at the left edge. The tabs never move.
@@ -6149,6 +6198,41 @@ class Component extends DCLogic {
     this._mt = setInterval(this._measure, 900);
   }
 
+  // Anything a keyboard can reach, in document order, skipping the hidden.
+  focusablesIn(root) {
+    const sel = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),' +
+      'textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+    return Array.prototype.filter.call(root.querySelectorAll(sel),
+      el => el.offsetWidth > 0 || el.offsetHeight > 0 || el === document.activeElement);
+  }
+  // A11Y-01 · called after every render. Opening a dialog parks the trigger so
+  // focus can be handed back to it, and hides the application behind it.
+  syncDialogFocus() {
+    if (typeof document === 'undefined') return;
+    const dialogs = document.querySelectorAll('[data-kp-dialog]');
+    const dlg = dialogs[dialogs.length - 1] || null;
+    const app = document.getElementById('kp-app');
+    if (dlg && !this._dlgOpen) {
+      this._dlgOpen = true;
+      const from = document.activeElement;
+      this._dlgReturn = from && from !== document.body ? from : null;
+      if (app) app.setAttribute('aria-hidden', 'true');
+      const items = this.focusablesIn(dlg);
+      // The close button is the last control in a drawer header, so prefer the
+      // first meaningful control and fall back to the dialog itself.
+      const target = items[0] || dlg;
+      if (!dlg.contains(document.activeElement)) {
+        if (target === dlg) dlg.setAttribute('tabindex', '-1');
+        try { target.focus({preventScroll:true}); } catch (err) { target.focus(); }
+      }
+    } else if (!dlg && this._dlgOpen) {
+      this._dlgOpen = false;
+      if (app) app.removeAttribute('aria-hidden');
+      const back = this._dlgReturn;
+      this._dlgReturn = null;
+      if (back && document.contains(back)) { try { back.focus({preventScroll:true}); } catch (err) { back.focus(); } }
+    }
+  }
   syncScrollLock() {
     const s = this.state;
     const on = !!s.overlay || !!s.calFull || !!s.builderFull || !!(s.pv || {}).full;
@@ -6168,6 +6252,10 @@ class Component extends DCLogic {
     clearTimeout(this._enter);
     window.removeEventListener('keydown', this._key);
     document.removeEventListener('pointerdown', this._away, true);
+    window.removeEventListener('keydown', this._trap, true);
+    window.removeEventListener('keydown', this._listKeys, true);
+    const app = document.getElementById('kp-app');
+    if (app) app.removeAttribute('aria-hidden');
     document.removeEventListener('mouseover', this._over, true);
     document.removeEventListener('mouseleave', this._out, true);
     window.removeEventListener('scroll', this._out, true);
@@ -7209,7 +7297,7 @@ class Component extends DCLogic {
       head:railOpen ? g.head : '', op:railOpen ? '1' : '0',
       items:g.items.map(it => {
         const known = MODULES.some(m => m.key === it.key), on = isWof ? it.key === s.product : it.key === s.product;
-        return {label:it.label, icon:it.icon, op:railOpen ? '1' : '0',
+        return {label:it.label, icon:it.icon, op:railOpen ? '1' : '0', current:on ? 'page' : 'false',
           bg:on ? '#FFF4EA' : 'transparent', fg:on ? '#B4600F' : '#8B7F73', fw:on ? '700' : '550',
           go:() => known
             ? this.setState({product:it.key, ptab:null, overlay:null, openFilter:null, profileOpen:false, switcherOpen:false})
@@ -7221,7 +7309,8 @@ class Component extends DCLogic {
           .concat(isAdmin ? [{label:'Admin', icon:'#i-shield', on:s.module === 'admin', go:() => this.setState({module:'admin', openFilter:null, profileOpen:false})}] : [])
       : prod.tabs.map(l => ({label:l, icon:'', on:(s.ptab || prod.tabs[0]) === l, go:() => this.setState({ptab:l})}));
     const tabs = tabDefs.map((d,i) => { const g = this.seg(d.on, i);
-      return {label:d.label, icon:d.icon, go:d.go, bg:g.bg, fg:g.fg, fw:g.fw, rad:g.rad, sh:g.sh, div:g.div}; });
+      return {label:d.label, icon:d.icon, go:d.go, current:d.on ? 'page' : 'false',
+        bg:g.bg, fg:g.fg, fw:g.fw, rad:g.rad, sh:g.sh, div:g.div}; });
     const activeTab = (tabDefs.find(d => d.on) || tabDefs[0]).label;
     const grain = this.grainSentence();
     const wall = s.module === 'mywall' ? (fresh ? this.freshWallVals(me) : this.wallVals(me)) : {};
@@ -7241,7 +7330,7 @@ class Component extends DCLogic {
       pvFull:pvOn, pv:pvBig, pvClose:() => this.setState({pv:null}),
       closeOverlay:() => this.close(),
       // UI-3 · the Motion preference reaches the whole app from one attribute
-      motionMode:s.prefs.motion ? 'on' : 'off',
+      motionMode:s.prefs.motionSet ? (s.prefs.motion ? 'on' : 'off') : 'auto',
       me:{name:me.name, title:me.title, initials:initials(me.name)},
       isWallFresh:isWof && s.module === 'mywall' && fresh, isWallSeasoned:isWof && s.module === 'mywall' && !fresh,
       isAdminModule:isWof && s.module === 'admin', accountName:s.account,
@@ -9313,7 +9402,12 @@ class Component extends DCLogic {
           : 'The Accounts tab in Standings always lists the ' + this.reachableAccounts().length + ' accounts you can reach. Below four it skips the podium and shows the ranked list only.'),
         this.bFields('DISPLAY', [
           this.fPills('Density', s.prefs.density, ['compact','comfortable','spacious'], v => this.setState({prefs:Object.assign({}, s.prefs, {density:v})}), {hint:'affects table row height'}),
-          this.fToggle('Motion', s.prefs.motion, s.prefs.motion ? 'Animations on' : 'Animations off', 'Charts draw in, lists stagger, panels slide', () => this.setState({prefs:Object.assign({}, s.prefs, {motion:!s.prefs.motion})}))
+          this.fToggle('Motion', s.prefs.motion,
+            s.prefs.motion ? 'Animations on' : 'Animations off',
+            s.prefs.motionSet
+              ? 'Charts draw in, lists stagger, panels slide'
+              : 'Following your system setting · switch to decide here instead',
+            () => this.setState({prefs:Object.assign({}, s.prefs, {motion:!s.prefs.motion, motionSet:true})}))
         ]),
         this.bFields('DEFAULTS', [
           this.fCombo('Landing module', {key:'prefs.module', value:[s.module === 'mywall' ? 'My Wall' : 'Showcase'], multi:false, options:['Showcase','My Wall'].map(x => ({label:x})), onChange:v => { if (v) this.setState({module:v === 'My Wall' ? 'mywall' : 'showcase'}); }}),
@@ -10806,7 +10900,7 @@ class Component extends DCLogic {
     const adminTabs = TABS.map(t => {
       const on = tab === t.k || (t.k === 'library' && (tab === 'builder' || tab === 'pleditor'));
       const badge = t.k === 'devices' ? DEVICES.filter(d => d.status === 'unclaimed').length : 0;
-      return Object.assign({label:t.label, icon:t.icon}, this.underlineOn(on), {fg:on ? ACD : '#7A736C',
+      return Object.assign({label:t.label, icon:t.icon, current:on ? 'page' : 'false'}, this.underlineOn(on), {fg:on ? ACD : '#7A736C',
         bar:on ? AC : 'transparent', badge:badge ? String(badge) : '', hasBadge:!!badge,
         pick:() => this.setState({adminTab:t.k, calSchedule:null, calDevice:null, calFull:false, builderFull:false, profileOpen:false, openFilter:null})});
     });
