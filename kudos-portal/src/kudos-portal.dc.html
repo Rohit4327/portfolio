@@ -272,7 +272,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 @media (max-width:1560px){.kp-schedgrid{--kp-cols:minmax(180px,1.5fr) 200px minmax(160px,1.1fr) 84px 156px 124px 64px}}
 @media (max-width:1380px){.kp-schedgrid{--kp-cols:minmax(180px,1.5fr) 200px minmax(160px,1.1fr) 156px 124px 64px}}
 @media (max-width:1180px){.kp-schedgrid{--kp-cols:minmax(170px,1.4fr) minmax(150px,1.1fr) 150px 118px 60px}}
-@media (max-width:960px){.kp-schedgrid{--kp-cols:minmax(150px,1.3fr) minmax(140px,1fr) 140px 60px}}
+@media (max-width:960px){.kp-schedgrid{--kp-cols:minmax(140px,1.3fr) minmax(120px,1fr) 128px 112px 56px}}
 
 /* Below tablet every table becomes a list of stacked records with visible
    field labels, rather than eight columns crushed into 320px. */
@@ -992,7 +992,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           <polygon points="{{ sc.rv.area }}" fill="url(#rvfill)"></polygon>
           <polyline points="{{ sc.rv.line }}" fill="none" stroke="#CE6B1F" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></polyline>
           <circle cx="{{ sc.rv.peakX }}" cy="{{ sc.rv.peakY }}" r="4.5" fill="#fff" stroke="#CE6B1F" stroke-width="2.4"></circle>
-          <text x="{{ sc.rv.peakTextX }}" y="{{ sc.rv.peakY }}" dy="-12" font-family="'Space Mono',monospace" font-size="10" fill="#B4600F" letter-spacing="0.06em">{{ sc.rv.peakLabel }}</text>
+          <text x="{{ sc.rv.peakTextX }}" y="{{ sc.rv.peakY }}" dy="-12" font-family="'Space Mono',monospace" font-size="12" fill="#B4600F" letter-spacing="0.06em">{{ sc.rv.peakLabel }}</text>
         </svg>
         <div style="display:flex;justify-content:space-between;padding:2px 0 12px">
           <sc-for list="{{ sc.rv.months }}" as="rm" hint-placeholder-count="12">
@@ -1788,10 +1788,10 @@ a:hover{color:#EC873A;text-decoration:underline}
               <line x1="0" y1="0" x2="-90.1" y2="52" stroke="#F3EFEB"></line>
               <line x1="0" y1="0" x2="-90.1" y2="-52" stroke="#F3EFEB"></line>
               <sc-for list="{{ radarRings }}" as="g" hint-placeholder-count="3">
-                <text x="5" y="{{ g.y }}" fill="#8A827A" font-size="10" font-weight="700" paint-order="stroke" stroke="#fff" stroke-width="3.5" stroke-linejoin="round">{{ g.label }}</text>
+                <text x="5" y="{{ g.y }}" fill="#8A827A" font-size="12" font-weight="700" paint-order="stroke" stroke="#fff" stroke-width="3.5" stroke-linejoin="round">{{ g.label }}</text>
               </sc-for>
               <circle cx="0" cy="0" r="2" fill="#C9C0B7"></circle>
-              <text x="5" y="4" fill="#A79E95" font-size="10" font-weight="700" paint-order="stroke" stroke="#fff" stroke-width="3.5" stroke-linejoin="round">0</text>
+              <text x="5" y="4" fill="#A79E95" font-size="12" font-weight="700" paint-order="stroke" stroke="#fff" stroke-width="3.5" stroke-linejoin="round">0</text>
               <sc-if value="{{ radarAccOn }}" hint-placeholder-val="{{ true }}">
                 <polygon points="{{ radarAvg }}" fill="none" stroke="#B9AFA5" stroke-width="1.8" stroke-dasharray="1.5 4"></polygon>
               </sc-if>
@@ -1914,9 +1914,10 @@ a:hover{color:#EC873A;text-decoration:underline}
             <sc-for list="{{ momChart.grid }}" as="g" hint-placeholder-count="4">
               <g>
                 <line x1="{{ g.x1 }}" y1="{{ g.y }}" x2="{{ g.x2 }}" y2="{{ g.y }}" stroke="#F0EBE6" stroke-width="1"></line>
-                <text x="8" y="{{ g.ly }}" fill="#A79E95" font-size="11" font-weight="600">{{ g.label }}</text>
+                <text x="8" y="{{ g.ly }}" fill="#8A827A" font-size="12" font-weight="600">{{ g.label }}</text>
               </g>
             </sc-for>
+            <text x="8" y="12" fill="#A79E95" font-size="12" font-weight="700" letter-spacing="0.06em">PTS</text>
             <polyline points="{{ momChart.avg }}" fill="none" stroke="#B9AFA5" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round" stroke-linecap="round"></polyline>
             <polyline class="om-draw" points="{{ momChart.you }}" fill="none" stroke="#EC873A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1400"></polyline>
             <sc-for list="{{ momChart.cols }}" as="c" hint-placeholder-count="6">
@@ -1996,7 +1997,7 @@ a:hover{color:#EC873A;text-decoration:underline}
               </span>
               <span style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
                 <strong style="font-size:15px;font-variant-numeric:tabular-nums;color:{{ r.nameFg }}">{{ r.score }}</strong>
-                <span style="font-size:12px;color:#25714A;text-align:right">{{ r.change }}</span>
+                <span style="font-size:12px;color:#25714A;text-align:right;white-space:nowrap">{{ r.change }}</span>
               </span>
               <span style="display:flex;justify-content:flex-end">
                 <sc-if value="{{ r.canShout }}" hint-placeholder-val="{{ false }}">
@@ -2841,6 +2842,7 @@ a:hover{color:#EC873A;text-decoration:underline}
   </sc-if>
 
       <sc-if value="{{ atBuilder }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ builder.inline }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
         <div style="display:flex;align-items:center;gap:13px;min-width:0">
           <button sc-camel-on-click="{{ builderBack }}" title="Back to {{ builderFromLabel }}" aria-label="Back to {{ builderFromLabel }}" style="flex:0 0 auto;width:42px;height:42px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#5E564F;display:grid;place-items:center;transition:all .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F;background:#FFF9F4"><svg width="17" height="17"><use href="#i-chev-l"></use></svg></button>
@@ -2857,6 +2859,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           <button sc-camel-on-click="{{ saveScene }}" style="height:36px;padding:0 16px;border:1px solid #EC873A;border-radius:12px;background:#EC873A;color:#fff;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:7px;box-shadow:0 6px 16px -6px rgba(206,107,31,.6)"><svg width="14" height="14"><use href="#i-save"></use></svg>Save to library</button>
         </div>
       </div>
+      </sc-if>
       <div style="display:flex;flex-direction:column;gap:12px;position:{{ builder.pos }};inset:{{ builder.inset }};z-index:{{ builder.z }};background:{{ builder.bg }};padding:{{ builder.pad }};height:{{ builder.h }};overflow:{{ builder.of }}">
         <sc-if value="{{ builder.full }}" hint-placeholder-val="{{ false }}">
           <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
@@ -7098,12 +7101,12 @@ class Component extends DCLogic {
     const base = isPeople ? rankedPeople : ranked;
     const top5 = base.slice(0,5);
     const order = [3,1,0,2,4];
-    const chips = [
-      {fg:'#6E665F',bg:'#F3EFEB',bd:'#E6DFD8',bar:'linear-gradient(180deg,#EFE9E2,#8C8377)',score:'#7A736C'},
-      {fg:'#5E564F',bg:'#EFEFEF',bd:'#DDDDDD',bar:'linear-gradient(180deg,#E9E9E9,#767676)',score:'#5E564F'},
-      {fg:'#B07600',bg:'#FFF3C9',bd:'#EFCA61',bar:'linear-gradient(180deg,#FFE39C,#D98A00)',score:'#C07C00'},
-      {fg:'#94502A',bg:'#F9D6BA',bd:'#D79A6C',bar:'linear-gradient(180deg,#F5C195,#95431B)',score:'#9C4B25'},
-      {fg:'#A45F66',bg:'#FFE2E3',bd:'#E7AFB3',bar:'linear-gradient(180deg,#FFCFD2,#AF6870)',score:'#B46A70'}
+    const RANK_RAMP = [
+      {fg:'#B4600F', bg:'#FFF0DF', bd:'#EFC9A8', bar:'#EC873A', score:'#B4600F'},
+      {fg:'#B4600F', bg:'#FFF4EA', bd:'#F3D8BC', bar:'#F0A363', score:'#C4701C'},
+      {fg:'#8A7A67', bg:'#FAF6F1', bd:'#EAE0D4', bar:'#E6BF95', score:'#7A736C'},
+      {fg:'#8A827A', bg:'#F7F4F1', bd:'#EAE4DE', bar:'#DFD3C6', score:'#8A827A'},
+      {fg:'#8A827A', bg:'#F5F2EF', bd:'#EAE4DE', bar:'#E4DBD2', score:'#8A827A'}
     ];
     const maxScore = top5.length ? this.scoreOf(top5[0]) : 1;
     const minTop = top5.length ? this.scoreOf(top5[top5.length - 1]) : 0;
@@ -7111,7 +7114,7 @@ class Component extends DCLogic {
     const podium = order.map((idx, col) => {
       const p = top5[idx];
       if (!p) return {name:'—', initials:'', score:'', rank:'', h:'40px', bar:'#F1ECE7', chipFg:'#8A827A', chipBg:'#F5F2EF', chipBd:'#EAE4DE', scoreFg:'#A79E95', delay:'0ms', open:() => {}};
-      const c = chips[col], sc = this.scoreOf(p);
+      const c = RANK_RAMP[Math.min(idx, RANK_RAMP.length - 1)], sc = this.scoreOf(p);
       return {
         name:p.name, initials:initials(p.name), score:String(sc), rank:String(idx + 1),
         h:Math.round(90 + ((sc - minTop) / topSpan) * 122) + 'px', bar:c.bar,
@@ -7158,7 +7161,7 @@ class Component extends DCLogic {
         badge:isPeople ? this.badgeState(p).label : (p.kpiLead + ' · ' + p.move),
         featured:(p.feat || 1) + 'x featured in the leaderboard',
         score:String(sc), vs:(vsAvg >= 0 ? '+' : '') + vsAvg, vsFg:vsAvg >= 0 ? '#25714A' : '#B04C40',
-        change:'+' + p.change + '% month on month',
+        change:'+' + p.change + '%',
         isTeam:isPeople && this.isTeammate(p), isMe:mine,
         follow:isPeople && !mine, following:!!s.entityFollows['person:' + p.name],
         followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
@@ -8055,7 +8058,7 @@ class Component extends DCLogic {
         name:isMe ? (p.name + ' (you)') : p.name, nameFg:isMe ? ACD : '#16130F',
         where:p.pf + ' · ' + p.loc,
         badge:pb.family, badgeSub:pb.holds ? ('earned ' + pb.since) : (pb.next.gap + ' pts from it'),
-        score:String(sc), change:'+' + p.change + '% month on month',
+        score:String(sc), change:'+' + p.change + '% MoM',
         gap:'', gapFg:'#8A827A',
         bg:isMe ? '#FFF9F4' : '#fff', mark:isMe ? '3px solid ' + AC : '3px solid transparent',
         pad:isMe ? '19px' : '22px', delay:(n * 40) + 'ms',
@@ -11680,9 +11683,9 @@ class Component extends DCLogic {
 
       // scene builder — unchanged surface, kept as designed
       builder:s.builderFull
-        ? {full:true, pos:'fixed', inset:'0', z:'160', bg:'#F3F0ED', pad:'16px', h:'100vh', of:'hidden',
+        ? {full:true, inline:false, pos:'fixed', inset:'0', z:'160', bg:'#F3F0ED', pad:'16px', h:'100vh', of:'hidden',
            colMaxH:'calc(100vh - 94px)', colOf:'auto', paletteFlex:'1 1 58%', layersFlex:'1 1 42%', wrapMode:'nowrap', rowOfX:'auto', rowOfY:'hidden'}
-        : {full:false, pos:'static', inset:'auto', z:'auto', bg:'transparent', pad:'0', h:'auto', of:'visible',
+        : {full:false, inline:true, pos:'static', inset:'auto', z:'auto', bg:'transparent', pad:'0', h:'auto', of:'visible',
            colMaxH:'none', colOf:'visible', paletteFlex:'0 1 auto', layersFlex:'1 1 auto', wrapMode:'wrap', rowOfX:'visible', rowOfY:'visible'},
       fullLabel:s.builderFull ? 'Exit full screen' : 'Full screen',
       fullIcon:s.builderFull ? '#i-x' : '#i-expand',
