@@ -1486,8 +1486,8 @@ a:hover{color:#EC873A;text-decoration:underline}
               </div>
               <p style="margin:0;font-size:14px;line-height:1.5;color:#3A342E">{{ f.text }}</p>
               <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
-                <button sc-camel-on-click="{{ f.cheer }}" style="min-height:32px;padding:0 13px;border:1px solid {{ f.cheerBd }};border-radius:12px;background:{{ f.cheerBg }};color:{{ f.cheerFg }};display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s"><svg width="13" height="13"><use href="#i-mega"></use></svg>{{ f.cheerLabel }}</button>
-                <button sc-camel-on-click="{{ f.toggleComments }}" style="min-height:32px;padding:0 13px;border:1px solid {{ f.cmBd }};border-radius:12px;background:{{ f.cmBg }};color:{{ f.cmFg }};display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s"><svg width="13" height="13"><use href="#i-mega"></use></svg>Shout out {{ f.commentCount }}</button>
+                <button sc-camel-on-click="{{ f.cheer }}" aria-pressed="{{ f.cheered }}" style="min-height:32px;padding:0 13px;border:1px solid {{ f.cheerBd }};border-radius:12px;background:{{ f.cheerBg }};color:{{ f.cheerFg }};display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s"><svg width="13" height="13"><use href="#i-mega"></use></svg>{{ f.cheerLabel }}</button>
+                <button sc-camel-on-click="{{ f.toggleComments }}" aria-expanded="{{ f.commentsOpen }}" aria-label="{{ f.threadAria }}" style="min-height:32px;padding:0 13px;border:1px solid {{ f.cmBd }};border-radius:12px;background:{{ f.cmBg }};color:{{ f.cmFg }};display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s"><svg width="13" height="13"><use href="#i-chat"></use></svg>Shout out {{ f.commentCount }}</button>
                 <button sc-camel-on-click="{{ f.share }}" style="min-height:32px;padding:0 13px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#7A736C;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F"><svg width="13" height="13"><use href="#i-share"></use></svg>Share</button>
               </div>
               <sc-if value="{{ f.commentsOpen }}" hint-placeholder-val="{{ false }}">
@@ -1523,7 +1523,12 @@ a:hover{color:#EC873A;text-decoration:underline}
             </article>
           </sc-for>
           <sc-if value="{{ feedEmpty }}" hint-placeholder-val="{{ false }}">
-            <div style="min-height:120px;padding:26px;border:1px dashed #E3DBD3;border-radius:16px;background:#FAF8F6;display:grid;place-items:center;text-align:center;color:#8A827A;font-size:13px">Nothing matches this filter yet.</div>
+            <div class="kp-empty" style="padding:30px 22px;background:#FAF8F6">
+              <span style="width:40px;height:40px;border-radius:13px;background:#F3EFEB;color:#A79E95;display:grid;place-items:center"><svg width="19" height="19"><use href="#i-mega"></use></svg></span>
+              <h3>No recognition matches this filter</h3>
+              <p>The board keeps 90 days. Nothing has landed here under these terms — which is normal for a narrow filter, not a sign anything is broken.</p>
+              <button sc-camel-on-click="{{ openComposer }}" style="min-height:40px;padding:0 16px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:13px;font-weight:650" style-hover="border-color:#EC873A;background:#FFF6EE">Write a shout out</button>
+            </div>
           </sc-if>
         </div>
       </section>
@@ -3247,7 +3252,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           </div>
           <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
             <div style="border-bottom:1px solid #F6F2EE">
-              <button sc-camel-on-click="{{ r.toggle }}" style="width:100%;padding:12px 20px;border:0;background:transparent;display:flex;align-items:center;gap:12px;text-align:left;transition:background .16s;animation:rise .3s ease-out both;animation-delay:{{ r.delay }}" style-hover="background:#FFFBF7">
+              <button sc-camel-on-click="{{ r.toggle }}" aria-expanded="{{ r.open }}" style="width:100%;padding:12px 20px;border:0;background:transparent;display:flex;align-items:center;gap:12px;text-align:left;transition:background .16s;animation:rise .3s ease-out both;animation-delay:{{ r.delay }}" style-hover="background:#FFFBF7">
                 <i style="width:28px;height:28px;border-radius:999px;background:#FCEBDC;color:#CE6B1F;display:grid;place-items:center;font-size:12.5px;font-style:normal;font-weight:700;flex:0 0 auto">{{ r.initials }}</i>
                 <sc-if value="{{ r.isAudit }}" hint-placeholder-val="{{ false }}">
                   <span style="flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:12px;color:#A79E95"><svg width="11" height="11"><use href="#i-lock"></use></svg>{{ r.id }}</span>
@@ -3366,11 +3371,11 @@ a:hover{color:#EC873A;text-decoration:underline}
           </div>
           <sc-for list="{{ accessRows }}" as="r" hint-placeholder-count="6">
             <div style="border-bottom:1px solid #F3EFEB;animation:rise .35s ease-out both;animation-delay:{{ r.delay }}">
-              <div sc-camel-on-click="{{ r.toggle }}" style="display:grid;grid-template-columns:1.4fr 1fr 1.15fr 1.1fr 100px 100px 1fr 110px;gap:12px;min-height:60px;padding:9px 20px;align-items:center;transition:background .16s" style-hover="background:#FFFBF7">
-                <span style="display:flex;align-items:center;gap:10px;min-width:0">
+              <div style="display:grid;grid-template-columns:1.4fr 1fr 1.15fr 1.1fr 100px 100px 1fr 110px;gap:12px;min-height:60px;padding:9px 20px;align-items:center;transition:background .16s" style-hover="background:#FFFBF7">
+                <button class="kp-rowlink" sc-camel-on-click="{{ r.edit }}" aria-label="Open the access record for {{ r.name }}" style="display:flex;align-items:center;gap:10px;min-width:0">
                   <i style="width:30px;height:30px;border-radius:999px;background:#FCEBDC;color:#CE6B1F;display:grid;place-items:center;font-size:12.5px;font-style:normal;font-weight:700;flex:0 0 auto">{{ r.initials }}</i>
-                  <strong style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</strong>
-                </span>
+                  <strong class="kp-cell-strong" style="font-size:13.5px">{{ r.name }}</strong>
+                </button>
                 <span style="font-size:12px;color:#5E564F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.team }}</span>
                 <span style="display:inline-flex;align-items:center;gap:5px;min-width:0;font-size:12px">
                   <sc-if value="{{ r.roleArrow }}" hint-placeholder-val="{{ false }}"><s style="text-decoration:none;color:#B5ABA1">{{ r.roleFrom }}</s><em style="font-style:normal;font-family:'Space Mono',monospace;color:#A79E95">→</em></sc-if>
@@ -3382,7 +3387,7 @@ a:hover{color:#EC873A;text-decoration:underline}
                 <span style="font-size:12px;color:#5E564F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.by }}</span>
                 <span style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
                   <em style="font-style:normal;min-height:24px;padding:0 10px;border-radius:999px;border:1px solid {{ r.statusBd }};background:{{ r.statusBg }};color:{{ r.statusFg }};font-size:12.5px;font-weight:700;display:inline-flex;align-items:center">{{ r.status }}</em>
-                  <button sc-camel-on-click="{{ r.edit }}" aria-label="Open the access record" style="width:28px;height:28px;border:1px solid #EAE4DE;border-radius:9px;background:#fff;color:#6E665F;display:grid;place-items:center"><svg width="13" height="13"><use href="#i-chev-r"></use></svg></button>
+                  <button class="kp-iconbtn" sc-camel-on-click="{{ r.toggle }}" aria-expanded="{{ r.expanded }}" aria-label="{{ r.toggleAria }}" title="{{ r.toggleAria }}"><svg width="15" height="15" style="transform:{{ r.caret }};transition:transform .18s"><use href="#i-chev-d"></use></svg></button>
                 </span>
               </div>
               <sc-if value="{{ r.open }}" hint-placeholder-val="{{ false }}">
@@ -7288,7 +7293,9 @@ class Component extends DCLogic {
         cheerLabel:cheered ? 'Cheered' : ('Cheer ' + this.cheerCount(f) + (this.inMyTeam(f.to) || f.to === me.name ? '' : ' · 1 pt')),
         capLine:this.capLine(f.to), capShort:this.capShort(f.to), capFg:this.inMyTeam(f.to) ? '#8A6512' : '#8A827A',
         cheerBd:cheered ? '#7652B3' : '#E3D9F0', cheerBg:cheered ? '#7652B3' : '#FAF8FD', cheerFg:cheered ? '#fff' : '#7652B3',
-        commentCount:String(comments.length), commentsOpen:!!s.openComments[f.id],
+        commentCount:String(comments.length), commentsOpen:!!s.openComments[f.id], cheered,
+        threadAria:(s.openComments[f.id] ? 'Hide the ' : 'Show the ') + comments.length
+          + (comments.length === 1 ? ' shout out' : ' shout outs') + ' on this moment',
         // FF-04 · the stack expands inside its own card, latest still on top
         stackOpen:!!s.stackOpen[f.id],
         comments:(s.stackOpen[f.id] ? comments.slice().reverse() : comments.slice(-3)).map(c => Object.assign({initials:initials(c.by)}, c)),
@@ -8505,6 +8512,22 @@ class Component extends DCLogic {
       bd:c.on ? AC : '#EAE4DE', bg:c.on ? '#FFF9F4' : '#fff', fg:c.on ? ACD : '#16130F'}, c))};
   }
 
+  // PROTO-01 · Spec identifiers are review annotations, not product copy. They
+  // are written into drawer eyebrows and note text at the point each surface
+  // is defined; one rule strips them everywhere unless the review gate is open.
+  stripSpecIds(v, depth) {
+    if (this.state.specPins || !v || depth > 6) return v;
+    if (typeof v === 'string') {
+      return v
+        .replace(/\s*\[[A-Z]{2,4}\d?-\d{2}(?:\s*[,·]\s*[A-Z]{2,4}\d?-\d{2})*\]/g, '')
+        .replace(/\s·\s[A-Z]{2,4}\d?-\d{2}(?:\s·\s[A-Z]{2,4}\d?-\d{2})*$/, '')
+        .replace(/^[A-Z]{2,4}\d?-\d{2}(?:\s·\s[A-Z]{2,4}\d?-\d{2})*\s·\s/, '');
+    }
+    if (Array.isArray(v)) { for (let i = 0; i < v.length; i++) v[i] = this.stripSpecIds(v[i], depth + 1); return v; }
+    if (typeof v !== 'object' || v.$$typeof || typeof v === 'function') return v;
+    for (const k in v) { if (typeof v[k] !== 'function') v[k] = this.stripSpecIds(v[k], depth + 1); }
+    return v;
+  }
   overlayVals() {
     const s = this.state, o = s.overlay;
     if (!o) return {hasOverlay:false, isDrawer:false, isModal:false, isSearch:false, ov:{}};
@@ -8531,7 +8554,7 @@ class Component extends DCLogic {
     return {hasOverlay:true, goBack:() => this.back(),
       isDrawer:drawerKinds.indexOf(o.type) > -1,
       isModal:o.type !== 'search' && o.type !== 'share' && drawerKinds.indexOf(o.type) < 0,
-      isShare:o.type === 'share', isSearch:o.type === 'search', ov};
+      isShare:o.type === 'share', isSearch:o.type === 'search', ov:this.stripSpecIds(ov, 0)};
   }
 
   ov_account(o) {
@@ -9654,8 +9677,9 @@ class Component extends DCLogic {
     const np = this.nowPlaying(d);
     const overs = this.overridesOf(d.id);
     const st = {online:{t:'good', l:'Online'}, offline:{t:'bad', l:'Offline'}}[d.status] || {t:'warn', l:'Unclaimed'};
-    return {width:'1240px', eyebrow:s.specPins ? 'DISPLAY · DEV-11' : 'DISPLAY', title:d.name, sub:d.city + ' · ' + d.spot, icon:'#i-monitor',
-      pill:st.l, ids:s.specPins ? 'DEV-05 · DEV-06 · DEV-07 · DEV-08 · DEV-09 · DEV-10' : '',
+    const pins = !!this.state.specPins;
+    return {width:'1240px', eyebrow:pins ? 'DISPLAY · DEV-11' : 'DISPLAY', title:d.name, sub:d.city + ' · ' + d.spot, icon:'#i-monitor',
+      pill:st.l, ids:pins ? 'DEV-05 · DEV-06 · DEV-07 · DEV-08 · DEV-09 · DEV-10' : '',
       // right column, 55% — the mirror. Real scene render, one orientation, no controls. [DEV-07, DEV-10]
       side:this.screenPreview({device:d, mirror:true, canFlip:false,
         note:d.status === 'offline'
@@ -11527,6 +11551,8 @@ class Component extends DCLogic {
           status:st.label, statusFg:st.fg, statusBg:st.bg, statusBd:st.bd,
           delay:(i * 35) + 'ms', open,
           history:(a.history || []).slice().reverse().map(h => ({when:h.when, what:h.what, from:h.from, to:h.to, by:h.by})),
+          expanded:open, caret:open ? 'rotate(180deg)' : 'none',
+          toggleAria:(open ? 'Hide' : 'Show') + ' the change history for ' + a.name,
           toggle:() => this.setState(st2 => ({accOpen:Object.assign({}, st2.accOpen, {[a.name]:!open})})),
           edit:() => this.open('accessPerson', {id:a.name}),
           revoke:() => this.open('revoke', {id:a.name})};
