@@ -343,6 +343,12 @@ a:hover{color:#EC873A;text-decoration:underline}
   transform-origin:left;animation:growx .7s cubic-bezier(.2,.8,.2,1) both}
 /* The wall band carries five readings beside the identity cell. */
 .kp-snap-wall{grid-template-columns:minmax(0,1.5fr) repeat(5,minmax(0,1fr))}
+/* Admin's readings have no lead cell: four equal columns, the same band. */
+.kp-snap-even{grid-template-columns:repeat(4,minmax(0,1fr))}
+/* Where a reading came from, in the type the app uses for machine facts.
+   It closes the cell, so all four share a bottom edge. */
+.kp-snap-prov{margin-top:auto;padding-top:12px;font-family:'Space Mono',monospace;
+  font-size:12px;line-height:1.35;color:var(--kp-text-3);text-wrap:pretty}
 .kp-identity{flex-direction:row;align-items:center;gap:16px;justify-content:flex-start}
 .kp-avatar-lg{width:56px;height:56px;flex:0 0 auto;border-radius:var(--kp-r-pill);
   background:linear-gradient(145deg,#F3954D,#C85B08);color:#fff;display:grid;place-items:center;
@@ -858,8 +864,8 @@ a:hover{color:#EC873A;text-decoration:underline}
     <div style="flex:0 0 auto;padding:20px 22px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
       <button sc-camel-on-click="{{ closePage }}" style="width:38px;height:38px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#7A736C;display:grid;place-items:center;flex:0 0 auto" style-hover="border-color:#E8C6A5;color:#CE6B1F"><svg width="16" height="16"><use href="#i-chev-l"></use></svg></button>
       <div style="min-width:0;flex:1 1 300px">
-        <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">{{ spTitle }}</h2>
-        <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ sp.hint }}</p>
+        <h2 class="kp-sec-title">{{ spTitle }}</h2>
+        <p class="kp-sec-sub">{{ sp.hint }}</p>
       </div>
     </div>
     <div style="flex:0 0 auto;padding:0 22px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -1038,8 +1044,8 @@ a:hover{color:#EC873A;text-decoration:underline}
 
 <sc-if value="{{ sc.pfIndexOpen }}" hint-placeholder-val="{{ false }}">
   <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-    <div style="padding:16px 20px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-      <span style="flex:1 1 220px;min-width:0"><h2 style="margin:0;font-size:16px;font-weight:700">Program index</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">Every program has a detail page. One destination, many doors.</p></span>
+    <div class="kp-sec-head">
+      <span style="flex:1 1 220px;min-width:0"><h2 class="kp-sec-title">Program index</h2><p class="kp-sec-sub">Every program has a detail page. One destination, many doors.</p></span>
       <div style="flex:1 1 220px;min-width:180px;display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border:1px solid #EAE4DE;border-radius:11px;background:#fff" style-focus-within="border-color:#EC873A;box-shadow:0 0 0 3px rgba(236,135,58,.12)">
         <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
         <input value="{{ sc.pfIndexQuery }}" sc-camel-on-change="{{ sc.setPfIndexQuery }}" placeholder="Search a program, owner or location" style="flex:1;min-width:0;height:100%;border:0;background:transparent;font-size:13px;outline:0">
@@ -1103,7 +1109,7 @@ a:hover{color:#EC873A;text-decoration:underline}
   </section>
 
   <section style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-    <div style="padding:16px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:16px;font-weight:700">What is Moving</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">All six KPIs with the month-on-month change</p></div>
+    <div class="kp-sec-head"><div style="flex:1 1 220px;min-width:0"><h2 class="kp-sec-title">What is Moving</h2><p class="kp-sec-sub">All six KPIs with the month-on-month change</p></div></div>
     <div style="padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:14px">
       <sc-for list="{{ sc.kpiStrip6 }}" as="k" hint-placeholder-count="6">
         <button sc-camel-on-click="{{ k.act }}" style="text-align:left;padding:0;border:0;background:transparent;display:flex;flex-direction:column;gap:7px">
@@ -1120,7 +1126,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:16px">
     <section style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-      <div style="padding:16px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:16px;font-weight:700">Who Was Recognised</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">Shout outs landing on this program</p></div>
+      <div class="kp-sec-head"><div style="flex:1 1 220px;min-width:0"><h2 class="kp-sec-title">Who Was Recognised</h2><p class="kp-sec-sub">Shout outs landing on this program</p></div></div>
       <sc-if value="{{ sc.hasShouts }}" hint-placeholder-val="{{ true }}">
         <sc-for list="{{ sc.shouts }}" as="sh" hint-placeholder-count="4">
           <button sc-camel-on-click="{{ sh.act }}" style="width:100%;padding:13px 20px;border:0;border-bottom:1px solid #F6F2EE;background:transparent;display:flex;gap:12px;align-items:flex-start;text-align:left;transition:background .16s;animation:rise .35s ease-out both;animation-delay:{{ sh.delay }}" style-hover="background:#FFFBF7">
@@ -1136,9 +1142,9 @@ a:hover{color:#EC873A;text-decoration:underline}
     </section>
 
     <section style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-      <div style="padding:16px 20px;border-bottom:1px solid #F0EBE6;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div class="kp-sec-head">
         <span style="min-width:0;display:flex;flex-direction:column;gap:3px">
-          <h2 style="margin:0;font-size:16px;font-weight:700">Recognition Volume</h2>
+          <h2 class="kp-sec-title">Recognition Volume</h2>
           <small style="font-family:'Space Mono',monospace;font-size:12.5px;color:#9B928A;line-height:1.5;text-wrap:pretty">{{ sc.rv.def }}</small>
         </span>
         <span style="flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;border:1px solid {{ sc.rv.src.bd }};background:{{ sc.rv.src.bg }};color:{{ sc.rv.src.fg }};font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em"><i style="width:6px;height:6px;border-radius:999px;background:{{ sc.rv.src.fg }}"></i>{{ sc.rv.src.label }}</span>
@@ -1163,15 +1169,14 @@ a:hover{color:#EC873A;text-decoration:underline}
           <polygon points="{{ sc.rv.area }}" fill="url(#rvfill)"></polygon>
           <polyline points="{{ sc.rv.line }}" fill="none" stroke="#CE6B1F" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></polyline>
           <circle cx="{{ sc.rv.peakX }}" cy="{{ sc.rv.peakY }}" r="4.5" fill="#fff" stroke="#CE6B1F" stroke-width="2.4"></circle>
-          <text x="{{ sc.rv.peakTextX }}" y="{{ sc.rv.peakY }}" dy="-12" font-family="'Space Mono',monospace" font-size="12" fill="#B4600F" letter-spacing="0.06em">{{ sc.rv.peakLabel }}</text>
         </svg>
         <div style="display:flex;justify-content:space-between;padding:2px 0 12px">
           <sc-for list="{{ sc.rv.months }}" as="rm" hint-placeholder-count="12">
-            <small style="font-family:'Space Mono',monospace;font-size:12px;color:#B5ADA5">{{ rm.label }}</small>
+            <small style="font-family:'Space Mono',monospace;font-size:12px;color:{{ rm.fg }};font-weight:{{ rm.fw }}">{{ rm.label }}</small>
           </sc-for>
         </div>
       </div>
-      <div style="padding:0 20px 16px"><small style="font-size:12px;color:#8A827A">{{ sc.rv.deltaNote }} · peak month annotated</small></div>
+      <div style="padding:0 20px 16px"><small style="font-size:12px;color:#8A827A">{{ sc.rv.deltaNote }} · peak {{ sc.rv.peakLabel }}</small></div>
     </section>
   </div>
 </sc-if>
@@ -1338,11 +1343,11 @@ a:hover{color:#EC873A;text-decoration:underline}
 
       <sc-if value="{{ showClash }}" hint-placeholder-val="{{ true }}">
       <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:20px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <div class="kp-sec-head">
           <div style="min-width:0">
             <span style="font-size:12px;font-weight:750;letter-spacing:.1em;color:#CE6B1F">TEAM BATTLE</span>
             <h2 style="margin:6px 0 0;font-size:19px;font-weight:700;letter-spacing:-.02em">Clash of the Titans</h2>
-            <p style="margin:5px 0 0;font-size:13px;color:#7A736C">Two top teams, side by side across the KPIs that matter this quarter.</p>
+            <p class="kp-sec-sub">Two top teams, side by side across the KPIs that matter this quarter.</p>
           </div>
           <button sc-camel-on-click="{{ redrawClash }}" style="height:40px;padding:0 16px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">
             <svg width="15" height="15"><use href="#i-refresh"></use></svg>Draw a new pair
@@ -1502,10 +1507,10 @@ a:hover{color:#EC873A;text-decoration:underline}
     <div style="flex:0 1 calc(45% - 10px);min-width:min(100%,420px);display:flex;flex-direction:column;gap:20px">
 
       <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:20px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:14px">
+        <div class="kp-sec-head">
           <div style="min-width:0">
-            <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">The six KPIs</h2>
-            <p style="margin:5px 0 0;font-size:13px;color:#7A736C">KPI standings · refreshed nightly</p>
+            <h2 class="kp-sec-title">The six KPIs</h2>
+            <p class="kp-sec-sub">KPI standings · refreshed nightly</p>
           </div>
           <button sc-camel-on-click="{{ openKpiExplorer }}" style="height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">See all</button>
         </div>
@@ -1606,8 +1611,8 @@ a:hover{color:#EC873A;text-decoration:underline}
         <sc-if value="{{ specPins }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;z-index:66;right:16px;top:-9px;padding:2px 7px;border-radius:6px;background:#B4600F;color:#fff;font:700 10px/1.7 'Space Mono',monospace;letter-spacing:.06em;pointer-events:none">VD-01</span></sc-if>
         <div style="padding:20px 22px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
           <div style="min-width:0">
-            <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">From the floor</h2>
-            <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ feedSub }}</p>
+            <h2 class="kp-sec-title">From the floor</h2>
+            <p class="kp-sec-sub">{{ feedSub }}</p>
           </div>
           <div style="flex:0 0 auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap">
             <sc-if value="{{ pendingLabel }}" hint-placeholder-val="{{ false }}">
@@ -1738,10 +1743,10 @@ a:hover{color:#EC873A;text-decoration:underline}
 
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
     <section style="flex:1 1 420px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:20px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <div class="kp-sec-head">
         <div>
-          <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">Start here</h2>
-          <p style="margin:5px 0 0;font-size:13px;color:#7A736C">Three things that put you on the wall</p>
+          <h2 class="kp-sec-title">Start here</h2>
+          <p class="kp-sec-sub">Three things that put you on the wall</p>
         </div>
         <span style="flex:0 0 auto;min-height:26px;padding:0 11px;border-radius:999px;background:#FFF4EA;color:#CE6B1F;display:grid;place-items:center;font-size:12px;font-weight:700">{{ fwStepsDone }}</span>
       </div>
@@ -1802,9 +1807,9 @@ a:hover{color:#EC873A;text-decoration:underline}
 
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
     <section style="flex:1 1 420px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:18px 22px;border-bottom:1px solid #F0EBE6">
-        <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">My position</h2>
-        <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ fwPositionSub }}</p>
+      <div class="kp-sec-head">
+        <h2 class="kp-sec-title">My position</h2>
+        <p class="kp-sec-sub">{{ fwPositionSub }}</p>
       </div>
       <div style="height:44px;padding:0 22px;display:grid;grid-template-columns:44px 36px 1fr 60px;align-items:center;gap:10px;background:#FAF8F6;border-bottom:1px solid #F0EBE6;color:#8A827A;font-size:12px;font-weight:700">
         <span>Rank</span><span></span><span>Person</span><span style="text-align:right">Score</span>
@@ -1834,10 +1839,10 @@ a:hover{color:#EC873A;text-decoration:underline}
     </section>
 
     <section style="flex:1.7 1 620px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:18px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+      <div class="kp-sec-head">
         <div style="min-width:0">
-          <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">Recognition around you</h2>
-          <p style="margin:5px 0 0;font-size:13px;color:#7A736C">Nothing on your wall yet — here is what Pune is celebrating</p>
+          <h2 class="kp-sec-title">Recognition around you</h2>
+          <p class="kp-sec-sub">Nothing on your wall yet — here is what Pune is celebrating</p>
         </div>
         <button sc-camel-on-click="{{ openAllRecognition }}" style="height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">See all</button>
       </div>
@@ -1975,10 +1980,10 @@ a:hover{color:#EC873A;text-decoration:underline}
     </section>
 
     <section style="flex:1 1 460px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:18px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:14px">
+      <div class="kp-sec-head">
         <div style="min-width:0">
-          <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">Featured moments</h2>
-          <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ momentsRule }}</p>
+          <h2 class="kp-sec-title">Featured moments</h2>
+          <p class="kp-sec-sub">{{ momentsRule }}</p>
         </div>
         <button sc-camel-on-click="{{ openMoments }}" style="height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">See all</button>
       </div>
@@ -2009,8 +2014,8 @@ a:hover{color:#EC873A;text-decoration:underline}
   </div>
 
   <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-    <div style="padding:20px 22px;border-bottom:1px solid #F0EBE6">
-      <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">My momentum</h2>
+    <div class="kp-sec-head">
+      <h2 class="kp-sec-title">My momentum</h2>
       <p style="margin:5px 0 0;font-size:13px;color:#7A736C;max-width:900px;text-wrap:pretty">{{ momSub }}</p>
     </div>
     <div class="om-noscroll" style="display:flex;gap:4px;padding:0 14px;overflow-x:auto;border-bottom:1px solid #F0EBE6;background:#FDFCFB">
@@ -2037,15 +2042,14 @@ a:hover{color:#EC873A;text-decoration:underline}
             </div>
           </sc-for>
         </div>
-        <div style="flex:1;min-height:232px;display:flex;flex-direction:column;gap:10px">
+        <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+          <div style="position:relative;min-width:0">
           <svg sc-camel-view-box="{{ momChart.box }}" style="display:block;width:100%;height:auto" role="img" aria-label="Your score each month against the account average for the same month">
             <sc-for list="{{ momChart.grid }}" as="g" hint-placeholder-count="4">
               <g>
                 <line x1="{{ g.x1 }}" y1="{{ g.y }}" x2="{{ g.x2 }}" y2="{{ g.y }}" stroke="#F0EBE6" stroke-width="1"></line>
-                <text x="8" y="{{ g.ly }}" fill="#8A827A" font-size="12" font-weight="600">{{ g.label }}</text>
               </g>
             </sc-for>
-            <text x="8" y="12" fill="#A79E95" font-size="12" font-weight="700" letter-spacing="0.06em">PTS</text>
             <polyline points="{{ momChart.avg }}" fill="none" stroke="#B9AFA5" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round" stroke-linecap="round"></polyline>
             <polyline class="om-draw" points="{{ momChart.you }}" fill="none" stroke="#EC873A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1400"></polyline>
             <sc-for list="{{ momChart.cols }}" as="c" hint-placeholder-count="6">
@@ -2054,10 +2058,22 @@ a:hover{color:#EC873A;text-decoration:underline}
                 <line x1="{{ c.lineX }}" y1="{{ c.lineY1 }}" x2="{{ c.lineX }}" y2="{{ c.lineY2 }}" stroke="#EFC9A8" stroke-width="1" opacity="{{ c.lineOp }}"></line>
                 <circle cx="{{ c.avgX }}" cy="{{ c.avgY }}" r="{{ c.avgR }}" fill="#fff" stroke="#B9AFA5" stroke-width="1.8"></circle>
                 <circle cx="{{ c.youX }}" cy="{{ c.youY }}" r="{{ c.youR }}" fill="#fff" stroke="#EC873A" stroke-width="2.4" style="transition:r .16s"></circle>
-                <text x="{{ c.labX }}" y="{{ c.labY }}" text-anchor="middle" font-size="12" fill="{{ c.labFg }}" font-weight="{{ c.labFw }}">{{ c.month }}</text>
               </g>
             </sc-for>
           </svg>
+          <!-- An axis label written as SVG text never renders here: the template
+               runtime wraps interpolated content in a span, and a span inside an
+               SVG text node draws nothing. Both axes were silently blank. They are
+               HTML over the chart now, which also keeps them at a readable size
+               when the chart scales. -->
+          <span style="position:absolute;left:0;top:0;font-size:12px;font-weight:700;letter-spacing:.06em;color:#A79E95">PTS</span>
+          <sc-for list="{{ momChart.grid }}" as="g" hint-placeholder-count="4">
+            <span style="position:absolute;left:0;top:{{ g.top }};transform:translateY(-50%);font-size:12px;font-weight:600;color:#8A827A;font-variant-numeric:tabular-nums;pointer-events:none">{{ g.label }}</span>
+          </sc-for>
+          <sc-for list="{{ momChart.cols }}" as="c" hint-placeholder-count="6">
+            <span style="position:absolute;left:{{ c.left }};bottom:0;transform:translateX(-50%);font-size:12px;white-space:nowrap;color:{{ c.labFg }};font-weight:{{ c.labFw }};pointer-events:none">{{ c.month }}</span>
+          </sc-for>
+          </div>
           <div style="display:flex;gap:18px;color:#8A827A;font-size:12px">
             <span style="display:inline-flex;align-items:center;gap:7px;color:#CE6B1F"><span style="width:18px;height:3px;border-radius:2px;background:#EC873A"></span>{{ momYouLabel }}</span>
             <span style="display:inline-flex;align-items:center;gap:7px"><span style="width:18px;height:0;border-top:2px dashed #B9AFA5"></span>{{ momAvgSeriesLabel }}</span>
@@ -2085,10 +2101,10 @@ a:hover{color:#EC873A;text-decoration:underline}
 
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
     <section style="flex:1 1 460px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:18px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+      <div class="kp-sec-head">
         <div style="min-width:0">
-          <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">My position</h2>
-          <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ positionSub }}</p>
+          <h2 class="kp-sec-title">My position</h2>
+          <p class="kp-sec-sub">{{ positionSub }}</p>
         </div>
         <div class="kp-segrow" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
           <sc-for list="{{ positionScopes }}" as="p" hint-placeholder-count="3">
@@ -2143,11 +2159,10 @@ a:hover{color:#EC873A;text-decoration:underline}
 
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
     <section id="mywall-feed" style="flex:1 1 460px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:20px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">
-        <div style="min-width:0">
-          <span style="font-size:12px;font-weight:700;letter-spacing:.11em;color:#A79E95">YOUR FEED</span>
-          <h2 style="margin:4px 0 0;font-size:19px;font-weight:700;letter-spacing:-.02em">What the people around you are doing</h2>
-          <p style="margin:5px 0 0;font-size:13px;color:#7A736C;text-wrap:pretty">{{ wallFeedTopSub }}</p>
+      <div class="kp-sec-head">
+        <div style="flex:1 1 240px;min-width:0">
+          <h2 class="kp-sec-title">Your feed</h2>
+          <p class="kp-sec-sub">{{ wallFeedTopSub }}</p>
         </div>
         <button sc-camel-on-click="{{ openWallFeed }}" style="flex:0 0 auto;height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;transition:all .16s" style-hover="border-color:#EC873A;background:#FFF6EE;color:#B4600F">Open the full feed</button>
       </div>
@@ -2156,8 +2171,8 @@ a:hover{color:#EC873A;text-decoration:underline}
           <button sc-camel-on-click="{{ pullWallFeed }}" style="min-height:34px;padding:0 15px;border:1px solid #EC873A;border-radius:999px;background:#fff;color:#B4600F;font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 16px -8px rgba(206,107,31,.5);animation:fadein .2s ease-out"><svg width="13" height="13"><use href="#i-arr-u"></use></svg>{{ wallFeedPendingLabel }}</button>
         </div>
       </sc-if>
-      <div style="flex:1;padding:14px 18px 18px;display:flex;flex-direction:column;gap:9px">
-        <sc-for list="{{ wallFeedTop }}" as="x" hint-placeholder-count="5">
+      <div style="flex:1;padding:14px 18px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:9px">
+        <sc-for list="{{ wallFeedTop }}" as="x" hint-placeholder-count="7">
           <div style="min-height:74px;padding:12px 14px;border:1px solid #EFEAE5;border-radius:16px;background:#fff;display:flex;gap:12px;align-items:flex-start;animation:rise .4s ease-out both;animation-delay:{{ x.delay }};transition:border-color .18s" style-hover="border-color:#EADFD4">
             <span style="width:32px;height:32px;flex:0 0 auto;border-radius:10px;display:grid;place-items:center;color:{{ x.fg }};background:{{ x.bg }}"><svg width="16" height="16"><use href="#{{ x.icon }}"></use></svg></span>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
@@ -2181,15 +2196,15 @@ a:hover{color:#EC873A;text-decoration:underline}
             <span style="max-width:340px;color:#8A827A;font-size:13px;line-height:1.5">Follow someone outside your team and their recognition lands here too.</span>
           </div>
         </sc-if>
-        <button sc-camel-on-click="{{ openWallFeed }}" style="margin-top:auto;min-height:40px;padding:0 16px;border:1px dashed #E3DBD3;border-radius:14px;background:#FAF8F6;color:#7A736C;font-size:12.5px;font-weight:650;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .16s" style-hover="border-color:#EFC9A8;color:#CE6B1F;background:#FFFBF7">See everything in your feed · {{ wallFeedCount }}<svg width="13" height="13"><use href="#i-arr-r"></use></svg></button>
+        <button sc-camel-on-click="{{ openWallFeed }}" style="min-height:40px;padding:0 16px;border:1px dashed #E3DBD3;border-radius:14px;background:#FAF8F6;color:#7A736C;font-size:12.5px;font-weight:650;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .16s" style-hover="border-color:#EFC9A8;color:#CE6B1F;background:#FFFBF7">See everything in your feed · {{ wallFeedCount }}<svg width="13" height="13"><use href="#i-arr-r"></use></svg></button>
       </div>
     </section>
 
       <section class="om-sec" style="flex:1 1 460px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
       <div style="padding:20px 22px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">
         <div style="min-width:0">
-          <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">{{ wallDirTitle }}</h2>
-          <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ wallDirSub }}</p>
+          <h2 class="kp-sec-title">{{ wallDirTitle }}</h2>
+          <p class="kp-sec-sub">{{ wallDirSub }}</p>
         </div>
         <button sc-camel-on-click="{{ openRecogAll }}" style="flex:0 0 auto;height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;transition:all .16s" style-hover="border-color:#EC873A;background:#FFF6EE;color:#B4600F">{{ recogMoreLabel }}</button>
       </div>
@@ -2281,7 +2296,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 
     <sc-if value="{{ hasNeedsAction }}" hint-placeholder-val="{{ true }}">
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:14px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:15px;font-weight:700">Needs Action</h2></div>
+        <div class="kp-sec-head"><div style="flex:1 1 220px;min-width:0"><h2 class="kp-sec-title">Needs Action</h2></div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))">
           <sc-for list="{{ needsAction }}" as="n" hint-placeholder-count="3">
             <div style="padding:15px 20px;border-right:1px solid #F3EFEB;display:flex;align-items:flex-start;gap:12px;animation:rise .4s ease-out both;animation-delay:{{ n.delay }}">
@@ -2296,19 +2311,16 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
       </section>
     </sc-if>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(212px,100%),1fr));gap:20px">
+    <div class="kp-snap kp-snap-even">
       <sc-for list="{{ kpiTiles }}" as="k" hint-placeholder-count="4">
-        <button sc-camel-on-click="{{ k.act }}" title="{{ k.title }}" style="text-align:left;padding:16px 18px 14px;border:1px solid {{ k.bd }};border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;flex-direction:column;gap:8px;animation:rise .45s ease-out both;animation-delay:{{ k.delay }};transition:border-color .2s,box-shadow .2s,transform .2s" style-hover="border-color:#EFC9A8;box-shadow:0 12px 26px -18px rgba(116,69,31,.4);transform:translateY(-1px)">
-          <span style="display:flex;align-items:center;gap:7px">
-            <i style="width:7px;height:7px;border-radius:999px;background:{{ k.dot }};flex:0 0 auto"></i>
-            <small style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8A827A">{{ k.label }}</small>
+        <button sc-camel-on-click="{{ k.act }}" title="{{ k.title }}" class="kp-snap-cell" style="animation:rise .45s ease-out both;animation-delay:{{ k.delay }}">
+          <span class="kp-snap-label"><i style="width:7px;height:7px;border-radius:999px;background:{{ k.dot }};flex:0 0 auto"></i>{{ k.label }}</span>
+          <span class="kp-snap-figure">
+            <b class="kp-snap-value" style="color:{{ k.valueFg }}">{{ k.value }}</b>
+            <sc-if value="{{ k.denom }}" hint-placeholder-val="{{ true }}"><span style="font-size:17px;font-weight:600;color:var(--kp-text-4);font-variant-numeric:tabular-nums">{{ k.denom }}</span></sc-if>
           </span>
-          <span style="display:flex;align-items:baseline;gap:5px">
-            <b style="font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1;color:{{ k.valueFg }};font-variant-numeric:tabular-nums">{{ k.value }}</b>
-            <sc-if value="{{ k.denom }}" hint-placeholder-val="{{ true }}"><span style="font-size:17px;font-weight:600;color:#A79E95;font-variant-numeric:tabular-nums">{{ k.denom }}</span></sc-if>
-          </span>
-          <span style="font-size:12px;font-weight:600;color:{{ k.noteFg }}">{{ k.consequence }}</span>
-          <span style="font-family:'Space Mono',monospace;font-size:12px;line-height:14px;color:rgba(22,19,15,.55)">{{ k.prov }}</span>
+          <span class="kp-snap-note" style="font-weight:600;color:{{ k.noteFg }}">{{ k.consequence }}</span>
+          <span class="kp-snap-prov">{{ k.prov }}</span>
         </button>
       </sc-for>
     </div>
@@ -2316,8 +2328,8 @@ a:hover{color:#EC873A;text-decoration:underline}
 
     <div style="display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:16px" class="om-ovgrid">
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-        <div style="padding:14px 18px;border-bottom:1px solid #F0EBE6;display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
-          <span style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-size:15px;font-weight:700">Fleet Status</h2><small style="font-size:12px;color:#8A827A">{{ fleetSub }}</small></span>
+        <div class="kp-sec-head" style="padding:16px 18px">
+          <div style="flex:1 1 140px;min-width:0"><h2 class="kp-sec-title" style="font-size:16px">Fleet status</h2><p class="kp-sec-sub">{{ fleetSub }}</p></div>
           <span style="flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;border:1px solid {{ fleetSrc.bd }};background:{{ fleetSrc.bg }};color:{{ fleetSrc.fg }};font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em"><i style="width:6px;height:6px;border-radius:999px;background:{{ fleetSrc.fg }}"></i>{{ fleetSrc.label }}</span>
         </div>
         <div sc-camel-on-mouse-leave="{{ fleetLeave }}" style="padding:18px;display:flex;flex-direction:column;align-items:center;gap:14px">
@@ -2341,7 +2353,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           <div style="width:100%;border-top:1px solid #F3EFEB;padding-top:12px;display:flex">
             <sc-for list="{{ fleetFacts }}" as="f" hint-placeholder-count="3">
               <button sc-camel-on-click="{{ f.act }}" title="{{ f.title }}" style="flex:1;min-width:0;padding:0 8px;border:0;border-left:{{ f.div }};background:transparent;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left">
-                <small style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A79E95">{{ f.label }}</small>
+                <small style="min-height:30px;font-family:'Space Mono',monospace;font-size:11px;line-height:15px;letter-spacing:.1em;text-transform:uppercase;color:#A79E95">{{ f.label }}</small>
                 <b style="font-size:14px;color:{{ f.fg }};font-variant-numeric:tabular-nums">{{ f.value }}</b>
                 <small style="font-size:12.5px;color:#8A827A">{{ f.note }}</small>
               </button>
@@ -2351,19 +2363,18 @@ a:hover{color:#EC873A;text-decoration:underline}
       </section>
 
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-        <div style="padding:14px 20px;border-bottom:1px solid #F0EBE6;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
-          <span style="display:flex;flex-direction:column;gap:3px;min-width:0">
-            <h2 style="margin:0;font-size:15px;font-weight:700">Web Engagement by Location</h2>
-            <small style="font-size:12px;color:#8A827A">Web app only · a display cannot register a cheer</small>
-            <small style="font-family:'Space Mono',monospace;font-size:12.5px;line-height:1.5;color:#9B928A;text-wrap:pretty">{{ engDef }}</small>
-          </span>
-          <span style="flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;border:1px solid {{ engSrc.bd }};background:{{ engSrc.bg }};color:{{ engSrc.fg }};font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em"><i style="width:6px;height:6px;border-radius:999px;background:{{ engSrc.fg }}"></i>{{ engSrc.label }}</span>
-        </div>
-        <div style="padding:12px 20px 0;display:flex">
+        <div class="kp-sec-head" style="padding:16px 20px">
+          <div style="flex:1 1 260px;min-width:0">
+            <h2 class="kp-sec-title" style="font-size:16px">Web engagement by location</h2>
+            <p class="kp-sec-sub">Web app only · a display cannot register a cheer</p>
+          </div>
+          <div style="flex:0 0 auto;display:inline-flex;align-items:center;gap:10px">
           <div style="display:inline-flex;align-items:stretch;border:1px solid #EAE4DE;border-radius:12px;background:#fff;overflow:hidden">
             <sc-for list="{{ engSegs }}" as="m" hint-placeholder-count="4">
-              <button sc-camel-on-click="{{ m.pick }}" title="{{ m.title }}" style="min-width:86px;height:34px;padding:0 13px;border:0;border-radius:{{ m.rad }};font-size:12px;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.fw }};border-left:{{ m.div }};box-shadow:{{ m.sh }};transition:background .2s,color .2s">{{ m.label }}</button>
+              <button sc-camel-on-click="{{ m.pick }}" title="{{ m.title }}" style="min-width:82px;height:34px;padding:0 13px;border:0;border-radius:{{ m.rad }};font-size:12px;background:{{ m.bg }};color:{{ m.fg }};font-weight:{{ m.fw }};border-left:{{ m.div }};transition:background .16s,color .16s">{{ m.label }}</button>
             </sc-for>
+          </div>
+          <span style="flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;border:1px solid {{ engSrc.bd }};background:{{ engSrc.bg }};color:{{ engSrc.fg }};font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em"><i style="width:6px;height:6px;border-radius:999px;background:{{ engSrc.fg }}"></i>{{ engSrc.label }}</span>
           </div>
         </div>
         <div style="padding:14px 20px 18px;display:flex;flex-direction:column;gap:9px">
@@ -2380,13 +2391,16 @@ a:hover{color:#EC873A;text-decoration:underline}
               </span>
             </button>
           </sc-for>
+          <p style="margin:6px 0 0;font-family:'Space Mono',monospace;font-size:12px;line-height:1.5;color:var(--kp-text-3);text-wrap:pretty">{{ engDef }}</p>
         </div>
       </section>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:16px;align-items:start">
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:14px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:15px;font-weight:700">Worth Knowing · Estate</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">Only facts that change something you control</p></div>
+        <div class="kp-sec-head" style="padding:16px 20px">
+          <div style="flex:1 1 200px;min-width:0"><h2 class="kp-sec-title" style="font-size:16px">Worth knowing · estate</h2><p class="kp-sec-sub">Only facts that change something you control</p></div>
+        </div>
         <sc-for list="{{ worthKnowing }}" as="w" hint-placeholder-count="3">
           <div style="padding:13px 20px;border-bottom:1px solid #F6F2EE;display:flex;align-items:center;gap:12px;animation:rise .4s ease-out both;animation-delay:{{ w.delay }}">
             <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
@@ -2399,8 +2413,8 @@ a:hover{color:#EC873A;text-decoration:underline}
       </section>
 
       <section style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:14px 20px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:10px">
-          <span><h2 style="margin:0;font-size:15px;font-weight:700">Recent Activity</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">{{ countLine }}</p></span>
+        <div class="kp-sec-head" style="padding:16px 20px">
+          <div style="flex:1 1 200px;min-width:0"><h2 class="kp-sec-title" style="font-size:16px">Recent activity</h2><p class="kp-sec-sub">{{ countLine }}</p></div>
           <button sc-camel-on-click="{{ goActivity }}" style="height:32px;padding:0 13px;border:1px solid #E7E1DB;border-radius:10px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650" style-hover="border-color:#E8C6A5;background:#FFFAF6">See all</button>
         </div>
         <sc-for list="{{ recentActivity }}" as="r" hint-placeholder-count="5">
@@ -2635,8 +2649,8 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
 
       <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04)">
-        <div style="padding:15px 20px;border-bottom:1px solid #F0EBE6;border-radius:19px 19px 0 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-          <span><h2 style="margin:0;font-size:15px;font-weight:700">Schedules</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">The schedule is the row. A display's own view lives inside its drawer.</p></span>
+        <div class="kp-sec-head" style="border-radius:19px 19px 0 0">
+          <span><h2 class="kp-sec-title">Schedules</h2><p class="kp-sec-sub">The schedule is the row. A display's own view lives inside its drawer.</p></span>
           <span style="min-height:30px;padding:0 12px;border-radius:999px;border:1px solid #C7D9E5;background:#F2F7FA;color:#376D96;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:7px"><svg width="13" height="13"><use href="#i-alert"></use></svg>Expired schedules are kept and filtered, never deleted</span>
         </div>
         <sc-if value="{{ schedEmpty }}" hint-placeholder-val="{{ false }}">
@@ -3511,7 +3525,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       </sc-if>
 
       <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:15px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:15px;font-weight:700">Access Records</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">Access is a record with a start, an end and a history. Everyone else in the account is a Viewer and needs no row here.</p></div>
+        <div class="kp-sec-head"><div style="flex:1 1 220px;min-width:0"><h2 class="kp-sec-title">Access Records</h2><p class="kp-sec-sub">Access is a record with a start, an end and a history. Everyone else in the account is a Viewer and needs no row here.</p></div></div>
         <div style="overflow-x:auto"><div style="min-width:980px">
           <div style="display:grid;grid-template-columns:1.4fr 1fr 1.15fr 1.1fr 100px 100px 1fr 110px;gap:12px;height:38px;padding:0 20px;align-items:center;background:#FAF8F6;border-bottom:1px solid #F0EBE6;color:#8A827A;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;position:sticky;top:0;z-index:2">
             <span>PERSON</span><span>TEAM</span><span>ROLE</span><span>SCOPE</span><span>FROM</span><span>TO</span><span>CHANGED BY</span><span>STATUS</span>
@@ -3575,7 +3589,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         </sc-for>
       </div>
       <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:15px 20px;border-bottom:1px solid #F0EBE6"><h2 style="margin:0;font-size:15px;font-weight:700">Access Matrix</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">Rows follow the object model: devices → schedules → playlists → templates → scenes. The four roles are frozen.</p></div>
+        <div class="kp-sec-head"><div style="flex:1 1 220px;min-width:0"><h2 class="kp-sec-title">Access Matrix</h2><p class="kp-sec-sub">Rows follow the object model: devices → schedules → playlists → templates → scenes. The four roles are frozen.</p></div></div>
         <div style="overflow-x:auto"><div style="min-width:720px">
           <div style="display:grid;grid-template-columns:minmax(240px,1.6fr) repeat(4,minmax(0,1fr));gap:0;height:40px;align-items:center;background:#FAF8F6;border-bottom:1px solid #F0EBE6;position:sticky;top:0;z-index:3">
             <span style="padding:0 20px;position:sticky;left:0;background:#FAF8F6;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;color:#8A827A">CAPABILITY</span>
@@ -5837,9 +5851,12 @@ const XSEARCH = [
 // One rule, everywhere: standings, Momentum Makers, Champions and every KPI
 // leader list. Top 10 percent, never fewer than 5 rows, never more than 50.
 const CUT = n => Math.min(n, Math.max(5, Math.min(50, Math.ceil(n * 0.1))));
+// The rule, in one line. Spelled out it ran to two lines in a panel header and
+// left the panel beside it starting higher — the floor and ceiling are stated in
+// the same words, just tighter.
 const CUT_RULE = n => n <= 5
   ? (n + (n === 1 ? ' row' : ' rows') + ' in view — the whole list')
-  : ('Top 10% — showing ' + CUT(n) + ' of ' + n + ', never fewer than 5 or more than 50');
+  : ('Top 10% of ' + n + ', showing ' + CUT(n) + ' — never under 5 or over 50');
 
 // ── SC-10 · DELIBERATE LIST LENGTHS ─────────────────────────────────────────
 // Grid-safe counts only: 4, 6, 8 or 10. Anything from data is trimmed down to one.
@@ -8105,7 +8122,8 @@ class Component extends DCLogic {
       you:youSeries.map((v,i) => xAt(i) + ',' + yAt(v)).join(' '),
       avg:avgSeries.map((v,i) => xAt(i) + ',' + yAt(v)).join(' '),
       grid:[0,1,2,3].map(g => { const v = Math.round(floor + (span * g) / 3);
-        return {y:String(yAt(v)), x2:String(CW - PR), x1:String(PL), label:String(v), ly:String(yAt(v) + 4)}; }),
+        return {y:String(yAt(v)), x2:String(CW - PR), x1:String(PL), label:String(v),
+          top:(Math.round((yAt(v) / CH) * 1000) / 10) + '%'}; }),
       cols:months.map((m,i) => {
         const on = i === hb;
         return {x:String(xAt(i) - (CW - PL - PR) / (months.length - 1) / 2), y:String(PT),
@@ -8114,7 +8132,7 @@ class Component extends DCLogic {
           lineOp:on ? '1' : '0',
           youX:String(xAt(i)), youY:String(yAt(youSeries[i])), youR:on ? '5.5' : '3.4',
           avgX:String(xAt(i)), avgY:String(yAt(avgSeries[i])), avgR:on ? '4.5' : '2.8',
-          labX:String(xAt(i)), labY:String(CH - 12), month:m,
+          month:m, left:(Math.round((xAt(i) / CW) * 1000) / 10) + '%',
           labFg:on ? '#16130F' : '#A79E95', labFw:on ? '700' : '500',
           enter:() => this.setState({momHover:i}), leave:() => this.setState({momHover:null})};
       })
@@ -8336,6 +8354,7 @@ class Component extends DCLogic {
       cmpRows, cmpSeg, cmpMax:String(cmpMax), cmpShort:cmpBase.short, cmpBasisLabel:cmpBase.label,
       cmpSub:'Ranked by your points, all six on one 0 to ' + cmpMax + ' scale',
       cmpFoot:viewNote + ' · the tick marks ' + cmpBase.note + ' · select a KPI to open it in My momentum',
+      momChart, momDetail, momStrip, momStats, momMoves, momMovesHead, momPanel,
       momSub:'Pick a KPI. The panel below is that KPI: points held, what you earned each month, and the interactions behind it.',
       momYouLabel:'You', momAvgSeriesLabel:avgSeriesLabel,
       positionRows, positionScopes, positionSub, moments,
@@ -8379,10 +8398,10 @@ class Component extends DCLogic {
       // FD-03/FD-04 (revised) · the dashboard panel carries the five newest and the arrivals
       // pill — enough to see the wall moving. The complete record opens in its own drawer.
       wallFeedCards:feedCards,
-      wallFeedTop:feedCards.slice(0, 5),
+      wallFeedTop:feedCards.slice(0, 7),
       wallFeedPreview:feedCards.slice(0, 3),
       openWallFeed:() => this.open('wallfeed'),
-      wallFeedTopSub:'Newest first · ' + feedAll.length + ' in the last ' + ADMISSION.wallFeed.window,
+      wallFeedTopSub:'What the people around you are doing · newest first · ' + feedAll.length + ' in the last ' + ADMISSION.wallFeed.window,
       wallFeedRule:ADMISSION.wallFeed.what + ' · from ' + ADMISSION.wallFeed.who + ' · last ' + ADMISSION.wallFeed.window + ' · ' + ADMISSION.wallFeed.order,
       wallFeedCount:feedAll.length + ' items',
       wallFeedEmpty:!feedCards.length,
@@ -11091,9 +11110,9 @@ class Component extends DCLogic {
       deltaFg:pop >= 0 ? '#25714A' : '#A7453B',
       deltaNote:rvRange === '6 months' ? 'last 3 months vs the 3 before' : 'last 6 months vs the 6 before',
       peakX:String(xA(peakI)), peakY:String(yA(rvMax)),
-      peakLabel:months[peakI] + ' · ' + rvMax,
-      peakTextX:String(Math.min(W - 70, Math.max(30, xA(peakI)))),
-      months:months.map((m, i) => ({label:m, x:String(xA(i)), on:i === peakI})),
+      peakLabel:months[peakI] + ' at ' + rvMax,
+      months:months.map((m, i) => ({label:m, x:String(xA(i)), on:i === peakI,
+        fg:i === peakI ? '#B4600F' : '#B5ADA5', fw:i === peakI ? '700' : '400'})),
       src:this.srcChip('WEB'),
       def:'recognition volume = shout outs + cheers landing on this scope, per month · web app only'
     };
