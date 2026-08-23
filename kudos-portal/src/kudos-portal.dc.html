@@ -221,7 +221,9 @@ a:hover{color:#EC873A;text-decoration:underline}
 .kp-table{display:block;font-variant-numeric:tabular-nums;min-width:0}
 .kp-row{display:grid;grid-template-columns:var(--kp-cols);align-items:center}
 /* 146px = the fixed top bar plus the sticky module strip above it. */
-.kp-head{position:sticky;top:146px;z-index:3;background:var(--kp-surface-2);border-bottom:1px solid var(--kp-border);border-radius:19px 19px 0 0}
+.kp-head{position:sticky;top:146px;z-index:3;background:var(--kp-surface-2);border-bottom:1px solid var(--kp-border)}
+.kp-table:first-child .kp-head{border-radius:19px 19px 0 0}
+.kp-body .kp-row:last-child{border-radius:0 0 19px 19px}
 .kp-head .kp-cell{
   height:44px;padding:0 14px;display:flex;align-items:center;
   /* the actions column is right-aligned, so its header is too */
@@ -259,6 +261,12 @@ a:hover{color:#EC873A;text-decoration:underline}
 @media (max-width:1380px){.kp-devgrid{--kp-cols:132px minmax(170px,1.15fr) 140px minmax(180px,1.35fr) 122px 108px}.kp-p3{display:none}}
 @media (max-width:1180px){.kp-devgrid{--kp-cols:126px minmax(160px,1.1fr) minmax(170px,1.3fr) 118px 104px}.kp-p2{display:none}}
 @media (max-width:960px){.kp-devgrid{--kp-cols:120px minmax(150px,1fr) minmax(150px,1.2fr) 100px}.kp-p1{display:none}}
+
+.kp-schedgrid{--kp-cols:minmax(180px,1.5fr) 200px minmax(160px,1.1fr) 84px 156px 122px 124px 64px}
+@media (max-width:1560px){.kp-schedgrid{--kp-cols:minmax(180px,1.5fr) 200px minmax(160px,1.1fr) 84px 156px 124px 64px}}
+@media (max-width:1380px){.kp-schedgrid{--kp-cols:minmax(180px,1.5fr) 200px minmax(160px,1.1fr) 156px 124px 64px}}
+@media (max-width:1180px){.kp-schedgrid{--kp-cols:minmax(170px,1.4fr) minmax(150px,1.1fr) 150px 118px 60px}}
+@media (max-width:960px){.kp-schedgrid{--kp-cols:minmax(150px,1.3fr) minmax(140px,1fr) 140px 60px}}
 
 /* Below tablet every table becomes a list of stacked records with visible
    field labels, rather than eight columns crushed into 320px. */
@@ -2508,8 +2516,8 @@ a:hover{color:#EC873A;text-decoration:underline}
         <button sc-camel-on-click="{{ newSchedule }}" style="flex:0 0 auto;height:46px;padding:0 16px;border:1px solid #EC873A;border-radius:12px;background:#EC873A;color:#fff;display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:650;box-shadow:0 6px 16px -6px rgba(206,107,31,.6)"><svg width="15" height="15"><use href="#i-plus"></use></svg>New schedule</button>
       </div>
 
-      <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:15px 20px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04)">
+        <div style="padding:15px 20px;border-bottom:1px solid #F0EBE6;border-radius:19px 19px 0 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
           <span><h2 style="margin:0;font-size:15px;font-weight:700">Schedules</h2><p style="margin:3px 0 0;font-size:12px;color:#8A827A">The schedule is the row. A display's own view lives inside its drawer.</p></span>
           <span style="min-height:30px;padding:0 12px;border-radius:999px;border:1px solid #C7D9E5;background:#F2F7FA;color:#376D96;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:7px"><svg width="13" height="13"><use href="#i-alert"></use></svg>Expired schedules are kept and filtered, never deleted</span>
         </div>
@@ -2520,58 +2528,76 @@ a:hover{color:#EC873A;text-decoration:underline}
             <button sc-camel-on-click="{{ resetSched }}" style="height:36px;padding:0 16px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650">Reset filters</button>
           </div>
         </sc-if>
-        <div class="kp-scroll-x"><div style="min-width:1080px">
-          <div style="display:grid;grid-template-columns:1.5fr 1.15fr 1.25fr 70px 130px 110px 104px 52px;gap:14px;height:42px;padding:0 20px;align-items:center;background:#FAF8F6;border-bottom:1px solid #F0EBE6;color:#A79E95;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">
-            <span>Schedule</span><span>Scope</span><span>Displays mapped</span><span>Blocks</span><span>Next change</span><span>Active since</span><span>Status</span><span></span>
-          </div>
-          <sc-for list="{{ schedRows }}" as="r" hint-placeholder-count="5">
-            <div style="border-bottom:1px solid #F3EFEB;opacity:{{ r.op }};animation:rise .35s ease-out both;animation-delay:{{ r.delay }}">
-              <div style="display:grid;grid-template-columns:1.5fr 1.15fr 1.25fr 70px 130px 110px 104px 52px;gap:14px;min-height:62px;padding:10px 20px;align-items:center;transition:background .16s" style-hover="background:#FFFBF7">
-                <span style="display:flex;flex-direction:column;gap:4px;min-width:0">
-                  <button sc-camel-on-click="{{ r.open }}" style="border:0;background:transparent;padding:0;text-align:left;font-size:13.5px;font-weight:650;color:#16130F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" style-hover="color:#CE6B1F">{{ r.name }}</button>
-                  <span style="display:flex;gap:6px;align-items:center">
-                    <sc-if value="{{ r.isDefault }}" hint-placeholder-val="{{ false }}"><em style="font-style:normal;padding:1px 7px;border-radius:5px;background:#16130F;color:#fff;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em">DEFAULT</em></sc-if>
-                    <small style="font-size:12.5px;color:#A79E95">{{ r.ownerLine }}</small>
-                  </span>
-                </span>
-                <span style="min-height:25px;width:fit-content;max-width:100%;padding:0 10px;border-radius:7px;background:{{ r.scopeBg }};color:{{ r.scopeFg }};font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;display:inline-flex;align-items:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.scopeType }} · {{ r.scopeValue }}</span>
-                <button sc-camel-on-click="{{ r.toggle }}" style="border:0;background:transparent;padding:0;text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0">
-                  <span style="font-size:13px;font-weight:600">{{ r.mapped }}</span>
-                  <span style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
-                    <sc-for list="{{ r.codes }}" as="c" hint-placeholder-count="2"><em style="font-style:normal;padding:1px 5px;border-radius:4px;background:#F3EFEB;color:#7A736C;font-family:'Space Mono',monospace;font-size:11px">{{ c }}</em></sc-for>
-                    <small style="font-size:12.5px;color:#A79E95">{{ r.mappedSub }}</small>
-                  </span>
-                </button>
-                <span style="font-size:13px;font-variant-numeric:tabular-nums">{{ r.blocks }}</span>
-                <span style="min-width:0;display:flex;flex-direction:column;gap:2px">
-                  <span style="font-size:13px;color:{{ r.nextFg }};font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.nextLabel }}</span>
-                  <small style="font-size:12.5px;color:#A79E95;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.nextSub }}</small>
-                </span>
-                <span style="font-size:12.5px;color:#5E564F;font-variant-numeric:tabular-nums">{{ r.since }}</span>
-                <span class="kp-status {{ r.statusCls }}"><i></i>{{ r.status }}</span>
-                <span data-pop style="position:relative;justify-self:end;display:inline-flex">
-                  <button class="kp-iconbtn" sc-camel-on-click="{{ r.toggleMenu }}" aria-label="More actions for {{ r.name }}" aria-expanded="{{ r.menuOpen }}" aria-haspopup="menu" title="More actions"><svg width="16" height="16"><use href="#i-dots"></use></svg></button>
-                  <sc-if value="{{ r.menuOpen }}" hint-placeholder-val="{{ false }}">
-                    <div class="kp-menu" role="menu" data-pop-list style="top:{{ r.menuTop }};bottom:{{ r.menuBottom }}">
-                      <sc-for list="{{ r.actions }}" as="a" hint-placeholder-count="4">
-                        <button class="kp-menu-item" role="menuitem" sc-camel-on-click="{{ a.act }}"><svg width="15" height="15"><use href="#{{ a.icon }}"></use></svg>{{ a.label }}</button>
-                      </sc-for>
-                    </div>
-                  </sc-if>
-                </span>
-              </div>
-              <sc-if value="{{ r.expand }}" hint-placeholder-val="{{ false }}">
-                <div style="padding:0 20px 14px;display:flex;gap:8px;flex-wrap:wrap">
-                  <sc-for list="{{ r.devList }}" as="dv" hint-placeholder-count="3">
-                    <button sc-camel-on-click="{{ dv.act }}" style="display:flex;flex-direction:column;gap:2px;align-items:flex-start;padding:8px 12px;border:1px solid #EFEAE5;border-radius:11px;background:#FCFBFA;text-align:left" style-hover="border-color:#EFC9A8;background:#FFF9F4">
-                      <strong style="font-size:12px">{{ dv.name }}</strong><small style="font-size:12.5px;color:#8A827A">{{ dv.sub }}</small>
-                    </button>
-                  </sc-for>
-                </div>
-              </sc-if>
+        <div class="kp-table kp-schedgrid" role="table" aria-label="Schedules">
+          <div class="kp-head" role="rowgroup">
+            <div class="kp-row" role="row">
+              <div class="kp-cell" role="columnheader">Schedule</div>
+              <div class="kp-cell kp-p2" role="columnheader">Scope</div>
+              <div class="kp-cell" role="columnheader">Displays mapped</div>
+              <div class="kp-cell kp-p3" role="columnheader">Blocks</div>
+              <div class="kp-cell" role="columnheader">Next change</div>
+              <div class="kp-cell kp-p4" role="columnheader">Active since</div>
+              <div class="kp-cell" role="columnheader">Status</div>
+              <div class="kp-cell" role="columnheader">Actions</div>
             </div>
-          </sc-for>
-        </div></div>
+          </div>
+          <div class="kp-body" role="rowgroup">
+            <sc-for list="{{ schedRows }}" as="r" hint-placeholder-count="5">
+              <div style="opacity:{{ r.op }};animation:rise .35s ease-out both;animation-delay:{{ r.delay }}">
+                <div class="kp-row" role="row">
+                  <div class="kp-cell" role="cell">
+                    <span class="kp-label">Schedule</span>
+                    <button class="kp-rowlink" sc-camel-on-click="{{ r.open }}" aria-label="Open the calendar for {{ r.name }}">
+                      <span class="kp-cell-strong">{{ r.name }}</span>
+                      <span class="kp-cell-sub"><sc-if value="{{ r.isDefault }}" hint-placeholder-val="{{ false }}"><em style="font-style:normal;padding:1px 6px;margin-right:6px;border-radius:5px;background:#16130F;color:#fff;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em">DEFAULT</em></sc-if>{{ r.ownerLine }}</span>
+                    </button>
+                  </div>
+                  <div class="kp-cell kp-p2" role="cell">
+                    <span class="kp-label">Scope</span>
+                    <span class="kp-tag">{{ r.scopeType }} · {{ r.scopeValue }}</span>
+                  </div>
+                  <div class="kp-cell" role="cell">
+                    <span class="kp-label">Displays mapped</span>
+                    <button class="kp-rowlink" sc-camel-on-click="{{ r.toggle }}" aria-expanded="{{ r.expand }}" aria-label="{{ r.mappedAria }}">
+                      <span class="kp-cell-strong" style="font-weight:600">{{ r.mapped }}</span>
+                      <span class="kp-cell-sub">{{ r.codeLine }}</span>
+                    </button>
+                  </div>
+                  <div class="kp-cell kp-p3" role="cell"><span class="kp-label">Blocks</span><span class="kp-cell-strong" style="font-weight:600">{{ r.blocks }}</span></div>
+                  <div class="kp-cell" role="cell">
+                    <span class="kp-label">Next change</span>
+                    <span class="kp-cell-strong" style="font-weight:600;color:{{ r.nextFg }}">{{ r.nextLabel }}</span>
+                    <span class="kp-cell-sub">{{ r.nextSub }}</span>
+                  </div>
+                  <div class="kp-cell kp-p4" role="cell"><span class="kp-label">Active since</span><span class="kp-mono">{{ r.since }}</span></div>
+                  <div class="kp-cell" role="cell"><span class="kp-label">Status</span><span class="kp-status {{ r.statusCls }}"><i></i>{{ r.status }}</span></div>
+                  <div class="kp-cell" role="cell" style="justify-self:end">
+                    <span class="kp-label">Actions</span>
+                    <span data-pop style="position:relative;display:inline-flex">
+                      <button class="kp-iconbtn" sc-camel-on-click="{{ r.toggleMenu }}" aria-label="More actions for {{ r.name }}" aria-expanded="{{ r.menuOpen }}" aria-haspopup="menu" title="More actions"><svg width="16" height="16"><use href="#i-dots"></use></svg></button>
+                      <sc-if value="{{ r.menuOpen }}" hint-placeholder-val="{{ false }}">
+                        <div class="kp-menu" role="menu" data-pop-list style="top:{{ r.menuTop }};bottom:{{ r.menuBottom }}">
+                          <sc-for list="{{ r.actions }}" as="a" hint-placeholder-count="4">
+                            <button class="kp-menu-item" role="menuitem" sc-camel-on-click="{{ a.act }}"><svg width="15" height="15"><use href="#{{ a.icon }}"></use></svg>{{ a.label }}</button>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </span>
+                  </div>
+                </div>
+                <sc-if value="{{ r.expand }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:0 20px 14px;display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ r.devList }}" as="dv" hint-placeholder-count="3">
+                      <button sc-camel-on-click="{{ dv.act }}" style="display:flex;flex-direction:column;gap:2px;align-items:flex-start;min-height:44px;padding:8px 12px;border:1px solid #EFEAE5;border-radius:11px;background:#FCFBFA;text-align:left" style-hover="border-color:#EFC9A8;background:#FFF9F4">
+                        <strong style="font-size:12.5px">{{ dv.name }}</strong><small style="font-size:12.5px;color:#8A827A">{{ dv.sub }}</small>
+                      </button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
       </section>
     </sc-if>
 
@@ -3047,11 +3073,11 @@ a:hover{color:#EC873A;text-decoration:underline}
               <div style="display:flex;flex-direction:column">
                 <div sc-camel-on-click="{{ r.select }}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid {{ r.bd }};border-radius:12px;background:{{ r.bg }};transition:border-color .16s,background .16s,box-shadow .16s;animation:rise .3s ease-out both;animation-delay:{{ r.delay }}" style-hover="border-color:#EFC9A8;box-shadow:0 6px 16px -12px rgba(22,19,15,.5)">
                   <span aria-hidden="true" style="flex:0 0 auto;color:#C4BAB0;font-size:13px;cursor:grab;letter-spacing:-2px">⠿</span>
-                  <span style="flex:0 0 auto;display:block;width:{{ r.preview.w }};aspect-ratio:{{ r.preview.ratio }};max-height:44px;border-radius:5px;overflow:hidden;background:linear-gradient(158deg,#241A13,#48290F 58%,#7A3F13)"></span>
-                  <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
-                    <strong style="font-size:13px;font-weight:{{ r.fw }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</strong>
+                  <span aria-hidden="true" style="flex:0 0 auto;display:grid;place-items:center;width:{{ r.preview.w }};aspect-ratio:{{ r.preview.ratio }};max-height:44px;border-radius:5px;overflow:hidden;background:linear-gradient(158deg,#241A13,#48290F 58%,#7A3F13);color:#FFB273;font-family:'Space Mono',monospace;font-size:12px;font-weight:700">{{ r.n }}</span>
+                  <button class="kp-rowlink" sc-camel-on-click="{{ r.select }}" aria-pressed="{{ r.selected }}" aria-label="Select {{ r.name }}, frame {{ r.n }}" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                    <strong style="font-size:13px;font-weight:{{ r.fw }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%">{{ r.name }}</strong>
                     <small style="font-size:12.5px;color:#A79E95">{{ r.share }} of the loop</small>
-                  </span>
+                  </button>
                   <span style="flex:0 0 auto;display:inline-flex;align-items:center;border:1px solid #EAE4DE;border-radius:9px;overflow:hidden;background:#fff">
                     <button sc-camel-on-click="{{ r.minus }}" aria-label="5 seconds less" style="width:26px;height:28px;border:0;background:transparent;color:#6E665F">−</button>
                     <b style="min-width:42px;text-align:center;font-family:'Space Mono',monospace;font-size:12.5px">{{ r.dur }}</b>
@@ -3097,9 +3123,9 @@ a:hover{color:#EC873A;text-decoration:underline}
               <small style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;color:#A79E95">PLAYLIST PROPERTIES</small>
               <span style="display:flex;flex-direction:column;gap:5px">
                 <small style="font-size:12.5px;color:#8A827A">Data scope</small>
-                <span style="display:inline-flex;align-items:stretch;border:1px solid #EAE4DE;border-radius:10px;background:#fff;overflow:hidden;flex-wrap:wrap">
+                <span style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
                   <sc-for list="{{ ple.scopeTypeOpts }}" as="st" hint-placeholder-count="4">
-                    <button sc-camel-on-click="{{ st.pick }}" style="flex:1;min-width:62px;height:30px;border:0;border-radius:{{ st.rad }};font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;background:{{ st.bg }};color:{{ st.fg }};font-weight:{{ st.fw }};border-left:{{ st.div }};box-shadow:{{ st.sh }}">{{ st.label }}</button>
+                    <button sc-camel-on-click="{{ st.pick }}" aria-pressed="{{ st.on }}" style="min-width:0;min-height:34px;padding:0 8px;border:1px solid {{ st.bd }};border-radius:10px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.05em;background:{{ st.bg }};color:{{ st.fg }};font-weight:{{ st.fw }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ st.label }}</button>
                   </sc-for>
                 </span>
                 <sc-raw-select value="{{ ple.scopeValue }}" sc-camel-on-change="{{ ple.setScopeValue }}" aria-label="Scope value" style="height:34px;padding:0 10px;border:1px solid #EAE4DE;border-radius:10px;background:#fff;font-size:12px;outline:0">
@@ -5145,8 +5171,8 @@ a:hover{color:#EC873A;text-decoration:underline}
 </sc-if>
 
 <sc-if value="{{ isSearch }}" hint-placeholder-val="{{ false }}">
-  <div role="dialog" aria-modal="true" aria-label="Search everything you can reach" data-kp-dialog style="position:fixed;z-index:210;inset:0;display:flex;justify-content:center;padding:86px 24px 24px;pointer-events:none">
-    <div style="position:relative;pointer-events:auto;width:min(680px,94vw);max-height:74vh;background:#fff;border:1px solid #EBE5DF;border-radius:22px;box-shadow:0 18px 44px -14px rgba(22,19,15,.22),0 2px 8px rgba(22,19,15,.06);display:flex;flex-direction:column;overflow:hidden;animation:pop .2s cubic-bezier(.2,.8,.2,1)">
+  <div role="dialog" aria-modal="true" aria-label="Search everything you can reach" data-kp-dialog style="position:fixed;z-index:210;inset:0;display:flex;align-items:flex-start;justify-content:center;padding:86px 24px 24px;pointer-events:none">
+    <div data-pop style="position:relative;pointer-events:auto;width:min(680px,94vw);max-height:74vh;background:#fff;border:1px solid #EBE5DF;border-radius:22px;box-shadow:0 18px 44px -14px rgba(22,19,15,.22),0 2px 8px rgba(22,19,15,.06);display:flex;flex-direction:column;overflow:hidden;animation:pop .2s cubic-bezier(.2,.8,.2,1)">
       <sc-if value="{{ specPins }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;z-index:66;right:14px;top:-9px;padding:2px 7px;border-radius:6px;background:#B4600F;color:#fff;font:700 10px/1.7 'Space Mono',monospace;letter-spacing:.06em;pointer-events:none">SH-03</span></sc-if>
       <div style="flex:0 0 auto;height:64px;padding:0 20px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;gap:12px">
         <svg width="19" height="19" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
@@ -5158,7 +5184,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           <button sc-camel-on-click="{{ c.pick }}" style="min-height:26px;padding:0 11px;border:1px solid {{ c.bd }};border-radius:999px;background:{{ c.bg }};color:{{ c.fg }};font-size:12.5px;font-weight:{{ c.fw }};transition:background .16s,border-color .16s">{{ c.label }}</button>
         </sc-for>
       </div>
-      <div style="flex:1;min-height:0;overflow-y:auto;padding:10px">
+      <div data-pop-list style="flex:0 1 auto;min-height:0;overflow-y:auto;padding:10px">
         <sc-for list="{{ searchGroups }}" as="g" hint-placeholder-count="3">
           <div style="padding:8px 10px 4px;display:flex;align-items:center;gap:8px">
             <span style="font-size:12px;font-weight:750;letter-spacing:.09em;color:#A79E95;text-transform:uppercase">{{ g.name }}</span>
@@ -5176,7 +5202,14 @@ a:hover{color:#EC873A;text-decoration:underline}
           </sc-for>
         </sc-for>
         <sc-if value="{{ searchEmpty }}" hint-placeholder-val="{{ false }}">
-          <div style="min-height:120px;display:grid;place-items:center;color:#A79E95;font-size:13px;text-align:center;padding:16px">Nothing under that scope. Widen it to Everything.</div>
+          <div style="padding:26px 20px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+            <span style="width:40px;height:40px;border-radius:13px;background:#F3EFEB;color:#A79E95;display:grid;place-items:center"><svg width="19" height="19"><use href="#i-search"></use></svg></span>
+            <strong style="font-size:14px">{{ searchEmptyTitle }}</strong>
+            <p style="margin:0;font-size:13px;color:#8A827A;max-width:44ch;text-wrap:pretty">{{ searchEmptyBody }}</p>
+            <sc-if value="{{ searchCanWiden }}" hint-placeholder-val="{{ false }}">
+              <button sc-camel-on-click="{{ searchWiden }}" style="min-height:36px;padding:0 14px;border:1px solid #F0DCC8;border-radius:11px;background:#fff;color:#CE6B1F;font-size:12.5px;font-weight:650">Search everything instead</button>
+            </sc-if>
+          </div>
         </sc-if>
       </div>
       <div style="flex:0 0 auto;padding:12px 20px;border-top:1px solid #F3EFEB;background:#FAF8F6;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -10495,7 +10528,18 @@ class Component extends DCLogic {
     ].filter(a => match(a.label));
     if ((scope === 'Everything' || scope === 'Kudos Portal') && actions.length) groups.push({name:'Actions in this shell', count:String(actions.length), items:actions});
 
+    const sq0 = (s.searchQuery || '').trim();
     return {searchGroups:groups, searchEmpty:!groups.length, searchQuery:s.searchQuery || '',
+      searchEmptyTitle:sq0 ? 'No match for “' + sq0 + '”' : 'Nothing to show yet',
+      searchEmptyBody:!sq0
+        ? 'Type a person, a ' + TAXONOMY_TERM.toLowerCase() + ', a KPI or a display.'
+        : (scope !== 'Everything'
+            ? 'Nothing in ' + scope + ' matches that. Other modules may still have it.'
+            : 'Nothing you can reach matches that. This searches people, '
+              + TAXONOMY_PLURAL.toLowerCase() + ', KPIs and the modules on your rail'
+              + (s.role === 'admin' ? ', including displays.' : '.')),
+      searchCanWiden:scope !== 'Everything',
+      searchWiden:() => this.setState({searchScope:'Everything'}),
       searchScopes:SEARCH_SCOPES.map(x => {
         const on = x === scope;
         return {label:x, bd:on ? '#EC873A' : '#EAE4DE', bg:on ? '#EC873A' : '#fff',
@@ -10692,7 +10736,7 @@ class Component extends DCLogic {
         const isOver = !!b.dev;
         const to = this.blockEnd(b);
         const top = Math.max(0, ((b.from - H0 * 60) / span) * gridH);
-        const h = Math.max(26, ((Math.min(to, H1 * 60) - Math.max(b.from, H0 * 60)) / span) * gridH - 3);
+        const h = Math.max(40, ((Math.min(to, H1 * 60) - Math.max(b.from, H0 * 60)) / span) * gridH - 3);
         return {title:b.pl, time:this.hhmm(b.from) + ' – ' + this.hhmm(to) + ' · ' + (b.reps || 1) + '×',
           tag:isOver ? 'OVERRIDE' : (b.rule === 'weekday' ? 'EVERY WEEKDAY' : (b.rule === 'daily' ? 'EVERY DAY' : 'WEEKLY')),
           bg:isOver ? 'repeating-linear-gradient(135deg,#FFF4EB 0 6px,#FDEADA 6px 12px)' : '#EEF2F6',
@@ -11244,6 +11288,12 @@ class Component extends DCLogic {
           mapped:devs.length + (devs.length === 1 ? ' display' : ' displays'),
           mappedSub:locs.length ? locs.length + (locs.length === 1 ? ' location' : ' locations') : 'none mapped',
           codes:[...new Set(devs.map(d => codeOf(d.city)))],
+          codeLine:devs.length
+            ? [...new Set(devs.map(d => codeOf(d.city)))].join(' · ') + ' · '
+              + locs.length + (locs.length === 1 ? ' location' : ' locations')
+            : 'none mapped',
+          mappedAria:(open ? 'Hide' : 'Show') + ' the ' + devs.length
+            + (devs.length === 1 ? ' display' : ' displays') + ' this schedule serves',
           expand:open, devList:devs.map(d => ({name:d.name, sub:d.city + ' · ' + d.spot, act:() => this.open('device', {id:d.id})})),
           toggle:() => this.setState(st2 => ({schedExpand:Object.assign({}, st2.schedExpand, {[x.id]:!open})})),
           blocks:String(this.blocksOfSchedule(x.id).length), since:x.since,
@@ -11730,7 +11780,7 @@ class Component extends DCLogic {
     const rows = items.map((x, i) => {
       const sc = sceneById(x.s);
       const on = sel === i;
-      return {n:String(i + 1), name:sc.name, desc:sc.desc, orient:sc.orient,
+      return {n:String(i + 1), name:sc.name, desc:sc.desc, orient:sc.orient, selected:on,
         preview:this.miniScene(sc, plOrient(p)),
         dur:x.d + 's', durNum:x.d,
         share:Math.round((x.d / Math.max(1, loop)) * 100) + '%',
@@ -11785,7 +11835,9 @@ class Component extends DCLogic {
       // inspector
       scopeType:p.scopeType,
       scopeTypeOpts:scopeTypes.map((t, i) => { const g = this.seg(p.scopeType === t, i);
-        return {label:t, bg:g.bg, fg:g.fg, fw:g.fw, rad:g.rad, sh:g.sh, div:g.div,
+        const on = p.scopeType === t;
+        return {label:t, on, bg:on ? '#FFF4EA' : '#fff', fg:on ? '#B4600F' : '#7A736C',
+          fw:on ? '700' : '550', bd:on ? '#EC873A' : '#EAE4DE', rad:g.rad, sh:'none', div:g.div,
           pick:() => this.editPlaylist(name, d => { d.scopeType = t; d.scopeValue = scopeValues[t][0]; })}; }),
       scopeValue:p.scopeValue,
       scopeValues:scopeValues[p.scopeType],
