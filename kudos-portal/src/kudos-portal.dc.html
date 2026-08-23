@@ -287,6 +287,177 @@ a:hover{color:#EC873A;text-decoration:underline}
   .kp-table .kp-row .kp-p3,.kp-table .kp-row .kp-p4{display:flex}
 }
 
+/* ── SECTION HEADER ──────────────────────────────────────────────────────
+   One header for every panel: title and its one-line subtitle on the left,
+   the controls that change what the panel shows on the same line at the
+   right. A control that drops to its own line reads as a second heading. */
+.kp-sec-head{
+  padding:18px 22px;border-bottom:1px solid var(--kp-divider);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.kp-sec-title{margin:0;font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.kp-sec-sub{margin:4px 0 0;font-size:13px;line-height:1.45;color:var(--kp-text-3);text-wrap:pretty}
+
+/* ── SNAPSHOT BAND ───────────────────────────────────────────────────────
+   Four readings, one baseline. Every cell opens with its label, then its
+   value, then its note — so the eye can travel across the row instead of
+   re-finding the structure in each cell. The lead cell earns width and type
+   size; it never earns height, because a taller cell leaves its neighbours
+   holding empty space. */
+.kp-snap{
+  display:grid;grid-template-columns:minmax(0,1.55fr) repeat(3,minmax(0,1fr));
+  border:1px solid var(--kp-border);border-radius:var(--kp-r-xl);
+  background:var(--kp-surface);box-shadow:var(--kp-shadow);overflow:hidden}
+.kp-snap-cell{
+  min-width:0;padding:18px 20px;border:0;border-left:1px solid var(--kp-divider);
+  background:transparent;text-align:left;
+  display:flex;flex-direction:column;gap:9px;
+  transition:background var(--kp-t-hover)}
+.kp-snap-cell:first-child{border-left:0}
+.kp-snap-cell:hover{background:var(--kp-tint)}
+.kp-snap-label{
+  display:flex;align-items:center;gap:8px;min-height:20px;
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--kp-text-4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kp-snap-hint{
+  display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;
+  border-radius:6px;background:var(--kp-accent-soft);color:var(--kp-accent-deep);
+  font-size:12px;font-weight:650;letter-spacing:0;text-transform:none}
+.kp-live{width:7px;height:7px;border-radius:var(--kp-r-pill);background:#1F9B5D;flex:0 0 auto;
+  animation:breathe 2.2s ease-in-out infinite}
+.kp-snap-figure{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-height:36px}
+.kp-snap-value{font-size:30px;font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kp-snap-value-lead{font-size:42px;letter-spacing:-.035em}
+.kp-snap-delta{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:650}
+.kp-snap-note{font-size:12.5px;line-height:1.45;color:var(--kp-text-3);text-wrap:pretty}
+/* The trend belongs to the lead figure, so it sits inside that cell at a
+   fixed height and never pushes the band taller than the row needs. */
+.kp-snap-spark{margin-top:auto;padding-top:10px;display:flex;flex-direction:column;gap:4px}
+.kp-snap-spark svg{display:block;width:100%;height:46px}
+.kp-snap-scale{display:flex;justify-content:space-between;font-size:12px;
+  color:var(--kp-text-4);font-variant-numeric:tabular-nums}
+/* Each signal ends on its own share, so all four cells share a top edge and
+   a bottom edge instead of one cell running tall beside three half-empty ones. */
+.kp-snap-meter{margin-top:auto;padding-top:12px;display:flex;flex-direction:column;gap:5px}
+.kp-meter{display:block;height:6px;border-radius:var(--kp-r-pill);background:var(--kp-surface-3);overflow:hidden}
+.kp-meter i{display:block;height:100%;border-radius:var(--kp-r-pill);
+  transform-origin:left;animation:growx .7s cubic-bezier(.2,.8,.2,1) both}
+/* The wall band carries five readings beside the identity cell. */
+.kp-snap-wall{grid-template-columns:minmax(0,1.5fr) repeat(5,minmax(0,1fr))}
+.kp-identity{flex-direction:row;align-items:center;gap:16px;justify-content:flex-start}
+.kp-avatar-lg{width:56px;height:56px;flex:0 0 auto;border-radius:var(--kp-r-pill);
+  background:linear-gradient(145deg,#F3954D,#C85B08);color:#fff;display:grid;place-items:center;
+  font-size:18px;font-weight:700}
+.kp-identity-body{min-width:0;display:flex;flex-direction:column;gap:5px}
+.kp-identity-name{font-size:24px;font-weight:700;letter-spacing:-.025em;line-height:1.15;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kp-identity-who{font-size:12.5px;line-height:1.45;color:var(--kp-text-3);text-wrap:pretty}
+.kp-identity-acts{margin-top:auto;padding-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+/* A feed row has two anchored columns: what happened, and when. */
+.kp-feedcard{min-height:64px;padding:12px 14px;border:1px solid var(--kp-border);
+  border-radius:var(--kp-r-md);background:var(--kp-surface);display:flex;gap:11px;align-items:center;
+  min-width:0;text-align:left;transition:border-color var(--kp-t-hover),background var(--kp-t-hover)}
+.kp-feedcard:hover{border-color:var(--kp-accent-line);background:var(--kp-accent-wash)}
+.kp-feedcard-icon{width:32px;height:32px;flex:0 0 auto;border-radius:var(--kp-r-sm);display:grid;place-items:center}
+.kp-feedcard-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.kp-feedcard-title{font-size:13px;font-weight:650;line-height:1.35;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kp-feedcard-kind{font-size:12.5px;color:var(--kp-text-3);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kp-feedcard-time{flex:0 0 auto;font-size:12.5px;color:var(--kp-text-4);white-space:nowrap}
+.kp-btn{min-height:36px;padding:0 13px;border:1px solid var(--kp-border);border-radius:var(--kp-r-md);
+  background:var(--kp-surface);color:var(--kp-text-2);display:inline-flex;align-items:center;gap:7px;
+  font-size:12.5px;font-weight:600;white-space:nowrap;
+  transition:border-color var(--kp-t-hover),color var(--kp-t-hover),background var(--kp-t-hover)}
+.kp-btn:hover{border-color:var(--kp-accent-line);color:var(--kp-accent-hover);background:var(--kp-accent-wash)}
+.kp-btn-primary{border-color:var(--kp-accent);background:var(--kp-accent);color:#fff;font-weight:650;
+  box-shadow:0 6px 16px -8px rgba(206,107,31,.6)}
+.kp-btn-primary:hover{background:#DE7A2A;border-color:#DE7A2A;color:#fff}
+@media (max-width:1500px){.kp-snap-wall{grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr))}}
+@media (max-width:1180px){.kp-snap-wall{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.kp-snap-wall{grid-template-columns:minmax(0,1fr)}}
+
+@media (max-width:1180px){
+  .kp-snap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kp-snap-cell{border-top:1px solid var(--kp-divider)}
+  .kp-snap-cell:nth-child(-n+2){border-top:0}
+  .kp-snap-cell:nth-child(odd){border-left:0}
+}
+@media (max-width:640px){
+  .kp-snap{grid-template-columns:minmax(0,1fr)}
+  .kp-snap-cell{border-left:0;border-top:1px solid var(--kp-divider)}
+  .kp-snap-cell:first-child{border-top:0}
+}
+
+
+/* ── COMPARISON BARS ─────────────────────────────────────────────────────
+   Six KPIs, one row each, one shared scale. The six-sided plot asked people
+   to decode an angle and a radius before they could read a number, and it
+   needed a prose column beside it to explain itself — which is the proof it
+   was not doing its job. A bar answers "how much", a tick on the same track
+   answers "compared with what", and the rows are ranked, so the shape of the
+   list is itself the finding. */
+.kp-cmp{display:flex;flex-direction:column;flex:1}
+.kp-cmp-head,.kp-cmp-row{
+  display:grid;grid-template-columns:minmax(116px,1.05fr) minmax(0,2.4fr) 64px 74px 138px;
+  align-items:center;gap:16px;padding:0 22px}
+.kp-cmp-head{
+  min-height:34px;border-bottom:1px solid var(--kp-divider);background:var(--kp-surface-2);
+  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--kp-text-4);white-space:nowrap}
+.kp-cmp-num{text-align:right;font-variant-numeric:tabular-nums;
+  overflow:hidden;text-overflow:ellipsis}
+.kp-cmp-row{
+  width:100%;flex:1;min-height:54px;border:0;border-bottom:1px solid var(--kp-divider);
+  background:transparent;text-align:left;color:inherit;
+  transition:background var(--kp-t-hover) var(--kp-ease)}
+.kp-cmp-row:last-child{border-bottom:0}
+.kp-cmp-row:hover,.kp-cmp-row[data-on="1"]{background:var(--kp-accent-wash)}
+.kp-cmp-name{display:flex;align-items:center;gap:9px;min-width:0;font-size:13px;font-weight:650;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kp-cmp-swatch{width:9px;height:9px;flex:0 0 auto;border-radius:3px}
+/* One track, one scale, every row. Bar length is comparable straight down the
+   column, and the tick lands at the same value wherever that value sits. */
+.kp-cmp-track{position:relative;height:14px;border-radius:var(--kp-r-pill);
+  background:var(--kp-surface-3);min-width:0}
+.kp-cmp-fill{position:absolute;left:0;top:0;bottom:0;border-radius:var(--kp-r-pill);
+  background:#E9A469;transition:background var(--kp-t-hover);
+  transform-origin:left;animation:growx .6s cubic-bezier(.2,.8,.2,1) both}
+.kp-cmp-mark{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;
+  border-radius:1px;background:var(--kp-text-2);transition:background var(--kp-t-hover)}
+.kp-cmp-row:hover .kp-cmp-mark,.kp-cmp-row[data-on="1"] .kp-cmp-mark{background:var(--kp-text)}
+.kp-cmp-row:hover .kp-cmp-fill,.kp-cmp-row[data-on="1"] .kp-cmp-fill{background:var(--kp-accent)}
+.kp-cmp-you{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.kp-cmp-vs{font-size:13px;color:var(--kp-text-3);font-variant-numeric:tabular-nums;text-align:right}
+.kp-cmp-verdict{display:flex;align-items:baseline;justify-content:flex-end;gap:7px;
+  font-size:12.5px;font-weight:650;white-space:nowrap;min-width:0}
+.kp-cmp-delta{font-variant-numeric:tabular-nums}
+.kp-cmp-foot{padding:12px 22px;border-top:1px solid var(--kp-divider);background:var(--kp-surface-2);
+  display:flex;align-items:center;justify-content:space-between;gap:8px 18px;flex-wrap:wrap;
+  font-size:12.5px;line-height:1.45;color:var(--kp-text-3)}
+.kp-cmp-key{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.kp-cmp-keyitem{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.kp-cmp-keybar{width:22px;height:9px;border-radius:var(--kp-r-pill);background:var(--kp-accent)}
+.kp-cmp-keytick{width:2px;height:14px;border-radius:1px;background:var(--kp-text-2)}
+/* Columns leave in the order a reader would give them up: the sentence first,
+   then the number they can already see as a tick. */
+@media (max-width:1320px){
+  .kp-cmp-head,.kp-cmp-row{grid-template-columns:minmax(112px,1fr) minmax(0,2fr) 60px 70px;gap:14px}
+  .kp-cmp-c5{display:none}
+}
+@media (max-width:860px){
+  .kp-cmp-head,.kp-cmp-row{grid-template-columns:minmax(104px,1fr) minmax(0,1.7fr) 58px;gap:12px;padding:0 16px}
+  .kp-cmp-c4{display:none}
+  .kp-cmp-foot{padding:12px 16px}
+}
+/* ── SETTINGS ROWS ───────────────────────────────────────────────────────
+   A section of fields is one card, and each field is a row inside it with a
+   hairline between. Before this, some fields carried their own border and
+   some did not, so a single panel held three different ideas of what a row
+   was. Two columns only when the fields pair evenly (see fieldCols). */
+.kp-fields-1{gap:0 20px}
+.kp-fields-1 > .kp-field{padding:15px 0}
+.kp-fields-1 > .kp-field + .kp-field{border-top:1px solid var(--kp-divider)}
+
 /* ── STATUS ───────────────────────────────────────────────────────────
    Never colour alone: a dot shape plus a word, so the state survives a
    greyscale print and a colour-vision difference. */
@@ -1039,56 +1210,54 @@ a:hover{color:#EC873A;text-decoration:underline}
     </section>
   </sc-if>
 
-  <!-- SC-01 · The executive snapshot. One number carries the state of the
-       account; the three signals beside it say what moved, how much recognition
-       is flowing and how big the population is. Four equal tiles said none of
-       that, because nothing was more important than anything else. -->
-  <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;flex-wrap:wrap">
-    <button class="kp-snap-main" sc-camel-on-click="{{ snap.open }}" style="flex:1 1 380px;min-width:0;padding:20px 24px;border:0;border-right:1px solid #F0EBE6;background:transparent;display:flex;flex-direction:column;gap:12px;text-align:left;border-radius:19px 0 0 19px;transition:background .16s" style-hover="background:#FFFCF9">
-      <span style="display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A79E95">
-        {{ snap.label }}
-        <span style="display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border-radius:7px;background:#FFF2E7;color:#B4600F;font-size:12px;font-weight:650;letter-spacing:0;text-transform:none"><svg width="12" height="12"><use href="#i-info"></use></svg>How is this built?</span>
+  <!-- SC-01 · The snapshot band. Four readings on one baseline: the label line
+       at the top of every cell, the value beneath it, the note under that. The
+       average score leads on width and type size, not on height — a cell that
+       grows taller than its neighbours is what leaves the dead space this band
+       used to carry under Momentum, Cheers and Programs. -->
+  <section class="om-sec kp-snap" aria-label="Account snapshot">
+    <button class="kp-snap-cell kp-snap-lead" sc-camel-on-click="{{ snap.open }}">
+      <span class="kp-snap-label">{{ snap.label }}
+        <span class="kp-snap-hint"><svg width="12" height="12"><use href="#i-info"></use></svg>How is this built?</span>
       </span>
-      <span style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
-        <strong style="font-size:46px;font-weight:700;line-height:1;letter-spacing:-.035em;font-variant-numeric:tabular-nums">{{ snap.score }}</strong>
-        <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:650;color:{{ snap.deltaFg }}">
-          <svg width="14" height="14"><use href="#{{ snap.deltaIcon }}"></use></svg>{{ snap.delta }}
-        </span>
+      <span class="kp-snap-figure">
+        <strong class="kp-snap-value kp-snap-value-lead">{{ snap.score }}</strong>
+        <span class="kp-snap-delta" style="color:{{ snap.deltaFg }}"><svg width="14" height="14"><use href="#{{ snap.deltaIcon }}"></use></svg>{{ snap.delta }}</span>
       </span>
-      <span style="font-size:13px;line-height:1.45;color:#7A736C;text-wrap:pretty">{{ snap.note }}</span>
-      <span style="margin-top:2px;display:flex;flex-direction:column;gap:5px">
-        <svg viewBox="0 0 300 58" preserveAspectRatio="none" role="img" aria-label="{{ snap.sparkAria }}" style="width:100%;height:58px;display:block;overflow:visible">
+      <span class="kp-snap-note">{{ snap.note }}</span>
+      <span class="kp-snap-spark">
+        <svg viewBox="0 0 240 60" preserveAspectRatio="none" role="img" aria-label="{{ snap.sparkAria }}">
           <polyline points="{{ snap.sparkArea }}" fill="{{ snap.sparkSoft }}" stroke="none"></polyline>
           <polyline class="om-draw" points="{{ snap.sparkLine }}" fill="none" stroke="{{ snap.sparkFg }}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></polyline>
-          <circle cx="{{ snap.sparkX }}" cy="{{ snap.sparkY }}" r="3.2" fill="{{ snap.sparkFg }}" vector-effect="non-scaling-stroke"></circle>
+          <circle cx="{{ snap.sparkX }}" cy="{{ snap.sparkY }}" r="3" fill="{{ snap.sparkFg }}" vector-effect="non-scaling-stroke"></circle>
         </svg>
-        <span style="display:flex;justify-content:space-between;font-size:12px;color:#A79E95;font-variant-numeric:tabular-nums">
-          <span>{{ snap.sparkFrom }}</span><span>{{ snap.sparkTo }}</span>
-        </span>
+        <span class="kp-snap-scale"><span>{{ snap.sparkFrom }}</span><span>{{ snap.sparkTo }}</span></span>
       </span>
     </button>
-    <div style="flex:1 1 400px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
-      <sc-for list="{{ snap.signals }}" as="g" hint-placeholder-count="3">
-        <button sc-camel-on-click="{{ g.open }}" style="min-width:0;padding:20px 18px;border:0;border-left:1px solid #F0EBE6;background:transparent;display:flex;flex-direction:column;gap:8px;text-align:left;transition:background .16s" style-hover="background:#FFFCF9">
-          <span style="display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A79E95">
-            <sc-if value="{{ g.live }}" hint-placeholder-val="{{ false }}"><i style="width:7px;height:7px;border-radius:999px;background:#1F9B5D;animation:breathe 2.2s ease-in-out infinite;flex:0 0 auto"></i></sc-if>
-            {{ g.label }}
-          </span>
-          <strong style="font-size:28px;font-weight:700;line-height:1;letter-spacing:-.028em;color:{{ g.fg }};font-variant-numeric:tabular-nums">{{ g.value }}</strong>
-          <span style="font-size:12.5px;line-height:1.45;color:#8A827A;text-wrap:pretty">{{ g.note }}</span>
-        </button>
-      </sc-for>
-    </div>
+    <sc-for list="{{ snap.signals }}" as="g" hint-placeholder-count="3">
+      <button class="kp-snap-cell" sc-camel-on-click="{{ g.open }}">
+        <span class="kp-snap-label">
+          <sc-if value="{{ g.live }}" hint-placeholder-val="{{ false }}"><i class="kp-live"></i></sc-if>
+          {{ g.label }}
+        </span>
+        <span class="kp-snap-figure"><strong class="kp-snap-value" style="color:{{ g.fg }}">{{ g.value }}</strong></span>
+        <span class="kp-snap-note">{{ g.note }}</span>
+        <span class="kp-snap-meter">
+          <span class="kp-meter"><i style="width:{{ g.barPct }};background:{{ g.barFg }}"></i></span>
+          <span class="kp-snap-scale"><span>{{ g.barLabel }}</span><span>{{ g.barValue }}</span></span>
+        </span>
+      </button>
+    </sc-for>
   </section>
 
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
     <div style="flex:0 1 calc(55% - 10px);min-width:min(100%,560px);display:flex;flex-direction:column;gap:20px">
 
       <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-        <div style="padding:20px 22px;border-bottom:1px solid #F0EBE6;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-          <div style="min-width:0">
-            <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">Standings</h2>
-            <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ standingsSub }}</p>
+        <div class="kp-sec-head">
+          <div style="flex:1 1 260px;min-width:0">
+            <h2 class="kp-sec-title">Standings</h2>
+            <p class="kp-sec-sub">{{ standingsSub }}</p>
           </div>
           <div class="kp-segrow" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
             <sc-if value="{{ canCompareAccounts }}" hint-placeholder-val="{{ false }}">
@@ -1593,41 +1762,40 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
     </section>
 
-    <section style="flex:1.7 1 620px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:20px 22px;border-bottom:1px solid #F0EBE6">
-        <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">Recognition radar</h2>
-        <p style="margin:5px 0 0;font-size:13px;color:#7A736C">Six KPIs, drawn from what you get recognised for</p>
+    <section style="flex:1.7 1 620px;min-width:0;border:1px solid var(--kp-border);border-radius:22px;background:var(--kp-surface);box-shadow:var(--kp-shadow);overflow:hidden;display:flex;flex-direction:column">
+      <div class="kp-sec-head">
+        <div style="flex:1 1 220px;min-width:0">
+          <h2 class="kp-sec-title">Score by KPI</h2>
+          <p class="kp-sec-sub">Six KPIs, drawn from what you get recognised for. Yours are all at zero — that is where everyone starts.</p>
+        </div>
+        <button sc-camel-on-click="{{ openKpiExplorer }}" class="kp-btn" style="flex:0 0 auto"><svg width="14" height="14"><use href="#i-target"></use></svg>See the six KPIs</button>
       </div>
-      <div style="flex:1;padding:22px;display:flex;flex-wrap:wrap;gap:22px;align-items:center">
-        <div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px">
-          <div style="position:relative;width:100%;max-width:340px">
-            <svg sc-camel-view-box="-140 -130 280 260" style="display:block;width:100%;height:auto" role="img" aria-label="Empty recognition radar showing only the account average">
-              <polygon points="0,-104 90.1,-52 90.1,52 0,104 -90.1,52 -90.1,-52" fill="none" stroke="#EFEAE5" stroke-width="1"></polygon>
-              <polygon points="0,-69.3 60,-34.7 60,34.7 0,69.3 -60,34.7 -60,-34.7" fill="none" stroke="#EFEAE5" stroke-width="1"></polygon>
-              <polygon points="0,-34.7 30,-17.4 30,17.4 0,34.7 -30,17.4 -30,-17.4" fill="none" stroke="#EFEAE5" stroke-width="1"></polygon>
-              <line x1="0" y1="0" x2="0" y2="-104" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="90.1" y2="-52" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="90.1" y2="52" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="0" y2="104" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="-90.1" y2="52" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="-90.1" y2="-52" stroke="#F3EFEB"></line>
-              <polygon points="{{ fwRadarAvg }}" fill="none" stroke="#B9AFA5" stroke-width="1.6" stroke-dasharray="4 4"></polygon>
-              <circle cx="0" cy="0" r="5" fill="#EC873A"></circle>
-            </svg>
-            <sc-for list="{{ fwRadarLabels }}" as="l" hint-placeholder-count="6">
-              <span style="position:absolute;white-space:nowrap;pointer-events:none;font-size:12px;font-weight:600;color:#B3AAA1;left:{{ l.left }};top:{{ l.top }};transform:translate(-50%,-50%)">{{ l.name }}</span>
-            </sc-for>
-          </div>
-          <div style="display:flex;gap:18px;color:#8A827A;font-size:12px;margin-top:4px">
-            <span style="display:inline-flex;align-items:center;gap:6px;color:#CE6B1F"><span style="width:10px;height:10px;border-radius:999px;background:#EC873A"></span>You — at the centre</span>
-            <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:3px;border-radius:2px;background:#B9AFA5"></span>Pune average</span>
-          </div>
+      <div class="kp-cmp" role="table" aria-label="The six KPIs, your points beside the local average">
+        <div class="kp-cmp-head" role="row">
+          <span class="kp-cmp-c1" role="columnheader">KPI</span>
+          <span class="kp-cmp-c2" role="columnheader">Points · 0 to {{ fwMax }}</span>
+          <span class="kp-cmp-c3 kp-cmp-num" role="columnheader">You</span>
+          <span class="kp-cmp-c4 kp-cmp-num" role="columnheader">Average</span>
+          <span class="kp-cmp-c5 kp-cmp-num" role="columnheader">To reach it</span>
         </div>
-        <div style="flex:1 1 260px;min-width:0;padding:20px;border:1px dashed #E3DBD3;border-radius:16px;background:#FAF8F6;display:flex;flex-direction:column;gap:10px">
-          <strong style="font-size:14px">Your shape starts at the centre</strong>
-          <p style="margin:0;font-size:13px;line-height:1.55;color:#6E665F;text-wrap:pretty">Every cheer you receive is mapped to one of the six KPIs and pushes that arm outward. The dashed outline is what Pune averages — that is the shape you are growing towards.</p>
-          <button sc-camel-on-click="{{ openKpiExplorer }}" style="margin-top:auto;align-self:flex-start;height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:650;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6"><svg width="14" height="14"><use href="#i-target"></use></svg>See the six KPIs</button>
+        <div role="rowgroup" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+          <sc-for list="{{ fwRows }}" as="c" hint-placeholder-count="6">
+            <div class="kp-cmp-row" role="row">
+              <span class="kp-cmp-c1 kp-cmp-name" role="cell"><i class="kp-cmp-swatch" style="background:{{ c.color }}"></i>{{ c.name }}</span>
+              <span class="kp-cmp-c2 kp-cmp-track" role="cell"><i class="kp-cmp-mark" style="left:{{ c.vsPct }}"></i></span>
+              <span class="kp-cmp-c3 kp-cmp-you" role="cell" style="color:var(--kp-text-4)">0</span>
+              <span class="kp-cmp-c4 kp-cmp-vs" role="cell">{{ c.vs }}</span>
+              <span class="kp-cmp-c5 kp-cmp-verdict" role="cell"><span style="font-weight:500;color:var(--kp-text-3)">{{ c.need }}</span></span>
+            </div>
+          </sc-for>
         </div>
+      </div>
+      <div class="kp-cmp-foot">
+        <span class="kp-cmp-key">
+          <span class="kp-cmp-keyitem"><i class="kp-cmp-keybar"></i>Your points</span>
+          <span class="kp-cmp-keyitem"><i class="kp-cmp-keytick"></i>{{ fwAvgLabel }}</span>
+        </span>
+        <span>Every cheer you receive is counted against one of the six KPIs and lengthens that bar.</span>
       </div>
     </section>
   </div>
@@ -1709,41 +1877,34 @@ a:hover{color:#EC873A;text-decoration:underline}
 <sc-if value="{{ isWallSeasoned }}" hint-placeholder-val="{{ false }}">
 <main style="padding:20px 24px 32px;display:flex;flex-direction:column;gap:20px;animation:fadein .3s ease-out">
 
-  <!-- MW3-05 · My Wall opens with who you are and where you stand, not with five
-       equal tiles. Identity on the left, the signals that answer "how am I
-       doing" on the right, and the one action worth taking from here. -->
-  <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:20px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);display:flex;flex-wrap:wrap;align-items:stretch">
-    <div style="flex:1 1 330px;min-width:0;padding:20px 22px;display:flex;align-items:center;gap:16px">
-      <span aria-hidden="true" style="width:58px;height:58px;flex:0 0 auto;border-radius:999px;background:linear-gradient(145deg,#F3954D,#C85B08);color:#fff;display:grid;place-items:center;font-size:19px;font-weight:700">{{ me.initials }}</span>
-      <span style="min-width:0;display:flex;flex-direction:column;gap:4px">
-        <strong style="font-size:22px;font-weight:700;letter-spacing:-.025em;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ me.name }}</strong>
-        <span style="font-size:13px;color:#7A736C;text-wrap:pretty">{{ wallWho }}</span>
-        <span style="margin-top:3px;display:flex;gap:8px;flex-wrap:wrap">
-          <button sc-camel-on-click="{{ openComposer }}" style="min-height:36px;padding:0 14px;border:1px solid #EC873A;border-radius:11px;background:#EC873A;color:#fff;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:650;box-shadow:0 6px 16px -8px rgba(206,107,31,.6);transition:background .16s" style-hover="background:#DE7A2A"><svg width="14" height="14"><use href="#i-mega"></use></svg>Write a shout out</button>
-          <button sc-camel-on-click="{{ openHelp }}" style="min-height:36px;padding:0 13px;border:1px solid #E7E1DB;border-radius:11px;background:#fff;color:#6E665F;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;transition:border-color .16s,color .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F"><svg width="14" height="14"><use href="#i-help"></use></svg>How the wall works</button>
-        </span>
+  <!-- MW3-05 · The wall opens on the same band Showcase uses: identity in the
+       lead cell, then the readings that answer "how am I doing". Every cell
+       closes on a measure, so the row has a top edge and a bottom edge rather
+       than one tall badge cell beside four half-empty ones. -->
+  <section class="om-sec kp-snap kp-snap-wall" aria-label="Your standing">
+    <div class="kp-snap-cell kp-snap-lead">
+      <span class="kp-snap-label">Your wall</span>
+      <span class="kp-snap-figure"><strong class="kp-identity-name">{{ me.name }}</strong></span>
+      <span class="kp-snap-note">{{ wallWho }}</span>
+      <span class="kp-identity-acts">
+        <button class="kp-btn kp-btn-primary" sc-camel-on-click="{{ openComposer }}"><svg width="14" height="14"><use href="#i-mega"></use></svg>Write a shout out</button>
+        <button class="kp-btn" sc-camel-on-click="{{ openHelp }}"><svg width="14" height="14"><use href="#i-help"></use></svg>How the wall works</button>
       </span>
     </div>
-    <div style="flex:1 1 560px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(146px,1fr))">
-      <sc-for list="{{ wallMetrics }}" as="m" hint-placeholder-count="5">
-        <button sc-camel-on-click="{{ m.open }}" title="{{ m.title }}" style="min-width:0;padding:20px 16px;border:0;border-left:1px solid #F0EBE6;background:transparent;display:flex;flex-direction:column;gap:7px;text-align:left;transition:background .16s" style-hover="background:#FFFCF9">
-          <span style="display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#A79E95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-            <sc-if value="{{ m.live }}" hint-placeholder-val="{{ false }}"><i style="width:7px;height:7px;border-radius:999px;background:#1F9B5D;animation:breathe 2.2s ease-in-out infinite;flex:0 0 auto"></i></sc-if>
-            {{ m.title }}
-          </span>
-          <strong style="font-size:{{ m.size }};line-height:1.1;letter-spacing:-.028em;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;max-width:100%">{{ m.value }}</strong>
-          <span style="font-size:12.5px;line-height:1.4;color:{{ m.noteColor }};text-wrap:pretty">{{ m.note }}</span>
-          <sc-if value="{{ m.bar }}" hint-placeholder-val="{{ false }}">
-            <span style="width:100%;display:flex;flex-direction:column;gap:5px">
-              <span style="width:100%;height:5px;border-radius:999px;background:#F3EFEB;overflow:hidden;display:block">
-                <span style="display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#F0954F,#CE6B1F);width:{{ m.bar.pct }};transition:width .22s cubic-bezier(.32,.72,0,1)"></span>
-              </span>
-              <span style="font-size:12px;font-weight:650;color:#B4600F">{{ m.bar.label }}</span>
-            </span>
-          </sc-if>
-        </button>
-      </sc-for>
-    </div>
+    <sc-for list="{{ wallMetrics }}" as="m" hint-placeholder-count="5">
+      <button class="kp-snap-cell" sc-camel-on-click="{{ m.open }}" title="{{ m.title }}">
+        <span class="kp-snap-label">
+          <sc-if value="{{ m.live }}" hint-placeholder-val="{{ false }}"><i class="kp-live"></i></sc-if>
+          {{ m.title }}
+        </span>
+        <span class="kp-snap-figure"><strong class="kp-snap-value" style="font-size:{{ m.size }}">{{ m.value }}</strong></span>
+        <span class="kp-snap-note" style="color:{{ m.noteColor }}">{{ m.note }}</span>
+        <span class="kp-snap-meter">
+          <span class="kp-meter"><i style="width:{{ m.barPct }};background:{{ m.barFg }}"></i></span>
+          <span class="kp-snap-scale"><span>{{ m.barLabel }}</span><span>{{ m.barValue }}</span></span>
+        </span>
+      </button>
+    </sc-for>
   </section>
 
   <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
@@ -1756,93 +1917,60 @@ a:hover{color:#EC873A;text-decoration:underline}
     </div>
     <div style="padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:10px">
       <sc-for list="{{ wallFeedPreview }}" as="x" hint-placeholder-count="3">
-        <button sc-camel-on-click="{{ x.open }}" aria-label="{{ x.openLabel }}" style="min-height:76px;padding:12px 14px;border:1px solid #EFEAE5;border-radius:16px;background:#FDFCFB;display:flex;gap:11px;align-items:flex-start;min-width:0;text-align:left;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">
-          <span style="width:32px;height:32px;flex:0 0 auto;border-radius:10px;display:grid;place-items:center;color:{{ x.fg }};background:{{ x.bg }}"><svg width="16" height="16"><use href="#{{ x.icon }}"></use></svg></span>
-          <span style="min-width:0;display:flex;flex-direction:column;gap:3px">
-            <strong style="font-size:13px;line-height:1.35">{{ x.title }}</strong>
-            <span style="font-size:12px;color:#8A827A">{{ x.kind }} · {{ x.time }}</span>
+        <button class="kp-feedcard" sc-camel-on-click="{{ x.open }}" aria-label="{{ x.openLabel }}">
+          <span class="kp-feedcard-icon" style="color:{{ x.fg }};background:{{ x.bg }}"><svg width="16" height="16"><use href="#{{ x.icon }}"></use></svg></span>
+          <span class="kp-feedcard-body">
+            <strong class="kp-feedcard-title">{{ x.title }}</strong>
+            <span class="kp-feedcard-kind">{{ x.kind }}</span>
           </span>
+          <span class="kp-feedcard-time">{{ x.time }}</span>
         </button>
       </sc-for>
     </div>
   </section>
 
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
-    <section style="flex:1.7 1 620px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:20px 22px;border-bottom:1px solid #F0EBE6">
-        <h2 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em">Recognition radar</h2>
-        <p style="margin:5px 0 0;font-size:13px;color:#7A736C">{{ radarSub }}</p>
+    <section class="om-sec" style="flex:1.7 1 620px;min-width:0;border:1px solid var(--kp-border);border-radius:22px;background:var(--kp-surface);box-shadow:var(--kp-shadow);overflow:hidden;display:flex;flex-direction:column">
+      <div class="kp-sec-head">
+        <div style="flex:1 1 220px;min-width:0">
+          <h2 class="kp-sec-title">Score by KPI</h2>
+          <p class="kp-sec-sub">{{ cmpSub }}</p>
+        </div>
+        <div class="kp-segrow" role="group" aria-label="Compare my points with" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
+          <sc-for list="{{ cmpSeg }}" as="sg" hint-placeholder-count="3">
+            <button sc-camel-on-click="{{ sg.pick }}" aria-pressed="{{ sg.press }}" style="flex:0 0 auto;height:36px;padding:0 15px;border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s;background:{{ sg.pillBg }};color:{{ sg.fg }};font-weight:{{ sg.fw }};box-shadow:{{ sg.pillSh }}">{{ sg.label }}</button>
+          </sc-for>
+        </div>
       </div>
-      <div style="flex:1;padding:22px;display:flex;flex-wrap:wrap;gap:22px;align-items:center">
-        <div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px">
-          <div style="position:relative;width:100%;max-width:340px">
-          <svg sc-camel-view-box="-140 -130 280 260" style="display:block;width:100%;height:auto" role="img" aria-label="Recognition radar comparing you with the account average">
-            <g>
-              <polygon points="0,-104 90.1,-52 90.1,52 0,104 -90.1,52 -90.1,-52" fill="none" stroke="#EFEAE5" stroke-width="1"></polygon>
-              <polygon points="0,-69.3 60,-34.7 60,34.7 0,69.3 -60,34.7 -60,-34.7" fill="none" stroke="#EFEAE5" stroke-width="1"></polygon>
-              <polygon points="0,-34.7 30,-17.4 30,17.4 0,34.7 -30,17.4 -30,-17.4" fill="none" stroke="#EFEAE5" stroke-width="1"></polygon>
-              <line x1="0" y1="0" x2="0" y2="-104" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="90.1" y2="-52" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="90.1" y2="52" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="0" y2="104" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="-90.1" y2="52" stroke="#F3EFEB"></line>
-              <line x1="0" y1="0" x2="-90.1" y2="-52" stroke="#F3EFEB"></line>
-              <sc-for list="{{ radarRings }}" as="g" hint-placeholder-count="3">
-                <text x="5" y="{{ g.y }}" fill="#8A827A" font-size="12" font-weight="700" paint-order="stroke" stroke="#fff" stroke-width="3.5" stroke-linejoin="round">{{ g.label }}</text>
-              </sc-for>
-              <circle cx="0" cy="0" r="2" fill="#C9C0B7"></circle>
-              <text x="5" y="4" fill="#A79E95" font-size="12" font-weight="700" paint-order="stroke" stroke="#fff" stroke-width="3.5" stroke-linejoin="round">0</text>
-              <sc-if value="{{ radarAccOn }}" hint-placeholder-val="{{ true }}">
-                <polygon points="{{ radarAvg }}" fill="none" stroke="#B9AFA5" stroke-width="1.8" stroke-dasharray="1.5 4"></polygon>
-              </sc-if>
-              <sc-if value="{{ radarPfOn }}" hint-placeholder-val="{{ true }}">
-                <polygon points="{{ radarPf }}" fill="none" stroke="#7A736C" stroke-width="1.8" stroke-dasharray="6 4"></polygon>
-              </sc-if>
-              <sc-if value="{{ radarYouOn }}" hint-placeholder-val="{{ true }}">
-                <polygon class="om-draw" points="{{ radarYou }}" fill="rgba(236,135,58,.16)" stroke="#EC873A" stroke-width="2.2" stroke-dasharray="1400"></polygon>
-              </sc-if>
-              <sc-for list="{{ radarDots }}" as="d" hint-placeholder-count="6"><circle cx="{{ d.x }}" cy="{{ d.y }}" r="{{ d.r }}" fill="{{ d.fill }}" stroke="#EC873A" stroke-width="{{ d.w }}" style="transition:r .16s"></circle></sc-for>
-            </g>
-          </svg>
-          <sc-for list="{{ radarLabels }}" as="l" hint-placeholder-count="6">
-            <button sc-camel-on-mouse-enter="{{ l.enter }}" sc-camel-on-mouse-leave="{{ l.leave }}" sc-camel-on-focus="{{ l.enter }}" sc-camel-on-blur="{{ l.leave }}" style="position:absolute;left:{{ l.left }};top:{{ l.top }};transform:translate(-50%,-50%);white-space:nowrap;display:flex;align-items:center;gap:6px;padding:3px 9px;border:1px solid {{ l.bd }};border-radius:999px;background:{{ l.bg }};box-shadow:{{ l.sh }};font-size:12px;font-weight:600;color:{{ l.fg }};transition:all .16s">
-              {{ l.name }}<b style="font-variant-numeric:tabular-nums;color:{{ l.vFg }}">{{ l.value }}</b>
+      <div class="kp-cmp" role="table" aria-label="My points for each KPI beside {{ cmpBasisLabel }}">
+        <div class="kp-cmp-head" role="row">
+          <span class="kp-cmp-c1" role="columnheader">KPI</span>
+          <span class="kp-cmp-c2" role="columnheader">Points · 0 to {{ cmpMax }}</span>
+          <span class="kp-cmp-c3 kp-cmp-num" role="columnheader">You</span>
+          <span class="kp-cmp-c4 kp-cmp-num" role="columnheader">{{ cmpShort }}</span>
+          <span class="kp-cmp-c5 kp-cmp-num" role="columnheader">Gap</span>
+        </div>
+        <div role="rowgroup" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+          <sc-for list="{{ cmpRows }}" as="c" hint-placeholder-count="6">
+            <button class="kp-cmp-row" role="row" data-on="{{ c.on }}" aria-label="{{ c.aria }}" title="{{ c.title }}" sc-camel-on-click="{{ c.pick }}" sc-camel-on-mouse-enter="{{ c.enter }}" sc-camel-on-mouse-leave="{{ c.leave }}" sc-camel-on-focus="{{ c.enter }}" sc-camel-on-blur="{{ c.leave }}">
+              <span class="kp-cmp-c1 kp-cmp-name" role="cell"><i class="kp-cmp-swatch" style="background:{{ c.color }}"></i>{{ c.name }}</span>
+              <span class="kp-cmp-c2 kp-cmp-track" role="cell">
+                <i class="kp-cmp-fill" style="width:{{ c.youPct }};animation-delay:{{ c.delay }}"></i>
+                <i class="kp-cmp-mark" style="left:{{ c.vsPct }}"></i>
+              </span>
+              <span class="kp-cmp-c3 kp-cmp-you" role="cell">{{ c.you }}</span>
+              <span class="kp-cmp-c4 kp-cmp-vs" role="cell">{{ c.vs }}</span>
+              <span class="kp-cmp-c5 kp-cmp-verdict" role="cell"><b class="kp-cmp-delta" style="color:{{ c.deltaFg }}">{{ c.delta }}</b><span style="font-weight:500;color:var(--kp-text-3)">{{ c.verdict }}</span></span>
             </button>
           </sc-for>
-          </div>
-          <div style="width:100%;min-height:48px;margin-top:8px;padding:9px 13px;border:1px solid #F0EBE6;border-radius:12px;background:#FAF8F6;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-            <sc-if value="{{ radarTip.show }}" hint-placeholder-val="{{ false }}">
-              <span style="display:flex;align-items:center;gap:8px;min-width:0">
-                <span style="width:9px;height:9px;border-radius:999px;background:{{ radarTip.color }};flex:0 0 auto"></span>
-                <strong style="font-size:13px">{{ radarTip.name }}</strong>
-              </span>
-              <span style="display:flex;align-items:baseline;gap:5px;font-size:12px;color:#8A827A">You<b style="font-size:14px;color:#16130F;font-variant-numeric:tabular-nums">{{ radarTip.you }}</b></span>
-              <span style="display:flex;align-items:baseline;gap:5px;font-size:12px;color:#8A827A">Average<b style="font-size:14px;color:#6E665F;font-variant-numeric:tabular-nums">{{ radarTip.avg }}</b></span>
-              <strong style="margin-left:auto;font-size:12px;color:{{ radarTip.diffFg }}">{{ radarTip.diff }}</strong>
-            </sc-if>
-            <sc-if value="{{ radarIdle }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size:12px;color:#8A827A">{{ radarScale }}. Point at a KPI to compare it with the average.</span>
-            </sc-if>
-          </div>
-          <div style="width:100%;margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-            <sc-for list="{{ radarSeries }}" as="sr" hint-placeholder-count="3">
-              <button sc-camel-on-click="{{ sr.toggle }}" style="min-height:30px;padding:0 11px;border:1px solid #EFEAE5;border-radius:999px;background:#fff;display:inline-flex;align-items:center;gap:8px;font-size:12px;color:{{ sr.fg }};opacity:{{ sr.op }};transition:opacity .16s,border-color .16s" style-hover="border-color:#EFC9A8">
-                <svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="{{ sr.color }}" stroke-width="{{ sr.w }}" stroke-dasharray="{{ sr.dash }}"></line></svg>{{ sr.label }}
-              </button>
-            </sc-for>
-          </div>
         </div>
-        <div style="flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:5px">
-          <span style="color:#A79E95;font-size:12px;font-weight:700;letter-spacing:.08em">IN PLAIN WORDS</span>
-          <sc-for list="{{ radarReadout }}" as="r" hint-placeholder-count="6">
-            <div sc-camel-on-mouse-enter="{{ r.enter }}" sc-camel-on-mouse-leave="{{ r.leave }}" style="min-height:44px;padding:0 12px;border-radius:12px;display:flex;align-items:center;gap:10px;background:{{ r.bg }};transition:background .16s;animation:rise .4s ease-out both;animation-delay:{{ r.delay }}">
-              <span style="width:9px;height:9px;flex:0 0 auto;border-radius:999px;background:{{ r.color }}"></span>
-              <strong style="font-size:13px">{{ r.name }}</strong>
-              <b style="font-size:13px;color:#6E665F;font-variant-numeric:tabular-nums">{{ r.value }}</b>
-              <b style="margin-left:auto;font-size:12px;font-weight:650;color:{{ r.verdictColor }}">{{ r.verdict }}</b>
-            </div>
-          </sc-for>
-        </div>
+      </div>
+      <div class="kp-cmp-foot">
+        <span class="kp-cmp-key">
+          <span class="kp-cmp-keyitem"><i class="kp-cmp-keybar"></i>Your points</span>
+          <span class="kp-cmp-keyitem"><i class="kp-cmp-keytick"></i>{{ cmpBasisLabel }}</span>
+        </span>
+        <span>{{ cmpFoot }}</span>
       </div>
     </section>
 
@@ -3789,13 +3917,15 @@ a:hover{color:#EC873A;text-decoration:underline}
 
           <sc-if value="{{ b.isFields }}" hint-placeholder-val="{{ false }}">
             <div style="padding:{{ b.cardPad }};border:{{ b.cardBd }};border-radius:16px;background:{{ b.cardBg }};box-shadow:{{ b.cardSh }};display:grid;grid-template-columns:{{ b.splitCols }};gap:20px;align-items:start">
-                <div style="min-width:0;display:grid;grid-template-columns:{{ b.fieldCols }};gap:16px 20px;align-items:start">
+                <div class="{{ b.fieldsClass }}" style="min-width:0;display:grid;grid-template-columns:{{ b.fieldCols }};gap:16px 20px;align-items:start">
               <sc-for list="{{ b.fields }}" as="fl" hint-placeholder-count="3">
-                <div style="min-width:0;display:flex;flex-direction:column;gap:7px">
-                  <span style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
-                    <strong style="font-size:13px;font-weight:650;letter-spacing:-.005em;color:#16130F">{{ fl.label }}</strong>
-                    <sc-if value="{{ fl.hint }}" hint-placeholder-val="{{ false }}"><small style="font-size:12px;color:#A79E95">{{ fl.hint }}</small></sc-if>
-                  </span>
+                <div class="kp-field" style="min-width:0;display:flex;flex-direction:column;gap:8px">
+                  <sc-if value="{{ fl.showLabel }}" hint-placeholder-val="{{ true }}">
+                    <span style="display:flex;flex-direction:column;gap:2px">
+                      <strong style="font-size:13px;font-weight:650;letter-spacing:-.005em;color:#16130F">{{ fl.label }}</strong>
+                      <sc-if value="{{ fl.hint }}" hint-placeholder-val="{{ false }}"><small style="font-size:12px;line-height:1.4;color:#A79E95">{{ fl.hint }}</small></sc-if>
+                    </span>
+                  </sc-if>
                   <sc-if value="{{ fl.mark }}" hint-placeholder-val="{{ false }}">
                     <em style="align-self:flex-start;font-style:normal;padding:2px 9px;border-radius:6px;background:{{ fl.markBg }};color:{{ fl.markFg }};font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em">{{ fl.mark }}</em>
                   </sc-if>
@@ -3881,24 +4011,24 @@ a:hover{color:#EC873A;text-decoration:underline}
                     </div>
                   </sc-if>
                   <sc-if value="{{ fl.isToggle }}" hint-placeholder-val="{{ false }}">
-                    <button sc-camel-on-click="{{ fl.set }}" role="switch" style="min-height:52px;padding:0 16px;border:1px solid {{ fl.bd }};border-radius:14px;background:{{ fl.bg }};display:flex;align-items:center;gap:13px;text-align:left;transition:all .18s">
+                    <button sc-camel-on-click="{{ fl.set }}" role="switch" aria-checked="{{ fl.checked }}" style="width:100%;min-height:44px;padding:0;border:0;background:transparent;display:flex;align-items:center;gap:14px;text-align:left">
                       <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
-                        <strong style="font-size:13px">{{ fl.on_label }}</strong>
-                        <small style="font-size:12px;color:#8A827A;font-weight:400">{{ fl.desc }}</small>
+                        <strong style="font-size:13px;font-weight:650">{{ fl.label }}</strong>
+                        <small style="font-size:12px;line-height:1.45;color:#8A827A;font-weight:400">{{ fl.on_label }} · {{ fl.desc }}</small>
                       </span>
                       <span style="flex:0 0 auto;width:46px;height:26px;border-radius:999px;background:{{ fl.trackBg }};padding:3px;display:flex;justify-content:{{ fl.knob }};transition:background .2s"><i style="width:20px;height:20px;border-radius:999px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);transition:all .2s"></i></span>
                     </button>
                   </sc-if>
                   <sc-if value="{{ fl.isCards }}" hint-placeholder-val="{{ false }}">
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px">
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(184px,100%),1fr));gap:9px;align-items:stretch">
                       <sc-for list="{{ fl.cards }}" as="c" hint-placeholder-count="2">
-                        <button sc-camel-on-click="{{ c.pick }}" style="min-height:84px;padding:14px;border:1.5px solid {{ c.bd }};border-radius:14px;background:{{ c.bg }};display:flex;flex-direction:column;gap:6px;text-align:left;transition:all .18s">
-                          <span style="display:flex;align-items:center;gap:8px">
-                            <svg width="16" height="16" style="color:{{ c.fg }}"><use href="#{{ c.icon }}"></use></svg>
-                            <strong style="font-size:13px;color:{{ c.fg }}">{{ c.title }}</strong>
-                            <sc-if value="{{ c.on }}" hint-placeholder-val="{{ false }}"><svg width="15" height="15" style="color:#CE6B1F;margin-left:auto"><use href="#i-check"></use></svg></sc-if>
+                        <button sc-camel-on-click="{{ c.pick }}" aria-pressed="{{ c.pressed }}" style="min-height:88px;padding:13px 14px;border:1.5px solid {{ c.bd }};border-radius:14px;background:{{ c.bg }};display:flex;flex-direction:column;gap:7px;text-align:left;transition:border-color .18s,background .18s">
+                          <span style="display:flex;align-items:center;gap:8px;min-height:20px;width:100%">
+                            <svg width="16" height="16" style="color:{{ c.fg }};flex:0 0 auto"><use href="#{{ c.icon }}"></use></svg>
+                            <strong style="flex:1;min-width:0;font-size:13px;color:{{ c.fg }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.title }}</strong>
+                            <sc-if value="{{ c.on }}" hint-placeholder-val="{{ false }}"><svg width="15" height="15" style="color:#CE6B1F;flex:0 0 auto"><use href="#i-check"></use></svg></sc-if>
                           </span>
-                          <small style="font-size:12px;color:#8A827A;line-height:1.45">{{ c.desc }}</small>
+                          <small style="flex:1;min-height:34px;font-size:12px;color:#8A827A;line-height:1.45;text-wrap:pretty">{{ c.desc }}</small>
                         </button>
                       </sc-for>
                     </div>
@@ -4261,10 +4391,10 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
     </sc-if>
     <sc-if value="{{ ov.footer }}" hint-placeholder-val="{{ false }}">
-      <div style="flex:0 0 auto;padding:16px 24px;border-top:1px solid #F0EBE6;background:#FDFCFB;display:flex;align-items:center;gap:11px;flex-wrap:wrap">
+      <div style="flex:0 0 auto;padding:16px 24px;border-top:1px solid #F0EBE6;background:#FDFCFB;display:flex;align-items:center;justify-content:flex-end;gap:11px;flex-wrap:wrap">
         <sc-if value="{{ ov.footNote }}" hint-placeholder-val="{{ false }}"><span style="order:-1;flex:1 0 100%;font-size:12px;color:#8A827A">{{ ov.footNote }}</span></sc-if>
         <sc-if value="{{ ov.secondary }}" hint-placeholder-val="{{ false }}">
-          <button sc-camel-on-click="{{ ov.secondaryAct }}" style="margin-right:auto;height:44px;padding:0 18px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:13px;font-weight:650;display:inline-flex;align-items:center;gap:8px;transition:border-color .16s" style-hover="border-color:#EC873A;background:#FFF6EE;color:#B4600F">{{ ov.secondary }}</button>
+          <button sc-camel-on-click="{{ ov.secondaryAct }}" style="margin-right:{{ ov.secondaryPush }};height:44px;padding:0 18px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:13px;font-weight:650;display:inline-flex;align-items:center;gap:8px;transition:border-color .16s" style-hover="border-color:#EC873A;background:#FFF6EE;color:#B4600F">{{ ov.secondary }}</button>
         </sc-if>
         <sc-if value="{{ ov.primary }}" hint-placeholder-val="{{ false }}">
           <button sc-camel-on-click="{{ ov.primaryAct }}" style="height:44px;padding:0 20px;border:1px solid #EC873A;border-radius:12px;background:#EC873A;color:#fff;font-size:13px;font-weight:650;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 16px -6px rgba(206,107,31,.6);transition:background .16s" style-hover="background:#DE7A2A">{{ ov.primary }}</button>
@@ -4624,7 +4754,7 @@ a:hover{color:#EC873A;text-decoration:underline}
                       </button>
                     </sc-if>
                     <sc-if value="{{ fl.isCards }}" hint-placeholder-val="{{ false }}">
-                      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px">
+                      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(184px,100%),1fr));gap:9px;align-items:stretch">
                         <sc-for list="{{ fl.cards }}" as="c" hint-placeholder-count="2">
                           <button sc-camel-on-click="{{ c.pick }}" style="min-height:84px;padding:14px;border:1.5px solid {{ c.bd }};border-radius:14px;background:{{ c.bg }};display:flex;flex-direction:column;gap:6px;text-align:left;transition:all .18s">
                             <span style="display:flex;align-items:center;gap:8px">
@@ -4993,9 +5123,9 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
       </sc-if>
     <sc-if value="{{ ov.footer }}" hint-placeholder-val="{{ false }}">
-        <div style="flex:0 0 auto;padding:16px 24px;border-top:1px solid #F0EBE6;background:#FDFCFB;display:flex;align-items:center;gap:11px;flex-wrap:wrap">
+        <div style="flex:0 0 auto;padding:16px 24px;border-top:1px solid #F0EBE6;background:#FDFCFB;display:flex;align-items:center;justify-content:flex-end;gap:11px;flex-wrap:wrap">
           <sc-if value="{{ ov.footNote }}" hint-placeholder-val="{{ false }}"><span style="order:-1;flex:1 0 100%;font-size:12px;color:#8A827A">{{ ov.footNote }}</span></sc-if>
-          <sc-if value="{{ ov.secondary }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ ov.secondaryAct }}" style="margin-right:auto;height:44px;padding:0 18px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:13px;font-weight:650;transition:border-color .16s" style-hover="border-color:#EC873A;background:#FFF6EE;color:#B4600F">{{ ov.secondary }}</button></sc-if>
+          <sc-if value="{{ ov.secondary }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ ov.secondaryAct }}" style="margin-right:{{ ov.secondaryPush }};height:44px;padding:0 18px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:13px;font-weight:650;transition:border-color .16s" style-hover="border-color:#EC873A;background:#FFF6EE;color:#B4600F">{{ ov.secondary }}</button></sc-if>
           <sc-if value="{{ ov.primary }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ ov.primaryAct }}" disabled="{{ ov.primaryOff }}" style="height:44px;padding:0 20px;border:1px solid #EC873A;border-radius:12px;background:#EC873A;color:#fff;font-size:13px;font-weight:650;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 16px -6px rgba(206,107,31,.6);opacity:{{ ov.primaryOpacity }};transition:background .16s" style-hover="background:#DE7A2A">{{ ov.primary }}</button></sc-if>
         </div>
       </sc-if>
@@ -5174,7 +5304,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
       <div style="flex:0 0 auto;padding:11px 14px;border-bottom:1px solid #F3EFEB;display:flex;gap:6px;flex-wrap:wrap">
         <sc-for list="{{ searchScopes }}" as="c" hint-placeholder-count="8">
-          <button sc-camel-on-click="{{ c.pick }}" style="min-height:26px;padding:0 11px;border:1px solid {{ c.bd }};border-radius:999px;background:{{ c.bg }};color:{{ c.fg }};font-size:12.5px;font-weight:{{ c.fw }};transition:background .16s,border-color .16s">{{ c.label }}</button>
+          <button sc-camel-on-click="{{ c.pick }}" aria-pressed="{{ c.pressed }}" style="min-height:30px;padding:0 11px;border:1px solid {{ c.bd }};border-radius:999px;background:{{ c.bg }};color:{{ c.fg }};font-size:12.5px;font-weight:{{ c.fw }};display:inline-flex;align-items:center;gap:7px;opacity:{{ c.op }};transition:background .16s,border-color .16s,opacity .16s">{{ c.label }}<sc-if value="{{ c.count }}" hint-placeholder-val="{{ false }}"><em style="font-style:normal;font-size:12px;font-weight:700;color:{{ c.countFg }};font-variant-numeric:tabular-nums">{{ c.count }}</em></sc-if></button>
         </sc-for>
       </div>
       <div data-pop-list style="flex:0 1 auto;min-height:0;overflow-y:auto;padding:10px">
@@ -5205,9 +5335,9 @@ a:hover{color:#EC873A;text-decoration:underline}
           </div>
         </sc-if>
       </div>
-      <div style="flex:0 0 auto;padding:12px 20px;border-top:1px solid #F3EFEB;background:#FAF8F6;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <span style="font-size:12px;color:#8A827A">{{ searchHint }}</span>
-        <span style="margin-left:auto;font-size:12.5px;color:#A79E95;text-align:right">Shell search. Finding a person inside the standings is a separate control in the module.</span>
+      <div style="flex:0 0 auto;min-height:44px;padding:11px 20px;border-top:1px solid #F3EFEB;background:#FAF8F6;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap">
+        <strong style="font-size:12.5px;font-weight:650;color:#5E564F">{{ searchHint }}</strong>
+        <span style="font-size:12.5px;line-height:1.45;color:#A79E95;text-wrap:pretty">{{ searchNote }}</span>
       </div>
     </div>
   </div>
@@ -5597,7 +5727,7 @@ const FEED_RETENTION_DAYS = 90;
 //                       Set Round 3 BD-04. No versus-you delta, no unlabelled percentage.
 //
 // ── SECTION GROUND RULE (Round 2 VD-02, closed in Round 3 VD3-01) ───────────────
-// WHITE            every dashboard section card: tiles, radar, momentum, position,
+// WHITE            every dashboard section card: tiles, score by KPI, momentum, position,
 //                  moments, follows, feed. White means "this is a measurement".
 // WARM NEUTRAL     rails and sub-headers, #FAF8F6 / #FDFCFB. Means "this is a control".
 // KPI TINT         recognition cards ONLY, at 4% of the KPI hue, with the same hue at
@@ -6038,7 +6168,7 @@ class Component extends DCLogic {
     range:null, calMode:false, calFrom:null, calTo:null, calY:2026, calM:7,
     openFilter:null,
     feedOpen:{}, commentDraft:{}, entityFollows:{'person:Rahul Deshmukh':true, 'person:Manisha Bathla':true}, entityShowAll:{},
-    cmQuery:{}, cmFilter:{}, cmShow:{}, radarHover:null,
+    cmQuery:{}, cmFilter:{}, cmShow:{}, kpiHover:null, cmpBasis:'acc',
     recogQuery:'', recogCat:'All', recogScope:'all', calSingle:false, momHover:null,
     more:{portfolio:'All', category:'All categories', liveOnly:false, momentum:false},
     moreDraft:null,
@@ -7048,6 +7178,8 @@ class Component extends DCLogic {
     const snapY = v => (52 - ((v - snapLo) / snapSpan) * 46).toFixed(1);
     const snapPts = snapTrend.map((v, i) => snapX(i) + ',' + snapY(v));
     const snapUp = snapTrend[snapTrend.length - 1] >= snapTrend[0];
+    const snapRising = ranked.filter(p => (p.change || 0) > 0).length;
+    const snapPeople = Math.max(1, ranked.reduce((a, p) => a + (p.people || 0), 0));
     // When nothing is filtered the population IS everything reachable, so the
     // comparison is against itself. Say that, rather than printing "+0".
     const snapGap = avgScore - accPfAvg;
@@ -7069,16 +7201,25 @@ class Component extends DCLogic {
       sparkAria:'Average score over twelve months, ' + MONTHS[0] + ' ' + snapTrend[0] + ' to '
         + MONTHS[MONTHS.length - 1] + ' ' + snapTrend[snapTrend.length - 1] + '. Low ' + snapLo + ', high ' + snapHi + '.',
       open:() => this.drill('scoreModel'),
+      // Each signal carries its own share alongside the figure. An unexplained
+      // number and a bar with a denominator are not the same reading, and the
+      // bar is what lets the three cells stand level with the trend beside them.
       signals:[
         {label:'Momentum', value:'+' + momentum + '%', fg:'#25714A',
          note:'change on last month, across ' + ranked.length + ' ' + grainNoun,
+         barPct:Math.round((snapRising / Math.max(1, ranked.length)) * 100) + '%', barFg:'#25714A',
+         barLabel:'improved this month', barValue:snapRising + ' of ' + ranked.length,
          open:() => this.openEntity('metric','momentum')},
         {label:'Cheers posted', value:String(cheers), fg:'#16130F', live:true,
          note:'to ' + recipientN + (recipientN === 1 ? ' person' : ' people') + ', ' + this.periodText().toLowerCase(),
+         barPct:Math.round((recipientN / Math.max(1, snapPeople)) * 100) + '%', barFg:'#EC873A',
+         barLabel:'of people recognised', barValue:recipientN + ' of ' + snapPeople,
          open:() => this.openEntity('metric','cheers')},
         {label:grainNoun.charAt(0).toUpperCase() + grainNoun.slice(1) + ' in scope', value:String(ranked.length), fg:'#16130F',
          note:ranked.reduce((a,p) => a + (p.people || 0), 0) + ' people · '
            + ranked.reduce((a,p) => a + (p.teams || 0), 0) + ' teams',
+         barPct:Math.round((ranked.length / Math.max(1, reachPf.length)) * 100) + '%', barFg:'#6E665F',
+         barLabel:'of everything you reach', barValue:ranked.length + ' of ' + reachPf.length,
          open:() => this.openEntity('metric','portfolios')}
       ]
     };
@@ -7758,14 +7899,16 @@ class Component extends DCLogic {
       markBd:t.done ? 'rgba(37,113,74,.35)' : '#EAE4DE', markBg:t.done ? '#25714A' : '#FAF8F6',
       markFg:t.done ? '#fff' : '#A79E95'}, t));
 
-    const axes = [[0,-1],[0.866,-0.5],[0.866,0.5],[0,1],[-0.866,0.5],[-0.866,-0.5]];
-    const avgPts = [], labels = [];
-    KPIS.forEach((k,i) => {
-      const a = peers.reduce((x,p) => x + p.kpi[k.id], 0) / Math.max(1, peers.length);
-      const r = (a / 30) * 104;
-      avgPts.push(Math.round(axes[i][0] * r * 10) / 10 + ',' + Math.round(axes[i][1] * r * 10) / 10);
-      labels.push({name:k.name, left:Math.round(50 + axes[i][0] * 42) + '%', top:Math.round(50 + axes[i][1] * 44) + '%'});
-    });
+    // The first week reads better as bars than as a dot at the centre. The
+    // ticks show what the floor around this person already scores, and the
+    // distance to each tick is the whole of a newcomer's story.
+    const fwAvgK = {};
+    KPIS.forEach(k => { fwAvgK[k.id] = Math.round(peers.reduce((x,p) => x + p.kpi[k.id], 0) / Math.max(1, peers.length)); });
+    const fwMax = Math.max(6, Math.ceil(Math.max.apply(null, KPIS.map(k => fwAvgK[k.id])) / 6) * 6);
+    const fwRows = KPIS.map(k => ({name:k.name, color:k.color, vs:String(fwAvgK[k.id]),
+      vsPct:(Math.round((fwAvgK[k.id] / fwMax) * 1000) / 10) + '%',
+      need:fwAvgK[k.id] + ' points'}));
+    const fwAvgLabel = me.loc + ' average, ' + peers.length + ' people';
 
     const pfNames = {};
     PF.filter(p => p.loc === me.loc).forEach(p => { pfNames[p.name] = true; });
@@ -7786,7 +7929,7 @@ class Component extends DCLogic {
         {title:'Badges', value:'0', size:'34px', fg:'#A79E95', note:'the first one lands at 3 cheers', icon:'#i-trophy'}
       ].map((m,i) => Object.assign({bd:'#E3DBD3', bg:'#FBFAF9', delay:(i * 60) + 'ms'}, m)),
       fwSteps:steps, fwStepsDone:steps.filter(t => t.done).length + '/3',
-      fwRadarAvg:avgPts.join(' '), fwRadarLabels:labels,
+      fwRows, fwMax, fwAvgLabel,
       fwPositionSub:'The top of Pune, and where you sit today',
       fwPositionRows:peers.slice(0,5).map((p,i) => ({rank:'#' + (i + 1), initials:initials(p.name), name:p.name,
         pf:p.pf, score:String(p.score), delay:(i * 40) + 'ms', open:() => this.openEntity('person', p.name)})),
@@ -7827,97 +7970,112 @@ class Component extends DCLogic {
     const allFollowers = autoFollowers + chosenFollowers;
 
     // MW3-05 · BADGE · SCORE · ENGAGEMENT · FOLLOWERS. Ranks live in the badge panel (BD-01).
+    // MW3-05 · Every reading closes on a measure with a stated denominator, so
+    // the five cells stand level and each number says what it is a share of.
+    const wallLead = rankedPool.length ? this.scoreOf(rankedPool[0]) : myScore;
     const wallMetrics = [
       {title:'Score', value:String(myScore), size:'30px',
         note:(me.change >= 0 ? '+' : '') + me.change + '% on last month · the six KPIs added up',
-        noteColor:me.change >= 0 ? '#25714A' : '#A7453B', icon:'#i-activity', delay:'0ms',
+        noteColor:me.change >= 0 ? '#25714A' : '#A7453B', delay:'0ms',
+        barPct:Math.round((myScore / Math.max(1, wallLead)) * 100) + '%',
+        barFg:me.change >= 0 ? '#25714A' : '#A7453B',
+        barLabel:'of the top score', barValue:myScore + ' of ' + wallLead,
         open:() => this.openEntity('person', me.name)},
       {title:'Rank', value:'#' + myRank, size:'30px',
-        note:'of ' + rankedPool.length + ' in ' + this.accountOf(me.name) + ' · ' + accAvg + ' is the average',
-        noteColor:'#8A827A', icon:'#i-trophy', delay:'60ms',
+        note:'in ' + this.accountOf(me.name) + ' · ' + accAvg + ' is the average score',
+        noteColor:'#8A827A', delay:'60ms',
+        barPct:Math.round(((rankedPool.length - myRank + 1) / Math.max(1, rankedPool.length)) * 100) + '%',
+        barFg:'#6E665F',
+        barLabel:'ahead of you', barValue:(myRank - 1) + ' of ' + rankedPool.length,
         open:() => this.openEntity('person', me.name)},
       {title:bs.holds ? 'Badge you hold' : 'Badge in reach', value:bs.family, size:'19px',
         note:bs.holds ? (bs.countLabel + ' · earned ' + bs.since) : ('none held yet · ' + bs.next.gap + ' points away'),
-        noteColor:'#8A827A', icon:'#i-medal', delay:'120ms',
-        bar:{pct:bs.pct + '%',
-          label:bs.next ? (bs.next.gap + (bs.next.gap === 1 ? ' point from ' : ' points from ') + bs.next.label) : 'All six badges held'},
+        noteColor:'#8A827A', delay:'120ms',
+        barPct:bs.pct + '%', barFg:'#EC873A',
+        barLabel:bs.next ? ('to ' + bs.next.label) : 'all six held',
+        barValue:bs.next ? (bs.next.gap + ' pts') : '6 of 6',
         open:() => this.open('badge')},
       {title:'Engagement', value:String(myBd.engagePts), size:'30px',
-        note:myBd.engageShare + '% of your score · cheers, shout outs and shares feed this KPI',
-        noteColor:'#8A827A', icon:'#i-mega', delay:'180ms', live:true, open:() => this.open('engagement')},
+        note:'cheers, shout outs and shares feed this KPI',
+        noteColor:'#8A827A', delay:'180ms', live:true,
+        barPct:myBd.engageShare + '%', barFg:'#7652B3',
+        barLabel:'of your score', barValue:myBd.engageShare + '%',
+        open:() => this.open('engagement')},
       {title:'Followers', value:String(allFollowers), size:'30px',
-        note:allFollowers + ' people see your recognition · ' + chosenFollowers + ' chose to follow you',
-        noteColor:'#8A827A', icon:'#i-users', delay:'240ms', open:() => this.open('followers')}
+        note:'people who see your recognition',
+        noteColor:'#8A827A', delay:'240ms',
+        barPct:Math.round((chosenFollowers / Math.max(1, allFollowers)) * 100) + '%', barFg:'#376D96',
+        barLabel:'chose to follow you', barValue:chosenFollowers + ' of ' + allFollowers,
+        open:() => this.open('followers')}
     ];
 
-    // ---- radar · RR-01 the scale is stated, RR-02 three series told apart by line style ----
-    const axes = [[0,-1],[0.866,-0.5],[0.866,0.5],[0,1],[-0.866,0.5],[-0.866,-0.5]];
+    // ---- score by KPI · one shared scale, one row per KPI ----
+    // This replaces the six-sided plot. That chart made a reader decode an
+    // angle and a radius before they could read a number, and it needed a
+    // column of prose beside it to say what it meant — proof it was not doing
+    // its job. Bars answer "how much" and a tick on the same track answers
+    // "compared with what", in one eye movement, and the rows are ranked, so
+    // the shape of the list is itself the finding. The comparison is a filter
+    // rather than three line styles: every basis the plot could draw is still
+    // reachable, plus the best single score in the account, which it could not.
     const myAcc = this.accountOf(me.name);
     const accPool = this.accountPeople(me.name);
     const pfPool = PEOPLE.filter(p => p.pf === me.pf);
-    const avgK = {}, pfK = {};
+    const avgK = {}, pfK = {}, topK = {};
     KPIS.forEach(k => {
       avgK[k.id] = Math.round(accPool.reduce((a,p) => a + this.kpiOf(p)[k.id], 0) / accPool.length);
       pfK[k.id] = Math.round(pfPool.reduce((a,p) => a + this.kpiOf(p)[k.id], 0) / Math.max(1, pfPool.length));
+      topK[k.id] = Math.max.apply(null, accPool.map(p => this.kpiOf(p)[k.id]));
     });
-    // RR-01 (revised) · reviewers could not tell what the outer ring was worth. The scale is
-    // now stated three ways: centre is 0, each ring is a third, and the outer ring carries
-    // its number in points. The max is rounded up to a multiple of six so the thirds are whole.
-    const rawMax = Math.max.apply(null, KPIS.map(k => Math.max.apply(null, accPool.map(p => this.kpiOf(p)[k.id]))));
-    const axisMax = Math.ceil(rawMax / 6) * 6;
-    const off = s.radarOff || {};
-    const hov = s.radarHover;
-    const youPts = [], avgPts = [], pfPts = [], dots = [], labels = [];
-    KPIS.forEach((k,i) => {
-      const ux = axes[i][0], uy = axes[i][1];
-      const on = hov === i;
-      const rr = v => (v / axisMax) * 104;
-      const ry = rr(myKpi[k.id]);
-      const yx = Math.round(ux * ry * 10) / 10, yy = Math.round(uy * ry * 10) / 10;
-      youPts.push(yx + ',' + yy);
-      avgPts.push(Math.round(ux * rr(avgK[k.id]) * 10) / 10 + ',' + Math.round(uy * rr(avgK[k.id]) * 10) / 10);
-      pfPts.push(Math.round(ux * rr(pfK[k.id]) * 10) / 10 + ',' + Math.round(uy * rr(pfK[k.id]) * 10) / 10);
-      dots.push({x:yx, y:yy, r:on ? 6 : 3.4, w:on ? 3 : 2, fill:on ? AC : '#fff'});
-      labels.push({name:k.name, value:String(myKpi[k.id]),
-        left:Math.round(50 + ux * 43) + '%',
-        top:Math.round(50 + uy * 45) + '%',
-        bd:on ? '#EFC9A8' : 'transparent', bg:on ? '#fff' : 'transparent',
-        fg:on ? '#16130F' : '#8A827A', vFg:on ? k.color : '#B3AAA1',
-        sh:on ? '0 6px 18px -8px rgba(116,69,31,.45)' : 'none',
-        enter:() => this.setState({radarHover:i}),
-        leave:() => this.setState({radarHover:null})});
-    });
-    // RR-01 · every ring carries its own value, so a full hexagon means something exact
-    const radarRings = [{r:34.7, v:axisMax / 3}, {r:69.3, v:(axisMax / 3) * 2}, {r:104, v:axisMax, end:true}]
-      .map(g => ({r:String(g.r), y:String(-g.r + 1), label:g.end ? (g.v + ' pts') : String(g.v)}));
-    const radarSeries = [
-      {k:'you', label:'You', dash:'0', color:AC, w:'2.2', swatch:'solid'},
-      {k:'pf', label:me.pf + ' average, ' + pfPool.length + ' people', dash:'6 4', color:'#7A736C', w:'1.8', swatch:'dashed'},
-      {k:'acc', label:myAcc + ' average, ' + accPool.length + ' people', dash:'1.5 4', color:'#B9AFA5', w:'1.8', swatch:'dotted'}
-    ].map(o => {
-      const on = !off[o.k];
-      return Object.assign({}, o, {on, op:on ? '1' : '.35',
-        fg:on ? '#3A342E' : '#A79E95',
-        toggle:() => this.setState({radarOff:Object.assign({}, s.radarOff, {[o.k]:on})})});
-    });
-    const hk = hov === null ? null : KPIS[hov];
-    const hDiff = hk ? myKpi[hk.id] - avgK[hk.id] : 0;
-    const radarTip = hk
-      ? {show:true, name:hk.name, color:hk.color, you:String(myKpi[hk.id]), avg:String(avgK[hk.id]),
-         diff:(hDiff >= 0 ? '+' : '') + hDiff + ' vs the ' + myAcc + ' average', diffFg:hDiff >= 0 ? '#25714A' : '#8F5D14'}
-      : {show:false, name:'', color:AC, you:'', avg:'', diff:'', diffFg:'#8A827A'};
-    const verdict = v => {
-      if (v > 18) return {t:'well above average', c:'#25714A'};
-      if (v > 6) return {t:'above average', c:'#25714A'};
-      if (v > -6) return {t:'around average', c:'#8A827A'};
-      return {t:'below average', c:'#8F5D14'};
+    // One scale for all six rows, rounded up to a multiple of six so the header
+    // reads as a round number. It ends just past the longest thing on screen —
+    // a ceiling set by an outlier would squash every bar into the same half-inch
+    // and hide the differences the panel exists to show.
+    const cmpCeil = vals => Math.max(6, Math.ceil(Math.max.apply(null,
+      KPIS.map(k => Math.max(myKpi[k.id], vals[k.id]))) / 6) * 6);
+    const CMP_BASES = {
+      acc:{label:myAcc + ' average', short:'Average', vals:avgK,
+           note:'the average across ' + accPool.length + ' people in ' + myAcc},
+      pf:{label:me.pf + ' average', short:'Average', vals:pfK,
+          note:'the average across ' + pfPool.length + ' people in ' + me.pf},
+      top:{label:'Best in ' + myAcc, short:'Best', vals:topK,
+           note:'the highest score any one person in ' + myAcc + ' holds for that KPI'}
     };
-    const radarReadout = KPIS.map((k,i) => {
-      const pct = Math.round(((myKpi[k.id] - avgK[k.id]) / Math.max(1, avgK[k.id])) * 100);
-      const v = verdict(pct);
-      return {name:k.name, color:k.color, verdict:v.t, verdictColor:v.c, value:String(myKpi[k.id]),
-        bg:i === hov ? '#FFF6EE' : (i % 2 ? '#FAF8F6' : 'transparent'), delay:(i * 50) + 'ms',
-        enter:() => this.setState({radarHover:i}), leave:() => this.setState({radarHover:null})};
+    const cmpKey = CMP_BASES[s.cmpBasis] ? s.cmpBasis : 'acc';
+    const cmpBase = CMP_BASES[cmpKey];
+    const cmpMax = cmpCeil(cmpBase.vals);
+    const hovK = s.kpiHover;
+    const cmpVerdict = (d, base) => {
+      const pct = Math.round((d / Math.max(1, base)) * 100);
+      if (pct > 18) return {t:'well ahead', c:'#25714A'};
+      if (pct > 6) return {t:'ahead', c:'#25714A'};
+      if (pct >= -6) return {t:'level', c:'#8A827A'};
+      if (pct >= -18) return {t:'behind', c:'#8F5D14'};
+      return {t:'well behind', c:'#8F5D14'};
+    };
+    const cmpRows = KPIS.map((k,i) => {
+      const you = myKpi[k.id], vs = cmpBase.vals[k.id], d = you - vs;
+      const v = cmpVerdict(d, vs);
+      return {i, name:k.name, color:k.color, you:String(you), vs:String(vs),
+        youPct:(Math.round((you / cmpMax) * 1000) / 10) + '%',
+        vsPct:(Math.round((vs / cmpMax) * 1000) / 10) + '%',
+        delta:(d > 0 ? '+' : '') + d, deltaFg:v.c, verdict:v.t,
+        on:hovK === i ? '1' : '0',
+        title:'You ' + you + ' · ' + cmpBase.label + ' ' + vs + ' · ' + (d > 0 ? '+' : '') + d,
+        aria:k.name + ': you ' + you + ' points, ' + cmpBase.label + ' ' + vs + ', ' + v.t
+          + '. Opens this KPI in My momentum.',
+        enter:() => this.setState({kpiHover:i}),
+        leave:() => this.setState({kpiHover:null}),
+        pick:() => { this.setState({momKpi:k.id, momHover:null, kpiHover:i});
+          this.flash('My momentum now shows ' + k.name + '.'); }};
+    }).sort((a,b) => Number(b.you) - Number(a.you));
+    cmpRows.forEach((r,i) => { r.delay = (i * 45) + 'ms'; });
+    const cmpSeg = ['acc','pf','top'].map(kk => {
+      const b = CMP_BASES[kk], on = kk === cmpKey;
+      return {label:b.label, press:on ? 'true' : 'false',
+        pillBg:on ? '#fff' : 'transparent', fg:on ? '#16130F' : '#6E665F',
+        fw:on ? '650' : '500', pillSh:on ? '0 1px 2px rgba(22,19,15,.10)' : 'none',
+        pick:() => this.setState({cmpBasis:kk, kpiHover:null})};
     });
 
     // ---- momentum · MO-01 per month, never cumulative · MO-02 two moving series ----
@@ -8174,13 +8332,10 @@ class Component extends DCLogic {
     }));
 
     return {
-      wallMetrics, wallWho, radarYou:youPts.join(' '), radarAvg:avgPts.join(' '), radarPf:pfPts.join(' '),
-      radarDots:dots, radarLabels:labels, radarReadout, radarTip, radarIdle:!radarTip.show,
-      radarRings, radarSeries,
-      radarYouOn:!off.you, radarPfOn:!off.pf, radarAccOn:!off.acc,
-      radarSub:'Centre 0 · outer ring ' + axisMax + ' points, the highest single KPI score in ' + myAcc + ' · ' + viewNote,
-      radarScale:'0 at the centre · ' + (axisMax / 3) + ' · ' + ((axisMax / 3) * 2) + ' · ' + axisMax + ' points at the outer ring',
-      momChart, momDetail, momStrip, momStats, momMoves, momMovesHead, momPanel,
+      wallMetrics, wallWho,
+      cmpRows, cmpSeg, cmpMax:String(cmpMax), cmpShort:cmpBase.short, cmpBasisLabel:cmpBase.label,
+      cmpSub:'Ranked by your points, all six on one 0 to ' + cmpMax + ' scale',
+      cmpFoot:viewNote + ' · the tick marks ' + cmpBase.note + ' · select a KPI to open it in My momentum',
       momSub:'Pick a KPI. The panel below is that KPI: points held, what you earned each month, and the interactions behind it.',
       momYouLabel:'You', momAvgSeriesLabel:avgSeriesLabel,
       positionRows, positionScopes, positionSub, moments,
@@ -8260,9 +8415,10 @@ class Component extends DCLogic {
     // DR-01 · a block only gets a card ground when its own content has none. Stat tiles and
     // picker cards are boxed already, so a second box around them is noise (audit: no nesting).
     b.headBtn = !!o.headBtn; b.headBtnLabel = o.headBtnLabel || ''; b.headBtnAct = o.headBtnAct || null;
-    const bareInputs = (b.fields || []).some(f => f && (f.isText || f.isArea || f.isSelect || f.isCombo));
-    b.card = !!(b.isBars || (b.isFields && bareInputs));
-    b.cardPad = b.card ? (b.isFields ? '18px' : '16px') : '0';
+    const boxedAlready = (b.fields || []).some(f => f && f.isCards);
+    b.card = !!(b.isBars || (b.isFields && !boxedAlready));
+    b.cardPad = b.card ? (b.isFields ? '4px 18px' : '16px') : '0';
+    b.fieldsClass = (b.fieldCols === 'minmax(0,1fr)') ? 'kp-fields kp-fields-1' : 'kp-fields';
     b.cardBg = b.card ? '#fff' : 'transparent';
     b.cardBd = b.card ? '1px solid #EFEAE5' : '0';
     b.cardSh = b.card ? '0 1px 2px rgba(22,19,15,.03)' : 'none';
@@ -8450,10 +8606,20 @@ class Component extends DCLogic {
     kvH:(o || {}).dense ? '36px' : '48px', kvPad:(o || {}).dense ? '7px 15px' : '11px 15px',
     pairs:arr.map((x,i) => Object.assign({bg:i % 2 ? '#FAF8F6' : '#fff', color:'#16130F', font:'inherit'},
       x, {plain:!x.chipBg}))}); }
+  // Two columns only when every field in the section is the same compact kind
+  // and they pair evenly. A toggle or a card group has nothing to sit beside,
+  // and an odd count leaves a hole where a control should be.
+  fieldCols(arr) {
+    const compact = f => f && (f.isText || f.isSelect || (f.isCombo && f.single));
+    const pairs = arr.length > 1 && arr.length % 2 === 0 && arr.every(compact);
+    return pairs ? 'repeat(auto-fit,minmax(min(228px,100%),1fr))' : 'minmax(0,1fr)';
+  }
+
   // an open list has to sit above every block below it, so the section itself lifts out of document order
   bFields(h, arr) { return this.blk({heading:h, isFields:true, z:arr.some(f => f && f.isCombo && f.showList) ? '90' : 'auto',
-    fieldCols:(arr.length > 1 && !arr.some(f => f && (f.isArea || (f.isCombo && !f.single)))) ? 'repeat(auto-fit,minmax(min(228px,100%),1fr))' : 'minmax(0,1fr)',
-    fields:arr.map(f => Object.assign({isText:false,isArea:false,isSelect:false,isPills:false,isToggle:false,isCards:false,isCombo:false,hasShuffle:false,hint:'',placeholder:''}, f))}); }
+    fieldCols:this.fieldCols(arr),
+    fields:arr.map(f => Object.assign({isText:false,isArea:false,isSelect:false,isPills:false,isToggle:false,isCards:false,isCombo:false,hasShuffle:false,hint:'',placeholder:''}, f,
+      {showLabel:!(f && f.isToggle)}))}); }
 
   // ---- one combobox for the whole app: searchable, single or multi, clearable ----
   cmb(key) { return (this.state.combos || {})[key] || {q:'', open:false}; }
@@ -8530,11 +8696,12 @@ class Component extends DCLogic {
     })}, o || {});
   }
   fToggle(label, on, onLabel, desc, set) {
-    return {label, isToggle:true, on_label:onLabel, desc, set,
-      bd:on ? AC : '#EAE4DE', bg:on ? '#FFF9F4' : '#fff', trackBg:on ? AC : '#DED7D0', knob:on ? 'flex-end' : 'flex-start'};
+    return {label, isToggle:true, on_label:onLabel, desc, set, checked:on ? 'true' : 'false',
+      bd:on ? '#F0DCC8' : '#EAE4DE', bg:on ? '#FFFCF9' : '#fff', trackBg:on ? AC : '#DED7D0', knob:on ? 'flex-end' : 'flex-start'};
   }
   fCards(label, cards) {
     return {label, isCards:true, cards:cards.map(c => Object.assign({
+      pressed:c.on ? 'true' : 'false',
       bd:c.on ? AC : '#EAE4DE', bg:c.on ? '#FFF9F4' : '#fff', fg:c.on ? ACD : '#16130F'}, c))};
   }
 
@@ -8560,12 +8727,11 @@ class Component extends DCLogic {
     const me = this.me();
     const drawerKinds = ['entity','champions','recognition','kpis','kpiLeaders','moments','badge','notifications','help','prefs','lineage','discovery','howItWorks','scoreModel','engagement','followers','wallfeed'];
     const build = this['ov_' + o.type] ? this['ov_' + o.type](o, me) : {title:'Not found', body:[]};
-    const ov = Object.assign({width:'820px', body:[], footer:false, tabs:null, actions:null, primaryOpacity:'1', primaryOff:false, hasSearch:false}, build);
+    const ov = Object.assign({width:'860px', body:[], footer:false, tabs:null, actions:null, primaryOpacity:'1', primaryOff:false, hasSearch:false}, build);
     ov.body = (ov.body || []).filter(Boolean).map((b,i) => Object.assign({}, b, {delay:(i*45)+'ms',
       plainHead:!b.headAct, headRot:b.headOpen === false ? 'rotate(-90deg)' : 'rotate(0deg)'}));
     ov.hasActions = !!(ov.actions && ov.actions.length);
     ov.footActions = ov.hasActions && !ov.headScore;
-    ov.headRule = ov.headScore ? '0' : '1px solid #F0EBE6';
     ov.headRule = ov.headScore ? '0' : '1px solid #F0EBE6';
     // UI-5 · doing-verbs on the left, Share pushed to the right edge
     ov.actionsMain = (ov.actions || []).filter(a => a.label !== 'Share');
@@ -8574,6 +8740,7 @@ class Component extends DCLogic {
     // not repeat them; it carries identity, the verbs, and the two icon buttons.
     ov.headActions = false; // the verbs live in the header row now, beside Share and Close
     ov.footer = !!(ov.primary || ov.secondary || ov.footNote);
+    ov.secondaryPush = ov.primary ? 'auto' : '0';
     const stack = s.overlayStack || [];
     ov.canBack = stack.length > 0;
     ov.backLabel = stack.length ? ((this['ov_' + stack[stack.length-1].type] ? (this['ov_' + stack[stack.length-1].type](stack[stack.length-1], me).title || 'Back') : 'Back')) : 'Back';
@@ -8764,7 +8931,7 @@ class Component extends DCLogic {
     ];
     const body = tab === 'kpi' ? kpiTab : (tab === 'recognition' ? recogTab : overview);
     return {eyebrow:isPerson ? 'PERSON' : TAXONOMY_TERM.toUpperCase(), title:rec.name, sub:isPerson ? (rec.title + ' · ' + rec.pf + ' · ' + rec.loc) : (rec.owner + ' · ' + rec.scale),
-      initials:initials(rec.name), body, actions, width:'820px',
+      initials:initials(rec.name), body, actions, width:'860px',
       headScore:String(recScore),
       headScoreNote:'#' + rank + ' of ' + rankedAll.length + ' ' + (isPerson ? 'people' : this.grainNoun()) + ' · ' + recBd.engageShare + '% engagement · ' + (rec.change >= 0 ? '+' : '') + rec.change + '% on last month',
       tabs:this.ovTabs('entTab', [
@@ -8941,7 +9108,7 @@ class Component extends DCLogic {
       {k:'location', label:'My location · ' + (fresh ? 'Pune' : me.loc)},
       {k:'all', label:'Every ' + TAXONOMY_TERM.toLowerCase() + ' in view (' + this.population().length + ')'}
     ];
-    return {width:'700px', eyebrow:'TITANS SIDE BY SIDE', title:'Champions',
+    return {width:'860px', eyebrow:'TITANS SIDE BY SIDE', title:'Champions',
       sub:'The people carrying each ' + TAXONOMY_TERM.toLowerCase() + ' this month', icon:'#i-medal',
       hasSearch:true, query:search.query, queryOn:!!search.query,
       searchPlaceholder:'Search by name, ' + TAXONOMY_TERM.toLowerCase() + ' or location',
@@ -9059,7 +9226,7 @@ class Component extends DCLogic {
     const avg = this.avgOf(pool, p => this.scoreOf(p));
     const worked = pool.slice().sort((a,b) => this.scoreOf(b) - this.scoreOf(a))[0];
     const wb = this.scoreBreakdown(worked);
-    return {width:'820px', eyebrow:'HOW THE SCORE IS BUILT', title:'Where ' + avg + ' comes from',
+    return {width:'860px', eyebrow:'HOW THE SCORE IS BUILT', title:'Where ' + avg + ' comes from',
       sub:'The average across ' + pool.length + ' ' + this.grainNoun() + ' in view · ' + this.periodText(), icon:'#i-activity',
       body:[
         this.bText('', 'A score is the six KPI point totals added together. Nothing is weighted, so a point of Coaching and a point of Ideation are worth the same. Engagement is the one exception: it is capped, so no amount of cheering moves a score past the work behind it.'),
@@ -9343,7 +9510,7 @@ class Component extends DCLogic {
   }
 
   ov_welcome(o, me) {
-    return {width:'620px', eyebrow:'FIRST VISIT', title:'Welcome to Kudos Portal, ' + me.name.split(' ')[0], sub:'Thirty seconds on what this is', icon:'#i-spark',
+    return {width:'640px', eyebrow:'FIRST VISIT', title:'Welcome to Kudos Portal, ' + me.name.split(' ')[0], sub:'Thirty seconds on what this is', icon:'#i-spark',
       body:[
         this.bText('WHAT YOU ARE LOOKING AT', 'The Wall is the public record of work worth repeating at ' + this.state.account + '. Programs are scored against their own history, never against each other, so a small team improving fast outranks a large one standing still.'),
         this.bRows('WHAT YOU CAN DO TODAY', [
@@ -9352,7 +9519,7 @@ class Component extends DCLogic {
           {icon:'#i-mega', iconBg:'#FFF4EA', iconFg:'#CE6B1F', left:'Cheer and post shoutouts', sub:'A cheer carries one recognition point to the person you name'}
         ]),
         this.bNote('info','You are a Viewer assigned to Pune. Other locations appear in the filter but stay locked until an admin widens your access.'),
-        this.bText('HOW YOU GET ON THE WALL', 'Your score sits at the baseline of 100 until your first cheer lands. From there every cheer is mapped to one of the six KPIs and pushes that arm of your radar outward.')
+        this.bText('HOW YOU GET ON THE WALL', 'Your score sits at the baseline of 100 until your first cheer lands. From there every cheer is counted against one of the six KPIs and lengthens that bar on your wall.')
       ],
       primary:'Show me the wall', primaryAct:() => this.close(),
       secondary:'How scoring works', secondaryAct:() => { this.setState({readHelp:true}); this.open('help'); }};
@@ -9360,7 +9527,7 @@ class Component extends DCLogic {
 
   ov_notifications() {
     if (this.state.persona === 'new') {
-      return {eyebrow:'INBOX', title:'Notifications', sub:'Nothing yet', icon:'#i-bell',
+      return {width:'460px', eyebrow:'INBOX', title:'Notifications', sub:'Nothing yet', icon:'#i-bell',
         body:[
           this.bNote('info','Your inbox fills up once people start reacting to you. Nothing here is a bad sign on day three.'),
           this.bRows('WHAT WILL LAND HERE', [
@@ -9406,7 +9573,7 @@ class Component extends DCLogic {
         right:n.when, rightColor:(!read && n.unread) ? '#B4600F' : '#A79E95',
         bg:(!read && n.unread) ? '#FFFCF9' : '#fff', act:n.act})));
     });
-    return {eyebrow:'INBOX', title:'Notifications', sub:unreadTotal ? (unreadTotal + ' unread across ' + mods.length + ' modules') : 'All caught up', icon:'#i-bell',
+    return {width:'460px', eyebrow:'INBOX', title:'Notifications', sub:unreadTotal ? (unreadTotal + ' unread across ' + mods.length + ' modules') : 'All caught up', icon:'#i-bell',
       body:body.concat([this.bNote('info','One tray for every module. Kudos Portal emits five event types: a cheer received, a shout out received, being featured on a display, someone you follow being recognised, and reaching a badge tier.')]),
       primary:'Mark all read', primaryAct:() => { this.setState({notifRead:true}); this.flash('All caught up.'); this.close(); },
       secondary:'Close', secondaryAct:() => this.close()};
@@ -9414,7 +9581,7 @@ class Component extends DCLogic {
 
   ov_help() {
     const tab = this.state.helpTab || 'how';
-    if (tab === 'words') return {width:'820px', eyebrow:'HELP', title:'How the Wall works',
+    if (tab === 'words') return {width:'860px', eyebrow:'HELP', title:'How the Wall works',
       sub:'The words this product uses, and the ones it no longer does', icon:'#i-help',
       tabs:this.ovTabs('helpTab', [{k:'how', label:'How it works'}, {k:'words', label:'Lexicon'}], tab),
       body:[
@@ -9424,7 +9591,7 @@ class Component extends DCLogic {
           icon:'#i-swap', iconBg:'#FFF4EA', iconFg:ACD, left:x.term, sub:'replaces ' + x.was})), 'one concept, one word'),
         this.bNote('warn','Retired, and expected to return zero matches in the interface: ' + RETIRED.join(' · ') + '.')
       ], secondary:'Close', secondaryAct:() => this.close()};
-    return {width:'820px', eyebrow:'HELP', title:'How the Wall works', sub:'One score, six KPIs, and what recognition is worth', icon:'#i-help',
+    return {width:'860px', eyebrow:'HELP', title:'How the Wall works', sub:'One score, six KPIs, and what recognition is worth', icon:'#i-help',
       tabs:this.ovTabs('helpTab', [{k:'how', label:'How it works'}, {k:'words', label:'Lexicon'}], tab),
       body:[
         this.bText('SCORING', 'A score is the six KPIs added up. There is no second number: no team score, no separate KPI points, no recognition bucket. KPI points come from submissions — reviewed, mapped to one of the six KPIs and scored nightly. Recognition feeds the Engagement KPI and nothing else.'),
@@ -9452,7 +9619,7 @@ class Component extends DCLogic {
     const s = this.state;
     const fresh = s.persona === 'new';
     const allAcc = this.reachableAccounts().length === ACCOUNT_LIST.length;
-    return {eyebrow:'PREFERENCES', title:'Your preferences', sub:'These apply to your account only', icon:'#i-sliders',
+    return {width:'640px', eyebrow:'PREFERENCES', title:'Your preferences', sub:'These apply to your account only', icon:'#i-sliders',
       body:[
         this.withHead(this.bFields('ACCOUNTS IN VIEW', [
           this.fCards('', ACCOUNT_LIST.map(a => {
@@ -9503,7 +9670,7 @@ class Component extends DCLogic {
       {k:TAXONOMY_TERM, why:'Rows are the ' + PF.filter(p => ACC_OF_PF[p.name] === s.account).length + ' programs inside ' + s.account + '.', ok:!several},
       {k:'Person', why:'Available inside the standings, as a view rather than a grain.', ok:false}
     ];
-    return {width:'560px', eyebrow:'WHAT IS COMPARED', title:'Change what is compared', sub:this.avgLabel(), icon:'#i-swap',
+    return {width:'460px', eyebrow:'WHAT IS COMPARED', title:'Change what is compared', sub:this.avgLabel(), icon:'#i-swap',
       body:[
         this.bText('THE LADDER', 'Grain resolves from what you can reach: Business group, then Account, then ' + TAXONOMY_TERM + ', then Person. Reach one account and the rows are its programs. Reach several and the rows are the accounts. Changing it recalculates every average, chart, comparison and export against the new population.'),
         this.bRows('GRAIN', rungs.map(r => ({
@@ -9518,7 +9685,7 @@ class Component extends DCLogic {
     const s = this.state;
     const cur = s.persona === 'new' ? 'new' : s.role;
     const draft = s.roleDraft || cur;
-    return {width:'560px', eyebrow:'ACCOUNT PROFILE', title:'Switch account profile', sub:'Changes what you can see and do', icon:'#i-swap',
+    return {width:'460px', eyebrow:'ACCOUNT PROFILE', title:'Switch account profile', sub:'Changes what you can see and do', icon:'#i-swap',
       body:[this.bFields('', [this.fCards('', [
         {title:'New viewer · Aditi Rane', desc:'First visit, no recognition yet, assigned to Pune only.', icon:'#i-spark', on:draft === 'new', pick:() => this.setState({roleDraft:'new'})},
         {title:'Viewer · Rohit Patle', desc:'Showcase and My Wall across every location. Cheer and shout out, but no admin.', icon:'#i-eye', on:draft === 'viewer', pick:() => this.setState({roleDraft:'viewer'})},
@@ -9546,7 +9713,7 @@ class Component extends DCLogic {
   ov_more() {
     const d = this.state.moreDraft || this.state.more;
     const patch = p => this.setState({moreDraft:Object.assign({}, d, p)});
-    return {width:'560px', eyebrow:'FILTERS', title:'More filters', sub:'Narrow the view further', icon:'#i-filter',
+    return {width:'460px', eyebrow:'FILTERS', title:'More filters', sub:'Narrow the view further', icon:'#i-filter',
       body:[this.bFields('', [
         this.fCombo(TAXONOMY_TERM, {key:'more.portfolio', value:[d.portfolio], multi:false, placeholder:'Search ' + TAXONOMY_PLURAL.toLowerCase(), options:['All'].concat(this.progUniverse().map(p => p.name)).map(x => ({label:x, sub:x === 'All' ? '' : ACC_OF_PF[x]})), onChange:v => patch({portfolio:v || 'All'})}),
         this.fCombo('Recognition category', {key:'more.category', value:[d.category], multi:false, options:['All categories'].concat(KPIS.map(k => k.name)).map(x => ({label:x})), onChange:v => patch({category:v || 'All categories'})}),
@@ -9633,7 +9800,7 @@ class Component extends DCLogic {
       + '<span><b style="display:block;font-size:13px">' + achievement + '</b>'
       + '<span style="display:block;font-size:12.5px;color:#C4B8AC">' + bPerson + '</span>'
       + '<span style="display:block;font-size:12px;color:#8E837A">' + bPeriod + '</span></span></a>';
-    return {width:'1240px', eyebrow:'SHARE · RECOGNITION', title:'Share this recognition',
+    return {width:'1120px', eyebrow:'SHARE · RECOGNITION', title:'Share this recognition',
       sub:isBadge ? 'A signature badge names its month, so a past achievement stays a past achievement.'
         : 'The card redraws as the audience changes.', icon:'#i-share',
       share:{
@@ -9704,7 +9871,7 @@ class Component extends DCLogic {
     const overs = this.overridesOf(d.id);
     const st = {online:{t:'good', l:'Online'}, offline:{t:'bad', l:'Offline'}}[d.status] || {t:'warn', l:'Unclaimed'};
     const pins = !!this.state.specPins;
-    return {width:'1240px', eyebrow:pins ? 'DISPLAY · DEV-11' : 'DISPLAY', title:d.name, sub:d.city + ' · ' + d.spot, icon:'#i-monitor',
+    return {width:'1120px', eyebrow:pins ? 'DISPLAY · DEV-11' : 'DISPLAY', title:d.name, sub:d.city + ' · ' + d.spot, icon:'#i-monitor',
       pill:st.l, ids:pins ? 'DEV-05 · DEV-06 · DEV-07 · DEV-08 · DEV-09 · DEV-10' : '',
       // right column, 55% — the mirror. Real scene render, one orientation, no controls. [DEV-07, DEV-10]
       side:this.screenPreview({device:d, mirror:true, canFlip:false,
@@ -9752,7 +9919,7 @@ class Component extends DCLogic {
     const d = devById(o.id) || DEVICES[0];
     const draft = this.state.deviceDraft || {name:d.name, city:d.city, spot:d.spot};
     const patch = p => this.setState({deviceDraft:Object.assign({}, draft, p)});
-    return {width:'760px', eyebrow:'DISPLAY', title:'Edit ' + d.name, sub:d.id + ' · orientation is fixed at claim time', icon:'#i-pencil',
+    return {width:'640px', eyebrow:'DISPLAY', title:'Edit ' + d.name, sub:d.id + ' · orientation is fixed at claim time', icon:'#i-pencil',
       body:[this.bSplit([
         this.fText('Display name', draft.name, e => patch({name:e.target.value})),
         this.fCombo('Location', {key:'device.edit.city', value:[draft.city], multi:false, emptyValue:'Pick a location',
@@ -9770,7 +9937,7 @@ class Component extends DCLogic {
     const draft = this.state.addDraft || {id:'', name:'', city:'Bhubaneshwar', spot:'', orientation:'Portrait'};
     const patch = p => this.setState({addDraft:Object.assign({}, draft, p)});
     const ok = draft.id.trim().length > 3 && draft.name.trim().length > 2;
-    return {width:'760px', eyebrow:'DISPLAYS · DEV-02', title:'Add a display manually',
+    return {width:'640px', eyebrow:'DISPLAYS · DEV-02', title:'Add a display manually',
       sub:'The exception, for a screen that cannot report. Discovery is the normal path.', icon:'#i-plus',
       body:[
         this.bNote('warn', 'Only use this when a screen cannot reach the discovery sweep. Everything here has to be typed by hand and none of it is verified against the display.'),
@@ -9804,7 +9971,7 @@ class Component extends DCLogic {
       left:x.id + '  ·  ' + x.city, sub:x.model + ' · ' + x.spot + ' · pairing code ' + x.code + ' · seen ' + x.seen,
       right:'Claim', rightSub:'confirm what it reported', rightColor:ACD,
       act:() => { this.setState({claimDraft:null}); this.drill('claim', {id:x.id, found:x}); }}));
-    return {width:'680px', eyebrow:'DISPLAYS · DEV-02', title:'Auto-discovery', sub:'Displays answering on the Apple ADC network', icon:'#i-monitor',
+    return {width:'640px', eyebrow:'DISPLAYS · DEV-02', title:'Auto-discovery', sub:'Displays answering on the Apple ADC network', icon:'#i-monitor',
       body:[
         this.bNote('good', 'Auto-discovery is on and runs every 5 minutes. Every Apple TV signed into the account broadcasts on its office subnet; anything unclaimed lands here within a few minutes.'),
         this.bStats('THIS SWEEP', [
@@ -9831,7 +9998,7 @@ class Component extends DCLogic {
       {n:'3/3', title:'Pairing code', body:'7K4–92B', hint:'The display now reads "waiting to be claimed" and appears in the admin discovery strip.', kind:'code'}
     ];
     const cur = STEPS[step];
-    return {width:'820px', eyebrow:'CROSS-TEAM DEPENDENCY · DEV-04', title:'tvOS first-run flow', sub:'Owned by the tvOS team — this is the contract, not a mock to build', icon:'#i-monitor',
+    return {width:'860px', eyebrow:'CROSS-TEAM DEPENDENCY · DEV-04', title:'tvOS first-run flow', sub:'Owned by the tvOS team — this is the contract, not a mock to build', icon:'#i-monitor',
       body:[
         this.bNote('warn', 'Step 1 of claiming happens on the Apple TV. It is not in this codebase. The admin drawer depends on the payload below, so the two teams have to ship together.'),
         this.blk({heading:'THREE FULL-SCREEN STEPS AT 10-FOOT SCALE', isSteps:true, stepsNow:step,
@@ -9897,7 +10064,7 @@ class Component extends DCLogic {
     const scope = (o || {}).dev ? 'this display' : ((o || {}).pl ? 'this playlist' : 'the whole fleet');
     const rows = PLAYBACK.filter(r => (!(o || {}).dev || r.dev === o.dev) && (!(o || {}).pl || r.pl === o.pl));
     const title = (o || {}).dev ? o.dev : ((o || {}).pl || 'All displays');
-    return {width:'980px', eyebrow:'PLAYBACK LOG · DEV-09', title:'Playback log', sub:title + ' · last 30 days · ' + scope, icon:'#i-list',
+    return {width:'1120px', eyebrow:'PLAYBACK LOG · DEV-09', title:'Playback log', sub:title + ' · last 30 days · ' + scope, icon:'#i-list',
       body:[
         this.bNote('info', 'One row per scene render on a claimed display. This is machine-counted playback — never a web session, and never summed with one.'),
         this.blk({heading:String(rows.length) + ' ROWS IN SCOPE', isTable:true,
@@ -9964,7 +10131,7 @@ class Component extends DCLogic {
         {k:'Scope', v:sc.scopeType + ' · ' + sc.scopeValue}
       ])
     ].filter(Boolean);
-    return {width:'900px', eyebrow:'SCHEDULE · SCH-02', title:sc.name,
+    return {width:'860px', eyebrow:'SCHEDULE · SCH-02', title:sc.name,
       sub:'Applies to ' + devs.length + ' displays across ' + locs.length + ' locations', icon:'#i-cal',
       tabs:this.ovTabs('schTab', [{k:'overview', label:'Overview'}, {k:'settings', label:'Settings'}], tab),
       body:tab === 'settings' ? settings : overview,
@@ -10026,7 +10193,7 @@ class Component extends DCLogic {
           : (plOrient(p) + ' · loop ' + fmtDur(this.loopOf(p.name)) + ' · ' + p.items.length + ' scenes'),
         off:bad};
     });
-    return {width:'820px', eyebrow:(resolved ? 'OVERRIDE · SCH-08' : 'SCHEDULE BLOCK · SCH-07'),
+    return {width:'640px', eyebrow:(resolved ? 'OVERRIDE · SCH-08' : 'SCHEDULE BLOCK · SCH-07'),
       title:existing ? 'Edit block' : (resolved ? 'Add an override' : 'Add a block'),
       sub:resolved
         ? (dev ? dev.name + ' only · layered over ' + (this.schedOfDevice(dev) || {}).name : 'this display only')
@@ -10152,7 +10319,7 @@ class Component extends DCLogic {
         : this.bNote('info', 'No display is on a schedule that runs this playlist yet.'),
       this.bActions([{label:'Download playback log for this playlist', icon:'#i-dl', act:() => this.drill('playback', {pl:p.name})}])
     ];
-    return {width:'980px', eyebrow:'PLAYLIST · LIB-02 · LIB-05', title:p.name,
+    return {width:'1120px', eyebrow:'PLAYLIST · LIB-02 · LIB-05', title:p.name,
       sub:'From ' + p.from + ' · in ' + scheds.length + ' schedules · on ' + devs.length + ' displays · loop ' + fmtDur(this.loopOf(p.name)),
       icon:'#i-play',
       tabs:this.ovTabs('plTab', [{k:'overview', label:'Overview'}, {k:'content', label:'Scenes'}, {k:'reach', label:'Reach'}], tab),
@@ -10201,7 +10368,7 @@ class Component extends DCLogic {
         {k:'Orientation', v:tpl.orient + ' · inherited from the template, not chosen'}
       ])
     ];
-    return {width:'820px', eyebrow:'CONTENT LIBRARY · LIB-01', title:'New playlist',
+    return {width:'640px', eyebrow:'CONTENT LIBRARY · LIB-01', title:'New playlist',
       sub:d.step === 0 ? 'Step 1 of 2 · pick a template' : 'Step 2 of 2 · name and scope it', icon:'#i-play',
       body:d.step === 0 ? step1 : step2,
       primary:d.step === 0 ? 'Name and scope it' : 'Create and open the editor',
@@ -10225,7 +10392,7 @@ class Component extends DCLogic {
     const pls = this.playlistsWithScene(sc.id);
     const devs = this.devicesWithScene(sc.id);
     const tpls = TEMPLATES.filter(t => t.scenes.indexOf(sc.id) > -1);
-    return {width:'980px', eyebrow:'SCENE · LIB-03', title:sc.name, sub:sc.group + ' · ' + sc.orient + ' only', icon:'#i-grid',
+    return {width:'1120px', eyebrow:'SCENE · LIB-03', title:sc.name, sub:sc.group + ' · ' + sc.orient + ' only', icon:'#i-grid',
       side:this.screenPreview({sceneId:sc.id, orient:sc.orient, canFlip:false, statusTone:'quiet', statusLabel:'Live data',
         note:'The real render at the real aspect ratio — the same component the display runs.'}),
       body:[
@@ -10253,7 +10420,7 @@ class Component extends DCLogic {
     const pls = this.playlistsFromTemplate(t.name);
     const devs = pls.reduce((a, p) => a.concat(this.devicesRunning(p.name)), []).filter((d, i, arr) => arr.indexOf(d) === i);
     const diverged = pls.filter(p => this.state.plEdits && this.state.plEdits[p.name]);
-    return {width:'980px', eyebrow:'TEMPLATE · LIB-07', title:t.name, sub:t.orient + ' · ' + t.scenes.length + ' scenes · composition only', icon:'#i-layers',
+    return {width:'1120px', eyebrow:'TEMPLATE · LIB-07', title:t.name, sub:t.orient + ' · ' + t.scenes.length + ' scenes · composition only', icon:'#i-layers',
       side:this.screenPreview({scenes:t.scenes.map(sceneById), orient:t.orient, canFlip:false, statusTone:'quiet',
         statusLabel:'Set preview', note:'Step through the set to see the look each scene inherits.'}),
       body:[
@@ -10288,7 +10455,7 @@ class Component extends DCLogic {
     const rows = SCENES.map(x => ({icon:'#i-grid', iconBg:'#FFF4EA', iconFg:ACD, left:x.name, sub:x.desc,
       right:x.orient, rightSub:this.playlistsWithScene(x.id).length + ' playlists',
       act:() => { this.close(); this.openBuilder(x.id, {tab:'library', libTab:'scenes'}); }}));
-    return {width:'720px', eyebrow:'SCENE BUILDER', title:'Open a scene', sub:'Every scene in the library', icon:'#i-folder',
+    return {width:'640px', eyebrow:'SCENE BUILDER', title:'Open a scene', sub:'Every scene in the library', icon:'#i-folder',
       body:[this.bRows('SCENES', rows, SCENES.length + ' scenes')],
       primary:'Close', primaryAct:() => this.close()};
   }
@@ -10300,7 +10467,7 @@ class Component extends DCLogic {
 
   // 13.1 · Open with the object model — everything else follows from it. [IA-03]
   ov_howItWorks() {
-    return {width:'980px', eyebrow:'THE MODEL · IA-01 · IA-02', title:'How the objects fit together',
+    return {width:'1120px', eyebrow:'THE MODEL · IA-01 · IA-02', title:'How the objects fit together',
       sub:'Five objects, three cardinalities, two directions of travel', icon:'#i-help',
       body:[
         this.blk({isModel:true, modelNodes:[
@@ -10404,7 +10571,7 @@ class Component extends DCLogic {
       this.bText('LOGGED AGAINST YOUR NAME', 'Granting writes one audit event per person, plus one for the batch. Both the grantor and each person are notified.')
     ];
     const step = d.step;
-    return {width:'900px', eyebrow:'PEOPLE & ACCESS · ACC-04', title:'Grant access',
+    return {width:'640px', eyebrow:'PEOPLE & ACCESS · ACC-04', title:'Grant access',
       sub:'Step ' + (step + 1) + ' of 3 · ' + ['select people', 'role and scope', 'confirm'][step], icon:'#i-users',
       body:step === 0 ? step0 : (step === 1 ? step1 : step2),
       primary:step < 2 ? 'Continue' : 'Grant access to ' + d.who.length + ' ' + (d.who.length === 1 ? 'person' : 'people'),
@@ -10428,7 +10595,7 @@ class Component extends DCLogic {
     const rec = ACCESS.find(a => a.name === o.id) || ACCESS[0];
     const d = Object.assign({when:'date', date:'04 Sep 2026', reason:''}, this.state.revokeDraft || {});
     const patch = p => this.setState({revokeDraft:Object.assign({}, d, p)});
-    return {width:'720px', eyebrow:'PEOPLE & ACCESS · ACC-06', title:'End access for ' + rec.name,
+    return {width:'640px', eyebrow:'PEOPLE & ACCESS · ACC-06', title:'End access for ' + rec.name,
       sub:rec.role + ' · ' + rec.scopeType + ' · ' + rec.scopeValue, icon:'#i-users',
       body:[
         this.bNote('warn', 'A known future departure should not depend on anyone remembering. Set the date now and the system executes it.'),
@@ -10459,7 +10626,7 @@ class Component extends DCLogic {
   ov_accessPerson(o) {
     const rec = ACCESS.find(a => a.name === o.id) || ACCESS[0];
     const st = ACCESS_STATES.find(x => x.k === rec.status) || ACCESS_STATES[0];
-    return {width:'780px', eyebrow:'ACCESS RECORD · ACC-01', title:rec.name, sub:rec.team + ' · ' + rec.role, icon:'#i-users',
+    return {width:'860px', eyebrow:'ACCESS RECORD · ACC-01', title:rec.name, sub:rec.team + ' · ' + rec.role, icon:'#i-users',
       pill:st.label,
       body:[
         this.bKv('THIS GRANT', [
@@ -10507,6 +10674,9 @@ class Component extends DCLogic {
       row(x.mod, x.label, x.sub, x.person ? () => this.openEntity('person', x.person)
         : (x.portfolio ? () => this.openEntity('portfolio', x.portfolio) : jump(x.mod, x.label)))));
 
+    // the chips count against everything that matched, not against the scope in
+    // force, so the row still says where the rest of the matches are
+    const allRows = rows.slice();
     if (scope !== 'Everything') rows = rows.filter(r => r.mod === scope);
     const order = SEARCH_SCOPES.slice(1);
     const groups = order.map(mod => {
@@ -10535,11 +10705,16 @@ class Component extends DCLogic {
       searchWiden:() => this.setState({searchScope:'Everything'}),
       searchScopes:SEARCH_SCOPES.map(x => {
         const on = x === scope;
+        const n = !q ? 0 : (x === 'Everything' ? allRows.length : allRows.filter(r => r.mod === x).length);
         return {label:x, bd:on ? '#EC873A' : '#EAE4DE', bg:on ? '#EC873A' : '#fff',
           fg:on ? '#fff' : '#7A736C', fw:on ? '700' : '550',
+          count:n ? String(n) : '', countFg:on ? 'rgba(255,255,255,.82)' : '#A79E95',
+          op:(q && !n && !on) ? '.45' : '1', pressed:on ? 'true' : 'false',
           pick:() => this.setState({searchScope:x})};
       }),
-      searchHint:q ? (rows.length + ' result' + (rows.length === 1 ? '' : 's') + ' across ' + groups.filter(g => g.name !== 'Actions in this shell').length + ' modules') : 'Type to search every module you can reach',
+      searchHint:q ? (rows.length + ' result' + (rows.length === 1 ? '' : 's') + ' in ' + groups.filter(g => g.name !== 'Actions in this shell').length + ' modules') : 'Type to search',
+      searchNote:q ? '· finding a person inside the standings is a separate control in that module'
+                   : '· every module you can reach, plus the actions in this shell',
       setSearch:e => this.setState({searchQuery:e.target.value})};
   }
 
