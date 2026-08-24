@@ -464,6 +464,24 @@ a:hover{color:#EC873A;text-decoration:underline}
 .kp-fields-1 > .kp-field{padding:15px 0}
 .kp-fields-1 > .kp-field + .kp-field{border-top:1px solid var(--kp-divider)}
 
+/* ── FOLLOW ───────────────────────────────────────────────────────────────
+   FD-05 · Follow is an offer, not a fixture. Ten of them stacked down a list
+   at ten different x positions is noise, so the chip appears on the row the
+   pointer or the keyboard is on, beside the name. A row you already follow
+   keeps its chip: that is information about you, not an offer. */
+.kp-follow{opacity:0;transition:opacity var(--kp-t-hover),background var(--kp-t-hover)}
+.kp-follow[data-on="1"]{opacity:1}
+[data-followrow]:hover .kp-follow,[data-followrow]:focus-within .kp-follow,
+.kp-follow:focus-visible{opacity:1}
+
+/* FD-06 · when a feed row sends you to the recognition it is about, the card
+   says so for a moment. Two soft pulses, then it goes back to being a card. */
+@keyframes kpflash{
+  0%{box-shadow:0 0 0 0 rgba(236,135,58,.5)}
+  70%{box-shadow:0 0 0 13px rgba(236,135,58,0)}
+  100%{box-shadow:0 0 0 0 rgba(236,135,58,0)}}
+.kp-flash{border-color:var(--kp-accent) !important;animation:kpflash 1.3s ease-out 2}
+
 /* ── STATUS ───────────────────────────────────────────────────────────
    Never colour alone: a dot shape plus a word, so the state survives a
    greyscale print and a colour-vision difference. */
@@ -717,9 +735,10 @@ a:hover{color:#EC873A;text-decoration:underline}
 </div>
 
 <sc-if value="{{ showIntro }}" hint-placeholder-val="{{ true }}">
-<div style="position:relative;z-index:60;padding:22px 24px 0">
-  <section class="kp-pagehead" style="position:relative;display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid #E4DDD6">
+<div style="position:relative;z-index:60;padding:20px 24px 0">
+  <section class="kp-pagehead" style="position:relative;border:1px solid var(--kp-border);border-radius:var(--kp-r-xl);background:var(--kp-surface);box-shadow:var(--kp-shadow)">
     <sc-if value="{{ specPins }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;z-index:66;right:16px;top:-9px;padding:2px 7px;border-radius:6px;background:#B4600F;color:#fff;font:700 10px/1.7 'Space Mono',monospace;letter-spacing:.06em;pointer-events:none">SH-02 · DT-01 · DT-03</span></sc-if>
+    <div style="display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;padding:20px 22px 18px">
     <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:7px">
       <h1 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1.15;text-wrap:balance">{{ headTitle }}</h1>
       <p style="margin:0;font-size:14px;line-height:1.5;color:#6E665F;text-wrap:pretty;max-width:66ch">{{ headSummary }}</p>
@@ -852,6 +871,30 @@ a:hover{color:#EC873A;text-decoration:underline}
           </sc-if>
     </div>
     </sc-if>
+    </div>
+    <!-- The scope switch, the program picker and the index all change what this page
+         is showing, so they sit on the page head with the filters rather than floating
+         above the first panel as a fourth unlabelled strip. -->
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 22px;border-top:1px solid var(--kp-divider);background:var(--kp-surface-2);border-radius:0 0 19px 19px">
+    <div style="display:inline-flex;align-items:stretch;border:1px solid #EAE4DE;border-radius:12px;background:#fff;overflow:hidden">
+    <sc-for list="{{ sc.scopeSwitch }}" as="ss" hint-placeholder-count="3">
+    <button sc-camel-on-click="{{ ss.pick }}" style="min-width:112px;height:42px;padding:0 16px;border:0;border-radius:{{ ss.rad }};font-size:13px;background:{{ ss.bg }};color:{{ ss.fg }};font-weight:{{ ss.fw }};border-left:{{ ss.div }};box-shadow:{{ ss.sh }};transition:background .2s,color .2s">{{ ss.label }}</button>
+    </sc-for>
+    </div>
+    <sc-if value="{{ sc.pfMulti }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative">
+    <button sc-camel-on-click="{{ sc.togglePfPick }}" style="height:42px;padding:0 14px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#5E564F;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:8px">Which program<svg width="13" height="13"><use href="#i-chev-d"></use></svg></button>
+    <sc-if value="{{ sc.pfPickOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;z-index:60;left:0;top:48px;min-width:240px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
+    <sc-for list="{{ sc.pfPickList }}" as="pp" hint-placeholder-count="2">
+    <button sc-camel-on-click="{{ pp.pick }}" style="width:100%;min-height:44px;padding:0 14px;border:0;border-bottom:1px solid #F6F2EE;background:#fff;display:flex;align-items:center;gap:10px;text-align:left" style-hover="background:#FFFBF7"><span style="flex:1;font-size:13px;font-weight:600">{{ pp.name }}</span><em style="font-style:normal;font-family:'Space Mono',monospace;font-size:12.5px;color:#B4600F">{{ pp.rank }}</em></button>
+    </sc-for>
+    </div>
+    </sc-if>
+    </div>
+    </sc-if>
+    <button sc-camel-on-click="{{ sc.openPfIndex }}" style="margin-left:auto;height:42px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:8px" style-hover="border-color:#EC873A;background:#FFF6EE"><svg width="15" height="15"><use href="#i-list"></use></svg>Program index</button>
+    </div>
   </section>
 </div>
 </sc-if>
@@ -961,7 +1004,7 @@ a:hover{color:#EC873A;text-decoration:underline}
             </sc-for>
           </div>
           <sc-for list="{{ sp.rows }}" as="r" hint-placeholder-count="10">
-            <div sc-camel-on-mouse-enter="{{ r.hoverOn }}" sc-camel-on-mouse-leave="{{ r.hoverOff }}" style="display:grid;grid-template-columns:76px minmax(190px,1.5fr) minmax(160px,1.2fr) minmax(120px,.9fr) minmax(190px,1.4fr) 96px 132px;align-items:center;column-gap:14px;min-height:66px;padding:0 18px;border-bottom:1px solid #F5F1ED;background:{{ r.zebra }};transition:background .16s" style-hover="background:#FFFBF7">
+            <div data-followrow sc-camel-on-mouse-enter="{{ r.hoverOn }}" sc-camel-on-mouse-leave="{{ r.hoverOff }}" style="display:grid;grid-template-columns:76px minmax(190px,1.5fr) minmax(160px,1.2fr) minmax(120px,.9fr) minmax(190px,1.4fr) 96px 132px;align-items:center;column-gap:14px;min-height:66px;padding:0 18px;border-bottom:1px solid #F5F1ED;background:{{ r.zebra }};transition:background .16s" style-hover="background:#FFFBF7">
               <span style="font-size:14px;font-weight:700;color:{{ r.rankFg }};font-variant-numeric:tabular-nums">{{ r.rankLabel }}</span>
               <div style="min-width:0;display:flex;align-items:center;gap:10px">
                 <span style="width:34px;height:34px;flex:0 0 auto;border-radius:11px;background:#FCEBDC;color:#CE6B1F;display:grid;place-items:center;font-size:12.5px;font-weight:700">{{ r.initials }}</span>
@@ -983,7 +1026,7 @@ a:hover{color:#EC873A;text-decoration:underline}
               <strong style="font-size:16px;font-variant-numeric:tabular-nums;text-align:right">{{ r.score }}</strong>
               <span style="display:flex;align-items:center;justify-content:flex-end;gap:9px">
                 <span style="font-size:13px;color:#25714A;font-weight:650;font-variant-numeric:tabular-nums">{{ r.change }}</span>
-                <button sc-camel-on-click="{{ r.toggleFollow }}" style="flex:0 0 auto;min-height:24px;padding:0 9px;border:1px solid #F0DCC8;border-radius:999px;background:{{ r.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650;opacity:{{ r.followOp }};transition:opacity .16s">{{ r.followLabel }}</button>
+                <button class="kp-follow" data-on="{{ r.followOn }}" sc-camel-on-click="{{ r.toggleFollow }}" style="flex:0 0 auto;min-height:24px;padding:0 9px;border:1px solid #F0DCC8;border-radius:999px;background:{{ r.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650;transition:opacity .16s">{{ r.followLabel }}</button>
               </span>
             </div>
           </sc-for>
@@ -1021,66 +1064,7 @@ a:hover{color:#EC873A;text-decoration:underline}
 
 <sc-if value="{{ isShowcase }}" hint-placeholder-val="{{ true }}">
 <main style="padding:20px 24px 32px;display:flex;flex-direction:column;gap:20px;animation:fadein .3s ease-out">
-<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-  <div style="display:inline-flex;align-items:stretch;border:1px solid #EAE4DE;border-radius:12px;background:#fff;overflow:hidden">
-    <sc-for list="{{ sc.scopeSwitch }}" as="ss" hint-placeholder-count="3">
-      <button sc-camel-on-click="{{ ss.pick }}" style="min-width:112px;height:42px;padding:0 16px;border:0;border-radius:{{ ss.rad }};font-size:13px;background:{{ ss.bg }};color:{{ ss.fg }};font-weight:{{ ss.fw }};border-left:{{ ss.div }};box-shadow:{{ ss.sh }};transition:background .2s,color .2s">{{ ss.label }}</button>
-    </sc-for>
-  </div>
-  <sc-if value="{{ sc.pfMulti }}" hint-placeholder-val="{{ false }}">
-    <div style="position:relative">
-      <button sc-camel-on-click="{{ sc.togglePfPick }}" style="height:42px;padding:0 14px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#5E564F;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:8px">Which program<svg width="13" height="13"><use href="#i-chev-d"></use></svg></button>
-      <sc-if value="{{ sc.pfPickOpen }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;z-index:60;left:0;top:48px;min-width:240px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 20px 44px -20px rgba(116,69,31,.5);overflow:hidden;animation:rise .18s ease-out both">
-          <sc-for list="{{ sc.pfPickList }}" as="pp" hint-placeholder-count="2">
-            <button sc-camel-on-click="{{ pp.pick }}" style="width:100%;min-height:44px;padding:0 14px;border:0;border-bottom:1px solid #F6F2EE;background:#fff;display:flex;align-items:center;gap:10px;text-align:left" style-hover="background:#FFFBF7"><span style="flex:1;font-size:13px;font-weight:600">{{ pp.name }}</span><em style="font-style:normal;font-family:'Space Mono',monospace;font-size:12.5px;color:#B4600F">{{ pp.rank }}</em></button>
-          </sc-for>
-        </div>
-      </sc-if>
-    </div>
-  </sc-if>
-  <button sc-camel-on-click="{{ sc.togglePfIndex }}" style="margin-left:auto;height:42px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:8px" style-hover="border-color:#EC873A;background:#FFF6EE"><svg width="15" height="15"><use href="#i-list"></use></svg>Program index</button>
-</div>
 
-<sc-if value="{{ sc.pfIndexOpen }}" hint-placeholder-val="{{ false }}">
-  <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden">
-    <div class="kp-sec-head">
-      <span style="flex:1 1 220px;min-width:0"><h2 class="kp-sec-title">Program index</h2><p class="kp-sec-sub">Every program has a detail page. One destination, many doors.</p></span>
-      <div style="flex:1 1 220px;min-width:180px;display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border:1px solid #EAE4DE;border-radius:11px;background:#fff" style-focus-within="border-color:#EC873A;box-shadow:0 0 0 3px rgba(236,135,58,.12)">
-        <svg width="14" height="14" style="color:#A79E95;flex:0 0 auto"><use href="#i-search"></use></svg>
-        <input value="{{ sc.pfIndexQuery }}" sc-camel-on-change="{{ sc.setPfIndexQuery }}" placeholder="Search a program, owner or location" style="flex:1;min-width:0;height:100%;border:0;background:transparent;font-size:13px;outline:0">
-        <sc-if value="{{ sc.pfIndexQueryOn }}" hint-placeholder-val="{{ false }}">
-          <button sc-camel-on-click="{{ sc.clearPfIndexQuery }}" aria-label="Clear search" style="flex:0 0 auto;width:22px;height:22px;border:0;border-radius:7px;background:#F3EFEB;color:#7A736C;display:grid;place-items:center"><svg width="10" height="10"><use href="#i-x"></use></svg></button>
-        </sc-if>
-      </div>
-      <span style="flex:0 0 auto;font-size:12px;color:#8A827A">{{ sc.pfIndexCount }}</span>
-    </div>
-    <div style="overflow-x:auto"><div style="min-width:880px">
-      <div style="display:grid;grid-template-columns:64px minmax(0,1.7fr) 78px 70px 86px 80px minmax(0,1fr);gap:12px;height:38px;padding:0 20px;align-items:center;background:#FAF8F6;border-bottom:1px solid #F0EBE6">
-        <sc-for list="{{ sc.pfIndexCols }}" as="pc" hint-placeholder-count="7">
-          <button sc-camel-on-click="{{ pc.sort }}" style="border:0;background:transparent;padding:0;text-align:left;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;color:{{ pc.fg }};text-transform:uppercase">{{ pc.label }}</button>
-        </sc-for>
-      </div>
-      <sc-for list="{{ sc.pfIndexRows }}" as="pr" hint-placeholder-count="8">
-        <button sc-camel-on-click="{{ pr.act }}" style="width:100%;display:grid;grid-template-columns:64px minmax(0,1.7fr) 78px 70px 86px 80px minmax(0,1fr);gap:12px;min-height:52px;padding:8px 20px;align-items:center;border:0;border-bottom:1px solid #F3EFEB;background:transparent;text-align:left;transition:background .16s;animation:rise .3s ease-out both;animation-delay:{{ pr.delay }}" style-hover="background:#FFFBF7">
-          <span style="font-family:'Space Mono',monospace;font-size:12px;color:#B4600F">{{ pr.rank }}</span>
-          <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
-            <strong style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ pr.name }}</strong>
-            <small style="font-size:12.5px;color:#A79E95;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ pr.owner }}</small>
-          </span>
-          <span style="font-size:13px;font-weight:650;font-variant-numeric:tabular-nums">{{ pr.score }}</span>
-          <span style="font-size:12px;font-weight:700;color:{{ pr.deltaFg }};font-variant-numeric:tabular-nums">{{ pr.delta }}</span>
-          <span style="font-size:13px;font-variant-numeric:tabular-nums">{{ pr.members }}</span>
-          <span style="font-size:13px;font-variant-numeric:tabular-nums">{{ pr.cheers }}</span>
-          <span style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">
-            <sc-for list="{{ pr.mix }}" as="mx" hint-placeholder-count="2"><em style="font-style:normal;padding:1px 6px;border-radius:4px;background:#F3EFEB;color:#7A736C;font-family:'Space Mono',monospace;font-size:11px">{{ mx }}</em></sc-for>
-            <sc-if value="{{ pr.mixMore }}" hint-placeholder-val="{{ false }}"><small style="font-size:12px;color:#A79E95">{{ pr.mixMore }}</small></sc-if>
-          </span>
-        </button>
-      </sc-for>
-    </div></div>
-  </section>
-</sc-if>
 
 <sc-if value="{{ sc.atProgramScope }}" hint-placeholder-val="{{ false }}">
   <section style="border:1px solid #F3D8BC;border-radius:22px;background:linear-gradient(104deg,#FFFDFB,#FFF6EC 62%,#FFF0E0);box-shadow:0 1px 2px rgba(22,19,15,.04);padding:22px;display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start">
@@ -1303,14 +1287,14 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
         <div>
           <sc-for list="{{ rows }}" as="r" hint-placeholder-count="5">
-            <div sc-camel-on-mouse-enter="{{ r.hoverOn }}" sc-camel-on-mouse-leave="{{ r.hoverOff }}" style="display:grid;grid-template-columns:{{ rowCols }};align-items:center;column-gap:12px;min-height:74px;padding:0 22px;border-bottom:1px solid #F3EFEB;background:#fff;transition:background .16s;animation:rise .45s ease-out both;animation-delay:{{ r.delay }}" style-hover="background:#FFFBF7">
+            <div data-followrow sc-camel-on-mouse-enter="{{ r.hoverOn }}" sc-camel-on-mouse-leave="{{ r.hoverOff }}" style="display:grid;grid-template-columns:{{ rowCols }};align-items:center;column-gap:12px;min-height:74px;padding:0 22px;border-bottom:1px solid #F3EFEB;background:#fff;transition:background .16s;animation:rise .45s ease-out both;animation-delay:{{ r.delay }}" style-hover="background:#FFFBF7">
               <button sc-camel-on-click="{{ r.open }}" style="border:0;background:transparent;padding:0;text-align:left;font-size:14px;font-weight:700;color:{{ r.rankFg }};font-variant-numeric:tabular-nums">{{ r.rankLabel }}</button>
               <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
                 <span style="display:flex;align-items:center;gap:8px;min-width:0">
                   <button sc-camel-on-click="{{ r.open }}" style="border:0;background:transparent;padding:0;text-align:left;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</button>
                   <sc-if value="{{ r.isTeam }}" hint-placeholder-val="{{ false }}"><span style="flex:0 0 auto;min-height:22px;padding:0 8px;border-radius:999px;background:#F3EFEB;color:#6E665F;font-size:12.5px;font-weight:650;display:inline-grid;place-items:center">Your team</span></sc-if>
                   <sc-if value="{{ r.canShout }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ r.shoutOut }}" style="flex:0 0 auto;min-height:22px;padding:0 9px;border:1px solid #F0DCC8;border-radius:999px;background:#fff;color:#CE6B1F;font-size:12.5px;font-weight:650;display:inline-flex;align-items:center;gap:5px" style-hover="background:#FFF6EE"><svg width="11" height="11"><use href="#i-mega"></use></svg>Shout out</button></sc-if>
-                  <sc-if value="{{ r.follow }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ r.toggleFollow }}" style="flex:0 0 auto;min-height:22px;padding:0 8px;border:1px solid #F0DCC8;border-radius:999px;background:{{ r.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650;opacity:{{ r.followOp }};transition:opacity .16s">{{ r.followLabel }}</button></sc-if>
+                  <sc-if value="{{ r.follow }}" hint-placeholder-val="{{ false }}"><button class="kp-follow" data-on="{{ r.followOn }}" sc-camel-on-click="{{ r.toggleFollow }}" style="flex:0 0 auto;min-height:22px;padding:0 8px;border:1px solid #F0DCC8;border-radius:999px;background:{{ r.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650;transition:opacity .16s">{{ r.followLabel }}</button></sc-if>
                 </span>
                 <small style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.sub }}</small>
               </div>
@@ -1550,31 +1534,45 @@ a:hover{color:#EC873A;text-decoration:underline}
               <span style="color:#5D7A6A;font-size:12px">Movement</span>
             </div>
           </div>
-          <div style="position:relative;margin-top:20px">
-          <svg sc-camel-view-box="0 0 520 150" sc-camel-preserve-aspect-ratio="none" style="display:block;width:100%;height:150px;overflow:visible" role="img" aria-label="KPI trend over twelve months">
-            <line x1="0" y1="10" x2="520" y2="10" stroke="#F1ECE7" stroke-width="1"></line>
-            <line x1="0" y1="50" x2="520" y2="50" stroke="#F1ECE7" stroke-width="1"></line>
-            <line x1="0" y1="90" x2="520" y2="90" stroke="#F1ECE7" stroke-width="1"></line>
-            <line x1="0" y1="130" x2="520" y2="130" stroke="#F1ECE7" stroke-width="1"></line>
-            <polyline points="{{ kpi.area }}" fill="{{ kpi.soft }}" stroke="none"></polyline>
-            <polyline class="om-draw" points="{{ kpi.line }}" fill="none" stroke="{{ kpi.color }}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1400" style="animation:draw 1.4s ease-out both"></polyline>
-            <sc-for list="{{ kpi.dots }}" as="d" hint-placeholder-count="12">
-              <circle cx="{{ d.x }}" cy="{{ d.y }}" r="{{ d.r }}" fill="{{ d.fill }}" stroke="{{ kpi.color }}" stroke-width="{{ d.w }}" style="transition:r .14s ease,fill .14s ease"></circle>
-              <rect x="{{ d.hitX }}" y="0" width="32" height="150" fill="transparent" sc-camel-on-mouse-enter="{{ d.enter }}" sc-camel-on-mouse-leave="{{ d.leave }}" style="cursor:pointer"></rect>
-            </sc-for>
-          </svg>
-          <sc-if value="{{ kpi.tip.show }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute;left:{{ kpi.tip.left }};top:-10px;transform:{{ kpi.tip.side }};min-width:172px;padding:11px 13px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 18px 40px -18px rgba(116,69,31,.5);pointer-events:none;z-index:5;display:flex;flex-direction:column;gap:6px;animation:pop .16s cubic-bezier(.2,.8,.2,1)">
-              <span style="display:flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.05em;color:#A79E95"><i style="width:8px;height:8px;border-radius:999px;background:{{ kpi.color }}"></i>{{ kpi.tip.month }}</span>
-              <strong style="font-size:20px;letter-spacing:-.025em;font-variant-numeric:tabular-nums;color:{{ kpi.color }}">{{ kpi.tip.value }}</strong>
-              <span style="font-size:12px;font-weight:650;color:{{ kpi.tip.deltaFg }};font-variant-numeric:tabular-nums">{{ kpi.tip.delta }}</span>
-              <span style="font-size:12px;color:#8A827A">{{ kpi.tip.vsGoal }}</span>
+          <!-- The chart box stretches to the panel width, so nothing that would
+               distort is drawn inside it: the line keeps a real 2.4px stroke and
+               the month marks are HTML placed on the box, not circles scaled with
+               it. The axis is read from the series and every rule carries its value. -->
+          <div style="margin-top:20px;display:flex;gap:8px;align-items:stretch">
+            <div style="flex:0 0 34px;position:relative">
+              <sc-for list="{{ kpi.grid }}" as="kg" hint-placeholder-count="4">
+                <span style="position:absolute;right:0;top:{{ kg.top }};transform:translateY(-50%);font-size:12px;color:#A79E95;font-variant-numeric:tabular-nums">{{ kg.label }}</span>
+              </sc-for>
             </div>
-          </sc-if>
+            <div style="flex:1;min-width:0">
+              <div style="position:relative">
+              <svg sc-camel-view-box="{{ kpi.box }}" sc-camel-preserve-aspect-ratio="none" style="display:block;width:100%;height:{{ kpi.h }};overflow:visible" role="img" aria-label="{{ kpi.name }} points per month over twelve months">
+                <sc-for list="{{ kpi.grid }}" as="kg" hint-placeholder-count="4">
+                  <line x1="0" y1="{{ kg.y }}" x2="{{ kg.x2 }}" y2="{{ kg.y }}" stroke="#F1ECE7" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                </sc-for>
+                <polyline points="{{ kpi.area }}" fill="{{ kpi.soft }}" stroke="none"></polyline>
+                <polyline class="om-draw" points="{{ kpi.line }}" fill="none" stroke="{{ kpi.color }}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1400" vector-effect="non-scaling-stroke"></polyline>
+              </svg>
+              <sc-for list="{{ kpi.dots }}" as="d" hint-placeholder-count="12">
+                <button sc-camel-on-mouse-enter="{{ d.enter }}" sc-camel-on-mouse-leave="{{ d.leave }}" sc-camel-on-focus="{{ d.enter }}" sc-camel-on-blur="{{ d.leave }}" aria-label="{{ d.label }}" style="position:absolute;left:{{ d.fx }};top:{{ d.fy }};transform:translate(-50%,-50%);width:28px;height:28px;padding:0;border:0;background:transparent;display:grid;place-items:center">
+                  <i style="width:{{ d.size }};height:{{ d.size }};border-radius:999px;background:{{ d.fill }};border:{{ d.bw }} solid {{ kpi.color }};transition:width .14s,height .14s,background .14s"></i>
+                </button>
+              </sc-for>
+              <sc-if value="{{ kpi.tip.show }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;z-index:4;left:{{ kpi.tip.left }};top:-10px;transform:{{ kpi.tip.side }};min-width:172px;padding:11px 13px;border:1px solid #EFE2D6;border-radius:14px;background:#fff;box-shadow:0 18px 38px -20px rgba(116,69,31,.5);display:flex;flex-direction:column;gap:3px;pointer-events:none;animation:pop .16s ease-out">
+                  <span style="display:flex;align-items:center;gap:7px;font-size:12px;font-weight:750;letter-spacing:.05em;color:#A79E95"><i style="width:8px;height:8px;border-radius:999px;background:{{ kpi.color }}"></i>{{ kpi.tip.month }}</span>
+                  <strong style="font-size:20px;letter-spacing:-.025em;font-variant-numeric:tabular-nums;color:{{ kpi.color }}">{{ kpi.tip.value }}</strong>
+                  <span style="font-size:12px;font-weight:650;color:{{ kpi.tip.deltaFg }};font-variant-numeric:tabular-nums">{{ kpi.tip.delta }}</span>
+                  <span style="font-size:12px;color:#8A827A">{{ kpi.tip.vsGoal }}</span>
+                </div>
+              </sc-if>
+              </div>
+              <div style="display:flex;justify-content:space-between;color:#A79E95;font-size:12px;padding:7px 0 0">
+                <sc-for list="{{ months }}" as="m" hint-placeholder-count="12"><span>{{ m }}</span></sc-for>
+              </div>
+            </div>
           </div>
-          <div style="display:flex;justify-content:space-between;color:#A79E95;font-size:12px;padding:6px 2px 0">
-            <sc-for list="{{ months }}" as="m" hint-placeholder-count="12"><span>{{ m }}</span></sc-for>
-          </div>
+          <div style="padding:8px 0 0 42px;font-size:12px;color:#A79E95">{{ kpi.scaleNote }}</div>
           <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
             <div style="display:flex;align-items:baseline;gap:7px"><strong style="font-size:15px;font-variant-numeric:tabular-nums">{{ kpi.goal }}%</strong><span style="color:#8A827A;font-size:12px">Goal for this month</span></div>
             <div style="display:flex;align-items:baseline;gap:7px"><strong style="font-size:15px;font-variant-numeric:tabular-nums">{{ kpi.goalNow }}%</strong><span style="color:#8A827A;font-size:12px">Where we are now</span></div>
@@ -1589,7 +1587,7 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
         <div>
           <sc-for list="{{ kpiLeaders }}" as="l" hint-placeholder-count="4">
-            <div sc-camel-on-click="{{ l.open }}" style="width:100%;min-height:76px;padding:0 22px;border-bottom:1px solid #F3EFEB;background:#fff;display:grid;grid-template-columns:44px minmax(0,1fr) 76px 82px;align-items:center;gap:12px;text-align:left;cursor:pointer;transition:background .16s;animation:rise .4s ease-out both;animation-delay:{{ l.delay }}" style-hover="background:#FFFBF7">
+            <div data-followrow sc-camel-on-click="{{ l.open }}" style="width:100%;min-height:76px;padding:0 22px;border-bottom:1px solid #F3EFEB;background:#fff;display:grid;grid-template-columns:44px minmax(0,1fr) 76px 82px;align-items:center;gap:12px;text-align:left;cursor:pointer;transition:background .16s;animation:rise .4s ease-out both;animation-delay:{{ l.delay }}" style-hover="background:#FFFBF7">
               <b style="font-size:14px;color:{{ l.rankFg }};font-variant-numeric:tabular-nums">#{{ l.rank }}</b>
               <span style="min-width:0;display:flex;align-items:center;gap:10px">
                 <span style="min-width:0;display:flex;flex-direction:column;gap:4px">
@@ -1597,7 +1595,7 @@ a:hover{color:#EC873A;text-decoration:underline}
                   <span style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ l.sub }}</span>
                 </span>
                 <sc-if value="{{ l.canFollow }}" hint-placeholder-val="{{ false }}">
-                  <button sc-camel-on-click="{{ l.toggleFollow }}" style="flex:0 0 auto;min-height:24px;padding:0 9px;border:1px solid #F0DCC8;border-radius:999px;background:{{ l.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650" style-hover="background:#FFF6EE">{{ l.followLabel }}</button>
+                  <button class="kp-follow" data-on="{{ l.followOn }}" sc-camel-on-click="{{ l.toggleFollow }}" style="flex:0 0 auto;min-height:24px;padding:0 9px;border:1px solid #F0DCC8;border-radius:999px;background:{{ l.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650" style-hover="background:#FFF6EE">{{ l.followLabel }}</button>
                 </sc-if>
               </span>
               <span style="display:flex;flex-direction:column;gap:3px;text-align:right"><strong style="font-size:15px;font-variant-numeric:tabular-nums">{{ l.value }}</strong><span style="font-size:12px;color:#A79E95">{{ l.unit }}</span></span>
@@ -1621,6 +1619,17 @@ a:hover{color:#EC873A;text-decoration:underline}
           <button sc-camel-on-click="{{ openAllRecognition }}" style="flex:0 0 auto;height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">See all</button>
           </div>
         </div>
+        <div style="padding:16px 18px 0">
+            <button sc-camel-on-click="{{ openComposer }}" style="position:relative;min-height:82px;padding:16px 18px;border:0;border-radius:16px;background:#221B14;color:#fff;display:flex;align-items:center;gap:16px;text-align:left;overflow:hidden;transition:transform .16s" style-hover="transform:translateY(-1px)">
+              <span style="position:absolute;inset:0;background:radial-gradient(120% 180% at 88% 50%,rgba(236,135,58,.55) 0%,rgba(236,135,58,0) 62%);pointer-events:none"></span>
+              <span style="position:relative;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.11);color:#F6BE86;display:grid;place-items:center;flex:0 0 auto"><svg width="19" height="19"><use href="#i-mega"></use></svg></span>
+              <span style="position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                <strong style="font-size:14.5px;font-weight:700;letter-spacing:-.01em">Someone here made your week easier.</strong>
+                <span style="font-size:12.5px;color:#C4B8AC">{{ composerPrompt }}</span>
+              </span>
+              <span style="position:relative;flex:0 0 auto;min-height:36px;padding:0 16px;border-radius:10px;background:#EC873A;color:#fff;font-size:12.5px;font-weight:650;display:grid;place-items:center">Post a shoutout</span>
+            </button>
+        </div>
         <div class="om-noscroll" style="margin-top:12px;border-bottom:1px solid #F1E7DD;display:flex;gap:4px;padding:0 18px;overflow-x:auto">
           <sc-for list="{{ feedOrders }}" as="o" hint-placeholder-count="2">
             <button sc-camel-on-click="{{ o.pick }}" style="position:relative;flex:0 0 auto;height:46px;padding:0 13px;border:0;background:transparent;display:inline-flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap;transition:color .18s;color:{{ o.fg }};font-weight:{{ o.fw }}">
@@ -1629,37 +1638,28 @@ a:hover{color:#EC873A;text-decoration:underline}
             </button>
           </sc-for>
         </div>
-        <div style="padding:18px;display:flex;flex-direction:column;gap:18px">
-          <button sc-camel-on-click="{{ openComposer }}" style="position:relative;min-height:82px;padding:16px 18px;border:0;border-radius:16px;background:#221B14;color:#fff;display:flex;align-items:center;gap:16px;text-align:left;overflow:hidden;transition:transform .16s" style-hover="transform:translateY(-1px)">
-            <span style="position:absolute;inset:0;background:radial-gradient(120% 180% at 88% 50%,rgba(236,135,58,.55) 0%,rgba(236,135,58,0) 62%);pointer-events:none"></span>
-            <span style="position:relative;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.11);color:#F6BE86;display:grid;place-items:center;flex:0 0 auto"><svg width="19" height="19"><use href="#i-mega"></use></svg></span>
-            <span style="position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
-              <strong style="font-size:14.5px;font-weight:700;letter-spacing:-.01em">Someone here made your week easier.</strong>
-              <span style="font-size:12.5px;color:#C4B8AC">{{ composerPrompt }}</span>
-            </span>
-            <span style="position:relative;flex:0 0 auto;min-height:36px;padding:0 16px;border-radius:10px;background:#EC873A;color:#fff;font-size:12.5px;font-weight:650;display:grid;place-items:center">Post a shoutout</span>
-          </button>
+        <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:14px">
           <sc-for list="{{ feed }}" as="f" hint-placeholder-count="3">
-            <article style="padding:16px;border:1px solid #EFEAE5;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:12px;animation:rise .45s ease-out both;animation-delay:{{ f.delay }};transition:border-color .18s,box-shadow .18s" style-hover="box-shadow:0 8px 22px -14px rgba(22,19,15,.22)">
+            <article data-followrow style="padding:15px 16px;border:1px solid #EFEAE5;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:11px;animation:rise .45s ease-out both;animation-delay:{{ f.delay }};transition:border-color .16s" style-hover="border-color:#EFC9A8">
               <div style="display:flex;align-items:center;gap:11px">
-                <button sc-camel-on-click="{{ f.openPerson }}" style="border:0;background:transparent;padding:0"><span style="width:36px;height:36px;border-radius:999px;background:#FCEBDC;color:#CE6B1F;display:grid;place-items:center;font-size:12px;font-weight:700">{{ f.initials }}</span></button>
+                <button sc-camel-on-click="{{ f.openPerson }}" aria-label="Open {{ f.person }}" style="flex:0 0 auto;border:0;background:transparent;padding:0"><span style="width:34px;height:34px;border-radius:999px;background:#FCEBDC;color:#CE6B1F;display:grid;place-items:center;font-size:12.5px;font-weight:700">{{ f.initials }}</span></button>
                 <div style="min-width:0;flex:1;display:flex;flex-direction:column;gap:2px">
-                  <span style="min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                    <strong style="font-size:14px">{{ f.person }}</strong>
+                  <span style="min-width:0;display:flex;align-items:center;gap:8px">
+                    <strong style="font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.person }}</strong>
                     <sc-if value="{{ f.canFollow }}" hint-placeholder-val="{{ false }}">
-                      <button sc-camel-on-click="{{ f.toggleFollow }}" style="flex:0 0 auto;min-height:24px;padding:0 10px;border:1px solid #F0DCC8;border-radius:999px;background:{{ f.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650" style-hover="background:#FFF6EE">{{ f.followLabel }}</button>
+                      <button class="kp-follow" data-on="{{ f.followOn }}" sc-camel-on-click="{{ f.toggleFollow }}" style="flex:0 0 auto;min-height:24px;padding:0 10px;border:1px solid #F0DCC8;border-radius:999px;background:{{ f.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650" style-hover="background:#FFF6EE">{{ f.followLabel }}</button>
                     </sc-if>
                   </span>
-                  <span style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.meta }}</span>
+                  <span style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.meta }}{{ f.teamNote }}</span>
                 </div>
-                <sc-if value="{{ f.isTeam }}" hint-placeholder-val="{{ false }}"><span style="flex:0 0 auto;min-height:26px;padding:0 11px;border-radius:999px;background:#F3EFEB;color:#6E665F;font-size:12.5px;font-weight:650;display:grid;place-items:center">Your team</span></sc-if>
-                <span style="flex:0 0 auto;min-height:26px;padding:0 12px;border-radius:999px;display:grid;place-items:center;font-size:12px;font-weight:650;color:{{ f.catFg }};background:{{ f.catBg }}">{{ f.category }}</span>
+                <span style="flex:0 0 auto;min-height:24px;padding:0 11px;border-radius:999px;display:grid;place-items:center;font-size:12px;font-weight:650;color:{{ f.catFg }};background:{{ f.catBg }}">{{ f.category }}</span>
               </div>
-              <p style="margin:0;font-size:14px;line-height:1.5;color:#3A342E">{{ f.text }}</p>
-              <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
-                <button sc-camel-on-click="{{ f.cheer }}" aria-pressed="{{ f.cheered }}" style="min-height:32px;padding:0 13px;border:1px solid {{ f.cheerBd }};border-radius:12px;background:{{ f.cheerBg }};color:{{ f.cheerFg }};display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s"><svg width="13" height="13"><use href="#i-mega"></use></svg>{{ f.cheerLabel }}</button>
-                <button sc-camel-on-click="{{ f.toggleComments }}" aria-expanded="{{ f.commentsOpen }}" aria-label="{{ f.threadAria }}" style="min-height:32px;padding:0 13px;border:1px solid {{ f.cmBd }};border-radius:12px;background:{{ f.cmBg }};color:{{ f.cmFg }};display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s"><svg width="13" height="13"><use href="#i-chat"></use></svg>Shout out {{ f.commentCount }}</button>
-                <button sc-camel-on-click="{{ f.share }}" style="min-height:32px;padding:0 13px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#7A736C;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F"><svg width="13" height="13"><use href="#i-share"></use></svg>Share</button>
+              <p style="margin:0;font-size:13.5px;line-height:1.5;color:#3A342E;text-wrap:pretty">{{ f.text }}</p>
+              <div style="display:flex;gap:7px;align-items:center;margin-top:auto">
+                <button sc-camel-on-click="{{ f.cheer }}" aria-pressed="{{ f.cheered }}" title="{{ f.cheerWorth }}" style="min-height:32px;padding:0 12px;border:1px solid {{ f.cheerBd }};border-radius:12px;background:{{ f.cheerBg }};color:{{ f.cheerFg }};display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s"><svg width="13" height="13"><use href="#i-mega"></use></svg>{{ f.cheerLabel }}<sc-if value="{{ f.cheerCount }}" hint-placeholder-val="{{ false }}"><b style="font-variant-numeric:tabular-nums">{{ f.cheerCount }}</b></sc-if></button>
+                <button sc-camel-on-click="{{ f.toggleComments }}" aria-expanded="{{ f.commentsOpen }}" aria-label="{{ f.threadAria }}" style="min-height:32px;padding:0 12px;border:1px solid {{ f.cmBd }};border-radius:12px;background:{{ f.cmBg }};color:{{ f.cmFg }};display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;transition:all .16s"><svg width="13" height="13"><use href="#i-chat"></use></svg>Shout out<sc-if value="{{ f.commentCount }}" hint-placeholder-val="{{ false }}"><b style="font-variant-numeric:tabular-nums">{{ f.commentCount }}</b></sc-if></button>
+                <button sc-camel-on-click="{{ f.share }}" aria-label="Share this recognition" style="width:32px;height:32px;border:1px solid #EAE4DE;border-radius:12px;background:#fff;color:#7A736C;display:grid;place-items:center;transition:all .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F"><svg width="13" height="13"><use href="#i-share"></use></svg></button>
+                <span style="margin-left:auto;flex:0 0 auto;font-size:12px;color:#A79E95;white-space:nowrap">{{ f.time }}</span>
               </div>
               <sc-if value="{{ f.commentsOpen }}" hint-placeholder-val="{{ false }}">
                 <div style="padding-top:12px;border-top:1px solid #F3EFEB;display:flex;flex-direction:column;gap:10px;animation:fadein .2s ease-out">
@@ -2123,7 +2123,7 @@ a:hover{color:#EC873A;text-decoration:underline}
             </div>
           </sc-if>
           <sc-if value="{{ r.isRow }}" hint-placeholder-val="{{ true }}">
-            <div sc-camel-on-click="{{ r.open }}" sc-camel-on-mouse-enter="{{ r.enter }}" sc-camel-on-mouse-leave="{{ r.leave }}" style="width:100%;min-height:76px;padding:11px 22px 11px {{ r.pad }};display:grid;grid-template-columns:46px minmax(0,1.5fr) minmax(0,1fr) 96px 124px;gap:10px;align-items:center;border-left:{{ r.mark }};border-bottom:1px solid #F3EFEB;background:{{ r.bg }};text-align:left;cursor:pointer;transition:background .16s;animation:rise .4s ease-out both;animation-delay:{{ r.delay }}" style-hover="background:#FFFBF7">
+            <div data-followrow sc-camel-on-click="{{ r.open }}" sc-camel-on-mouse-enter="{{ r.enter }}" sc-camel-on-mouse-leave="{{ r.leave }}" style="width:100%;min-height:76px;padding:11px 22px 11px {{ r.pad }};display:grid;grid-template-columns:46px minmax(0,1.7fr) minmax(0,1fr) 104px;gap:10px;align-items:center;border-left:{{ r.mark }};border-bottom:1px solid #F3EFEB;background:{{ r.bg }};text-align:left;cursor:pointer;transition:background .16s;animation:rise .4s ease-out both;animation-delay:{{ r.delay }}" style-hover="background:#FFFBF7">
               <b style="font-size:13px;color:{{ r.rankFg }};font-variant-numeric:tabular-nums">{{ r.rank }}</b>
               <span style="min-width:0;display:flex;align-items:center;gap:10px">
                 <span style="width:32px;height:32px;flex:0 0 auto;border-radius:999px;background:{{ r.avBg }};color:{{ r.avFg }};display:grid;place-items:center;font-size:12.5px;font-weight:700">{{ r.initials }}</span>
@@ -2132,7 +2132,10 @@ a:hover{color:#EC873A;text-decoration:underline}
                   <span style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.where }}</span>
                 </span>
                 <sc-if value="{{ r.canFollow }}" hint-placeholder-val="{{ false }}">
-                  <button sc-camel-on-click="{{ r.toggleFollow }}" style="flex:0 0 auto;min-height:26px;padding:0 10px;border:1px solid #F0DCC8;border-radius:999px;background:{{ r.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650;opacity:{{ r.actOp }};pointer-events:{{ r.actPe }};transition:opacity .16s,background .16s" style-hover="background:#FFF6EE">{{ r.followLabel }}</button>
+                  <button class="kp-follow" data-on="{{ r.followOn }}" sc-camel-on-click="{{ r.toggleFollow }}" style="flex:0 0 auto;min-height:26px;padding:0 10px;border:1px solid #F0DCC8;border-radius:999px;background:{{ r.followBg }};color:#CE6B1F;font-size:12.5px;font-weight:650;transition:opacity .16s,background .16s" style-hover="background:#FFF6EE">{{ r.followLabel }}</button>
+                </sc-if>
+                <sc-if value="{{ r.canShout }}" hint-placeholder-val="{{ false }}">
+                <button class="kp-follow" sc-camel-on-click="{{ r.shoutOut }}" style="min-height:32px;padding:0 12px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:opacity .16s,background .16s" style-hover="background:#FFF6EE"><svg width="12" height="12"><use href="#i-mega"></use></svg>Shout out</button>
                 </sc-if>
               </span>
               <span style="min-width:0;display:flex;flex-direction:column;gap:3px">
@@ -2142,11 +2145,6 @@ a:hover{color:#EC873A;text-decoration:underline}
               <span style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
                 <strong style="font-size:15px;font-variant-numeric:tabular-nums;color:{{ r.nameFg }}">{{ r.score }}</strong>
                 <span style="font-size:12px;color:#25714A;text-align:right;white-space:nowrap">{{ r.change }}</span>
-              </span>
-              <span style="display:flex;justify-content:flex-end">
-                <sc-if value="{{ r.canShout }}" hint-placeholder-val="{{ false }}">
-                  <button sc-camel-on-click="{{ r.shoutOut }}" style="min-height:32px;padding:0 12px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;opacity:{{ r.actOp }};pointer-events:{{ r.actPe }};transition:opacity .16s,background .16s" style-hover="background:#FFF6EE"><svg width="12" height="12"><use href="#i-mega"></use></svg>Shout out</button>
-                </sc-if>
               </span>
             </div>
           </sc-if>
@@ -2173,20 +2171,20 @@ a:hover{color:#EC873A;text-decoration:underline}
       </sc-if>
       <div style="flex:1;padding:14px 18px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:9px">
         <sc-for list="{{ wallFeedTop }}" as="x" hint-placeholder-count="7">
-          <div style="min-height:74px;padding:12px 14px;border:1px solid #EFEAE5;border-radius:16px;background:#fff;display:flex;gap:12px;align-items:flex-start;animation:rise .4s ease-out both;animation-delay:{{ x.delay }};transition:border-color .18s" style-hover="border-color:#EADFD4">
+          <div data-feedrow style="min-height:74px;padding:12px 14px;border:1px solid #EFEAE5;border-radius:16px;background:#fff;display:flex;gap:12px;align-items:center;animation:rise .4s ease-out both;animation-delay:{{ x.delay }};transition:border-color .16s" style-hover="border-color:#EFC9A8">
             <span style="width:32px;height:32px;flex:0 0 auto;border-radius:10px;display:grid;place-items:center;color:{{ x.fg }};background:{{ x.bg }}"><svg width="16" height="16"><use href="#{{ x.icon }}"></use></svg></span>
-            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
-              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                <strong style="font-size:13px">{{ x.title }}</strong>
+            <button sc-camel-on-click="{{ x.open }}" aria-label="{{ x.openLabel }}" title="{{ x.openLabel }}" style="flex:1;min-width:0;padding:0;border:0;background:transparent;text-align:left;display:flex;flex-direction:column;gap:4px">
+              <span style="display:flex;align-items:center;gap:8px;min-width:0;width:100%">
+                <strong style="font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ x.title }}</strong>
                 <sc-if value="{{ x.hasCat }}" hint-placeholder-val="{{ false }}">
-                  <span style="min-height:20px;padding:0 9px;border-radius:999px;display:grid;place-items:center;font-size:12.5px;font-weight:650;color:{{ x.catFg }};background:{{ x.catBg }}">{{ x.cat }}</span>
+                  <span style="flex:0 0 auto;min-height:20px;padding:0 9px;border-radius:999px;display:grid;place-items:center;font-size:12.5px;font-weight:650;color:{{ x.catFg }};background:{{ x.catBg }}">{{ x.cat }}</span>
                 </sc-if>
-              </div>
-              <span style="font-size:12.5px;line-height:1.45;color:#6E665F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ x.text }}</span>
-              <span style="font-size:12.5px;color:#A79E95">{{ x.kind }} · {{ x.time }} · {{ x.why }}</span>
-            </div>
+              </span>
+              <span style="width:100%;font-size:12.5px;line-height:1.45;color:#6E665F;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ x.text }}</span>
+              <span style="width:100%;font-size:12.5px;color:#A79E95;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ x.kind }} · {{ x.time }} · {{ x.why }}</span>
+            </button>
             <sc-if value="{{ x.canAct }}" hint-placeholder-val="{{ true }}">
-              <button sc-camel-on-click="{{ x.shoutOut }}" aria-label="{{ x.shoutLabel }}" style="flex:0 0 auto;width:32px;height:32px;border:1px solid #F0DCC8;border-radius:10px;background:#fff;color:#CE6B1F;display:grid;place-items:center;transition:all .16s" style-hover="background:#FFF6EE"><svg width="14" height="14"><use href="#i-mega"></use></svg></button>
+              <button sc-camel-on-click="{{ x.shoutOut }}" aria-label="{{ x.shoutLabel }}" title="{{ x.shoutLabel }}" style="flex:0 0 auto;width:32px;height:32px;border:1px solid #F0DCC8;border-radius:10px;background:#fff;color:#CE6B1F;display:grid;place-items:center;transition:all .16s" style-hover="background:#FFF6EE"><svg width="14" height="14"><use href="#i-mega"></use></svg></button>
             </sc-if>
           </div>
         </sc-for>
@@ -2200,7 +2198,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
     </section>
 
-      <section class="om-sec" style="flex:1 1 460px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
+      <section id="mywall-recognition" class="om-sec" style="flex:1 1 460px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
       <div style="padding:20px 22px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">
         <div style="min-width:0">
           <h2 class="kp-sec-title">{{ wallDirTitle }}</h2>
@@ -2232,7 +2230,7 @@ a:hover{color:#EC873A;text-decoration:underline}
       <div style="flex:1;padding:18px;display:flex;flex-direction:column;gap:12px">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(288px,100%),1fr));gap:14px">
           <sc-for list="{{ recogFeed }}" as="f" hint-placeholder-count="4">
-            <article style="padding:16px;border:1px solid #EFEAE5;border-radius:16px;background:{{ f.cardBg }};display:flex;flex-direction:column;gap:11px;animation:rise .45s ease-out both;animation-delay:{{ f.delay }};transition:border-color .18s,box-shadow .18s" style-hover="border-color:#EADFD4;box-shadow:0 8px 22px -14px rgba(22,19,15,.22)">
+            <article data-recog="{{ f.id }}" class="{{ f.flashOn }}" style="padding:16px;border:1px solid #EFEAE5;border-radius:16px;background:{{ f.cardBg }};display:flex;flex-direction:column;gap:11px;animation:rise .45s ease-out both;animation-delay:{{ f.delay }};transition:border-color .18s,box-shadow .18s" style-hover="border-color:#EADFD4;box-shadow:0 8px 22px -14px rgba(22,19,15,.22)">
               <div style="display:flex;align-items:center;gap:11px">
                 <button sc-camel-on-click="{{ f.openPerson }}" style="border:0;background:transparent;padding:0"><span style="width:32px;height:32px;border-radius:999px;background:#FCEBDC;color:#CE6B1F;display:grid;place-items:center;font-size:12px;font-weight:700">{{ f.initials }}</span></button>
                 <div style="min-width:0;flex:1;display:flex;flex-direction:column;gap:2px">
@@ -3836,6 +3834,27 @@ a:hover{color:#EC873A;text-decoration:underline}
             </div>
           </sc-if>
 
+          <sc-if value="{{ b.isGrid }}" hint-placeholder-val="{{ false }}">
+            <div style="border:1px solid #EFEAE5;border-radius:16px;overflow:hidden">
+              <div class="kp-scroll-x" style="overflow-x:auto"><div style="min-width:{{ b.gridMin }}">
+                <div role="row" style="display:grid;grid-template-columns:{{ b.gridCols }};gap:12px;min-height:38px;padding:0 16px;align-items:center;background:#FAF8F6;border-bottom:1px solid #EFEAE5">
+                  <sc-for list="{{ b.gridHead }}" as="gh" hint-placeholder-count="6">
+                    <button sc-camel-on-click="{{ gh.sort }}" role="columnheader" style="border:0;background:transparent;padding:0;text-align:{{ gh.align }};font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:{{ gh.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .16s" style-hover="color:#CE6B1F">{{ gh.label }}</button>
+                  </sc-for>
+                </div>
+                <sc-for list="{{ b.gridRows }}" as="gr" hint-placeholder-count="8">
+                  <button sc-camel-on-click="{{ gr.act }}" role="row" style="width:100%;display:grid;grid-template-columns:{{ b.gridCols }};gap:12px;min-height:54px;padding:9px 16px;align-items:center;border:0;border-bottom:1px solid #F6F2EE;background:{{ gr.bg }};text-align:left;animation:rise .35s ease-out both;animation-delay:{{ gr.delay }};transition:background .16s" style-hover="background:#FFFBF7">
+                    <sc-for list="{{ gr.cells }}" as="gc" hint-placeholder-count="6">
+                      <span role="cell" style="min-width:0;display:flex;flex-direction:column;gap:2px;text-align:{{ gc.align }}">
+                        <b style="font-size:{{ gc.size }};font-weight:{{ gc.w }};color:{{ gc.fg }};font-family:{{ gc.font }};font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ gc.v }}</b>
+                        <sc-if value="{{ gc.sub }}" hint-placeholder-val="{{ false }}"><small style="font-size:12.5px;color:#A79E95;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ gc.sub }}</small></sc-if>
+                      </span>
+                    </sc-for>
+                  </button>
+                </sc-for>
+              </div></div>
+            </div>
+          </sc-if>
           <sc-if value="{{ b.isChips }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;flex-wrap:wrap;gap:8px">
               <sc-for list="{{ b.chips }}" as="c" hint-placeholder-count="4">
@@ -5856,6 +5875,12 @@ const CUT = n => Math.min(n, Math.max(5, Math.min(50, Math.ceil(n * 0.1))));
 // The rule, in one line. Spelled out it ran to two lines in a panel header and
 // left the panel beside it starting higher — the floor and ceiling are stated in
 // the same words, just tighter.
+// Which piece of state carries the tab for each overlay, so a caller can name
+// the tab it means and everything else still opens on its first one.
+const OV_TAB_KEY = {entity:'entTab', help:'helpTab', playlist:'plTab', device:'devTab',
+  scene:'scTab', schedule:'schTab', kpis:'kpiExpTab', followers:'followTab',
+  wallfeed:'feedKind', recognition:'recogTab4'};
+
 const CUT_RULE = n => n <= 5
   ? (n + (n === 1 ? ' row' : ' rows') + ' in view — the whole list')
   : ('Top 10% of ' + n + ', showing ' + CUT(n) + ' — never under 5 or over 50');
@@ -6187,7 +6212,7 @@ class Component extends DCLogic {
     range:null, calMode:false, calFrom:null, calTo:null, calY:2026, calM:7,
     openFilter:null,
     feedOpen:{}, commentDraft:{}, entityFollows:{'person:Rahul Deshmukh':true, 'person:Manisha Bathla':true}, entityShowAll:{},
-    cmQuery:{}, cmFilter:{}, cmShow:{}, kpiHover:null, cmpBasis:'acc',
+    cmQuery:{}, cmFilter:{}, cmShow:{}, kpiHover:null, cmpBasis:'acc', wallFocus:null, wallFlash:null,
     recogQuery:'', recogCat:'All', recogScope:'all', calSingle:false, momHover:null,
     more:{portfolio:'All', category:'All categories', liveOnly:false, momentum:false},
     moreDraft:null,
@@ -6475,14 +6500,30 @@ class Component extends DCLogic {
 
   flash(msg) { this.setState({toast:msg}); if (this._t) clearTimeout(this._t); this._t = setTimeout(() => this.setState({toast:null}), 2600); }
   set(patch) { this.setState(patch); }
+  // DR-06 · every overlay opens on its first tab. A tab is a place inside one
+  // record, not a preference that should follow you into the next record you
+  // open — landing on Recognition because that is where you were three people
+  // ago is the kind of thing that reads as a bug. A caller that genuinely means
+  // a different tab passes one, and it is applied on top of the reset.
+  tabReset(payload) {
+    const r = {entTab:'overview', helpTab:'how', plTab:'overview', devTab:'overview',
+      scTab:'overview', schTab:'overview', kpiExpTab:'all', followTab:'yours',
+      feedKind:'All', recogTab4:null, ovFocus:null};
+    const p = payload || {};
+    if (p.tab) { const k = OV_TAB_KEY[p.type] || 'entTab'; r[k] = p.tab; }
+    if (p.focus) r.ovFocus = p.focus;
+    return r;
+  }
   open(type, payload) { if (this._pvT) clearTimeout(this._pvT);
-    this.setState({overlay:Object.assign({type}, payload || {}), overlayStack:[], profileOpen:false, openFilter:null,
-      pv:null, plTab:'overview', devTab:'overview', scTab:'overview'}); }
+    this.setState(Object.assign({overlay:Object.assign({type}, payload || {}), overlayStack:[],
+      profileOpen:false, openFilter:null, pv:null},
+      this.tabReset(Object.assign({type}, payload || {})))); }
   push(type, payload) {
     if (this._pvT) clearTimeout(this._pvT);
-    this.setState(s => ({overlay:Object.assign({type}, payload || {}), pv:null,
+    this.setState(s => Object.assign({overlay:Object.assign({type}, payload || {}), pv:null,
       overlayStack:(s.overlayStack || []).concat([s.overlay]).filter(Boolean).slice(-6),
-      profileOpen:false, openFilter:null}));
+      profileOpen:false, openFilter:null},
+      this.tabReset(Object.assign({type}, payload || {}))));
   }
   back() {
     if (this._pvT) clearTimeout(this._pvT);
@@ -6583,11 +6624,22 @@ class Component extends DCLogic {
       if (d > FEED_RETENTION_DAYS) return;
       const about = f.to;
       if (about !== me.name && !src[about]) return;
-      items.push({id:'sh-' + f.id, kind:'Shout out received', icon:'#i-mega', fg:'#7652B3', bg:'rgba(118,82,179,.09)',
-        who:about === me.name ? f.person : about,
-        why:about === me.name ? 'they recognised you' : src[about], cat:f.category,
-        title:f.person + ' recognised ' + (about === me.name ? 'you' : about),
-        text:f.text, time:f.time, days:d, ref:f});
+      const mine = about === me.name;
+      const iGave = f.person === me.name;
+      const cheeredIt = !!s.feedCheers[f.id];
+      // which of the four recognition tabs this row lives in, so the row can
+      // take you to itself rather than to a person page
+      const tab = iGave ? 'shouts-given'
+        : (mine ? 'shouts-received' : (cheeredIt ? 'cheers-given' : null));
+      const tabLabel = {'shouts-given':'Shout outs I gave', 'shouts-received':'Shout outs I received',
+        'cheers-received':'Cheers I received', 'cheers-given':'Cheers I gave'}[tab] || '';
+      items.push({id:'sh-' + f.id, kind:cheeredIt ? 'Cheer' : 'Shout out received',
+        icon:'#i-mega', fg:'#7652B3', bg:'rgba(118,82,179,.09)',
+        who:mine ? f.person : about,
+        why:mine ? 'they recognised you' : src[about], cat:f.category,
+        title:f.person + ' recognised ' + (mine ? 'you' : about),
+        text:f.text, time:f.time, days:d, ref:f,
+        recogTab:tab, recogId:tab ? f.id : null, recogLabel:tabLabel});
     });
     Object.keys(src).slice(0, 6).forEach((n, i) => {
       const p = person(n); if (!p) return;
@@ -6890,6 +6942,23 @@ class Component extends DCLogic {
     }
     const k = ({portfolio:'portfolio', mine:'mine', today:'today', all:'all'})[scope || 'all'] || 'all';
     this.setState({recogScope:k, recogQuery:'', recogCat:'All'}); this.open('recognition', {scope:k});
+  }
+  // FD-06 · a feed row is about one piece of recognition, so opening it lands on
+  // that piece of recognition — the right tab, scrolled to, and marked for long
+  // enough to find. It used to open the person's record instead, which answered
+  // a question the row had not asked.
+  showRecognition(tab, focusId) {
+    this.setState({module:'mywall', overlay:null, overlayStack:[], recogTab4:tab,
+      recogWallQuery:'', wallKpiCat:'All KPIs', wallFocus:focusId || null, wallFlash:focusId || null});
+    if (this._focusT) clearTimeout(this._focusT);
+    if (typeof document !== 'undefined') {
+      setTimeout(() => {
+        const el = document.querySelector('[data-recog="' + focusId + '"]')
+          || document.getElementById('mywall-recognition');
+        if (el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth', block:'center'});
+      }, 60);
+    }
+    this._focusT = setTimeout(() => this.setState({wallFlash:null}), 2600);
   }
   openEntity(kind, id) { this.state.overlay ? this.push('entity', {kind, id}) : this.open('entity', {kind, id}); }
   // open from inside an overlay — keeps a trail so the next panel can go back
@@ -7325,7 +7394,7 @@ class Component extends DCLogic {
         change:'+' + p.change + '%',
         isTeam:isPeople && this.isTeammate(p), isMe:mine,
         follow:isPeople && !mine, following:!!s.entityFollows['person:' + p.name],
-        followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
+        followOn:s.entityFollows['person:' + p.name] ? '1' : '0', followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
         followOp:(s.rowHover === p.name || s.entityFollows['person:' + p.name]) ? '1' : '0',
         followBg:s.entityFollows['person:' + p.name] ? '#FFF4EA' : '#fff',
         hoverOn:() => this.setState({rowHover:p.name}),
@@ -7404,19 +7473,34 @@ class Component extends DCLogic {
         lOpen:() => a && this.openEntity('person', a.name), rOpen:() => b && this.openEntity('person', b.name)};
     }).filter(Boolean);
 
-    // kpi panel
-    const sx = i => Math.round((i / 11) * 520 * 10) / 10;
-    const sy = v => Math.round((130 - ((v - 35) / 80) * 118) * 10) / 10;
-    const pts = kpi.series.map((v,i) => sx(i) + ',' + sy(v)).join(' ');
+    // kpi panel · the trend had a hardcoded 35-to-115 band with four unlabelled
+    // rules, and it stretched: the box scaled x and y by different amounts, so
+    // the line thickened and the dots went oval. The band is read from the series
+    // now, every rule carries its value, and the marks sit outside the stretched
+    // box so nothing distorts.
+    const kSeries = kpi.series;
+    const kLo = Math.floor(Math.min.apply(null, kSeries) / 10) * 10;
+    const kHi = Math.ceil(Math.max.apply(null, kSeries) / 10) * 10;
+    const kSpan = Math.max(10, kHi - kLo);
+    const KW = 520, KH = 190, KT = 14, KB = 16;
+    const sx = i => Math.round((i / Math.max(1, kSeries.length - 1)) * KW * 10) / 10;
+    const sy = v => Math.round((KT + (1 - (v - kLo) / kSpan) * (KH - KT - KB)) * 10) / 10;
+    const pct = n => (Math.round(n * 1000) / 10) + '%';
+    const pts = kSeries.map((v,i) => sx(i) + ',' + sy(v)).join(' ');
+    const kpiGrid = [0,1,2,3].map(g => { const v = Math.round(kLo + (kSpan * (3 - g)) / 3);
+      return {y:String(sy(v)), x2:String(KW), label:String(v), top:pct(sy(v) / KH)}; });
     const kpiPanel = {
       name:kpi.name, color:kpi.color, soft:kpi.soft, tag:kpi.tag, copy:kpi.copy,
       last:String(kpi.last), now:String(kpi.now), delta:'+' + (kpi.now - kpi.last),
       goal:String(kpi.goal), goalNow:String(kpi.goalNow), progress:String(kpi.progress),
-      line:pts, area:'0,140 ' + pts + ' 520,140',
-      dots:kpi.series.map((v,i) => {
-        const on = s.kpiDot === i, prev = i ? kpi.series[i-1] : null, d = prev === null ? 0 : v - prev;
-        return {x:sx(i), y:sy(v), r:on ? 5.5 : 3, w:on ? 2.6 : 2, fill:on ? kpi.color : '#fff',
-          hitX:sx(i) - 16, hitY:0,
+      line:pts, area:'0,' + (KH - KB) + ' ' + pts + ' ' + KW + ',' + (KH - KB),
+      grid:kpiGrid, box:'0 0 ' + KW + ' ' + KH, h:KH + 'px',
+      scaleNote:'points per month · ' + kLo + ' to ' + kHi + ' on this axis',
+      dots:kSeries.map((v,i) => {
+        const on = s.kpiDot === i;
+        return {fx:pct(sx(i) / KW), fy:pct(sy(v) / KH),
+          size:on ? '11px' : '7px', bw:on ? '2.6px' : '2px', fill:on ? kpi.color : '#fff',
+          label:MONTHS[i] + ', ' + v + ' points',
           enter:() => this.setState({kpiDot:i}), leave:() => this.setState({kpiDot:null})};
       }),
       tip:(() => {
@@ -7444,14 +7528,14 @@ class Component extends DCLogic {
           rank:String(i+1), rankFg:i < 2 ? ACD : '#7A736C', name:p.name,
           sub:(ACC_OF_PF[p.name] || '') + ' · ' + p.owner + ' · ' + p.kpiLead + ' leads',
           value:String(this.kpiOf(p)[kpi.id]), unit:'pts', change:'+' + p.change + '%', delay:(i*50)+'ms',
-          canFollow:false, followLabel:'', followBg:'#fff', toggleFollow:() => {},
+          canFollow:false, followOn:'0', followLabel:'', followBg:'#fff', toggleFollow:() => {},
           open:() => this.openEntity('portfolio', p.name)}))
       : kpiPpAll.slice(0, CUT(kpiPpAll.length)).map((p,i) => ({
           rank:String(i+1), rankFg:i < 2 ? ACD : '#7A736C', name:p.name,
           sub:p.title + ' · ' + p.pf + ' · ' + (ACC_OF_PF[p.pf] || ''),
           value:String(this.kpiOf(p)[kpi.id]), unit:'pts', change:'+' + p.change + '%', delay:(i*50)+'ms',
           // FD-05 · Follow sits beside a person's name on every surface that lists people.
-          canFollow:p.name !== me.name, followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
+          canFollow:p.name !== me.name, followOn:s.entityFollows['person:' + p.name] ? '1' : '0', followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
           followBg:s.entityFollows['person:' + p.name] ? '#FFF4EA' : '#fff',
           toggleFollow:e => { if (e && e.stopPropagation) e.stopPropagation(); this.toggleFollow('person', p.name); },
           open:() => this.openEntity('person', p.name)}));
@@ -7469,17 +7553,21 @@ class Component extends DCLogic {
         this.setState(st => ({feedComments:Object.assign({}, st.feedComments, {[f.id]:(st.feedComments[f.id]||[]).concat([{by:me.name, when:'just now', text:draft.trim()}])}), drafts:Object.assign({}, st.drafts, {[f.id]:''})}));
       };
       return {
-        person:f.person, initials:initials(f.person), meta:f.team + ' · ' + f.time, category:f.category,
-        canFollow:f.person !== me.name, followLabel:s.entityFollows['person:' + f.person] ? 'Following' : 'Follow',
+        person:f.person, initials:initials(f.person), meta:f.team, time:f.time, category:f.category,
+        canFollow:f.person !== me.name, followOn:s.entityFollows['person:' + f.person] ? '1' : '0', followLabel:s.entityFollows['person:' + f.person] ? 'Following' : 'Follow',
         followBg:s.entityFollows['person:' + f.person] ? '#FFF4EA' : '#fff',
         toggleFollow:() => this.toggleFollow('person', f.person),
         catFg:cat.fg, catBg:cat.bg, text:f.text, delay:(i*70)+'ms',
         kpiHue:(KPIS.find(k => k.name === f.category) || {color:'#EAE4DE'}).color,
         isTeam:this.isTeammate(PEOPLE.find(x => x.name === f.person)),
-        cheerLabel:cheered ? 'Cheered' : ('Cheer ' + this.cheerCount(f) + (this.inMyTeam(f.to) || f.to === me.name ? '' : ' · 1 pt')),
+        teamNote:this.isTeammate(PEOPLE.find(x => x.name === f.person)) ? ' · your team' : '',
+        cheerLabel:cheered ? 'Cheered' : 'Cheer',
+        cheerCount:this.cheerCount(f) ? String(this.cheerCount(f)) : '',
+        cheerWorth:(this.inMyTeam(f.to) || f.to === me.name) ? '' : '1 pt',
         capLine:this.capLine(f.to), capShort:this.capShort(f.to), capFg:this.inMyTeam(f.to) ? '#8A6512' : '#8A827A',
         cheerBd:cheered ? '#7652B3' : '#E3D9F0', cheerBg:cheered ? '#7652B3' : '#FAF8FD', cheerFg:cheered ? '#fff' : '#7652B3',
-        commentCount:String(comments.length), commentsOpen:!!s.openComments[f.id], cheered,
+        commentCount:comments.length ? String(comments.length) : '',
+        commentsOpen:!!s.openComments[f.id], cheered,
         threadAria:(s.openComments[f.id] ? 'Hide the ' : 'Show the ') + comments.length
           + (comments.length === 1 ? ' shout out' : ' shout outs') + ' on this moment',
         // FF-04 · the stack expands inside its own card, latest still on top
@@ -7810,7 +7898,7 @@ class Component extends DCLogic {
               score:String(this.scoreOf(p)), change:'+' + p.change + '%',
               isTeam:this.isTeammate(p), isMe:p.name === me.name,
               zebra:i % 2 === 0 ? '#fff' : '#FDFCFB',
-              followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
+              followOn:s.entityFollows['person:' + p.name] ? '1' : '0', followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
               followOp:(s.rowHover === p.name || s.entityFollows['person:' + p.name]) ? '1' : '0',
               followBg:s.entityFollows['person:' + p.name] ? '#FFF4EA' : '#fff',
               hoverOn:() => this.setState({rowHover:p.name}),
@@ -8218,7 +8306,7 @@ class Component extends DCLogic {
     }
     const blankRow = {isGap:false, isRow:false, gapLabel:'', rank:'', rankFg:'#8A827A', initials:'', avBg:'#F3EFEB', avFg:'#6E665F',
       name:'', nameFg:'#16130F', where:'', badge:'', badgeSub:'', score:'', change:'', gap:'', gapFg:'#8A827A',
-      canShout:false, shoutOut:() => {}, actOp:'0', actPe:'none', canFollow:false, followLabel:'', followBg:'#fff',
+      canShout:false, shoutOut:() => {}, actOp:'0', actPe:'none', canFollow:false, followOn:'0', followLabel:'', followBg:'#fff',
       toggleFollow:() => {}, enter:() => {}, leave:() => {},
       bg:'#fff', mark:'3px solid transparent', pad:'22px', delay:'0ms', open:() => {}};
     const positionRows = idxs.map((idx, n) => {
@@ -8229,7 +8317,7 @@ class Component extends DCLogic {
       return Object.assign({}, blankRow, {isRow:true,
         enter:() => this.setState({posHover:idx}), leave:() => this.setState({posHover:null}),
         actOp:hovered ? '1' : '0', actPe:hovered ? 'auto' : 'none',
-        canFollow:!isMe, followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
+        canFollow:!isMe, followOn:s.entityFollows['person:' + p.name] ? '1' : '0', followLabel:s.entityFollows['person:' + p.name] ? 'Following' : 'Follow',
         followBg:s.entityFollows['person:' + p.name] ? '#FFF4EA' : '#fff',
         toggleFollow:e => { if (e && e.stopPropagation) e.stopPropagation(); this.toggleFollow('person', p.name); },
         rank:'#' + (idx + 1), rankFg:isMe ? ACD : '#8A827A', initials:initials(p.name),
@@ -8324,13 +8412,17 @@ class Component extends DCLogic {
     });
     // RC-04 · six inline, see all for the rest
     const PAGE = 6;
-    const recogFeed = list.slice(0, PAGE).map((x,i) => this.feedCard(x, i, me, active.rel));
+    const focused = s.wallFocus;
+    const ordered = focused
+      ? list.filter(x => x.id === focused).concat(list.filter(x => x.id !== focused))
+      : list;
+    const recogFeed = ordered.slice(0, PAGE).map((x,i) => this.feedCard(x, i, me, active.rel));
     // RC-02 · four flat tabs, all visible, nothing nested and nothing hidden
     const recogTabs = TABS4.map(o => {
       const on = o.k === recogTabKey;
       return Object.assign({label:o.label, count:String(o.list.length),
         countBg:on ? '#FFF4EA' : '#F3EFEB', countFg:on ? '#B4600F' : '#8A827A',
-        pick:() => this.setState({recogTab4:o.k, recogWallQuery:'', wallKpiCat:'All KPIs'})}, this.underlineOn(on));
+        pick:() => this.setState({recogTab4:o.k, recogWallQuery:'', wallKpiCat:'All KPIs', wallFocus:null, wallFlash:null})}, this.underlineOn(on));
     });
     const tabTitle = active.label;
 
@@ -8344,11 +8436,14 @@ class Component extends DCLogic {
       cat:x.cat || '', hasCat:!!x.cat,
       catFg:(CATS[x.cat] || {fg:'#7A736C'}).fg, catBg:(CATS[x.cat] || {bg:'#F3EFEB'}).bg,
       delay:(i * 45) + 'ms',
-      open:() => this.openEntity('person', x.who),
+      open:x.recogTab
+        ? () => this.showRecognition(x.recogTab, x.recogId)
+        : () => this.openEntity('person', x.who),
+      openLead:x.recogTab ? 'Open in ' + x.recogLabel : ('Open ' + x.who),
       canAct:x.who !== me.name,
       shoutOut:() => this.composeFor(x.who, x.cat || null),
       shoutLabel:'Shout out ' + x.who.split(' ')[0],
-      openLabel:'Open ' + x.who
+      openLabel:x.recogTab ? ('Open in ' + x.recogLabel) : ('Open ' + x.who)
     }));
 
     return {
@@ -8432,7 +8527,7 @@ class Component extends DCLogic {
 
   // ===================== OVERLAYS =====================
   blk(o) {
-    const b = Object.assign({isSplit:false,splitCols:'minmax(0,1fr)',dev:null,isText:false,isNote:false,isStats:false,isBars:false,isRows:false,isChips:false,isTimeline:false,isFeed:false,isFields:false,isKv:false,isBadges:false,isActions:false,isBands:false,heading:'',hint:'',delay:'0ms',z:'auto'}, o);
+    const b = Object.assign({isSplit:false,splitCols:'minmax(0,1fr)',dev:null,isText:false,isNote:false,isStats:false,isBars:false,isRows:false,isChips:false,isTimeline:false,isFeed:false,isFields:false,isKv:false,isBadges:false,isActions:false,isBands:false,isGrid:false,heading:'',hint:'',delay:'0ms',z:'auto'}, o);
     // DR-01 · a block only gets a card ground when its own content has none. Stat tiles and
     // picker cards are boxed already, so a second box around them is noise (audit: no nesting).
     b.headBtn = !!o.headBtn; b.headBtnLabel = o.headBtnLabel || ''; b.headBtnAct = o.headBtnAct || null;
@@ -8464,6 +8559,18 @@ class Component extends DCLogic {
   }
   bBars(h, arr) { return this.blk({heading:h, isBars:true, bars:arr.map((x,i) => Object.assign({color:AC, delay:(i*60)+'ms'}, x))}); }
   bRowsToggle(h, arr, hint, toggle, open) { const b = this.bRows(h, arr, hint); return Object.assign({}, b, {headAct:toggle, headOpen:open}); }
+  // A sortable grid inside an overlay. The columns are the same idea as the two
+  // operational tables: one template string, cells in order, and the row is the
+  // link. It lives here so an index does not have to be a page of its own.
+  bGrid(h, cols, rows, o) {
+    const opt = o || {};
+    return this.blk({heading:h, hint:opt.hint || '', isGrid:true,
+      gridCols:opt.cols, gridMin:opt.min || '760px',
+      gridHead:cols.map(c => Object.assign({sort:() => {}, on:false, align:'left'}, c)),
+      gridRows:rows.map(r => Object.assign({act:() => {}, delay:'0ms', bg:'#fff'}, r,
+        {cells:r.cells.map(c => Object.assign({sub:'', size:'13px', w:'500', fg:'#16130F',
+          font:'inherit', align:'left'}, c))}))});
+  }
   bRows(h, arr, hint) { return this.blk({heading:h, hint:hint || '', isRows:true, rows:arr.map(x => Object.assign({bg:'#fff', rightColor:'#16130F', act:() => {}, initials:'', icon:'', iconBg:'#F3EFEB', iconFg:'#6E665F', sub:'', right:'', rightSub:''}, x))}); }
   bChips(h, arr) { return this.blk({heading:h, isChips:true, chips:arr}); }
   bChain(h, arr, hint) { return this.blk({heading:h, hint:hint || '', isChain:true,
@@ -8747,7 +8854,7 @@ class Component extends DCLogic {
     const s = this.state, o = s.overlay;
     if (!o) return {hasOverlay:false, isDrawer:false, isModal:false, isSearch:false, ov:{}};
     const me = this.me();
-    const drawerKinds = ['entity','champions','recognition','kpis','kpiLeaders','moments','badge','notifications','help','prefs','lineage','discovery','howItWorks','scoreModel','engagement','followers','wallfeed'];
+    const drawerKinds = ['entity','champions','recognition','kpis','pfindex','kpiLeaders','moments','badge','notifications','help','prefs','lineage','discovery','howItWorks','scoreModel','engagement','followers','wallfeed'];
     const build = this['ov_' + o.type] ? this['ov_' + o.type](o, me) : {title:'Not found', body:[]};
     const ov = Object.assign({width:'860px', body:[], footer:false, tabs:null, actions:null, primaryOpacity:'1', primaryOff:false, hasSearch:false}, build);
     ov.body = (ov.body || []).filter(Boolean).map((b,i) => Object.assign({}, b, {delay:(i*45)+'ms',
@@ -9275,6 +9382,51 @@ class Component extends DCLogic {
         this.bNote('info','If this average moves and no individual score did, the population in view changed — check the location and time frame at the top of the page before reading anything into it.')
       ],
       primary:'Open the KPI explorer', primaryAct:() => this.drill('kpis'),
+      secondary:'Close', secondaryAct:() => this.close()};
+  }
+
+  // INS-13 · the program index. It used to push the whole Showcase down and take
+  // the page over; it is a drawer now, so the page behind it keeps its place.
+  ov_pfindex(o, me) {
+    const s = this.state;
+    const ranked = this.rankedPf();
+    const rankOf = n => ranked.findIndex(p => p.name === n) + 1;
+    const pq = (s.pfIndexQuery || '').trim().toLowerCase();
+    const sortKey = s.pfSort || 'rank';
+    const sorters = {rank:(a, b) => this.scoreOf(b) - this.scoreOf(a), name:(a, b) => a.name.localeCompare(b.name),
+      score:(a, b) => this.scoreOf(b) - this.scoreOf(a),
+      delta:(a, b) => b.change - a.change,
+      members:(a, b) => PEOPLE.filter(p => p.pf === b.name).length - PEOPLE.filter(p => p.pf === a.name).length,
+      cheers:(a, b) => this.cheersOf(b) - this.cheersOf(a)};
+    const cols = [{k:'rank', label:'Rank'}, {k:'name', label:'Program'}, {k:'score', label:'Score'},
+      {k:'delta', label:'Change'}, {k:'members', label:'People'}, {k:'cheers', label:'Cheers'}];
+    const rows = ranked
+      .filter(p => !pq || (p.name + ' ' + p.owner + ' ' + (p.locs || []).join(' ')).toLowerCase().indexOf(pq) > -1)
+      .slice().sort(sorters[sortKey] || sorters.rank);
+    const grid = this.bGrid('', cols.map(c => ({label:c.label, on:sortKey === c.k,
+        fg:sortKey === c.k ? ACD : '#8A827A', align:c.k === 'name' ? 'left' : (c.k === 'rank' ? 'left' : 'right'),
+        sort:() => this.setState({pfSort:c.k})})),
+      rows.map((p, i) => ({
+        delay:(i * 22) + 'ms', bg:p.name === me.pf ? '#FFFCF9' : '#fff',
+        act:() => this.drill('entity', {kind:'portfolio', id:p.name}),
+        cells:[
+          {v:'#' + rankOf(p.name), font:"'Space Mono',monospace", size:'12px', fg:'#B4600F', w:'400'},
+          {v:p.name, sub:p.owner + ' · ' + (p.locs || []).map(l => codeOf(l)).join(' · '), w:'650'},
+          {v:String(this.scoreOf(p)), w:'650', align:'right'},
+          {v:(p.change >= 0 ? '+' : '') + p.change + '%', w:'700', size:'12.5px',
+           fg:p.change >= 0 ? '#25714A' : '#A7453B', align:'right'},
+          {v:String(PEOPLE.filter(x => x.pf === p.name).length), align:'right'},
+          {v:String(this.cheersOf(p)), align:'right'}
+        ]})),
+      {cols:'62px minmax(0,1.9fr) 74px 82px 74px 74px', min:'640px'});
+    return {width:'860px', eyebrow:'INDEX', icon:'#i-list', title:'Program index',
+      sub:'Every program has a detail page. One destination, many doors.',
+      hasSearch:true, searchPlaceholder:'Search a program, owner or location',
+      query:s.pfIndexQuery || '', queryOn:!!pq,
+      setQuery:e => this.setState({pfIndexQuery:e.target.value}),
+      clearQuery:() => this.setState({pfIndexQuery:''}),
+      searchFilters:[], searchCount:rows.length + ' of ' + PF.length + ' programs',
+      body:[grid],
       secondary:'Close', secondaryAct:() => this.close()};
   }
 
@@ -11120,31 +11272,6 @@ class Component extends DCLogic {
       def:'recognition volume = shout outs + cheers landing on this scope, per month · web app only'
     };
 
-    // ── 5.3 Portfolio index · searchable, sortable, every portfolio  [INS-13]
-    const pq = (s.pfIndexQuery || '').trim().toLowerCase();
-    const sortKey = s.pfSort || 'rank';
-    const sorters = {rank:(a, b) => this.scoreOf(b) - this.scoreOf(a), name:(a, b) => a.name.localeCompare(b.name),
-      delta:(a, b) => b.change - a.change, members:(a, b) => PEOPLE.filter(p => p.pf === b.name).length - PEOPLE.filter(p => p.pf === a.name).length,
-      cheers:(a, b) => this.cheersOf(b) - this.cheersOf(a)};
-    const cols = [{k:'rank', label:'Rank'}, {k:'name', label:'Program'}, {k:'score', label:'Score'},
-      {k:'delta', label:'Δ'}, {k:'members', label:'Members'}, {k:'cheers', label:'Cheers'}, {k:'mix', label:'Location mix'}];
-    const pfIndexCols = cols.map(c => ({label:c.label, on:sortKey === c.k,
-      fg:sortKey === c.k ? ACD : '#8A827A',
-      sort:() => this.setState({pfSort:sorters[c.k] ? c.k : sortKey})}));
-    const pfIndexRows = ranked
-      .filter(p => !pq || (p.name + ' ' + p.owner + ' ' + (p.locs || []).join(' ')).toLowerCase().indexOf(pq) > -1)
-      .slice().sort(sorters[sortKey] || sorters.rank)
-      .map((p, i) => ({rank:'#' + rankOf(p.name), name:p.name, owner:p.owner,
-        score:String(this.scoreOf(p)),
-        delta:(p.change >= 0 ? '+' : '') + p.change + '%',
-        deltaFg:p.change >= 0 ? '#25714A' : '#A7453B',
-        members:String(PEOPLE.filter(x => x.pf === p.name).length),
-        cheers:String(this.cheersOf(p)),
-        mix:(p.locs || []).slice(0, 3).map(l => codeOf(l)),
-        mixMore:(p.locs || []).length > 3 ? '+' + ((p.locs || []).length - 3) : '',
-        mine:p.name === myPf.name, delay:(i * 22) + 'ms',
-        act:() => this.openEntity('portfolio', p.name)}));
-
     return {
       scopeSwitch, atAccountScope:scope === 'account', atProgramScope:scope === 'portfolio', atLocationScope:scope === 'location',
       pfMulti:multi, pfPickOpen:!!s.pfPickOpen,
@@ -11153,13 +11280,7 @@ class Component extends DCLogic {
         pick:() => this.setState({pfPickOpen:false, showcaseScope:'portfolio'})})),
       standing, kpiStrip6, shouts, hasShouts:!!shouts.length,
       rv:rvVals,
-      pfIndexOpen:!!s.pfIndexOpen,
-      togglePfIndex:() => this.setState({pfIndexOpen:!s.pfIndexOpen}),
-      pfIndexQuery:s.pfIndexQuery || '', pfIndexQueryOn:!!pq,
-      setPfIndexQuery:e => this.setState({pfIndexQuery:e.target.value}),
-      clearPfIndexQuery:() => this.setState({pfIndexQuery:''}),
-      pfIndexCols, pfIndexRows,
-      pfIndexCount:pfIndexRows.length + ' of ' + PF.length + ' programs',
+      openPfIndex:() => this.open('pfindex'),
       locScopeName:me.loc,
       goLocationPeople:() => this.setState({location:me.loc, standView:'people', showcaseScope:'account'})
     };
@@ -12098,6 +12219,7 @@ class Component extends DCLogic {
       person:rel ? other : f.person, initials:initials(rel ? other : f.person),
       meta:relLine ? (relLine + ' · ' + f.team) : f.team, time:f.time, category:f.category,
       catFg:cat.fg, catBg:cat.bg, text:f.text, delay:(i * 60) + 'ms',
+      id:f.id, flashOn:s.wallFlash === f.id ? 'kp-flash' : '',
       cardEdge:cat.fg, cardBg:tint(cat.fg, .04),
 
       cheerLabel:cheered ? 'Cheered' : ('Cheer ' + (f.cheers + (cheered ? 1 : 0))),
