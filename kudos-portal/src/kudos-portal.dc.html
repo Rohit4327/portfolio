@@ -482,6 +482,54 @@ a:hover{color:#EC873A;text-decoration:underline}
   100%{box-shadow:0 0 0 0 rgba(236,135,58,0)}}
 .kp-flash{border-color:var(--kp-accent) !important;animation:kpflash 1.3s ease-out 2}
 
+/* ── SCORE BY KPI · SELECTOR ──────────────────────────────────────────────
+   The bars are both the comparison and the picker for the panel beside them,
+   so a row shows which one is being read as well as which one is under the
+   pointer. The whole score sits above the table rather than inside it: it is
+   a different scale, and a row on a different scale in the same column is the
+   kind of thing that makes a table lie. */
+.kp-cmp-all{width:100%;min-height:66px;padding:13px 22px;border:0;
+  border-bottom:1px solid var(--kp-border-strong);background:var(--kp-surface-2);
+  display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;
+  gap:4px 14px;text-align:left;transition:background var(--kp-t-hover)}
+.kp-cmp-all:hover{background:var(--kp-accent-wash)}
+.kp-cmp-all[data-sel="1"]{background:var(--kp-accent-soft);
+  box-shadow:inset 3px 0 0 var(--kp-accent)}
+.kp-cmp-all-label{font-size:13px;font-weight:650}
+.kp-cmp-all-value{grid-row:1;grid-column:2;font-size:19px;font-weight:700;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kp-cmp-all-note{grid-column:1;font-size:12px;color:var(--kp-text-3)}
+.kp-cmp-all-gap{grid-column:2;font-size:12.5px;font-weight:650;text-align:right;
+  font-variant-numeric:tabular-nums}
+.kp-cmp-row[data-sel="1"]{background:var(--kp-accent-soft);
+  box-shadow:inset 3px 0 0 var(--kp-accent)}
+.kp-cmp-row[data-sel="1"] .kp-cmp-name{color:var(--kp-accent-deep)}
+.kp-cmp-row[data-sel="1"] .kp-cmp-mark{background:var(--kp-text)}
+/* The picker and the panel it drives sit side by side, so the effect of a
+   choice is on screen next to the choice. In that narrower column the table
+   takes its compact form: the sentence goes, and the numbers stay. */
+.kp-kpisplit .kp-cmp-head,.kp-kpisplit .kp-cmp-row{
+  grid-template-columns:minmax(80px,1fr) minmax(0,1.15fr) 42px 34px;gap:10px;padding:0 16px}
+.kp-kpisplit .kp-cmp-c5{display:none}
+.kp-cmp-tight{display:none}
+.kp-kpisplit .kp-cmp-tight{display:inline}
+.kp-kpisplit .kp-cmp-wide{display:none}
+.kp-kpisplit .kp-cmp-all{padding:13px 16px}
+.kp-kpisplit .kp-cmp-foot{padding:12px 16px}
+.kp-kpisplit{display:grid;grid-template-columns:minmax(300px,.85fr) minmax(0,2.1fr);align-items:stretch}
+.kp-kpisplit > :first-child{border-right:1px solid var(--kp-divider);display:flex;flex-direction:column;min-width:0}
+.kp-kpisplit > :last-child{min-width:0}
+@media (max-width:1240px){
+  .kp-kpisplit{grid-template-columns:minmax(0,1fr)}
+  .kp-kpisplit > :first-child{border-right:0;border-bottom:1px solid var(--kp-divider)}
+  /* stacked, the table has the whole width again and takes its full form back */
+  .kp-kpisplit .kp-cmp-head,.kp-kpisplit .kp-cmp-row{
+    grid-template-columns:minmax(112px,1fr) minmax(0,2fr) 60px 70px;gap:14px;padding:0 22px}
+  .kp-kpisplit .kp-cmp-all,.kp-kpisplit .kp-cmp-foot{padding-left:22px;padding-right:22px}
+  .kp-kpisplit .kp-cmp-tight{display:none}
+  .kp-kpisplit .kp-cmp-wide{display:inline}
+}
+
 /* ── STATUS ───────────────────────────────────────────────────────────
    Never colour alone: a dot shape plus a word, so the state survives a
    greyscale print and a colour-vision difference. */
@@ -741,7 +789,7 @@ a:hover{color:#EC873A;text-decoration:underline}
     <div style="display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;padding:20px 22px 18px">
     <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:7px">
       <h1 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1.15;text-wrap:balance">{{ headTitle }}</h1>
-      <p style="margin:0;font-size:14px;line-height:1.5;color:#6E665F;text-wrap:pretty;max-width:66ch">{{ headSummary }}</p>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:#6E665F;text-wrap:pretty;max-width:70ch"><strong style="font-weight:650;color:#16130F">{{ headScope }}</strong> · {{ headSummary }}</p>
       <sc-if value="{{ showCompare }}" hint-placeholder-val="{{ true }}">
         <button sc-camel-on-click="{{ openGrain }}" style="align-self:flex-start;margin-top:1px;min-height:32px;padding:0 11px 0 9px;border:1px solid #E7E1DB;border-radius:9px;background:#fff;color:#6E665F;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;transition:border-color .16s,color .16s" style-hover="border-color:#E8C6A5;color:#CE6B1F">
           <svg width="14" height="14"><use href="#i-swap"></use></svg>Comparing <strong style="font-weight:700;color:#3A342E;font-variant-numeric:tabular-nums">{{ grainCount }}</strong> {{ grainNounLabel }} · change
@@ -1620,7 +1668,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           </div>
         </div>
         <div style="padding:16px 18px 0">
-            <button sc-camel-on-click="{{ openComposer }}" style="position:relative;min-height:82px;padding:16px 18px;border:0;border-radius:16px;background:#221B14;color:#fff;display:flex;align-items:center;gap:16px;text-align:left;overflow:hidden;transition:transform .16s" style-hover="transform:translateY(-1px)">
+            <button sc-camel-on-click="{{ openComposer }}" style="position:relative;width:100%;min-height:82px;padding:16px 18px;border:0;border-radius:16px;background:#221B14;color:#fff;display:flex;align-items:center;gap:16px;text-align:left;overflow:hidden;transition:transform .16s" style-hover="transform:translateY(-1px)">
               <span style="position:absolute;inset:0;background:radial-gradient(120% 180% at 88% 50%,rgba(236,135,58,.55) 0%,rgba(236,135,58,0) 62%);pointer-events:none"></span>
               <span style="position:relative;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.11);color:#F6BE86;display:grid;place-items:center;flex:0 0 auto"><svg width="19" height="19"><use href="#i-mega"></use></svg></span>
               <span style="position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
@@ -1934,50 +1982,136 @@ a:hover{color:#EC873A;text-decoration:underline}
     </div>
   </section>
 
+  <!-- The picker and the panel it drives are one section: choosing a KPI on the
+       left changes the panel on the right, in view, instead of updating
+       something two screens further down that you cannot see. -->
+  <section class="om-sec" style="border:1px solid var(--kp-border);border-radius:22px;background:var(--kp-surface);box-shadow:var(--kp-shadow);overflow:hidden">
+    <div class="kp-sec-head">
+      <div style="flex:1 1 260px;min-width:0">
+        <h2 class="kp-sec-title">Score by KPI</h2>
+        <p class="kp-sec-sub">{{ cmpSub }} · select one to read it in full</p>
+      </div>
+      <div class="kp-segrow" role="group" aria-label="Compare my points with" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
+        <sc-for list="{{ cmpSeg }}" as="sg" hint-placeholder-count="3">
+          <button sc-camel-on-click="{{ sg.pick }}" aria-pressed="{{ sg.press }}" style="flex:0 0 auto;height:36px;padding:0 15px;border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s;background:{{ sg.pillBg }};color:{{ sg.fg }};font-weight:{{ sg.fw }};box-shadow:{{ sg.pillSh }}">{{ sg.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div class="kp-kpisplit">
+      <div>
+        <button class="kp-cmp-all" data-sel="{{ cmpAll.sel }}" aria-pressed="{{ cmpAll.press }}" sc-camel-on-click="{{ cmpAll.pick }}">
+          <span class="kp-cmp-all-label">All six KPIs</span>
+          <b class="kp-cmp-all-value">{{ cmpAll.you }}</b>
+          <span class="kp-cmp-all-note">{{ cmpAll.note }}</span>
+          <b class="kp-cmp-all-gap" style="color:{{ cmpAll.deltaFg }}">{{ cmpAll.delta }}</b>
+        </button>
+        <div class="kp-cmp" role="table" aria-label="My points for each KPI beside {{ cmpBasisLabel }}">
+          <div class="kp-cmp-head" role="row">
+            <span class="kp-cmp-c1" role="columnheader">KPI</span>
+            <span class="kp-cmp-c2" role="columnheader">Points · 0 to {{ cmpMax }}</span>
+            <span class="kp-cmp-c3 kp-cmp-num" role="columnheader">You</span>
+            <span class="kp-cmp-c4 kp-cmp-num" role="columnheader"><b class="kp-cmp-wide">{{ cmpShort }}</b><b class="kp-cmp-tight">vs</b></span>
+            <span class="kp-cmp-c5 kp-cmp-num" role="columnheader">Gap</span>
+          </div>
+          <div role="rowgroup" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+            <sc-for list="{{ cmpRows }}" as="c" hint-placeholder-count="6">
+              <button class="kp-cmp-row" role="row" data-on="{{ c.on }}" data-sel="{{ c.sel }}" aria-pressed="{{ c.press }}" aria-label="{{ c.aria }}" title="{{ c.title }}" sc-camel-on-click="{{ c.pick }}" sc-camel-on-mouse-enter="{{ c.enter }}" sc-camel-on-mouse-leave="{{ c.leave }}" sc-camel-on-focus="{{ c.enter }}" sc-camel-on-blur="{{ c.leave }}">
+                <span class="kp-cmp-c1 kp-cmp-name" role="cell"><i class="kp-cmp-swatch" style="background:{{ c.color }}"></i>{{ c.name }}</span>
+                <span class="kp-cmp-c2 kp-cmp-track" role="cell">
+                  <i class="kp-cmp-fill" style="width:{{ c.youPct }};animation-delay:{{ c.delay }}"></i>
+                  <i class="kp-cmp-mark" style="left:{{ c.vsPct }}"></i>
+                </span>
+                <span class="kp-cmp-c3 kp-cmp-you" role="cell">{{ c.you }}</span>
+                <span class="kp-cmp-c4 kp-cmp-vs" role="cell">{{ c.vs }}</span>
+                <span class="kp-cmp-c5 kp-cmp-verdict" role="cell"><b class="kp-cmp-delta" style="color:{{ c.deltaFg }}">{{ c.delta }}</b><span style="font-weight:500;color:var(--kp-text-3)">{{ c.verdict }}</span></span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div class="kp-cmp-foot" style="margin-top:auto">
+          <span class="kp-cmp-key">
+            <span class="kp-cmp-keyitem"><i class="kp-cmp-keybar"></i>Your points</span>
+            <span class="kp-cmp-keyitem"><i class="kp-cmp-keytick"></i>{{ cmpBasisLabel }}</span>
+          </span>
+          <span>{{ cmpFoot }}</span>
+        </div>
+      </div>
+      <div>
+        <div style="padding:22px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(min(280px,100%),1fr);gap:22px;align-items:stretch">
+          <div style="min-width:0;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+              <strong style="font-size:22px;letter-spacing:-.025em;color:{{ momPanel.color }}">{{ momPanel.name }}</strong>
+              <span style="font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;color:{{ momPanel.color }};background:{{ momPanel.soft }}">{{ momPanel.tag }}</span>
+            </div>
+            <p style="margin:0;color:#7A736C;font-size:13.5px;line-height:1.5;text-wrap:pretty">{{ momPanel.copy }}</p>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+              <sc-for list="{{ momStats }}" as="st" hint-placeholder-count="4">
+                <div style="min-height:96px;padding:14px;border:1px solid #EFEAE5;border-radius:14px;background:#fff;display:flex;flex-direction:column;gap:6px">
+                  <span style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ st.label }}</span>
+                  <strong style="font-size:24px;line-height:1;letter-spacing:-.025em;color:{{ st.color }};font-variant-numeric:tabular-nums">{{ st.value }}</strong>
+                  <span style="margin-top:auto;font-size:12px;color:#8A827A">{{ st.note }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+              <div style="position:relative;min-width:0">
+              <svg sc-camel-view-box="{{ momChart.box }}" style="display:block;width:100%;height:auto" role="img" aria-label="Your score each month against the account average for the same month">
+                <sc-for list="{{ momChart.grid }}" as="g" hint-placeholder-count="4">
+                  <g>
+                    <line x1="{{ g.x1 }}" y1="{{ g.y }}" x2="{{ g.x2 }}" y2="{{ g.y }}" stroke="#F0EBE6" stroke-width="1"></line>
+                  </g>
+                </sc-for>
+                <polyline points="{{ momChart.avg }}" fill="none" stroke="#B9AFA5" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round" stroke-linecap="round"></polyline>
+                <polyline class="om-draw" points="{{ momChart.you }}" fill="none" stroke="#EC873A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1400"></polyline>
+                <sc-for list="{{ momChart.cols }}" as="c" hint-placeholder-count="6">
+                  <g sc-camel-on-mouse-enter="{{ c.enter }}" sc-camel-on-mouse-leave="{{ c.leave }}">
+                    <rect x="{{ c.x }}" y="{{ c.y }}" width="{{ c.w }}" height="{{ c.h }}" fill="transparent"></rect>
+                    <line x1="{{ c.lineX }}" y1="{{ c.lineY1 }}" x2="{{ c.lineX }}" y2="{{ c.lineY2 }}" stroke="#EFC9A8" stroke-width="1" opacity="{{ c.lineOp }}"></line>
+                    <circle cx="{{ c.avgX }}" cy="{{ c.avgY }}" r="{{ c.avgR }}" fill="#fff" stroke="#B9AFA5" stroke-width="1.8"></circle>
+                    <circle cx="{{ c.youX }}" cy="{{ c.youY }}" r="{{ c.youR }}" fill="#fff" stroke="#EC873A" stroke-width="2.4" style="transition:r .16s"></circle>
+                  </g>
+                </sc-for>
+              </svg>
+              <!-- An axis label written as SVG text never renders here: the template
+                   runtime wraps interpolated content in a span, and a span inside an
+                   SVG text node draws nothing. Both axes were silently blank. They are
+                   HTML over the chart now, which also keeps them at a readable size
+                   when the chart scales. -->
+                  <sc-for list="{{ momChart.grid }}" as="g" hint-placeholder-count="4">
+                <span style="position:absolute;left:0;top:{{ g.top }};transform:translateY(-50%);font-size:12px;font-weight:600;color:#8A827A;font-variant-numeric:tabular-nums;pointer-events:none">{{ g.label }}</span>
+              </sc-for>
+              <sc-for list="{{ momChart.cols }}" as="c" hint-placeholder-count="6">
+                <span style="position:absolute;left:{{ c.left }};bottom:0;transform:translateX(-50%);font-size:12px;white-space:nowrap;color:{{ c.labFg }};font-weight:{{ c.labFw }};pointer-events:none">{{ c.month }}</span>
+              </sc-for>
+              </div>
+              <div style="display:flex;gap:18px;color:#8A827A;font-size:12px">
+                <span style="display:inline-flex;align-items:center;gap:7px;color:#CE6B1F"><span style="width:18px;height:3px;border-radius:2px;background:#EC873A"></span>{{ momYouLabel }}</span>
+                <span style="display:inline-flex;align-items:center;gap:7px"><span style="width:18px;height:0;border-top:2px dashed #B9AFA5"></span>{{ momAvgSeriesLabel }}</span><span style="margin-left:auto;color:#B3AAA1">points earned per month</span>
+              </div>
+            </div>
+          </div>
+          <div style="min-width:0;display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:12px;font-weight:700;letter-spacing:.11em;color:#A79E95">{{ momMovesHead }}</span>
+            <sc-for list="{{ momMoves }}" as="mv" hint-placeholder-count="6">
+              <button sc-camel-on-click="{{ mv.act }}" style="width:100%;padding:11px 13px;border:1px solid #EFEAE5;border-radius:14px;background:#fff;display:flex;flex-direction:column;gap:8px;text-align:left;transition:border-color .16s,background .16s" style-hover="border-color:#EFC9A8;background:#FFFBF7">
+                <span style="width:100%;display:flex;align-items:center;gap:10px">
+                  <span style="width:28px;height:28px;flex:0 0 auto;border-radius:9px;display:grid;place-items:center;background:{{ mv.bg }};color:{{ mv.fg }}"><svg width="15" height="15"><use href="#{{ mv.icon }}"></use></svg></span>
+                  <span style="min-width:0;flex:1;display:flex;flex-direction:column;gap:2px">
+                    <strong style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ mv.title }}</strong>
+                    <span style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ mv.meta }}</span>
+                  </span>
+                  <b style="flex:0 0 auto;font-size:14px;font-variant-numeric:tabular-nums">{{ mv.value }}<em style="font-size:12.5px;font-style:normal;font-weight:500;color:#A79E95"> {{ mv.unit }}</em></b>
+                </span>
+                <span style="width:100%;height:5px;border-radius:999px;background:#F3EFEB;overflow:hidden"><span style="display:block;height:100%;border-radius:999px;background:{{ mv.color }};width:{{ mv.pct }}"></span></span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
-    <section class="om-sec" style="flex:1.7 1 620px;min-width:0;border:1px solid var(--kp-border);border-radius:22px;background:var(--kp-surface);box-shadow:var(--kp-shadow);overflow:hidden;display:flex;flex-direction:column">
-      <div class="kp-sec-head">
-        <div style="flex:1 1 220px;min-width:0">
-          <h2 class="kp-sec-title">Score by KPI</h2>
-          <p class="kp-sec-sub">{{ cmpSub }}</p>
-        </div>
-        <div class="kp-segrow" role="group" aria-label="Compare my points with" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:13px;background:#EFEAE4">
-          <sc-for list="{{ cmpSeg }}" as="sg" hint-placeholder-count="3">
-            <button sc-camel-on-click="{{ sg.pick }}" aria-pressed="{{ sg.press }}" style="flex:0 0 auto;height:36px;padding:0 15px;border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s;background:{{ sg.pillBg }};color:{{ sg.fg }};font-weight:{{ sg.fw }};box-shadow:{{ sg.pillSh }}">{{ sg.label }}</button>
-          </sc-for>
-        </div>
-      </div>
-      <div class="kp-cmp" role="table" aria-label="My points for each KPI beside {{ cmpBasisLabel }}">
-        <div class="kp-cmp-head" role="row">
-          <span class="kp-cmp-c1" role="columnheader">KPI</span>
-          <span class="kp-cmp-c2" role="columnheader">Points · 0 to {{ cmpMax }}</span>
-          <span class="kp-cmp-c3 kp-cmp-num" role="columnheader">You</span>
-          <span class="kp-cmp-c4 kp-cmp-num" role="columnheader">{{ cmpShort }}</span>
-          <span class="kp-cmp-c5 kp-cmp-num" role="columnheader">Gap</span>
-        </div>
-        <div role="rowgroup" style="flex:1;display:flex;flex-direction:column;justify-content:center">
-          <sc-for list="{{ cmpRows }}" as="c" hint-placeholder-count="6">
-            <button class="kp-cmp-row" role="row" data-on="{{ c.on }}" aria-label="{{ c.aria }}" title="{{ c.title }}" sc-camel-on-click="{{ c.pick }}" sc-camel-on-mouse-enter="{{ c.enter }}" sc-camel-on-mouse-leave="{{ c.leave }}" sc-camel-on-focus="{{ c.enter }}" sc-camel-on-blur="{{ c.leave }}">
-              <span class="kp-cmp-c1 kp-cmp-name" role="cell"><i class="kp-cmp-swatch" style="background:{{ c.color }}"></i>{{ c.name }}</span>
-              <span class="kp-cmp-c2 kp-cmp-track" role="cell">
-                <i class="kp-cmp-fill" style="width:{{ c.youPct }};animation-delay:{{ c.delay }}"></i>
-                <i class="kp-cmp-mark" style="left:{{ c.vsPct }}"></i>
-              </span>
-              <span class="kp-cmp-c3 kp-cmp-you" role="cell">{{ c.you }}</span>
-              <span class="kp-cmp-c4 kp-cmp-vs" role="cell">{{ c.vs }}</span>
-              <span class="kp-cmp-c5 kp-cmp-verdict" role="cell"><b class="kp-cmp-delta" style="color:{{ c.deltaFg }}">{{ c.delta }}</b><span style="font-weight:500;color:var(--kp-text-3)">{{ c.verdict }}</span></span>
-            </button>
-          </sc-for>
-        </div>
-      </div>
-      <div class="kp-cmp-foot">
-        <span class="kp-cmp-key">
-          <span class="kp-cmp-keyitem"><i class="kp-cmp-keybar"></i>Your points</span>
-          <span class="kp-cmp-keyitem"><i class="kp-cmp-keytick"></i>{{ cmpBasisLabel }}</span>
-        </span>
-        <span>{{ cmpFoot }}</span>
-      </div>
-    </section>
 
     <section style="flex:1 1 460px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
       <div class="kp-sec-head">
@@ -1987,8 +2121,8 @@ a:hover{color:#EC873A;text-decoration:underline}
         </div>
         <button sc-camel-on-click="{{ openMoments }}" style="height:36px;padding:0 15px;border:1px solid #F0DCC8;border-radius:12px;background:#fff;color:#CE6B1F;font-size:12px;font-weight:650;transition:border-color .16s,background .16s" style-hover="border-color:#E8C6A5;background:#FFFAF6">See all</button>
       </div>
-      <div style="flex:1;padding:18px 22px;display:flex;flex-direction:column;gap:11px">
-        <div style="min-height:88px;padding:0 18px;display:flex;align-items:center;gap:14px;border:1px solid rgba(37,113,74,.28);border-radius:16px;background:linear-gradient(100deg,#E9F4EE,#F6FBF8)">
+      <div style="flex:1;padding:18px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:11px;align-content:start">
+        <div style="grid-column:1/-1;min-height:88px;padding:0 18px;display:flex;align-items:center;gap:14px;border:1px solid rgba(37,113,74,.28);border-radius:16px;background:linear-gradient(100deg,#E9F4EE,#F6FBF8)">
           <span style="width:38px;height:38px;border-radius:12px;background:#fff;color:#25714A;display:grid;place-items:center;flex:0 0 auto"><svg width="19" height="19"><use href="#i-monitor"></use></svg></span>
           <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
             <strong style="color:#1F6641;font-size:14px">Currently featured</strong>
@@ -2000,7 +2134,7 @@ a:hover{color:#EC873A;text-decoration:underline}
           </div>
         </div>
         <sc-for list="{{ moments }}" as="m" hint-placeholder-count="3">
-          <div style="min-height:70px;padding:0 14px;display:flex;gap:12px;align-items:center;border:1px solid #EFEAE5;border-radius:16px;background:#fff;animation:rise .4s ease-out both;animation-delay:{{ m.delay }};transition:border-color .18s" style-hover="border-color:#EADFD4">
+          <div style="min-height:70px;padding:13px 14px;display:flex;gap:12px;align-items:flex-start;border:1px solid #EFEAE5;border-radius:16px;background:#fff;animation:rise .4s ease-out both;animation-delay:{{ m.delay }};transition:border-color .18s" style-hover="border-color:#EADFD4">
             <span style="width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;color:{{ m.fg }};background:{{ m.bg }};border:1px solid {{ m.bd }}"><sc-if value="{{ m.icon }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18"><use href="#{{ m.icon }}"></use></svg></sc-if></span>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
               <strong style="font-size:13px">{{ m.title }}</strong>
@@ -2012,92 +2146,6 @@ a:hover{color:#EC873A;text-decoration:underline}
       </div>
     </section>
   </div>
-
-  <section class="om-sec" style="border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
-    <div class="kp-sec-head">
-      <h2 class="kp-sec-title">My momentum</h2>
-      <p style="margin:5px 0 0;font-size:13px;color:#7A736C;max-width:900px;text-wrap:pretty">{{ momSub }}</p>
-    </div>
-    <div class="om-noscroll" style="display:flex;gap:4px;padding:0 14px;overflow-x:auto;border-bottom:1px solid #F0EBE6;background:#FDFCFB">
-      <sc-for list="{{ momStrip }}" as="k" hint-placeholder-count="7">
-        <button sc-camel-on-click="{{ k.pick }}" style="position:relative;flex:0 0 auto;height:54px;padding:0 14px;border:0;background:transparent;display:inline-flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap;transition:color .18s;color:{{ k.fg }};font-weight:{{ k.fw }}">
-          <i style="width:8px;height:8px;border-radius:999px;background:{{ k.dot }};flex:0 0 auto"></i>{{ k.name }}
-          <span style="position:absolute;left:10px;right:10px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:{{ k.bar }}"></span>
-        </button>
-      </sc-for>
-    </div>
-    <div style="padding:22px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(min(280px,100%),1fr);gap:22px;align-items:stretch">
-      <div style="min-width:0;display:flex;flex-direction:column;gap:14px">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-          <strong style="font-size:22px;letter-spacing:-.025em;color:{{ momPanel.color }}">{{ momPanel.name }}</strong>
-          <span style="font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;color:{{ momPanel.color }};background:{{ momPanel.soft }}">{{ momPanel.tag }}</span>
-        </div>
-        <p style="margin:0;color:#7A736C;font-size:13.5px;line-height:1.5;text-wrap:pretty">{{ momPanel.copy }}</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px">
-          <sc-for list="{{ momStats }}" as="st" hint-placeholder-count="4">
-            <div style="min-height:96px;padding:14px;border:1px solid #EFEAE5;border-radius:14px;background:#fff;display:flex;flex-direction:column;gap:6px">
-              <span style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ st.label }}</span>
-              <strong style="font-size:24px;line-height:1;letter-spacing:-.025em;color:{{ st.color }};font-variant-numeric:tabular-nums">{{ st.value }}</strong>
-              <span style="margin-top:auto;font-size:12px;color:#8A827A">{{ st.note }}</span>
-            </div>
-          </sc-for>
-        </div>
-        <div style="flex:1;display:flex;flex-direction:column;gap:10px">
-          <div style="position:relative;min-width:0">
-          <svg sc-camel-view-box="{{ momChart.box }}" style="display:block;width:100%;height:auto" role="img" aria-label="Your score each month against the account average for the same month">
-            <sc-for list="{{ momChart.grid }}" as="g" hint-placeholder-count="4">
-              <g>
-                <line x1="{{ g.x1 }}" y1="{{ g.y }}" x2="{{ g.x2 }}" y2="{{ g.y }}" stroke="#F0EBE6" stroke-width="1"></line>
-              </g>
-            </sc-for>
-            <polyline points="{{ momChart.avg }}" fill="none" stroke="#B9AFA5" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round" stroke-linecap="round"></polyline>
-            <polyline class="om-draw" points="{{ momChart.you }}" fill="none" stroke="#EC873A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1400"></polyline>
-            <sc-for list="{{ momChart.cols }}" as="c" hint-placeholder-count="6">
-              <g sc-camel-on-mouse-enter="{{ c.enter }}" sc-camel-on-mouse-leave="{{ c.leave }}">
-                <rect x="{{ c.x }}" y="{{ c.y }}" width="{{ c.w }}" height="{{ c.h }}" fill="transparent"></rect>
-                <line x1="{{ c.lineX }}" y1="{{ c.lineY1 }}" x2="{{ c.lineX }}" y2="{{ c.lineY2 }}" stroke="#EFC9A8" stroke-width="1" opacity="{{ c.lineOp }}"></line>
-                <circle cx="{{ c.avgX }}" cy="{{ c.avgY }}" r="{{ c.avgR }}" fill="#fff" stroke="#B9AFA5" stroke-width="1.8"></circle>
-                <circle cx="{{ c.youX }}" cy="{{ c.youY }}" r="{{ c.youR }}" fill="#fff" stroke="#EC873A" stroke-width="2.4" style="transition:r .16s"></circle>
-              </g>
-            </sc-for>
-          </svg>
-          <!-- An axis label written as SVG text never renders here: the template
-               runtime wraps interpolated content in a span, and a span inside an
-               SVG text node draws nothing. Both axes were silently blank. They are
-               HTML over the chart now, which also keeps them at a readable size
-               when the chart scales. -->
-          <span style="position:absolute;left:0;top:0;font-size:12px;font-weight:700;letter-spacing:.06em;color:#A79E95">PTS</span>
-          <sc-for list="{{ momChart.grid }}" as="g" hint-placeholder-count="4">
-            <span style="position:absolute;left:0;top:{{ g.top }};transform:translateY(-50%);font-size:12px;font-weight:600;color:#8A827A;font-variant-numeric:tabular-nums;pointer-events:none">{{ g.label }}</span>
-          </sc-for>
-          <sc-for list="{{ momChart.cols }}" as="c" hint-placeholder-count="6">
-            <span style="position:absolute;left:{{ c.left }};bottom:0;transform:translateX(-50%);font-size:12px;white-space:nowrap;color:{{ c.labFg }};font-weight:{{ c.labFw }};pointer-events:none">{{ c.month }}</span>
-          </sc-for>
-          </div>
-          <div style="display:flex;gap:18px;color:#8A827A;font-size:12px">
-            <span style="display:inline-flex;align-items:center;gap:7px;color:#CE6B1F"><span style="width:18px;height:3px;border-radius:2px;background:#EC873A"></span>{{ momYouLabel }}</span>
-            <span style="display:inline-flex;align-items:center;gap:7px"><span style="width:18px;height:0;border-top:2px dashed #B9AFA5"></span>{{ momAvgSeriesLabel }}</span>
-          </div>
-        </div>
-      </div>
-      <div style="min-width:0;display:flex;flex-direction:column;gap:8px">
-        <span style="font-size:12px;font-weight:700;letter-spacing:.11em;color:#A79E95">{{ momMovesHead }}</span>
-        <sc-for list="{{ momMoves }}" as="mv" hint-placeholder-count="6">
-          <button sc-camel-on-click="{{ mv.act }}" style="width:100%;padding:11px 13px;border:1px solid #EFEAE5;border-radius:14px;background:#fff;display:flex;flex-direction:column;gap:8px;text-align:left;transition:border-color .16s,background .16s" style-hover="border-color:#EFC9A8;background:#FFFBF7">
-            <span style="width:100%;display:flex;align-items:center;gap:10px">
-              <span style="width:28px;height:28px;flex:0 0 auto;border-radius:9px;display:grid;place-items:center;background:{{ mv.bg }};color:{{ mv.fg }}"><svg width="15" height="15"><use href="#{{ mv.icon }}"></use></svg></span>
-              <span style="min-width:0;flex:1;display:flex;flex-direction:column;gap:2px">
-                <strong style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ mv.title }}</strong>
-                <span style="font-size:12px;color:#8A827A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ mv.meta }}</span>
-              </span>
-              <b style="flex:0 0 auto;font-size:14px;font-variant-numeric:tabular-nums">{{ mv.value }}<em style="font-size:12.5px;font-style:normal;font-weight:500;color:#A79E95"> {{ mv.unit }}</em></b>
-            </span>
-            <span style="width:100%;height:5px;border-radius:999px;background:#F3EFEB;overflow:hidden"><span style="display:block;height:100%;border-radius:999px;background:{{ mv.color }};width:{{ mv.pct }}"></span></span>
-          </button>
-        </sc-for>
-      </div>
-    </div>
-  </section>
 
   <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
     <section style="flex:1 1 460px;min-width:0;border:1px solid #EBE5DF;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(22,19,15,.04);overflow:hidden;display:flex;flex-direction:column">
@@ -7672,7 +7720,10 @@ class Component extends DCLogic {
       // SH-02 · the page header names the scope the viewer is standing in and
       // the population behind every number below it. Outside Kudos Portal the
       // registry entry still supplies the title.
-      headTitle:isWof
+      // The head greets first and scopes second: the title is the place you are
+      // in, and the line under it says what is being counted.
+      headTitle:isWof ? (s.module === 'mywall' ? me.name : 'Welcome to Kudos Portal') : prod.title,
+      headScope:isWof
         ? (s.module === 'mywall' ? me.name
             : (this.programsIn().length === 1
                 ? this.programsIn()[0]
@@ -8167,16 +8218,26 @@ class Component extends DCLogic {
         youPct:(Math.round((you / cmpMax) * 1000) / 10) + '%',
         vsPct:(Math.round((vs / cmpMax) * 1000) / 10) + '%',
         delta:(d > 0 ? '+' : '') + d, deltaFg:v.c, verdict:v.t,
-        on:hovK === i ? '1' : '0',
+        on:hovK === i ? '1' : '0', sel:(s.momKpi || 'all') === k.id ? '1' : '0',
         title:'You ' + you + ' · ' + cmpBase.label + ' ' + vs + ' · ' + (d > 0 ? '+' : '') + d,
         aria:k.name + ': you ' + you + ' points, ' + cmpBase.label + ' ' + vs + ', ' + v.t
-          + '. Opens this KPI in My momentum.',
+          + '. Shows this KPI in the panel beside it.',
+        press:(s.momKpi || 'all') === k.id ? 'true' : 'false',
         enter:() => this.setState({kpiHover:i}),
         leave:() => this.setState({kpiHover:null}),
-        pick:() => { this.setState({momKpi:k.id, momHover:null, kpiHover:i});
-          this.flash('My momentum now shows ' + k.name + '.'); }};
+        pick:() => this.setState({momKpi:k.id, momHover:null, kpiHover:i})};
     }).sort((a,b) => Number(b.you) - Number(a.you));
     cmpRows.forEach((r,i) => { r.delay = (i * 45) + 'ms'; });
+    const cmpAllVs = KPIS.reduce((a,k) => a + cmpBase.vals[k.id], 0);
+    const cmpAllGap = myScore - cmpAllVs;
+    const cmpAll = {
+      you:String(myScore), vs:String(cmpAllVs),
+      delta:(cmpAllGap > 0 ? '+' : '') + cmpAllGap,
+      deltaFg:cmpAllGap >= 0 ? '#25714A' : '#8F5D14',
+      note:'the six added up · ' + cmpBase.label + ' ' + cmpAllVs,
+      sel:(s.momKpi || 'all') === 'all' ? '1' : '0',
+      press:(s.momKpi || 'all') === 'all' ? 'true' : 'false',
+      pick:() => this.setState({momKpi:'all', momHover:null, kpiHover:null})};
     const cmpSeg = ['acc','pf','top'].map(kk => {
       const b = CMP_BASES[kk], on = kk === cmpKey;
       return {label:b.label, press:on ? 'true' : 'false',
@@ -8448,9 +8509,9 @@ class Component extends DCLogic {
 
     return {
       wallMetrics, wallWho,
-      cmpRows, cmpSeg, cmpMax:String(cmpMax), cmpShort:cmpBase.short, cmpBasisLabel:cmpBase.label,
+      cmpRows, cmpSeg, cmpAll, cmpMax:String(cmpMax), cmpShort:cmpBase.short, cmpBasisLabel:cmpBase.label,
       cmpSub:'Ranked by your points, all six on one 0 to ' + cmpMax + ' scale',
-      cmpFoot:viewNote + ' · the tick marks ' + cmpBase.note + ' · select a KPI to open it in My momentum',
+      cmpFoot:viewNote + ' · the tick marks ' + cmpBase.note,
       momChart, momDetail, momStrip, momStats, momMoves, momMovesHead, momPanel,
       momSub:'Pick a KPI. The panel below is that KPI: points held, what you earned each month, and the interactions behind it.',
       momYouLabel:'You', momAvgSeriesLabel:avgSeriesLabel,
