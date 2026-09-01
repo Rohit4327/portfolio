@@ -160,7 +160,12 @@
     setTimeout(function () { el.textContent = old; el.classList.remove('is-on'); }, 1100);
   }
   function copy(text, el, label) {
-    var done = function () { if (el) flash(el, label || 'copied'); toast('Copied ' + text); };
+    var done = function () {
+      if (el) flash(el, label || 'copied');
+      // A token fits in a toast. A stylesheet does not.
+      toast(text.length < 120 ? 'Copied ' + text
+                              : 'Copied ' + text.length.toLocaleString() + ' characters');
+    };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done).catch(fallback);
     } else { fallback(); }
