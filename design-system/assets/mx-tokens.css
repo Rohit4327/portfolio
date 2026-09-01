@@ -1,0 +1,295 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MUTANT X DESIGN SYSTEM · TOKEN LAYER
+   v1.0.0 · The single source of truth. Nothing below this file hard-codes a
+   value; every component reads from here.
+
+   Naming: --mx-<category>-<role>-<step>
+   Categories: color · type · space · radius · elevation · motion · layer · size
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+
+  /* ── 1 · TYPEFACE ────────────────────────────────────────────────────────
+     San Francisco. Apple ships two optical sizes and the browser picks by
+     size when you use the system stack: SF Pro Text below 20px, SF Pro
+     Display at 20px and above. Do not name the optical size yourself unless
+     you are overriding that switch on purpose. */
+  --mx-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+                  "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  --mx-font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont,
+                  "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  --mx-font-rounded: "SF Pro Rounded", -apple-system, BlinkMacSystemFont,
+                  "Helvetica Neue", Arial, sans-serif;
+  --mx-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+                  "Liberation Mono", monospace;
+
+  /* ── 2 · COLOR · NEUTRAL (warm grey) ─────────────────────────────────────
+     A warm ramp. Cool greys read as clinical beside the orange accent, so
+     every step carries a trace of the brand hue. */
+  --mx-white:        #FFFFFF;
+  --mx-neutral-0:    #FFFDFB;   /* rail ground            */
+  --mx-neutral-25:   #FDFCFB;   /* raised header gradient */
+  --mx-neutral-50:   #FBFAF9;
+  --mx-neutral-75:   #FAF8F6;   /* surface-2              */
+  --mx-neutral-100:  #F6F2EE;
+  --mx-neutral-150:  #F3EFEB;   /* surface-3, inset track */
+  --mx-neutral-200:  #F1F1F1;   /* page ground            */
+  --mx-neutral-250:  #F0EBE6;   /* divider                */
+  --mx-neutral-300:  #EFEAE5;   /* segmented track        */
+  --mx-neutral-350:  #EBE5DF;   /* border                 */
+  --mx-neutral-400:  #EAE4DE;   /* control border         */
+  --mx-neutral-450:  #E7E1DB;   /* shell control border   */
+  --mx-neutral-500:  #E2D8CE;   /* border-strong, FIELD RULE */
+  --mx-neutral-550:  #E3D7CB;   /* dashed border          */
+  --mx-neutral-600:  #C9BEB4;
+  --mx-neutral-650:  #B5ABA1;
+  --mx-neutral-700:  #A79E95;   /* text-4 / placeholder   */
+  --mx-neutral-750:  #8A827A;   /* text-3 / muted         */
+  --mx-neutral-800:  #7A736C;
+  --mx-neutral-850:  #6E665F;
+  --mx-neutral-875:  #5E564F;   /* text-2 / body          */
+  --mx-neutral-900:  #4A423A;
+  --mx-neutral-925:  #3A342E;
+  --mx-neutral-950:  #2A231D;
+  --mx-neutral-975:  #16130F;   /* text-1 / ink           */
+  --mx-neutral-1000: #0B0906;
+
+  /* ── 3 · COLOR · ACCENT (Mutant orange) ────────────────────────────────── */
+  --mx-accent-25:   #FFFCF9;
+  --mx-accent-50:   #FFFAF6;
+  --mx-accent-75:   #FFF9F4;   /* wash — row hover           */
+  --mx-accent-100:  #FFF6EE;
+  --mx-accent-150:  #FFF4EA;   /* soft — selected, icon tile */
+  --mx-accent-200:  #FCEBDC;
+  --mx-accent-250:  #F7DFC6;
+  --mx-accent-300:  #F0DCC8;   /* line — accent hairline     */
+  --mx-accent-350:  #EFC9A8;
+  --mx-accent-400:  #E8C6A5;   /* hover border               */
+  --mx-accent-450:  #FFB273;   /* on dark                    */
+  --mx-accent-500:  #F3954D;
+  --mx-accent-550:  #EC873A;   /* ★ PRIMARY                  */
+  --mx-accent-600:  #DE7A2A;   /* primary hover              */
+  --mx-accent-650:  #CE6B1F;   /* interactive text, link     */
+  --mx-accent-700:  #C85B08;
+  --mx-accent-750:  #B4600F;   /* deep — text on soft        */
+  --mx-accent-800:  #9A5310;
+
+  /* ── 4 · COLOR · STATUS ──────────────────────────────────────────────────
+     Every status is a TRIO: text · wash · line. Never ship one without the
+     other two, and never carry meaning in hue alone — pair it with the dot
+     shape defined in .mx-status. */
+  --mx-ok-text:     #24724B;  --mx-ok-wash:   #EFF8F2;  --mx-ok-line:   #BEDBC9;
+  --mx-ok-signal:   #1F9B5D;  --mx-ok-bright: #7FE0AE;  /* live dot · on dark */
+  --mx-warn-text:   #8A6512;  --mx-warn-wash: #FFF9E9;  --mx-warn-line: #EAD69F;
+  --mx-crit-text:   #A7453B;  --mx-crit-wash: #FDF2F0;  --mx-crit-line: #E8C2BD;
+  --mx-crit-signal: #D93025;  /* pure alert red — validation, required mark */
+  --mx-crit-mid:    #C1584C;
+  --mx-info-text:   #376D96;  --mx-info-wash: #F2F7FA;  --mx-info-line: #C7D9E5;
+
+  /* ── 5 · COLOR · CATEGORICAL (KPI / data-viz) ────────────────────────────
+     Six hues, ordered for maximum separation in sequence and distinguishable
+     under deuteranopia. Each pairs a full-strength mark colour with a 6-8%
+     ground for the track behind it. */
+  --mx-cat-1:       #2E7D55;  --mx-cat-1-soft: #EDF6F1;  /* Pollination   */
+  --mx-cat-2:       #E07B2C;  --mx-cat-2-soft: #FDF2E8;  /* Adoption      */
+  --mx-cat-3:       #2F4B8F;  --mx-cat-3-soft: #EEF1F9;  /* Ideation      */
+  --mx-cat-4:       #7652B3;  --mx-cat-4-soft: #F4F0FA;  /* Engagement    */
+  --mx-cat-5:       #B8467E;  --mx-cat-5-soft: #FBEFF5;  /* Coaching      */
+  --mx-cat-6:       #1F8A82;  --mx-cat-6-soft: #EBF6F5;  /* Home Building */
+
+  /* ── 6 · COLOR · DARK SURFACES ───────────────────────────────────────────
+     Display previews, the toast, and anything that represents a screen the
+     product renders onto rather than a screen the product IS. */
+  --mx-dark-900:    #100C09;   /* full-bleed preview ground */
+  --mx-dark-850:    #16130F;
+  --mx-dark-800:    #1B1815;   /* toast                    */
+  --mx-dark-750:    #1F1712;
+  --mx-dark-700:    #231F1B;
+  --mx-scene-a:     #241A13;   /* scene gradient stop 1    */
+  --mx-scene-b:     #4A2A15;   /* scene gradient stop 2    */
+  --mx-scene-c:     #7A3F13;   /* scene gradient stop 3    */
+  --mx-scene: linear-gradient(160deg, var(--mx-scene-a), var(--mx-scene-b) 58%, var(--mx-scene-c));
+  --mx-avatar: linear-gradient(145deg, #F3954D, #C85B08);
+
+  /* ── 7 · SEMANTIC ALIASES ────────────────────────────────────────────────
+     Components read THESE, not the ramp above. Re-point an alias to retheme
+     the product without touching a component file. */
+  --mx-page:            var(--mx-neutral-200);
+  --mx-surface:         var(--mx-white);
+  --mx-surface-2:       var(--mx-neutral-75);
+  --mx-surface-3:       var(--mx-neutral-150);
+  --mx-surface-tint:    var(--mx-accent-25);
+  --mx-surface-rail:    var(--mx-neutral-0);
+
+  --mx-text:            var(--mx-neutral-975);
+  --mx-text-2:          var(--mx-neutral-875);
+  --mx-text-3:          var(--mx-neutral-750);
+  --mx-text-4:          var(--mx-neutral-700);
+  --mx-text-inverse:    var(--mx-white);
+  --mx-text-link:       var(--mx-accent-650);
+
+  --mx-border:          var(--mx-neutral-350);
+  --mx-border-control:  var(--mx-neutral-400);
+  --mx-border-strong:   var(--mx-neutral-500);
+  --mx-divider:         var(--mx-neutral-250);
+  --mx-border-accent:   var(--mx-accent-300);
+  --mx-border-hover:    var(--mx-accent-400);
+
+  --mx-focus-ring:      rgba(236,135,58,.6);
+  --mx-focus-halo:      rgba(236,135,58,.12);
+
+  /* ── 8 · TYPE SCALE ──────────────────────────────────────────────────────
+     Dense-UI scale. The half-pixel steps are deliberate: at 12-14px a whole
+     pixel is a 8% jump and breaks the rhythm between a label and its value. */
+  --mx-text-2xs:   11px;    /* legal, kbd, micro-count      */
+  --mx-text-xs:    12px;    /* caption, overline, meta      */
+  --mx-text-sm:    12.5px;  /* secondary body, table sub    */
+  --mx-text-base:  13px;    /* default UI body              */
+  --mx-text-md:    13.5px;  /* nav label, emphasised row    */
+  --mx-text-lg:    14px;    /* tab, comfortable body        */
+  --mx-text-field: 15px;    /* ★ form control value         */
+  --mx-text-xl:    17px;
+  --mx-text-2xl:   18px;    /* section title                */
+  --mx-text-3xl:   20px;    /* modal title                  */
+  --mx-text-4xl:   24px;    /* identity name                */
+  --mx-text-5xl:   30px;    /* KPI figure                   */
+  --mx-text-6xl:   42px;    /* lead figure                  */
+
+  --mx-lh-tight:   1.15;
+  --mx-lh-snug:    1.25;
+  --mx-lh-normal:  1.45;
+  --mx-lh-relaxed: 1.55;
+  --mx-lh-flat:    1;
+
+  --mx-fw-regular:  400;
+  --mx-fw-medium:   500;
+  --mx-fw-book:     550;
+  --mx-fw-semi:     600;
+  --mx-fw-strong:   650;   /* ★ the workhorse: labels, cell values */
+  --mx-fw-bold:     700;
+  --mx-fw-heavy:    750;   /* uppercase overlines only             */
+  --mx-fw-black:    800;
+
+  --mx-ls-tighter: -.035em;
+  --mx-ls-tight:   -.025em;
+  --mx-ls-snug:    -.015em;
+  --mx-ls-flat:     -.005em;
+  --mx-ls-wide:     .06em;
+  --mx-ls-wider:    .09em;
+  --mx-ls-caps:     .11em;  /* uppercase overline */
+
+  /* ── 9 · SPACE (4px base) ────────────────────────────────────────────────
+     Use the named steps. The odd values below the scale exist in legacy
+     screens; do not add new ones. */
+  --mx-space-0:   0px;
+  --mx-space-1:   2px;
+  --mx-space-2:   4px;
+  --mx-space-3:   6px;
+  --mx-space-4:   8px;
+  --mx-space-5:   10px;
+  --mx-space-6:   12px;
+  --mx-space-7:   14px;
+  --mx-space-8:   16px;
+  --mx-space-9:   20px;
+  --mx-space-10:  24px;
+  --mx-space-11:  32px;
+  --mx-space-12:  44px;
+  --mx-space-13:  64px;
+
+  /* ── 10 · RADIUS ─────────────────────────────────────────────────────────
+     Six steps. A radius should say how big the thing is: the bigger the
+     surface, the rounder the corner. */
+  --mx-radius-xs:   6px;    /* tag, inline mark            */
+  --mx-radius-sm:   8px;    /* status pill, icon button    */
+  --mx-radius-md:   12px;   /* button, input shell, menu   */
+  --mx-radius-lg:   16px;   /* card, icon tile             */
+  --mx-radius-xl:   20px;   /* panel                       */
+  --mx-radius-2xl:  22px;   /* modal, popover              */
+  --mx-radius-pill: 999px;
+
+  /* ── 11 · ELEVATION ──────────────────────────────────────────────────────
+     A border plus one ambient shadow. Nothing floats without a border; a
+     shadow alone reads as a rendering artefact on a warm ground. */
+  --mx-elev-0:     none;
+  --mx-elev-1:     0 1px 2px rgba(22,19,15,.04);
+  --mx-elev-2:     0 1px 2px rgba(22,19,15,.03);
+  --mx-elev-3:     0 10px 26px -12px rgba(22,19,15,.4);
+  --mx-elev-4:     0 18px 44px -14px rgba(22,19,15,.22), 0 2px 8px rgba(22,19,15,.06);
+  --mx-elev-5:     0 20px 50px -12px rgba(22,19,15,.24);
+  --mx-elev-6:     0 34px 80px -22px rgba(22,19,15,.42);
+  --mx-elev-drawer: -24px 0 60px -20px rgba(22,19,15,.32);
+  --mx-elev-toast:  0 18px 40px -12px rgba(0,0,0,.5);
+  --mx-elev-accent: 0 6px 16px -8px rgba(206,107,31,.6);
+  --mx-elev-focus:  0 0 0 3px var(--mx-focus-halo);
+  --mx-elev-row:    inset 3px 0 0 0 var(--mx-accent-550);
+
+  /* ── 12 · MOTION ─────────────────────────────────────────────────────────
+     Four durations, three curves. If a change needs a fifth duration, the
+     change is doing two things. */
+  --mx-dur-hover:   .16s;   /* colour, border               */
+  --mx-dur-control: .2s;    /* toggle, segmented pill       */
+  --mx-dur-panel:   .26s;   /* drawer, sheet                */
+  --mx-dur-enter:   .34s;   /* modal, popover               */
+  --mx-dur-section: .48s;   /* page section settle          */
+  --mx-ease:        cubic-bezier(.2,.8,.2,1);   /* standard */
+  --mx-ease-spring: cubic-bezier(.32,.72,0,1);  /* rail, width */
+  --mx-ease-out:    cubic-bezier(.4,0,.2,1);    /* draw     */
+
+  /* ── 13 · LAYER (z-index) ────────────────────────────────────────────────
+     One ladder. A component never invents a z-index. */
+  --mx-z-base:     0;
+  --mx-z-raised:   3;    /* sticky table head            */
+  --mx-z-sticky:   40;   /* in-page tab band             */
+  --mx-z-band:     45;   /* module strip                 */
+  --mx-z-nav:      70;   /* product rail                 */
+  --mx-z-header:   90;   /* app header                   */
+  --mx-z-popover:  95;   /* menu, dropdown, profile pop  */
+  --mx-z-fab:      140;  /* back to top                  */
+  --mx-z-overlay:  210;  /* modal, drawer, scrim         */
+  --mx-z-toast:    300;
+  --mx-z-immersive:340;  /* full-bleed preview           */
+
+  /* ── 14 · SHELL GEOMETRY ─────────────────────────────────────────────────
+     Declared once. Every sticky top, page pad and full-height main reads
+     these; nothing overrides them locally. */
+  --mx-shell-h:    76px;   /* app header                        */
+  --mx-module-h:   70px;   /* module strip                      */
+  --mx-sticky-h:   146px;  /* = shell + module. Sticky offset.  */
+  --mx-rail-w:     84px;   /* rail, collapsed                   */
+  --mx-rail-w-open:264px;  /* rail, expanded on hover           */
+  --mx-gutter:     24px;   /* page side padding                 */
+
+  /* ── 15 · CONTROL SIZE ───────────────────────────────────────────────────
+     Three heights, and a 44px minimum target on anything a finger can reach. */
+  --mx-ctl-xs:  26px;   /* status pill, count badge  */
+  --mx-ctl-sm:  30px;   /* dense chip                */
+  --mx-ctl-md:  36px;   /* ★ default button          */
+  --mx-ctl-lg:  40px;   /* field, select             */
+  --mx-ctl-xl:  46px;   /* tab, shell search         */
+  --mx-ctl-touch: 44px; /* minimum pointer target    */
+
+  /* ── 16 · FIELD ANATOMY ──────────────────────────────────────────────────
+     The underline field. See the Text Input page for the full state table. */
+  --mx-field-rule:        1.5px;
+  --mx-field-rule-active: 2px;
+  --mx-field-indent:      18px;  /* control text sits in; label stays flush */
+  --mx-field-color-rest:  var(--mx-neutral-500);
+  --mx-field-color-hover: var(--mx-neutral-600);
+  --mx-field-color-focus: var(--mx-accent-550);
+  --mx-field-color-error: var(--mx-crit-signal);
+  --mx-field-label:       var(--mx-accent-650);
+  --mx-field-required:    var(--mx-crit-signal);
+  --mx-field-placeholder: var(--mx-neutral-700);
+}
+
+/* ── BREAKPOINTS (documentation only — CSS custom properties cannot be used
+   inside a media query, so these are the canonical numbers to write by hand)
+   xs   640px   phone
+   sm   720px   phone landscape · shell bands begin to scroll internally
+   md   820px   tablet portrait · tables become stacked records
+   lg   960px   tablet landscape
+   xl  1180px   laptop
+   2xl 1380px   desktop
+   3xl 1560px   wide desktop
+   Container queries on panelled tables: 910 · 1130 · 1330
+   ─────────────────────────────────────────────────────────────────────── */
