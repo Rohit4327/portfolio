@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#f2efe9">
+<title>Floor Walkthrough — Interactive 3D Reconstruction</title>
+<meta name="description" content="First-person architectural walkthrough reconstructed from the supplied floor model.">
+<link rel="stylesheet" href="./styles.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js" } }
+</script>
+</head>
+<body>
+
+<canvas id="view" aria-label="Interactive 3D architectural walkthrough"></canvas>
+
+<div id="ui">
+  <header class="hud hud-tl">
+    <span class="mark">Floor Walkthrough</span>
+  </header>
+
+  <nav class="hud hud-tr" aria-label="Viewer controls">
+    <button id="reset" type="button" class="chip" title="Return to the lift lobby (R)">Reset</button>
+    <button id="replay" type="button" class="chip" title="Replay the intro sequence">Replay intro</button>
+    <button id="map-toggle" type="button" class="chip" aria-pressed="false" title="Toggle the floor-plan navigator (M)">Map</button>
+    <button id="ref-toggle" type="button" class="chip chip-ghost" aria-pressed="false" title="Reference match mode (V)">Reference</button>
+  </nav>
+
+  <p id="hint" class="hint" role="status" aria-live="polite"></p>
+</div>
+
+<div id="loading" class="veil">
+  <div class="veil-inner"><span class="spin" aria-hidden="true"></span> Building the floor…</div>
+</div>
+
+<section id="start" class="veil start" aria-labelledby="start-title">
+  <div class="start-card">
+    <p class="eyebrow">Architectural reconstruction</p>
+    <h1 id="start-title">Step into the floor</h1>
+    <p class="lede">
+      The model on the table is the real thing, rebuilt in 3D. The camera pushes
+      into the lift lobby and hands you the controls at eye height.
+    </p>
+    <div class="start-actions">
+      <button id="enter" type="button" class="btn">Enter Experience</button>
+      <button id="skip" type="button" class="btn btn-quiet">Skip Intro</button>
+    </div>
+    <ul class="keys" aria-label="Controls">
+      <li><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrow keys — move</li>
+      <li><kbd>Shift</kbd> — walk faster · <kbd>R</kbd> — back to the lift lobby</li>
+      <li>Click and drag to look · <kbd>Esc</kbd> releases the mouse</li>
+      <li><kbd>M</kbd> — floor plan · <kbd>V</kbd> — reference match mode</li>
+    </ul>
+  </div>
+</section>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
