@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hello, World · Rohit R. Patle</title>
+<meta name="description" content="A three-minute kinetic typography film about an engineer who became a designer and now works in the gap between design and code.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&display=block">
+<link rel="stylesheet" href="film.css">
+</head>
+<body>
+<main class="player">
+  <div class="screen" id="screen">
+    <div id="stage">
+      <canvas id="bg"></canvas>
+      <div id="world"></div>
+      <canvas id="fx" style="position:absolute;inset:0;z-index:30;pointer-events:none"></canvas>
+      <div id="hud">
+        <span class="corner a"></span><span class="corner b"></span><span class="corner c"></span><span class="corner d"></span>
+        <div class="tl"></div><div class="tr"></div><div class="bl"></div><div class="br"></div>
+      </div>
+      <canvas id="grain"></canvas>
+      <div id="flash"></div>
+      <div id="fade"></div>
+    </div>
+    <button class="poster" id="poster" type="button" aria-label="Play the film">
+      <span class="poster-btn">
+        <span class="disc"><svg viewBox="0 0 16 16"><path d="M2 1l13 7-13 7z"/></svg></span>
+        <span>Play the film<small id="posterNote">3:04 · sound on</small></span>
+      </span>
+    </button>
+  </div>
+
+  <div class="controls" id="controls">
+    <button id="play" type="button" aria-label="Play"><svg viewBox="0 0 16 16"><path d="M3 1l12 7-12 7z"/></svg></button>
+    <span class="time" id="time">0:00 / 3:04</span>
+    <div class="scrub-wrap">
+      <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="184" aria-valuenow="0">
+        <div class="fill" id="fill"></div>
+        <div class="head" id="head"></div>
+      </div>
+    </div>
+    <span class="chapter" id="chapter">Cold open</span>
+    <button id="mute" type="button" aria-label="Mute">Sound on</button>
+    <button id="fs" type="button" aria-label="Fullscreen"><svg viewBox="0 0 16 16"><path d="M1 1h5v2H3v3H1zM10 1h5v5h-2V3h-3zM1 10h2v3h3v2H1zM13 10h2v5h-5v-2h3z"/></svg></button>
+    <span class="status" id="status">Scoring soundtrack…</span>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="score.js"></script>
+<script src="film.js"></script>
+<script src="player.js"></script>
+</body>
+</html>
