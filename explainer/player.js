@@ -58,11 +58,11 @@
 
     // ---------- audio ----------
     let actx = null, gainNode = null, buffer = null, src = null, muted = false;
-    // The export writes soundtrack.m4a next to the page. Decoding it is faster than
+    // The export writes soundtrack.mp3 next to the page. Decoding it is faster than
     // synthesizing; if it is missing, synthesize the same score in the browser.
     async function loadSoundtrack() {
       try {
-        const r = await fetch('soundtrack.m4a');
+        const r = await fetch('soundtrack.mp3');
         if (!r.ok) throw new Error(r.status);
         return await new OfflineAudioContext(2, 1, 44100).decodeAudioData(await r.arrayBuffer());
       } catch (e) {

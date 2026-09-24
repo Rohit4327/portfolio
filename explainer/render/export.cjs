@@ -47,7 +47,7 @@ const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/cs
   await new Promise((r) => ff.on('close', r));
   await b.close(); srv.close();
   // web copy of the soundtrack so the page can skip synthesis
-  execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-i', wavPath, '-c:a', 'aac', '-b:a', '160k', path.join(root, 'soundtrack.m4a')]);
+  execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-i', wavPath, '-c:a', 'libmp3lame', '-b:a', '192k', path.join(root, 'soundtrack.mp3')]);
   fs.unlinkSync(wavPath);
   console.log('done', out, ((Date.now() - t0) / 1000).toFixed(0) + 's');
 })();
