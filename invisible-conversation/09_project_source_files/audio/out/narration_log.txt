@@ -1,0 +1,42 @@
+== synthesizing at speed 1.060 (voice af_heart)
+  synth  1.30s  A door stands before you.
+  synth  1.99s  There is no clear handle, so you push.
+  synth  0.51s  Nothing.
+  synth  0.56s  You pull.
+  synth  0.74s  It opens.
+  synth  0.89s  You feel foolish.
+  synth  1.64s  But what if the problem was never you?
+  synth  1.19s  What if it was the design?
+  synth  6.40s  That tiny moment reveals the question behind user experience
+  synth  4.37s  Long before apps, people struggled with tools, machines, and
+  synth  8.37s  During the twentieth century, industrial designers and human
+  synth  8.66s  In nineteen fifty-five, Henry Dryfuss published Designing fo
+  synth  3.73s  Think telephone dials, cockpit switches, and confusing appli
+  synth  4.55s  Good design was becoming less about the machine alone, and m
+  synth  2.69s  Early computers demanded that people adapt to them.
+  synth  3.18s  Instructions arrived through punched cards or typed commands
+  synth  2.30s  Without knowing the language, you were locked out.
+  synth  2.14s  But researchers imagined something different.
+  synth  3.21s  What if information could be seen and moved, not just comman
+  synth  5.96s  In nineteen sixty-three, Ivan Sutherland's Sketchpad made it
+  synth  6.61s  In nineteen sixty-eight, Douglas Engelbart and his team stun
+  synth  6.70s  They showed a mouse, linked documents, on-screen editing, an
+  synth  6.73s  The mouse itself had emerged from experiments earlier in the
+  synth  3.79s  But the famous nineteen sixty-eight demonstration used a lat
+  synth  3.97s  Computing began to feel like something you could point to, n
+  synth  8.39s  In nineteen seventy-three, Zerox Park built the Alto, bringi
+  synth  5.11s  Zerox's Star followed in nineteen eighty-one with a more com
+  synth  8.21s  Apple's Lisa arrived in nineteen eighty-three, and the Macin
+  synth  1.99s  Icons looked like familiar objects.
+  synth  1.24s  A folder held files.
+  synth  1.20s  A trash can meant delete.
+  synth  3.25s  Complex systems borrowed the language of everyday life.
+  synth  4.54s  In nineteen eighty-eight, Don Norman explained why everyday 
+  synth  3.73s  A year later, Tim Berners-Lee proposed the World Wide Web at
+  synth  4.28s  By nineteen ninety-one, its first website made linked inform
+  synth  6.46s  The question now reached beyond operating a machine: could p
+  synth  5.31s  In nineteen ninety-three, Norman helped establish user exper
+  synth  2.44s  That experience extended far beyond the screen.
+  synth  6.39s  As websites multiplied, navigation, readability, trust, and 
+  synth  6.87s  Accessibility gained shared standards, including the first W
+  synth  6.93s  Then, in two thousand seven, the eye-Phone made touching, fl

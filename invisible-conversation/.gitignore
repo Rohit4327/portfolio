@@ -1,0 +1,8 @@
+09_project_source_files/node_modules/
+*.mp4
+*.wav
+*.mov
+09_project_source_files/audio/out/tts_cache/
+09_project_source_files/audio/out/sfx/
+*.npy
+renders/

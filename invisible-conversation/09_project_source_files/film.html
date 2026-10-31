@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Invisible Conversation — render surface</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0D1016; overflow: hidden; width: 1920px; height: 1080px; }
+  canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #probe { position: absolute; left: -9999px; top: -9999px; font-family: 'Inter', 'Inter Display', 'DejaVu Sans Mono'; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/" } }
+</script>
+</head>
+<body>
+  <canvas id="gl" width="1920" height="1080"></canvas>
+  <canvas id="ui" width="1920" height="1080"></canvas>
+  <div id="probe"><span style="font: 400 20px Inter">a</span><span style="font: 700 20px 'Inter Display'">a</span><span style="font: 400 20px 'DejaVu Sans Mono'">a</span></div>
+  <script type="module" src="/lib/main.js"></script>
+</body>
+</html>

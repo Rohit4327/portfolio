@@ -1,0 +1,1577 @@
+[
+ {
+  "verify": {
+   "chapter": "ch2-human-factors",
+   "results": [
+    {
+     "claim": "Henry Dreyfuss published the book \"Designing for People\" in 1955.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Designing for People (library catalog record)",
+       "url": "https://www.cca.qc.ca/en/search/details/library/publication/00519229",
+       "publisher": "Canadian Centre for Architecture",
+       "supports": "Catalog record for the first edition: New York, Simon and Schuster, 1955."
+      },
+      {
+       "title": "Henry Dreyfuss (SIRIS record, Dreyfuss Archive / Directing Design)",
+       "url": "https://www.si.edu/object/siris_sil_537689",
+       "publisher": "Smithsonian Institution",
+       "supports": "Smithsonian record listing Designing for People (1955) among Dreyfuss's publications; Cooper Hewitt holds the Dreyfuss Archive."
+      },
+      {
+       "title": "Henry Dreyfuss",
+       "url": "https://en.wikipedia.org/wiki/Henry_Dreyfuss",
+       "publisher": "Wikipedia",
+       "supports": "Biography stating Designing for People was published in 1955 and introduced the Joe and Josephine figures."
+      }
+     ],
+     "notes": "Publisher was Simon and Schuster (New York), 1955. The book is part memoir, part statement of design philosophy (the IDSA profile calls it an autobiography); it is where the 'Joe' and 'Josephine' anthropometric figures first appeared in print. Later editions: Paragraphic Books 1967, Allworth Press 2003 (do not confuse these reprint dates with first publication)."
+    },
+    {
+     "claim": "Dreyfuss was an American industrial designer associated with human factors/ergonomics and anthropometric data (later \"The Measure of Man\", 1960).",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Henry Dreyfuss profile",
+       "url": "https://www.idsa.org/profile/henry-dreyfuss/",
+       "publisher": "Industrial Designers Society of America",
+       "supports": "Describes Dreyfuss as an American industrial designer; says Joe and Josephine charts first appeared in Designing for People (1955) and that The Measure of Man (1960, Whitney Library of Design) was an ergonomic data guide compiled from military records by the Dreyfuss office."
+      },
+      {
+       "title": "The Measure of Man, by Dreyfuss",
+       "url": "https://www.britannica.com/topic/The-Measure-of-Man-by-Dreyfuss",
+       "publisher": "Encyclopaedia Britannica",
+       "supports": "Dates The Measure of Man to 1960 with a revised edition in 1967; describes its extensive data on the human body and its movements."
+      },
+      {
+       "title": "The measure of man: human factors in design (library catalog record)",
+       "url": "https://cca.qc.ca/en/search/details/library/publication/03020812",
+       "publisher": "Canadian Centre for Architecture",
+       "supports": "Catalog record: New York, Whitney Library of Design, 1960."
+      }
+     ],
+     "notes": "Full title is 'The Measure of Man: Human Factors in Design', published by Whitney Library of Design (New York). Most authoritative sources (Britannica, library catalogs, IDSA) give 1960; a Cooper Hewitt object record and a few secondary sources say 1959, so narration should say 'around 1960' or simply '1960' and avoid asserting a month. It was issued as a portfolio of anthropometric charts (including two life-size Joe/Josephine figure charts), not a conventional prose book. Revised 1967; later expanded by Dreyfuss Associates into the Humanscale portfolios (MIT Press) and 'The Measure of Man and Woman' (1990s). Dreyfuss himself used the period term 'human engineering'; 'ergonomics'/'human factors' are the modern labels."
+    },
+    {
+     "claim": "Dreyfuss designed telephones for Bell/Western Electric (e.g. the model 302 in 1937 and the model 500 in 1949).",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "The 302 (Object of the Day)",
+       "url": "https://www.cooperhewitt.org/2013/10/24/the-302/",
+       "publisher": "Cooper Hewitt, Smithsonian Design Museum",
+       "supports": "States Dreyfuss began consulting for Bell Telephone Laboratories in 1930, that his work with Bell engineers produced the 302 in 1937, and that the 500 debuted in 1949 as a lighter plastic redesign."
+      },
+      {
+       "title": "Model 302 / 500 telephone collection record",
+       "url": "https://www-3.collection.cooperhewitt.org/objects/18732761",
+       "publisher": "Cooper Hewitt, Smithsonian Design Museum",
+       "supports": "Museum object record attributing the Bell System telephone design to Dreyfuss, manufactured by Western Electric."
+      },
+      {
+       "title": "Model 500 telephone",
+       "url": "https://en.wikipedia.org/wiki/Model_500_telephone",
+       "publisher": "Wikipedia",
+       "supports": "Development began 1946 by the Dreyfuss firm with Bell Labs and Western Electric; AT&T announced it in 1949 with ~4,000 field-trial sets; first ~23,000 production sets released to Bell operating companies in 1950; standard US desk phone until the 1984 divestiture."
+      }
+     ],
+     "notes": "Precise framing: the client was Bell Telephone Laboratories (AT&T's research arm) and the manufacturer was Western Electric, so say 'designed for Bell Labs, built by Western Electric' rather than 'for Western Electric'. The 302 went into production in 1937 (cast-metal housing, switched to thermoplastic around 1941); some sources credit Bell Labs engineer George Lum for its engineering, with Dreyfuss shaping the form in collaboration with Bell's engineers. The 500 was publicly announced/field-trialed in 1949 but reached production and customers in 1950, so 'introduced in 1949' is correct for the debut, while 'in homes from 1950' is the safer phrasing for availability. Roughly 93 million 500-series sets were made through 1984 (secondary-source figure)."
+    },
+    {
+     "claim": "Human factors / ergonomics research grew substantially in the WWII era, including studies of aircraft cockpit controls (e.g. Alphonse Chapanis and Paul Fitts).",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Alphonse Chapanis",
+       "url": "https://en.wikipedia.org/wiki/Alphonse_Chapanis",
+       "publisher": "Wikipedia",
+       "supports": "Chapanis (Yale PhD 1943) was the first psychologist at the Army Air Forces Aero Medical Laboratory at Wright Field; traced gear-up landing accidents in B-17s, B-25s and P-47s to confusable side-by-side gear and flap controls and introduced shape coding; co-authored the first human factors textbook in 1949."
+      },
+      {
+       "title": "Fitts and Jones' Analysis of Pilot Error: 40 Years Later",
+       "url": "https://corescholar.libraries.wright.edu/psychology/372",
+       "publisher": "Wright State University (CORE Scholar)",
+       "supports": "Academic paper on the 1947 Fitts & Jones Aero Medical Laboratory study of 460 'pilot-error' experiences, which reframed cockpit control errors as design problems."
+      },
+      {
+       "title": "Pilot Error? Chapanis and the Shape of Things to Come",
+       "url": "https://uxmag.com/articles/pilot-error-chapanis-and-the-shape-of-things-to-come",
+       "publisher": "UX Magazine",
+       "supports": "Narrative account of the wartime B-17 flap/landing-gear confusion and Chapanis's shape-coding fix (wheel-shaped gear knob, wedge-shaped flap knob)."
+      }
+     ],
+     "notes": "Timeline nuance: Chapanis's cockpit-control work at Wright Field was during the war (from 1943). Paul Fitts arrived at Wright Field in July 1945 (with Walter Grether) to form the lab's psychology branch, and the famous Fitts & Jones 460-error 'pilot error' study is a 1947 postwar memorandum report (TSEAA-694-12), so narration should say 'WWII and its immediate aftermath' rather than dating Fitts's study to the war itself. Chapanis's formulation was 'designer error', not 'pilot error'. The first human factors textbook, Applied Experimental Psychology: Human Factors in Engineering Design (Chapanis, Garner & Morgan), appeared in 1949; the UK Ergonomics Research Society also formed in 1949 (Waterson 2011). Avoid the popular claims that 'accidents dropped to zero overnight' and that shape coding is 'still legally required' - neither is supported by a primary source in the results. Exact hardware details (wedge vs. triangle, rubber strips) vary across sources, so keep descriptions general."
+    }
+   ]
+  },
+  "refute": {
+   "chapter": "ch2-human-factors",
+   "challenges": [
+    {
+     "claim": "Henry Dreyfuss published the book \"Designing for People\" in 1955.",
+     "refuted": false,
+     "reason": "Holds. Multiple independent library catalog records (University of Pennsylvania, Canadian Centre for Architecture, Universidad Nacional de C\u00f3rdoba) list the first edition as New York: Simon and Schuster, 1955, 240 pp., illustrated. Later editions (Paragraphic Books 1967, Viking 1974, Allworth Press 2003) are reprints, not the original. No source found giving a different year. Minor nuance only: it was not Dreyfuss's first book (his firm issued 'A Record of Industrial Designs' in 1947), so avoid calling it his first publication.",
+     "sources": [
+      {
+       "title": "Designing for people (catalog record, Simon and Schuster, 1955)",
+       "url": "https://find.library.upenn.edu/catalog/9910993163503681",
+       "publisher": "University of Pennsylvania Libraries"
+      },
+      {
+       "title": "Designing for people (publication record)",
+       "url": "https://www.cca.qc.ca/en/search/details/library/publication/00519229",
+       "publisher": "Canadian Centre for Architecture"
+      },
+      {
+       "title": "Henry Dreyfuss",
+       "url": "https://en.wikipedia.org/wiki/Henry_Dreyfuss",
+       "publisher": "Wikipedia"
+      }
+     ]
+    },
+    {
+     "claim": "Dreyfuss was an American industrial designer associated with human factors/ergonomics and anthropometric data (later \"The Measure of Man\", 1960).",
+     "refuted": false,
+     "reason": "Holds. Dreyfuss (born New York, 1904; died Pasadena area, 1972) was American; 'The Measure of Man: Human Factors in Design' was published by the Whitney Library of Design, New York, in 1960, as a folio with the life-size 'Joe' and 'Josephine' charts. Two nuances worth carrying into the wording to avoid over-attribution: (a) the 'Joe and Josephine' figures were first introduced in 'Designing for People' (1955), and (b) the anthropometric drawings were drafted by Dreyfuss's long-time associate Alvin R. Tilley (per Cooper Hewitt), drawing on US military and fashion-industry data. Also note that Flinchum & Meyer (Winterthur Portfolio, 2017) argue Dreyfuss did not actually rely on anthropometric measurements in his telephone work, so the ergonomics association belongs to the firm's published charts rather than to every product. 'Associated with' is accurate as stated.",
+     "better_wording": "Dreyfuss (1904\u20131972) was an American industrial designer whose office, Henry Dreyfuss Associates, popularized anthropometric data for designers: the 'Joe and Josephine' figures appeared in Designing for People (1955) and became the life-size charts of The Measure of Man (Whitney Library of Design, 1960), drafted largely by associate Alvin R. Tilley.",
+     "sources": [
+      {
+       "title": "Dreyfuss, Henry: The Measure of Man: Human Factors in Design. New York: Whitney Library of Design, 1960",
+       "url": "https://modernism101.com/products-page/graphic-design/dreyfuss-henry-the-measure-of-man-human-factors-in-design-new-york-whitney-library-of-design-1960/",
+       "publisher": "Modernism101"
+      },
+      {
+       "title": "Object Timeline (Joe and Josephine drawings; Tilley)",
+       "url": "https://www-3.collection.cooperhewitt.org/objects/51689363",
+       "publisher": "Cooper Hewitt, Smithsonian Design Museum"
+      },
+      {
+       "title": "Henry Dreyfuss biography",
+       "url": "https://www-3.collection.cooperhewitt.org/people/18041501/bio",
+       "publisher": "Cooper Hewitt, Smithsonian Design Museum"
+      },
+      {
+       "title": "This is Joe, the average American adult male (1955)",
+       "url": "https://collections.artsmia.org/art/111566",
+       "publisher": "Minneapolis Institute of Art"
+      },
+      {
+       "title": "Henry Dreyfuss and Bell Telephones (Winterthur Portfolio 51:4, 2017)",
+       "url": "https://bvbvf1.bib-bvb.de/vufind/PrimoRecord/cdi_uchicagopress_journals_696842",
+       "publisher": "University of Chicago Press / Winterthur Portfolio"
+      }
+     ]
+    },
+    {
+     "claim": "Dreyfuss designed telephones for Bell/Western Electric (e.g. the model 302 in 1937 and the model 500 in 1949).",
+     "refuted": true,
+     "reason": "The model 500 part holds: Dreyfuss's firm designed the Western Electric 500, which debuted in 1949 (field trials of 4,000 sets in 1949; production units dated Q1 1949) and became the Bell System's standard desk set from 1950. The model 302 attribution is the problem. The Smithsonian's object record for the Model 302 lists Bell Telephone Laboratories engineer George R. Lum (1889\u20131989) as designer, with Dreyfuss only as a contributor; Lum held the 1935 design patent 'Desk Stand for a Hand Telephone'. Russell Flinchum and Ralph Meyer's peer-reviewed article 'Henry Dreyfuss and Bell Telephones' (Winterthur Portfolio 51:4, 2017, pp. 173\u2013200) explicitly sets out to dispel the myth that Dreyfuss designed the 302, using Dreyfuss-firm insider sources, and credits Lum; Wikipedia's Model 302 article now follows this. Some older Cooper Hewitt pages still say 'designed by Henry Dreyfuss', so the attribution is contested, but current scholarship and the Smithsonian record favor Lum. Presenting the 302 as a Dreyfuss design is over-attribution. (Also, Dreyfuss had consulted for Bell Labs since 1930, so the 302 was not the start of the relationship.)",
+     "better_wording": "Dreyfuss consulted for Bell Telephone Laboratories from 1930, and his firm's landmark telephone was the Western Electric model 500 (introduced 1949; the Bell System's standard desk set from 1950). The earlier model 302 (1937), long credited to Dreyfuss, is now attributed by the Smithsonian and by Flinchum & Meyer (Winterthur Portfolio, 2017) to Bell Labs engineer George R. Lum, with Dreyfuss's office contributing at most.",
+     "sources": [
+      {
+       "title": "Model 302 Telephone (object record naming George R. Lum as designer)",
+       "url": "https://si.edu/object/model-302-telephone:chndm_1994-73-2",
+       "publisher": "Smithsonian Institution"
+      },
+      {
+       "title": "Henry Dreyfuss and Bell Telephones (Winterthur Portfolio 51:4, 2017)",
+       "url": "https://bvbvf1.bib-bvb.de/vufind/PrimoRecord/cdi_uchicagopress_journals_696842",
+       "publisher": "University of Chicago Press / Winterthur Portfolio"
+      },
+      {
+       "title": "Winterthur Portfolio vol. 51 no. 4 table of contents",
+       "url": "https://www.journals.uchicago.edu/toc/wp/2017/51/4",
+       "publisher": "University of Chicago Press"
+      },
+      {
+       "title": "Model 302 telephone",
+       "url": "https://en.wikipedia.org/wiki/Model_302_telephone",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Model 500 telephone",
+       "url": "https://en.wikipedia.org/wiki/Model_500_telephone",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "The 302 (Cooper Hewitt blog, still crediting Dreyfuss)",
+       "url": "https://www.cooperhewitt.org/2013/10/24/the-302/",
+       "publisher": "Cooper Hewitt, Smithsonian Design Museum"
+      },
+      {
+       "title": "Model 302 Telephone collection record",
+       "url": "https://www-4.collection.cooperhewitt.org/objects/18649321",
+       "publisher": "Cooper Hewitt, Smithsonian Design Museum"
+      }
+     ]
+    },
+    {
+     "claim": "Human factors / ergonomics research grew substantially in the WWII era, including studies of aircraft cockpit controls (e.g. Alphonse Chapanis and Paul Fitts).",
+     "refuted": false,
+     "reason": "Holds. Chapanis (Yale PhD 1943) served as the first psychologist at the Army Air Forces Aero Medical Laboratory, Wright Field, where he diagnosed B-17 gear/flap control confusions and introduced shape-coded knobs; in Britain the MRC Applied Psychology Unit (est. 1944) ran the 'Cambridge Cockpit' studies, and Waterson (Ergonomics, 2011) traces UK ergonomics directly to WWII research. One dating nuance: Fitts and Jones's landmark 'Analysis of factors contributing to 460 \"pilot-error\" experiences in operating aircraft controls' is Aero Medical Laboratory Memorandum Report TSEAA-694-12, dated 1947, i.e. immediately post-war (analyzing wartime incidents), and the word 'ergonomics' itself was coined only in 1949. Secondary sources also disagree on whether Chapanis's B-17 fix was 1942 or 1943, so avoid giving a precise year for it. 'WWII era' as a loose phrase covers this; a tighter wording should say 'during and immediately after WWII'.",
+     "better_wording": "Human factors research expanded sharply during and immediately after World War II: Alphonse Chapanis, at the Army Air Forces' Aero Medical Laboratory, showed that B-17 'pilot error' gear-up landings stemmed from identical, adjacent gear and flap controls, and Paul Fitts and Richard Jones's 1947 analysis of 460 control-operation errors generalized the finding that many 'pilot errors' were cockpit design errors.",
+     "sources": [
+      {
+       "title": "Alphonse Chapanis",
+       "url": "https://en.wikipedia.org/wiki/Alphonse_Chapanis",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Analysis of factors contributing to 460 'pilot-error' experiences in operating aircraft controls (1947, TSEAA-694-12)",
+       "url": "https://apps.dtic.mil/sti/pdfs/ADA800143.pdf",
+       "publisher": "Defense Technical Information Center"
+      },
+      {
+       "title": "The Adolescence of Engineering Psychology (Roscoe)",
+       "url": "https://www.hfes.org/Portals/0/Documents/adolescence.pdf",
+       "publisher": "Human Factors and Ergonomics Society"
+      },
+      {
+       "title": "World War II and other historical influences on the formation of the Ergonomics Research Society (Waterson, 2011)",
+       "url": "https://iea.cc/wpfd/620/miscellaneous/139679/waterson-world-war-ii-and-other-historical-influences-on-the-formation-of-the-ergonomics-research-society-2011",
+       "publisher": "International Ergonomics Association"
+      },
+      {
+       "title": "MRC Cognition and Brain Sciences Unit history overview (APU est. 1944, Cambridge Cockpit)",
+       "url": "https://www.mrc-cbu.cam.ac.uk/history/overview/",
+       "publisher": "MRC Cognition and Brain Sciences Unit, University of Cambridge"
+      },
+      {
+       "title": "Pilot Error: Chapanis and the Shape of Things to Come",
+       "url": "https://uxmag.com/articles/pilot-error-chapanis-and-the-shape-of-things-to-come",
+       "publisher": "UX Magazine"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "verify": {
+   "chapter": "ch3-sketchpad",
+   "results": [
+    {
+     "claim": "Ivan Sutherland created Sketchpad in 1963 (as his MIT PhD thesis) on the TX-2 computer at MIT Lincoln Laboratory.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "The Remarkable Ivan Sutherland",
+       "url": "https://computerhistory.org/blog/the-remarkable-ivan-sutherland/",
+       "publisher": "Computer History Museum",
+       "supports": "States that in January 1963 Sutherland completed his PhD on the system he created on the TX-2, Sketchpad; notes he met TX-2 designer Wesley Clark at Lincoln Laboratory and proposed using the machine for engineering-drawing software."
+      },
+      {
+       "title": "The TX-2 Computer and Sketchpad",
+       "url": "https://www.ll.mit.edu/media/6536",
+       "publisher": "MIT Lincoln Laboratory",
+       "supports": "Lincoln Laboratory's own retrospective: the TX-2 was an experimental digital computer created at MIT in 1958, Sketchpad ran on it, and much of computer graphics began on the TX-2."
+      },
+      {
+       "title": "Sketchpad, a man-machine graphical communication system (PhD thesis record)",
+       "url": "https://dspace.mit.edu/handle/1721.1/14979",
+       "publisher": "MIT Libraries / DSpace@MIT",
+       "supports": "Catalog record of the 1963 MIT Department of Electrical Engineering PhD thesis, submitted January 7, 1963, with Claude E. Shannon as thesis supervisor."
+      }
+     ],
+     "notes": "Dating nuance: 1963 is the thesis year, not the start of the work. The Sketchpad program itself was built on the TX-2 during roughly 1961-1962 (CHM holds Sketchpad footage catalogued circa 1961); the thesis was submitted January 7, 1963 (CHM marks Jan 7 as the day Sutherland 'introduced' Sketchpad) and a companion paper appeared at the Spring Joint Computer Conference in 1963. Safe phrasing: 'completed in 1963' or 'presented in his 1963 MIT PhD thesis' rather than 'invented in 1963.' Thesis supervisor was Claude Shannon (committee included Marvin Minsky and Steven Coons) - a nice detail if wanted. The TX-2 was built at Lincoln Laboratory under Wesley Clark and became operational in 1958; Lincoln Laboratory is an MIT lab but is located off the main Cambridge campus (in Lexington, MA - this location was not confirmed by the search results, only by general knowledge, so avoid stating it unless independently checked). The thesis was republished in 2003 by the University of Cambridge Computer Laboratory as Technical Report UCAM-CL-TR-574, which is the freely available edition most people read today. Sutherland received the 1988 ACM Turing Award citing Sketchpad."
+    },
+    {
+     "claim": "Sketchpad used a light pen to draw and manipulate geometric shapes directly on a CRT display.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Sketchpad",
+       "url": "https://www.britannica.com/technology/Sketchpad",
+       "publisher": "Encyclopaedia Britannica",
+       "supports": "Describes Sketchpad as the first interactive computer-graphics program, running on the TX-2 at MIT's Lincoln Laboratory; it displayed graphics on the CRT display and a light pen was used to manipulate the line objects, much like a modern mouse."
+      },
+      {
+       "title": "1963 (Computer History Museum Timeline)",
+       "url": "https://www.computerhistory.org/timeline/1963/",
+       "publisher": "Computer History Museum",
+       "supports": "Describes Sketchpad as an interactive, real-time computer drawing system in which a user could create and manipulate graphical figures with a light pen; calls the thesis a seminal basis for later graphical user interfaces."
+      },
+      {
+       "title": "Light pen and interface box (prototype) - CHM Revolution",
+       "url": "https://www.computerhistory.org/revolution/input-output/14/349/1543",
+       "publisher": "Computer History Museum",
+       "supports": "Establishes that light pens were developed about 1952 to select points on the display of MIT's Whirlwind computer - i.e., the device predates Sketchpad."
+      }
+     ],
+     "notes": "Core claim is solid: drawing and editing of lines, circles/arcs and composite figures with a light pen on the TX-2's CRT, including geometric constraints (parallel, perpendicular, equal length) applied to the drawing. Nuances: (1) Sutherland did not invent the light pen - it dates to MIT's Whirlwind (~1952) and was used on the SAGE air-defense system; Sketchpad popularized it as a drawing/pointing device. Avoid narration implying the pen was his invention. (2) The light pen was not the only input: Sketchpad also relied on push-buttons and knobs on the TX-2 console (e.g., to start a line, apply constraints, zoom/rotate), so 'directly' should mean on-screen pointing, not pen-only control. (3) The light pen worked by sensing when the CRT's beam lit the spot under it, which is why the system had to track the pen's position relative to its prior position (the 'INK'/tracking cross described in the thesis). (4) If the film uses the familiar black-and-white demonstration footage, that is mostly from the 1964 MIT 'Science Reporter' episode 42 'Computer Sketchpad', in which Timothy Johnson (MIT Mechanical Engineering) operates the system at Lincoln Laboratory, not Sutherland himself - credits for that episode vary across sources, so attribute carefully."
+    },
+    {
+     "claim": "Early computer interaction commonly used punched cards and later typed commands at terminals; typical users had to learn specialized command languages.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Punched Cards - CHM Revolution",
+       "url": "https://www.computerhistory.org/revolution/punched-cards/2",
+       "publisher": "Computer History Museum",
+       "supports": "States that until the 1970s punched cards remained the primary computer input and storage medium for data and, later, software programs."
+      },
+      {
+       "title": "Human-machine interface",
+       "url": "https://www.britannica.com/technology/human-machine-interface",
+       "publisher": "Encyclopaedia Britannica",
+       "supports": "Describes the batch (punch-card) interface as tedious and error-prone, followed by command-line interfaces that let users interactively issue commands, which were an improvement but did not take full advantage of human perceptual and learning abilities."
+      },
+      {
+       "title": "Direct Manipulation: Definition",
+       "url": "https://www.nngroup.com/articles/direct-manipulation/",
+       "publisher": "Nielsen Norman Group",
+       "supports": "Explains that command-line interfaces require users to recall both command names (e.g., 'mv') and the names of the objects involved - recall rather than recognition - which is the usability basis for saying users had to learn command languages."
+      }
+     ],
+     "notes": "Broadly accurate as a sweep of interface eras, but the narration should respect three nuances. (1) In the batch/punched-card era (1950s-1960s) 'typical users' generally did not interact with the computer at all: they handed card decks to operators and waited an hour or more for printed output (Britannica, batch processing); the specialized knowledge was of coding sheets, job-control cards and programming languages, not 'commands' in the interactive sense. (2) Typed commands at terminals arrived with time-sharing - first described in 1959 by Strachey and McCarthy, with MIT's CTSS as an early system (1961) - initially on teletypes and only widely on video terminals (VDTs) from the mid-1970s. (3) The eras overlapped heavily rather than succeeding one another cleanly: punched cards stayed in use into the 1970s, and interactive graphics like Sketchpad (1963) and Whirlwind/SAGE displays predate most people's exposure to command-line terminals. So 'and later typed commands' is fine as a general arc, but avoid implying Sketchpad came after the command-line era or that card-era users typed anything. Don Norman's jnd.org piece ('UI Breakthrough - Command Line Interfaces', https://jnd.org/ui-breakthrough-command-line-interfaces/) also supports the framing that GUIs replaced arbitrary memorized commands with direct manipulation."
+    }
+   ]
+  },
+  "refute": {
+   "chapter": "ch3-sketchpad",
+   "challenges": [
+    {
+     "claim": "Ivan Sutherland created Sketchpad in 1963 (as his MIT PhD thesis) on the TX-2 computer at MIT Lincoln Laboratory.",
+     "refuted": false,
+     "reason": "The core facts hold: Sutherland was an MIT EE doctoral student (advisor Claude Shannon), Sketchpad ran on Wes Clark's TX-2 at Lincoln Laboratory, the thesis 'Sketchpad: A Man-Machine Graphical Communication System' is dated January 1963 (issued as Lincoln Laboratory Technical Report 296, 30 Jan 1963), and the PhD was awarded in 1963. The only nuance is dating: the program itself was built during 1961-62 (Britannica dates the first version to 1961; Wikipedia says 'invented Sketchpad in 1962'; Sutherland was at Lincoln Lab 1960-63). '1963' is the thesis/publication and public-demo date (AFIPS Spring Joint Computer Conference, spring 1963), not the year the software was written. Also, Sketchpad was the subject of the thesis rather than literally 'the thesis'. Not a concrete error, but worth tightening.",
+     "better_wording": "Ivan Sutherland built Sketchpad in 1961-62 on the TX-2 computer at MIT Lincoln Laboratory and described it in his January 1963 MIT PhD thesis, demonstrating it publicly at the Spring Joint Computer Conference that year.",
+     "sources": [
+      {
+       "title": "Ivan Sutherland recollections, Lincoln Laboratory Journal (2012)",
+       "url": "https://www.ll.mit.edu/media/6536",
+       "publisher": "MIT Lincoln Laboratory"
+      },
+      {
+       "title": "Sketchpad",
+       "url": "https://britannica.com/technology/Sketchpad",
+       "publisher": "Encyclopaedia Britannica"
+      },
+      {
+       "title": "Ivan Sutherland - CHM Fellow Award",
+       "url": "https://www.computerhistory.org/fellowawards/hall/ivan-e-sutherland/",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "Sketchpad: A Man-Machine Graphical Communication System (Lincoln Lab TR 296, Jan 1963)",
+       "url": "https://apps.dtic.mil/sti/tr/pdf/AD0404549.pdf",
+       "publisher": "DTIC / MIT Lincoln Laboratory"
+      },
+      {
+       "title": "Ivan Edward Sutherland (dissertation record, advisor Claude Shannon)",
+       "url": "https://www.mathgenealogy.org/id.php?id=61088",
+       "publisher": "Mathematics Genealogy Project"
+      },
+      {
+       "title": "Sutherland running Sketchpad on the TX-2 (photo)",
+       "url": "https://mitmuseum.mit.edu/collections/object/GCP-00025349",
+       "publisher": "MIT Museum"
+      },
+      {
+       "title": "Sketchpad",
+       "url": "https://en.wikipedia.org/wiki/Sketchpad",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Ivan Sutherland",
+       "url": "https://en.wikipedia.org/wiki/Ivan_Sutherland",
+       "publisher": "Wikipedia"
+      }
+     ]
+    },
+    {
+     "claim": "Sketchpad used a light pen to draw and manipulate geometric shapes directly on a CRT display.",
+     "refuted": false,
+     "reason": "Accurate. Sutherland's thesis describes using the light pen to indicate positions and point at existing drawing parts on the TX-2's 9-inch CRT, drawing points, line segments and circular arcs and applying geometric constraints. Two nuances: (1) the pen was not the sole input - commands were issued with a box of pushbuttons ('draw', 'move', etc.), a bank of toggle switches, and four knobs that panned and zoomed the picture, so the pen selected and positioned while buttons chose the operation; (2) the light pen was not new - MIT's Whirlwind used a 'light gun' around 1952 and SAGE operators used one in the mid-1950s, so Sketchpad's novelty was the software, not the device. The claim does not assert otherwise, so it stands.",
+     "better_wording": "Sketchpad let the user draw and manipulate geometric shapes directly on a CRT with a light pen (a device inherited from Whirlwind and SAGE), used together with pushbuttons and knobs to choose operations and pan or zoom the drawing.",
+     "sources": [
+      {
+       "title": "Sketchpad: A Man-Machine Graphical Communication System (thesis text)",
+       "url": "https://www.cs.purdue.edu/homes/hosking/197/canon/sutherland.pdf",
+       "publisher": "Purdue University (copy of Sutherland's MIT thesis)"
+      },
+      {
+       "title": "Sketchpad: A Man-Machine Graphical Communication System (Lincoln Lab TR 296)",
+       "url": "https://apps.dtic.mil/sti/tr/pdf/AD0404549.pdf",
+       "publisher": "DTIC / MIT Lincoln Laboratory"
+      },
+      {
+       "title": "Computer Graphics brochure (light pen on Whirlwind, c. 1952)",
+       "url": "https://www.computerhistory.org/brochures/graphics/",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "SAGE light gun",
+       "url": "https://www.computerhistory.org/revolution/early-computer-music/14/349",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "Science Reporter: Computer Sketchpad (1964 film)",
+       "url": "https://americanarchive.org/catalog/cpb-aacip-15-07gqpbbm",
+       "publisher": "American Archive of Public Broadcasting"
+      },
+      {
+       "title": "Sketchpad",
+       "url": "https://britannica.com/technology/Sketchpad",
+       "publisher": "Encyclopaedia Britannica"
+      },
+      {
+       "title": "3.1.2 Sketchpad (console description)",
+       "url": "https://mprove.de/diplom/text/3.1.2_sketchpad.html",
+       "publisher": "mprove.de"
+      }
+     ]
+    },
+    {
+     "claim": "Early computer interaction commonly used punched cards and later typed commands at terminals; typical users had to learn specialized command languages.",
+     "refuted": false,
+     "reason": "Holds as a general characterization. Batch processing with punched-card decks dominated mainframe computing from the 1950s, with programmers handing decks to operators and waiting for output; time-sharing systems then let users type commands at teletype-style terminals; and command-line interfaces are described in HCI histories as designed for trained experts who had to recall commands. One sequencing nuance: 'later' overstates the separation. Typed-command interaction via time-sharing began at MIT with CTSS (prototype demonstrated November 1961, so before Sketchpad's 1963 thesis), while punched-card batch work persisted well into the 1970s; the two modes overlapped for roughly two decades. Also 'typical users' in the batch era were mostly programmers and operators rather than end users.",
+     "better_wording": "Early computer interaction commonly meant submitting punched-card decks for batch processing; from the early 1960s time-sharing let people type commands at terminals instead, though both modes coexisted for years, and either way users had to learn specialized command languages.",
+     "sources": [
+      {
+       "title": "Compatible Time-Sharing System (1961-1973): Fiftieth Anniversary Commemorative Overview",
+       "url": "https://history.computer.org/pubs/2011-06-ctss.pdf",
+       "publisher": "IEEE Computer Society"
+      },
+      {
+       "title": "Timeline of Computer History: 1961",
+       "url": "https://www.computerhistory.org/timeline/1961",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "Fernando J. Corbato - A.M. Turing Award",
+       "url": "https://amturing.acm.org/award_recipient/corbato_1009471",
+       "publisher": "ACM"
+      },
+      {
+       "title": "Computer programming in the punched card era",
+       "url": "https://en.wikipedia.org/wiki/Computer_programming_in_the_punched_card_era",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Compatible Time-Sharing System",
+       "url": "https://en.wikipedia.org/wiki/Compatible_Time-Sharing_System",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "CS349 History of HCI lecture slides",
+       "url": "https://student.cs.uwaterloo.ca/~cs349/1235/schedule/slides/02.01.history.pdf",
+       "publisher": "University of Waterloo"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "verify": {
+   "chapter": "ch4-engelbart",
+   "results": [
+    {
+     "claim": "Douglas Engelbart and his SRI team gave the demonstration later called \"The Mother of All Demos\" on December 9, 1968, in San Francisco (Fall Joint Computer Conference).",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Firsts: The Demo - Doug Engelbart Institute",
+       "url": "https://www.dougengelbart.org/theDemo",
+       "publisher": "Doug Engelbart Institute",
+       "supports": "90-minute live public demonstration on December 9, 1968 by Engelbart and his SRI Augmentation Research Center group at a session of the Fall Joint Computer Conference in San Francisco."
+      },
+      {
+       "title": "1968 \"Mother of All Demos\" Forecasted Much of the Technology We Use Every Day",
+       "url": "https://www.sri.com/blog/1968-mother-of-all-demos",
+       "publisher": "SRI International",
+       "supports": "On December 9, 1968 Engelbart and team presented live to a packed house at the Fall Joint Computer Conference in San Francisco; the 'mother of all demos' label was applied later ('as it has since been dubbed')."
+      },
+      {
+       "title": "Net@50: Did Engelbart's \"Mother of All Demos\" Launch the Connected World?",
+       "url": "https://computerhistory.org/blog/net-50-did-engelbart-s-mother-of-all-demos-launch-the-connected-world/",
+       "publisher": "Computer History Museum",
+       "supports": "Engelbart's team presented at the Fall Joint Computer Conference in San Francisco on December 9, 1968 to an audience of roughly 1,000."
+      }
+     ],
+     "notes": "Date, city and conference are solid. Nuances: (1) The nickname was applied retroactively; Wikipedia (https://en.wikipedia.org/wiki/The_Mother_of_All_Demos) credits Andy van Dam repeating the phrase in 1995 when introducing Engelbart at the Vannevar Bush Symposium at MIT, so narration should say 'later called' or 'since dubbed', never that it was called that in 1968. (2) Venue naming is inconsistent across sources: 'Civic Auditorium' (now Bill Graham Civic Auditorium; used by the Engelbart Institute and SRI alumni newsletter), 'Brooks Hall' (CHM blog, 1968 IEEE GRID listing), and 'Convention Center' (Engelbart MouseSite). Both halls are in the San Francisco Civic Center complex, and the IEEE Milestone page (https://ethw.org/Milestones:Public_Demonstration_of_Online_Systems_and_Personal_Computing,_1968) notes its own 'Brooks Hall' wording should read 'San Francisco Civic Auditorium'. Safest narration: 'at the Fall Joint Computer Conference in San Francisco's Civic Center' or simply 'in San Francisco'. (3) The official session title was 'A research center for augmenting human intellect'; the system was NLS (oN-Line System). (4) Length is usually given as ~90 minutes (some say 100). (5) One on-screen outline on dougengelbart.org is dated December 8, but the Institute's main pages, SRI and CHM all use December 9; keep December 9."
+    },
+    {
+     "claim": "The 1968 demo showed a mouse, hypertext links, on-screen text editing, windows, and real-time collaboration/video conferencing with remote colleagues.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "1968 \"Mother of All Demos\" Forecasted Much of the Technology We Use Every Day",
+       "url": "https://www.sri.com/blog/1968-mother-of-all-demos",
+       "publisher": "SRI International",
+       "supports": "The demo debuted the mouse controlling a networked system to demonstrate hypertext linking, real-time text editing, multiple windows with flexible view control, and shared-screen teleconferencing; SRI also says Engelbart hosted the first videoconferencing session during the demo."
+      },
+      {
+       "title": "Douglas C. Engelbart - CHM Profile",
+       "url": "https://computerhistory.org/profile/doug-engelbart/",
+       "publisher": "Computer History Museum",
+       "supports": "NLS showed 'actual instances of, or precursors to' hypertext, shared-screen collaboration, multiple windows, on-screen video teleconferencing, and the mouse as an input device."
+      },
+      {
+       "title": "The Mother of All Demos",
+       "url": "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos",
+       "publisher": "Wikipedia",
+       "supports": "Two microwave links provided live two-way video between the SRI lab in Menlo Park and the conference hall; the workstation in San Francisco was connected to the SDS 940 computer in Menlo Park via homemade modems; collaborative real-time editing and video conferencing were demonstrated."
+      }
+     ],
+     "notes": "All five elements are supported. Nuances for narration: (1) 'Windows' in NLS meant split-screen/multiple windows with flexible view control, not the overlapping, draggable windows of later Xerox PARC/Apple GUIs; avoid implying a modern desktop window system. (2) The remote collaboration was with colleagues ~30 miles away at SRI in Menlo Park (Bill Paxton, Don Andrews and Jeff Rulifson appear via the live link, per the Brown CS telecollaboration page https://cs.brown.edu/stc/resea/telecollaboration/engelbart.html and others), carried over two microwave video links, with the mouse/keyboard data sent to the SDS 940 over homemade modems (sources disagree on 1200 vs 2400 baud; avoid citing a figure). (3) CHM's careful wording 'actual instances of, or precursors to' is a good model: the demo showed working versions or precursors of these ideas rather than 'inventing' them all on stage. (4) The demo also introduced the five-key chord keyset alongside the mouse, which the narration may want to mention. (5) Stewart Brand assisted with cameras/production (Wikipedia)."
+    },
+    {
+     "claim": "The first mouse prototype was a wooden-shelled device built by Bill English in 1964 at SRI based on Engelbart's concept.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "The computer mouse and interactive computing",
+       "url": "https://sri.com/hoi/computer-mouse-and-interactive-computing/",
+       "publisher": "SRI International",
+       "supports": "Bill English, then chief engineer at SRI, built the first computer mouse prototype in 1964 from Engelbart's design; SRI later patented it as an 'X-Y position indicator for a display system' (patent awarded 1970)."
+      },
+      {
+       "title": "Prototype Engelbart mouse (replica) - CHM Revolution",
+       "url": "https://www.computerhistory.org/revolution/artifact/350/1546",
+       "publisher": "Computer History Museum",
+       "supports": "SRI engineer Bill English built the first Engelbart mouse prototype (circa 1964), which used knife-edge wheels and had space for only one button."
+      },
+      {
+       "title": "The Mouse - Doug Engelbart Institute",
+       "url": "https://dougengelbart.org/content/view/162",
+       "publisher": "Doug Engelbart Institute",
+       "supports": "The first prototype, a one-button mouse in a wooden shell on wheels, was built in the fall of 1964 to test the concept; Engelbart's idea was sketched in his notebook and English built it."
+      }
+     ],
+     "notes": "Confirmed with precise framing: Engelbart conceived it (notes from 1961, sketch in his pocket notebook) and Bill English built it in fall 1964. Narration should credit Engelbart as inventor and English as builder/engineer, not say English 'invented' it. Material: CHM's acquisition note (https://computerhistory.org/sri-mouse-mn052024/) says the original was crafted from redwood by the SRI machine shop; some secondary sources say pine, so say 'wooden' or 'redwood' (CHM), not pine. Mechanism: two perpendicular knife-edge/sharp wheels, one button. Date discrepancy: Wikipedia's Bill English article says 1963; the Engelbart Institute, SRI and CHM all say 1964; use 1964. Also note the mouse on display in CHM's Revolution exhibit was for years a faithful replica made by English himself; CHM acquired the original in 2024, so archival photos may show the replica."
+    },
+    {
+     "claim": "The mouse used in the 1968 demo was a later three-button model, not the original 1964 wooden prototype.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "The Mouse - Doug Engelbart Institute",
+       "url": "https://dougengelbart.org/theMouse",
+       "publisher": "Doug Engelbart Institute",
+       "supports": "States the 1968 version included a three-button mouse and five-key keyset, distinct from the one-button wooden first prototype of 1964."
+      },
+      {
+       "title": "The Mouse (Engelbart's account) - Doug Engelbart Institute",
+       "url": "https://dougengelbart.org/content/view/162",
+       "publisher": "Doug Engelbart Institute",
+       "supports": "Engelbart in his own words: 'The mouse we built for the [1968] show was an early prototype that had three buttons'; the team experimented with up to five buttons and settled on three; the cord was turned to exit the top ('tail') to avoid tangling."
+      },
+      {
+       "title": "Production-run three-button mouse, serial number 001 - CHM Revolution",
+       "url": "https://www.computerhistory.org/revolution/input-output/14/350/1656",
+       "publisher": "Computer History Museum",
+       "supports": "By 1968 SRI had provided Engelbart with commercially produced three-button mice (production run, ca. 1968, made by Computer Displays, Inc.) to use in the 'Mother of All Demos'."
+      }
+     ],
+     "notes": "Confirmed: the demo mouse had three buttons and was not the 1964 one-button wooden shell. Nuances: (1) Sources differ slightly on how to characterize the demo unit: Engelbart called it 'an early prototype' with three buttons, while CHM describes commercially produced/production-run three-button mice supplied for the demo. Narration should say 'a later three-button model' or 'a refined three-button mouse' and avoid both 'the original wooden mouse' and strong claims of a mass-produced commercial product. (2) The exact physical unit shown on stage is not firmly established; a Gizmodo piece on an auctioned three-button SRI mouse notes the demo footage shows a darker housing and provenance cannot be confirmed, so do not identify a specific surviving artifact as 'the demo mouse'. (3) A Logitech blog post claims the demo mouse was wooden and one-button; this contradicts Engelbart's own account and CHM and should be treated as a common error the narration must avoid. (4) The three-button design became standard except on the Mac (Engelbart's account)."
+    }
+   ]
+  },
+  "refute": {
+   "chapter": "ch4-engelbart",
+   "challenges": [
+    {
+     "claim": "Douglas Engelbart and his SRI team gave the demonstration later called \"The Mother of All Demos\" on December 9, 1968, in San Francisco (Fall Joint Computer Conference).",
+     "refuted": false,
+     "reason": "Could not refute. Every source checked (Doug Engelbart Institute, IEEE/ETHW milestone, Computer History Museum, SRI, Wikipedia) agrees on December 9, 1968, at the ACM/IEEE Fall Joint Computer Conference in San Francisco, session title 'A Research Center for Augmenting Human Intellect', ~1,000 attendees. The name was applied retroactively (the claim already says 'later called'), which is accurate. Only nuance found: the venue was the San Francisco Civic Auditorium (now Bill Graham Civic Auditorium); some accounts say 'Brooks Hall', which ETHW flags as an error. The claim does not name the hall, so no correction is needed.",
+     "better_wording": "On December 9, 1968, at the Fall Joint Computer Conference in San Francisco's Civic Auditorium, Douglas Engelbart and his SRI Augmentation Research Center team gave the 90-minute demonstration later nicknamed 'The Mother of All Demos'.",
+     "sources": [
+      {
+       "title": "Milestones: Public Demonstration of Online Systems and Personal Computing, 1968",
+       "url": "https://ethw.org/Milestones:Public_Demonstration_of_Online_Systems_and_Personal_Computing,_1968",
+       "publisher": "IEEE / Engineering and Technology History Wiki"
+      },
+      {
+       "title": "The Demo (1968)",
+       "url": "https://dougengelbart.org/theDemo",
+       "publisher": "Doug Engelbart Institute"
+      },
+      {
+       "title": "The Mother of All Demos",
+       "url": "https://en.wikipedia.org/wiki/The_Mother_of_All_Demos",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "The Click Heard around the World",
+       "url": "https://www.thehenryford.org/collections/explore/articles/the-click-heard-around-the-world",
+       "publisher": "The Henry Ford"
+      }
+     ]
+    },
+    {
+     "claim": "The 1968 demo showed a mouse, hypertext links, on-screen text editing, windows, and real-time collaboration/video conferencing with remote colleagues.",
+     "refuted": false,
+     "reason": "Could not refute. SRI's own history lists hypertext linking, real-time text editing, multiple windows with flexible view control, and shared-screen teleconferencing; the ETHW milestone and DEI confirm the mouse's first public showing and the audio/video link to colleagues about 30 miles away at SRI in Menlo Park, whose faces appeared on screen while they jointly worked on the shared display. Two nuances worth noting but not errors: (1) 'windows' here means NLS's split-screen multiple views, not overlapping GUI windows of the later Xerox PARC/Mac style; (2) the 'video conferencing' was a shared-screen session with a live video/audio link (the remote colleague's face superimposed on the display), carried over leased video links and homemade 1200-baud modems, rather than a standalone videoconferencing product.",
+     "better_wording": "The 1968 demo showed the mouse in public for the first time, along with hypertext linking, real-time on-screen text editing, multiple on-screen windows (split-screen views), and shared-screen collaboration with a live audio/video link to colleagues 30 miles away at SRI in Menlo Park.",
+     "sources": [
+      {
+       "title": "The computer mouse and interactive computing",
+       "url": "https://sri.com/hoi/computer-mouse-and-interactive-computing/",
+       "publisher": "SRI International"
+      },
+      {
+       "title": "Milestones: Public Demonstration of Online Systems and Personal Computing, 1968",
+       "url": "https://ethw.org/Milestones:Public_Demonstration_of_Online_Systems_and_Personal_Computing,_1968",
+       "publisher": "IEEE / Engineering and Technology History Wiki"
+      },
+      {
+       "title": "Douglas Engelbart Demonstrates Hypertext, Text Editing, Windows, Email and a Mouse: \"The Mother of All Demos\"",
+       "url": "https://www.historyofinformation.com/detail.php?id=870",
+       "publisher": "HistoryofInformation.com"
+      },
+      {
+       "title": "Doug Engelbart's Mother of All Demos 50 years On",
+       "url": "https://www.i-programmer.info/news/82-heritage/12366-doug-engelbarts-mother-of-all-demos-50-years-on.html",
+       "publisher": "I Programmer"
+      }
+     ]
+    },
+    {
+     "claim": "The first mouse prototype was a wooden-shelled device built by Bill English in 1964 at SRI based on Engelbart's concept.",
+     "refuted": false,
+     "reason": "Could not refute, but there is a real dating disagreement to be aware of. The Doug Engelbart Institute, SRI, and the Computer History Museum catalog (object 102803057) all say Bill English built the first prototype in 1964, in a wooden (CHM says redwood) shell with two perpendicular wheels and one button, from Engelbart's sketch. However, Wikipedia's Bill English article, the Science Museum (London) replica record ('Computer mouse prototype, 1963'), and a 2020 Vancouver Sun obituary give 1963; Engelbart's own notes mention a 'bug' device in November 1963, and Engelbart dated the original idea to 1961. The claim's 1964 matches the primary institutions (DEI, SRI, CHM), so it stands, but a hedge is advisable. The wood species is also disputed (redwood vs pine); 'wooden-shelled' sidesteps that correctly.",
+     "better_wording": "The first mouse prototype, a one-button device in a carved wooden shell riding on two perpendicular wheels, was built by SRI engineer Bill English in 1964 (some accounts say late 1963) from a concept Engelbart had sketched in his notebook.",
+     "sources": [
+      {
+       "title": "Prototype Engelbart mouse, SRI, 1964 (catalog 102803057)",
+       "url": "https://www.computerhistory.org/collections/catalog/102803057/",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "CHM Acquires Original SRI Mouse",
+       "url": "https://computerhistory.org/?p=29205",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "The computer mouse and interactive computing",
+       "url": "https://sri.com/hoi/computer-mouse-and-interactive-computing/",
+       "publisher": "SRI International"
+      },
+      {
+       "title": "The Mouse (Firsts)",
+       "url": "https://dougengelbart.org/content/view/162",
+       "publisher": "Doug Engelbart Institute"
+      },
+      {
+       "title": "Bill English (computer engineer)",
+       "url": "https://en.wikipedia.org/wiki/Bill_English_(computer_engineer)",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Computer mouse prototype, 1963 (replica)",
+       "url": "https://collection.sciencemuseum.org.uk/objects/co8359400",
+       "publisher": "Science Museum Group"
+      }
+     ]
+    },
+    {
+     "claim": "The mouse used in the 1968 demo was a later three-button model, not the original 1964 wooden prototype.",
+     "refuted": false,
+     "reason": "Could not refute. Engelbart himself said 'The mouse we built for the [1968] show was an early prototype that had three buttons. We turned it around so the tail came out the top,' and that the team tried up to five buttons before settling on three. The Computer History Museum's record for the Computer Displays Inc. production-run three-button mouse (serial 001, ca. 1968) states SRI had provided commercially produced three-button mice for the demo, and a DEI page identifies that production model as the one used at the FJCC. The sources disagree on whether the exact unit on stage was a hand-built prototype or a CDI production unit, but all agree it was a three-button device and not the 1964 one-button wooden prototype, so the claim holds. The word 'model' is appropriately neutral on the prototype-vs-production question.",
+     "better_wording": "The mouse used in the 1968 demo was a later three-button design (with its cord exiting from the top), not the one-button wooden prototype of 1964; sources differ on whether it was a hand-built prototype or one of the commercially produced three-button units SRI had by then.",
+     "sources": [
+      {
+       "title": "The Mouse",
+       "url": "https://dougengelbart.org/theMouse",
+       "publisher": "Doug Engelbart Institute"
+      },
+      {
+       "title": "The Mouse (Firsts)",
+       "url": "https://dougengelbart.org/content/view/162",
+       "publisher": "Doug Engelbart Institute"
+      },
+      {
+       "title": "Production-run three-button mouse, serial number 001",
+       "url": "https://www.computerhistory.org/revolution/artifact/350/1656",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "Doug Engelbart's mouse prototype",
+       "url": "https://www.computerhistory.org/revolution/input-output/14/346/1876",
+       "publisher": "Computer History Museum"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "verify": {
+   "chapter": "ch5-gui",
+   "results": [
+    {
+     "claim": "The Xerox Alto was developed at Xerox PARC with the first units operating in 1973; it was an experimental/research machine, not a mass-market product.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Alto: A Personal Computer (Xerox PARC report CSL-79-11, Thacker, McCreight, Lampson, Sproull, Boggs)",
+       "url": "https://bitsavers.computerhistory.org/pdf/xerox/parc/techReports/CSL-79-11_Alto_A_Personal_Computer.pdf",
+       "publisher": "Xerox PARC, hosted by Computer History Museum (bitsavers)",
+       "supports": "Primary source: the Alto was 'designed in early 1973 as an experiment in personal computing'; the first prototype ran in April 1973 and Smalltalk was running on it by June 1973; by summer 1979 nearly a thousand Altos were in regular use by researchers, engineers and secretaries."
+      },
+      {
+       "title": "Xerox Alto - CHM Revolution",
+       "url": "https://www.computerhistory.org/revolution/input-output/14/347",
+       "publisher": "Computer History Museum",
+       "supports": "Alto developed at Xerox PARC; lead engineer Charles Thacker noted the first unit cost Xerox $12,000; presented as a research machine, not a product."
+      },
+      {
+       "title": "Alto (computer)",
+       "url": "https://www.britannica.com/topic/Alto-computer",
+       "publisher": "Encyclopaedia Britannica",
+       "supports": "Alto developed at PARC with a GUI using a mouse and windows; Xerox only later introduced a commercial version, the Xerox Star, in 1981 (the Alto itself was never sold as a product)."
+      }
+     ],
+     "notes": "Date nuance: the PARC team's own 1979 report says the first prototype ran in April 1973; several secondary timelines (computinghistory.org.uk, historyofinformation.com) give 1 March 1973 as the 'introduction' at PARC. 'First units operating in 1973' is safe; avoid naming a specific day. Scale nuance: roughly 1,500-2,000 Altos were built over the following decade for Xerox labs and for universities (Wikipedia; IEEE Spectrum 'Still Living in the Xerox Alto's World'); it was never offered as a commercial product. Interface nuance: the Alto had a bitmapped display, three-button mouse, and (in Smalltalk) overlapping windows and pop-up menus, but the office 'desktop' of document/folder icons was developed for the Star; the icon concept itself grew out of Alto-era research (David Canfield Smith's 1975 Pygmalion thesis). Do not describe the Alto as having a Star/Mac-style icon desktop."
+    },
+    {
+     "claim": "The Xerox Star (8010 Information System) was released commercially in 1981 and had a desktop metaphor with icons, windows, and a mouse.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Xerox Unveils Multipurpose Personal Information System (PR Newswire, New York, April 27, 1981)",
+       "url": "https://tech-insider.org/star/research/1981/0427.html",
+       "publisher": "Xerox press release via PR Newswire, archived at tech-insider.org",
+       "supports": "Primary source: Xerox announced and demonstrated the 8010 Star information system on April 27, 1981 in New York; described a two-page desktop display, keyboard, processor and 'an unusual control device' (the mouse); U.S. price $16,595 with basic software."
+      },
+      {
+       "title": "Xerox 8010 Star Information System",
+       "url": "https://americanhistory.si.edu/collections/object/nmah_1064205",
+       "publisher": "Smithsonian National Museum of American History",
+       "supports": "Development began in 1977 using Alto concepts; bit-mapped WYSIWYG GUI, two-button mouse, built-in Ethernet; the interface represented office objects (documents, folders, file drawers, in/out baskets) as icons; introductory price $16,595 per workstation."
+      },
+      {
+       "title": "Xerox Star",
+       "url": "https://www.britannica.com/technology/Xerox-Star",
+       "publisher": "Encyclopaedia Britannica",
+       "supports": "Star introduced in 1981 as the commercial successor to the Alto with an icon-based graphical interface and mouse."
+      }
+     ],
+     "notes": "Announced/released nuance: the firm date is the announcement, April 27, 1981 (press release); public showing followed at the National Computer Conference in Chicago in May 1981; first customer shipments came later in 1981 and no authoritative ship date surfaced, so narration should say 'announced/introduced in April 1981' rather than cite a ship date. Price nuance: $16,595 was for a single workstation; a working networked office system with file/print servers cost far more (often quoted around $75,000). Windows nuance: the original Star tiled its document windows rather than letting them overlap (the designers removed overlapping as confusing; see Smith et al. 1982 and mprove.de/visionreality/text/3.1.6_xeroxstar.html); overlapping windows came back in the later ViewPoint release. Name nuance: 'Star' was the software/system name, the 8010 workstation hardware was code-named Dandelion. Sales figures vary widely in sources (from under 2,000 to about 25,000 systems); avoid quoting a number. Also see CHM's 1981 'Final Demonstration of the Xerox Star' transcript: https://archive.computerhistory.org/resources/access/text/2015/09/102737965-05-01-acc.pdf"
+    },
+    {
+     "claim": "The Apple Lisa was released in January 1983 with a graphical user interface.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "January 19: Apple Computer Introduces the Lisa (This Day in History)",
+       "url": "https://www.computerhistory.org/tdih/january/19/",
+       "publisher": "Computer History Museum",
+       "supports": "Apple introduced the Lisa on January 19, 1983."
+      },
+      {
+       "title": "The Lisa: Apple's Most Influential Failure",
+       "url": "https://computerhistory.org/blog/the-lisa-apples-most-influential-failure/",
+       "publisher": "Computer History Museum",
+       "supports": "Lisa announced January 19, 1983 at $9,995 with a graphical user interface; a key stepping stone to the Macintosh; Apple engineers developed its GUI from scratch though influenced by Xerox PARC; discontinued April 1985."
+      },
+      {
+       "title": "GUIdebook: Apple Lisa spotlight - Introduction (timeline)",
+       "url": "https://guidebookgallery.org/extras/spotlights/lisa/introduction",
+       "publisher": "GUIdebook (Marcin Wichary)",
+       "supports": "Timeline entry: June 1983, Lisa begins shipping; September 1983 price cut to $6,995 without bundled software."
+      }
+     ],
+     "notes": "Announced vs shipped: January 19, 1983 is the announcement/introduction date; at launch Apple promised delivery in May 1983 (Craig 1993 article hosted at bitsavers.computerhistory.org) and units actually began shipping in June 1983 (GUIdebook timeline and other secondary sources). Narration should say 'announced/introduced in January 1983' (or 'unveiled'), not 'shipped in January'. The Lisa was the first personal computer sold with a GUI by Apple, but not the first commercial GUI machine (the Xerox Star beat it to market in 1981, per CHM). The CHM catalog entry https://www.computerhistory.org/collections/catalog/102805342 also gives Jan 19, 1983 and $9,995. Lisa sold poorly (roughly 10,000 units by most accounts); CHM calls it 'Apple's most influential failure'."
+    },
+    {
+     "claim": "The Apple Macintosh was released in January 1984 and helped bring the GUI to a wider audience.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "A Computer for the Rest of Us",
+       "url": "https://computerhistory.org/blog/a-computer-for-the-rest-of-us/",
+       "publisher": "Computer History Museum",
+       "supports": "Macintosh introduced January 24, 1984; its graphical interface and mouse were new on mass-market computers."
+      },
+      {
+       "title": "1984 - Timeline of Computer History",
+       "url": "https://www.computerhistory.org/timeline/1984/",
+       "publisher": "Computer History Museum",
+       "supports": "Apple introduced the Macintosh in 1984 (heralded by the Super Bowl commercial) at about $2,500; described as the first successful mouse-driven computer with a graphical user interface."
+      },
+      {
+       "title": "Graphical user interface (GUI)",
+       "url": "https://www.britannica.com/technology/graphical-user-interface",
+       "publisher": "Encyclopaedia Britannica",
+       "supports": "After the expensive Lisa, the lower-cost Macintosh shipped in 1984 'won millions of converts' to the graphical interface."
+      }
+     ],
+     "notes": "Date nuance: the Macintosh was unveiled by Steve Jobs on January 24, 1984 at Apple's annual shareholders meeting at the Flint Center, De Anza College, Cupertino, and went on sale at $2,495; the '1984' Super Bowl commercial aired two days earlier, January 22, 1984 (Smithsonian Lemelson Center: https://invention.si.edu/invention-stories/remembering-apples-1984-super-bowl-ad). 'Released in January 1984' is accurate. Framing nuance: it was not the first GUI computer (Alto 1973, Star 1981, Lisa 1983 preceded it); it is best described as the first commercially successful, affordable mass-market GUI/mouse computer. First-year sales were modest after a strong start (about 70,000 units by May 1984), so 'helped bring the GUI to a wider audience' is well supported; avoid 'instant success'."
+    },
+    {
+     "claim": "Apple did not invent the graphical user interface or the mouse; both predate Apple's products (SRI, Xerox PARC).",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "The computer mouse and interactive computing",
+       "url": "https://sri.com/hoi/computer-mouse-and-interactive-computing/",
+       "publisher": "SRI International",
+       "supports": "The mouse was developed at SRI by Douglas Engelbart's group in the early 1960s; Bill English built the first prototype in 1964; the basic patent (Engelbart named inventor) was filed in 1967 and issued in 1970; publicly demonstrated at the December 9, 1968 'Mother of All Demos'."
+      },
+      {
+       "title": "Firsts: The Mouse",
+       "url": "https://dougengelbart.org/firsts/mouse.html",
+       "publisher": "Doug Engelbart Institute",
+       "supports": "First mouse prototype (one-button, wooden shell on wheels) built in fall 1964 to test Engelbart's concept; patented 1970 as an 'X-Y Position Indicator'; first public demo December 1968."
+      },
+      {
+       "title": "Xerox PARC - CHM Revolution",
+       "url": "https://www.computerhistory.org/revolution/input-output/14/348",
+       "publisher": "Computer History Museum",
+       "supports": "The Alto GUI (icons, mouse, windows) was developed at Xerox PARC in the 1970s; Apple engineers and Steve Jobs visited PARC in December 1979, which reinforced similar work already underway at Apple for the Lisa and Macintosh."
+      }
+     ],
+     "notes": "Lineage: Engelbart's SRI lab (mouse, windows, hypertext, 1960s) -> several of his team moved to Xerox PARC in the 1970s (Alto, Smalltalk, Star) -> Apple (Lisa 1983, Macintosh 1984); Britannica's GUI entry states this chain explicitly. Mouse-date nuance: Engelbart's notes date to 1961, the concept is often dated 1963, the first prototype was built in 1964 (the Engelbart Institute now says attributing the build solely to Bill English was an oversimplification); say 'conceived by Engelbart in the early 1960s, prototyped 1964'. Ivan Sutherland's Sketchpad (1963) is another pre-Apple GUI precursor if the script wants one. Fairness nuance: Apple did not simply copy PARC. Xerox received Apple pre-IPO stock in exchange for the 1979 PARC demonstrations; Apple's Lisa and Macintosh projects were already underway; CHM notes Apple engineers built the Lisa GUI from scratch; and Apple contributed genuine innovations (menu bar with pull-down menus, drag-and-drop file manipulation, double-click, the desktop Trash). Lisa designers told Byte that 'the only thing we probably took from Star was icons' and that most of their Xerox inspiration was Smalltalk (quoted in Johnson et al. 1989: https://worrydream.com/refs/Johnson_1989_-_The_Xerox_Star,_a_Retrospective.pdf). Avoid the word 'stole'."
+    },
+    {
+     "claim": "The desktop metaphor with folder and trash/wastebasket icons was present on the Xerox Star (1981) and later Apple Lisa/Macintosh.",
+     "verdict": "needs_correction",
+     "correction": "The desktop metaphor with document and folder icons (plus file drawers, in/out baskets and printers) debuted commercially on the Xerox Star in 1981, but the original Star desktop had no trash/wastebasket icon; files were deleted with a keyboard Delete key. The on-screen trash can first appeared commercially on the Apple Lisa in 1983 (named 'Wastebasket', later renamed 'Trash') and then on the Macintosh in 1984 ('Trash'). Xerox added a Wastebasket to its own Star/ViewPoint desktop around 1985.",
+     "sources": [
+      {
+       "title": "Icon for wastebasket or the like (U.S. Design Patent D295632)",
+       "url": "https://patents.justia.com/patent/D295632",
+       "publisher": "Justia Patents (USPTO record)",
+       "supports": "Xerox Corporation's design patent for a wastebasket icon was filed October 28, 1985 (inventors Doris Wells-Papanek, William Verplank, Norman Cox) and granted May 10, 1988, i.e., more than four years after the 1981 Star launch."
+      },
+      {
+       "title": "Xerox Star (GUI Gallery)",
+       "url": "https://toastytech.com/guis/star.html",
+       "publisher": "ToastyTech GUI Gallery (Nathan Lineback)",
+       "supports": "States that the original 1981 Xerox 8010 Star desktop does not have the 'Waste Basket'; deletion was performed with the keyboard Delete key."
+      },
+      {
+       "title": "Trash (computing)",
+       "url": "https://en.wikipedia.org/wiki/Trash_(computing)",
+       "publisher": "Wikipedia",
+       "supports": "The Apple Lisa shipped in 1983 with a 'Wastebasket' icon (later renamed 'Trash'); the Macintosh (1984) refined it as 'Trash'; in Apple v. Microsoft the court held Apple's trash icon to be original, protectable expression."
+      }
+     ],
+     "notes": "The folder part of the claim is solid: the Smithsonian's 8010 Star entry (https://americanhistory.si.edu/collections/object/nmah_1064205) and Smith et al.'s 1982 Byte article 'Designing the Star User Interface' (https://guidebookgallery.org/articles/designingthestaruserinterface) document document, folder, file-drawer, in/out-basket and printer icons; Norm Cox drew the final icons and David Canfield Smith originated the office/desktop metaphor. The trash part is not: Xerox's own documentation first shows a Wastebasket in the September 1985 ViewPoint Application Developer's Guide (section 2.6, https://kuiper.mirrorservice.org/sites/www.bitsavers.org/pdf/xerox/viewpoint/programming/610E00200_Viewpoint_Application_Developers_Guide_Sep1985.pdf), consistent with the October 1985 design-patent filing. Some popular articles (e.g., AV Club) date the trash icon to the 1981 Star, but no primary Star 1.0 documentation or screenshot supports that, and the Apple v. Microsoft ruling treating Apple's trash can as original points the same way. Apple naming nuance: Lisa called it 'Wastebasket' (an alley-style can with tipped lid), a later Lisa update and the Macintosh called it 'Trash' (Susan Kare's closed-lid can). Suggested narration: credit the Star with the icon desktop (documents, folders, in-baskets, printers) and credit the Lisa/Macintosh with the trash can."
+    }
+   ]
+  },
+  "refute": {
+   "chapter": "ch5-gui",
+   "challenges": [
+    {
+     "claim": "The Xerox Alto was developed at Xerox PARC with the first units operating in 1973; it was an experimental/research machine, not a mass-market product.",
+     "refuted": false,
+     "reason": "Holds. Sources consistently date the first Alto to spring 1973 (Wikipedia/DigiBarn give March 1, 1973; IEEE Spectrum says early spring 1973; the design memo is dated December 19, 1972). Roughly 2,000 units (120 Alto I, ~2,000 Alto II) were built over about a decade, used inside Xerox and donated to universities (MIT, Stanford, CMU, Rochester, c. 1978-79); Xerox rejected proposals to market it and it was never sold as a product. Only one outlier (mprove.de) says Altos became operational in 1974, which is contradicted by the project's own chronology. Minor nuance: it was not a one-off prototype but a production run of ~2,000 research machines, so 'experimental/research machine' is accurate as long as it is not read as 'a single prototype'.",
+     "better_wording": "The Xerox Alto was developed at Xerox PARC, with the first machines running in spring 1973; roughly 2,000 were built for use inside Xerox and at a handful of universities, but it was never sold commercially.",
+     "sources": [
+      {
+       "title": "Xerox Alto",
+       "url": "https://en.wikipedia.org/wiki/Xerox_Alto",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "50 Years Later, We're Still Living in the Xerox Alto's World",
+       "url": "https://spectrum.ieee.org/xerox-alto",
+       "publisher": "IEEE Spectrum"
+      },
+      {
+       "title": "Computer History Museum Adds Historic Xerox Alto Source Code to its Software Source Code Series",
+       "url": "https://computerhistory.org/blog/xerox-alto/",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "Xerox Alto File System Archive (Alto memo, December 19, 1972)",
+       "url": "https://xeroxalto.computerhistory.org/xerox_alto_file_system_archive.html",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "Xerox Alto personal computer is developed at Xerox PARC",
+       "url": "https://computinghistory.org.uk/det/5920/Xerox Alto personal computer is developed at Xerox PARC",
+       "publisher": "Centre for Computing History"
+      },
+      {
+       "title": "Alto 30th anniversary",
+       "url": "https://www.digibarn.com/eventsvisiting/alto30",
+       "publisher": "DigiBarn Computer Museum"
+      }
+     ]
+    },
+    {
+     "claim": "The Xerox Star (8010 Information System) was released commercially in 1981 and had a desktop metaphor with icons, windows, and a mouse.",
+     "refuted": false,
+     "reason": "Holds. Xerox introduced the 8010 Star Information System on April 27, 1981 (Manhattan press conference, then shown at the National Computer Conference in Chicago in May 1981), priced around $16,595 per workstation, and it was sold commercially (on the order of 25,000 systems over its life, per secondary sources). It is widely described as the first commercial system with a desktop metaphor, icons, overlapping windows and a mouse (David Canfield Smith is credited with the desktop metaphor/icons). I could not find a precise first-customer-shipment date, but no source places shipments outside 1981. Two minor nuances, neither a refutation: 'Star' was strictly the name of the software/user interface, with '8010 Information System' the product name; and the Star was a commercial failure despite its influence.",
+     "better_wording": "The Xerox 8010 Information System, known as the Star, was announced on April 27, 1981 and sold commercially; it was the first commercial system to ship with a desktop metaphor of icons, windows and a mouse, though it sold poorly.",
+     "sources": [
+      {
+       "title": "Xerox Star",
+       "url": "https://en.wikipedia.org/wiki/Xerox_Star",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "The Xerox Star: A Retrospective (Johnson et al., 1989)",
+       "url": "https://guidebookgallery.org/articles/thexeroxstararetrospective",
+       "publisher": "GUIdebook"
+      },
+      {
+       "title": "The Xerox Star: The \"Office of the Future\"",
+       "url": "https://www.historyofinformation.com/detail.php?entryid=123",
+       "publisher": "HistoryofInformation.com"
+      },
+      {
+       "title": "Star History and Development",
+       "url": "https://engblg.livingcomputers.org/index.php/tag/star/",
+       "publisher": "Living Computers: Museum + Labs"
+      },
+      {
+       "title": "Xerox 8010",
+       "url": "https://digibarn.com/collections/systems/xerox-8010/",
+       "publisher": "DigiBarn Computer Museum"
+      },
+      {
+       "title": "Business Week report on the Star, May 11, 1981",
+       "url": "https://tech-insider.org/star/research/1981/0511.html",
+       "publisher": "tech-insider.org (Business Week archive)"
+      }
+     ]
+    },
+    {
+     "claim": "The Apple Lisa was released in January 1983 with a graphical user interface.",
+     "refuted": true,
+     "reason": "Announced-vs-shipped confusion. Apple announced/unveiled the Lisa on January 19, 1983 (base price $9,995), but it did not ship to customers until June 1983; Apple had originally promised May delivery. Multiple sources (Wikipedia, Low End Mac, GUIdebook timeline, AppleMatters) agree on the June 1983 shipping date. Saying it was 'released' in January is therefore imprecise: the product was introduced in January and released (shipped) in June. The GUI part of the claim is correct.",
+     "better_wording": "The Apple Lisa, with a graphical user interface, was announced on January 19, 1983 and began shipping in June 1983.",
+     "sources": [
+      {
+       "title": "Apple Lisa",
+       "url": "https://en.wikipedia.org/wiki/Apple_Lisa",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Apple Lisa (1983)",
+       "url": "https://lowendmac.com/1983/apple-lisa/",
+       "publisher": "Low End Mac"
+      },
+      {
+       "title": "January 19 in Apple and LEM History",
+       "url": "https://lowendmac.com/arc/0119.html",
+       "publisher": "Low End Mac"
+      },
+      {
+       "title": "GUIdebook: Apple Lisa spotlight - Introduction",
+       "url": "https://guidebookgallery.org/extras/spotlights/lisa/introduction",
+       "publisher": "GUIdebook"
+      },
+      {
+       "title": "On January 19, 1983 Apple introduced the Lisa",
+       "url": "https://historyofinformation.com/detail.php?id=5392",
+       "publisher": "HistoryofInformation.com"
+      },
+      {
+       "title": "CHM Makes Apple Lisa Source Code Available to the Public",
+       "url": "https://computerhistory.org/?p=26842",
+       "publisher": "Computer History Museum"
+      }
+     ]
+    },
+    {
+     "claim": "The Apple Macintosh was released in January 1984 and helped bring the GUI to a wider audience.",
+     "refuted": false,
+     "reason": "Holds. Steve Jobs unveiled the Macintosh at Apple's annual shareholders meeting at the Flint Center, Cupertino, on January 24, 1984, two days after the '1984' Super Bowl ad, and unlike the Lisa it went on sale that same day at $2,495 (about 70,000 sold by May 3, 1984). At $2,495 versus the Lisa's $9,995 and the Star's ~$16,595 per workstation, it did bring the GUI to a far larger audience, so the second part is a fair characterization. Nuance only: initial sales slowed later in 1984, so 'helped bring to a wider audience' is appropriately hedged; it did not make the GUI dominant overnight.",
+     "better_wording": "The Apple Macintosh was introduced and went on sale on January 24, 1984 at $2,495, bringing a GUI and mouse to a far wider audience than the Lisa or Xerox Star.",
+     "sources": [
+      {
+       "title": "Macintosh 128K",
+       "url": "https://en.wikipedia.org/wiki/Macintosh_128K",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Macintosh launched on Jan 24, 1984 and changed the world - eventually",
+       "url": "https://appleinsider.com/articles/19/01/24/apple-launched-macintosh-on-january-24-1984-and-changed-the-world----eventually",
+       "publisher": "AppleInsider"
+      },
+      {
+       "title": "Apple launches the Macintosh 128K",
+       "url": "https://www.computinghistory.org.uk/det/5806/Apple-launches-the-Macintosh-128K/",
+       "publisher": "Centre for Computing History"
+      },
+      {
+       "title": "Apple Mac went on sale 30 years ago today",
+       "url": "https://www.cultofmac.com/news/apple-mac-went-sale-30-years-ago-today-video",
+       "publisher": "Cult of Mac"
+      },
+      {
+       "title": "Watch Steve Jobs reveal the first Mac",
+       "url": "https://macworld.com/article/2215934/watch-steve-jobs-reveal-first-mac.html",
+       "publisher": "Macworld"
+      }
+     ]
+    },
+    {
+     "claim": "Apple did not invent the graphical user interface or the mouse; both predate Apple's products (SRI, Xerox PARC).",
+     "refuted": false,
+     "reason": "Holds. The mouse was conceived by Douglas Engelbart and built by Bill English at SRI in 1963-64 (patent granted 1970) and demonstrated publicly in the 1968 NLS demo; GUI antecedents include Ivan Sutherland's Sketchpad (MIT, 1963), Engelbart's NLS (tiled windows, 1968), and the Xerox PARC Alto (1973) and Star (1981), all before the Lisa (1983) and Macintosh (1984). Apple's team visited PARC in 1979 and Apple licensed SRI's mouse patent (Engelbart recalled roughly $40,000). Nuance, not a refutation: Apple did contribute genuine GUI innovations of its own (e.g., the menu bar with pull-down menus, drag-and-drop, the one-button mouse made cheap), so the claim should not be read as 'Apple merely copied'. Also the lineage is broader than SRI and PARC alone (MIT's Sketchpad).",
+     "better_wording": "Apple did not invent the mouse (Engelbart and English at SRI, 1963-64) or the graphical user interface (Sketchpad at MIT 1963, Engelbart's NLS 1968, Xerox PARC's Alto 1973 and Star 1981); Apple licensed the SRI mouse patent and refined and popularized these ideas in the Lisa and Macintosh.",
+     "sources": [
+      {
+       "title": "SRI Mouse (Bill English, 1964; patented 1970)",
+       "url": "https://computerhistory.org/sri-mouse-mn052024/",
+       "publisher": "Computer History Museum"
+      },
+      {
+       "title": "Milestone-Proposal: Invention of the Computer Mouse",
+       "url": "https://ieeemilestones.ethw.org/Milestone-Proposal:Invention_of_the_Computer_Mouse",
+       "publisher": "IEEE / Engineering and Technology History Wiki"
+      },
+      {
+       "title": "The Origin of the Computer Mouse",
+       "url": "https://www.scientificamerican.com/article/origins-computer-mouse/",
+       "publisher": "Scientific American"
+      },
+      {
+       "title": "History of the graphical user interface",
+       "url": "https://en.wikipedia.org/wiki/History_of_the_graphical_user_interface",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Apple pointing devices (SRI mouse license to Apple)",
+       "url": "https://en.wikipedia.org/wiki/Apple_pointing_devices",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "Rich Neighbor with Open Doors: Apple and Xerox PARC",
+       "url": "https://www.mac-history.net/2010/03/22/apple-and-xerox-parc",
+       "publisher": "mac-history.net"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "verify": {
+   "chapter": "ch6-web-ux",
+   "results": [
+    {
+     "claim": "Don Norman published \"The Psychology of Everyday Things\" in 1988 (later retitled \"The Design of Everyday Things\").",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "The Design of Everyday Things (first edition)",
+       "url": "https://jnd.org/the-design-of-everyday-things/",
+       "publisher": "jnd.org (Don Norman)",
+       "supports": "Norman's own book page for the first edition; states the book was first published in 1988 under its original title. (One field on the page reportedly shows '1986 (re-issued 2002)', which conflicts with the page's own 1988 statement and all catalog data and appears to be a typo.)"
+      },
+      {
+       "title": "Science of the appliance",
+       "url": "https://www.timeshighereducation.com/node/95847",
+       "publisher": "Times Higher Education",
+       "supports": "1998 article explaining that the title was changed for the paperback from 'The Psychology of Everyday Things' to 'The Design of Everyday Things' so bookshops would shelve it with design rather than psychology."
+      },
+      {
+       "title": "An edition of The Psychology of Everyday Things (1988)",
+       "url": "https://openlibrary.org/isbn/0465067107",
+       "publisher": "Open Library (Internet Archive)",
+       "supports": "Catalog record (ISBN 0465067107) of the 1988 Basic Books hardcover under the original title 'The Psychology of Everyday Things'."
+      }
+     ],
+     "notes": "Nuances: the 1988 hardcover (Basic Books) was titled 'The Psychology of Everyday Things' (nicknamed POET); the retitling to 'The Design of Everyday Things' (DOET) came with the 1990 paperback, with a 2002 reissue adding a new preface and a 'Revised and Expanded Edition' in 2013 (Basic Books; MIT Press in the UK). Norman has said his academic peers liked the original title but the new one better conveyed the content and attracted readers; the Times Higher Education account adds the bookstore-shelving motive. Narration should say 'published in 1988 as The Psychology of Everyday Things' and 'retitled for the paperback' rather than implying the retitle was immediate. Avoid the occasionally seen blog claim that the 1988 book introduced the term 'user experience' \u2014 no source supports that."
+    },
+    {
+     "claim": "Tim Berners-Lee wrote the proposal for what became the World Wide Web at CERN in March 1989.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Information Management: A Proposal (Tim Berners-Lee, CERN, March 1989, May 1990)",
+       "url": "https://www.w3.org/History/1989/Proposal.html",
+       "publisher": "W3C",
+       "supports": "The original document itself, written at CERN and dated March 1989 (the W3C copy notes it was redistributed unchanged apart from a May 1990 date); proposes a distributed hypertext system; Berners-Lee notes the only name he had for it then was 'Mesh'."
+      },
+      {
+       "title": "Web30: the 30-year anniversary of an invention that changed the world",
+       "url": "https://home.cern/news/news/computing/web30-30-year-anniversary-invention-changed-world",
+       "publisher": "CERN",
+       "supports": "CERN marks 12 March 1989 as the day Berners-Lee submitted 'Information Management: A Proposal' to his supervisors; CERN celebrated the 30th anniversary on 12 March 2019."
+      },
+      {
+       "title": "First outline of the World Wide Web",
+       "url": "https://timeline-upgrade.web.cern.ch/node/503",
+       "publisher": "CERN (Timelines)",
+       "supports": "CERN's own timeline entry for the March 1989 proposal, including Mike Sendall's 'Vague but exciting...' annotation and the fact that a revised version followed in 1990."
+      }
+     ],
+     "notes": "Nuances for narration: (1) The 1989 document was titled 'Information Management: A Proposal' and did not use the name 'World Wide Web' \u2014 Berners-Lee's working name was 'Mesh'; the name 'WorldWideWeb' appears in the second, more concrete proposal he wrote with Robert Cailliau in November 1990. (2) The proposal was not approved immediately; his boss Mike Sendall wrote 'Vague but exciting...' on the cover, and Berners-Lee recirculated it in May 1990 before getting the go-ahead (hence the 'March 1989, May 1990' dates on the W3C copy; CERN Archives https://archives.web.cern.ch/?p=609 also holds the annotated original). (3) CERN uses 12 March 1989 as the Web's 'birthday'; it is the date of the proposal, not of any working software or site. Proposal (1989) is distinct from first server/site (Dec 1990) and public announcement (Aug 1991)."
+    },
+    {
+     "claim": "The first website (info.cern.ch) went live at CERN in 1991 and was served from a NeXT computer; the World Wide Web is distinct from the Internet, which predates it.",
+     "verdict": "needs_correction",
+     "correction": "The first website, info.cern.ch, was running on Tim Berners-Lee's NeXT computer at CERN by December 1990 \u2014 CERN dates the first browser/editor, server and website going live to December 1990, with the first full demonstration around Christmas 1990 \u2014 and the project was first announced to the wider Internet on 6 August 1991, when Berners-Lee posted it to the alt.hypertext newsgroup. The World Wide Web is distinct from the Internet, which predates it: the Internet (originating with ARPANET in 1969) had been in use for two decades when the Web was built on top of it.",
+     "sources": [
+      {
+       "title": "The world's first browser/editor, website and server go live at CERN",
+       "url": "https://timeline.web.cern.ch/node/398",
+       "publisher": "CERN (Timelines)",
+       "supports": "CERN's timeline places the first browser/editor, website and server going live at CERN in December 1990 (by Christmas 1990 HTML, HTTP and URL were defined and the first browser/editor and server software written), i.e., not 1991."
+      },
+      {
+       "title": "A short history of the Web",
+       "url": "https://home.cern/science/computing/the-birth-of-the-web/short-history-web/",
+       "publisher": "CERN",
+       "supports": "States that info.cern.ch was the address of the world's first website and web server, running on a NeXT computer at CERN; the first server and browser were up and running at CERN by the end of 1990; CERN restored the first website at info.cern.ch in 2013."
+      },
+      {
+       "title": "Sir Berners-Lee announces the WWW software on the Internet",
+       "url": "https://timeline.web.cern.ch/node/479",
+       "publisher": "CERN (Timelines)",
+       "supports": "The first public announcement was on 6 August 1991 to the alt.hypertext newsgroup, with instructions for obtaining the WWW software from CERN \u2014 the 1991 date is the public release/announcement, not the first site going live."
+      }
+     ],
+     "notes": "The NeXT and info.cern.ch parts are confirmed (the NeXTcube, with its 'This machine is a server. DO NOT POWER IT DOWN!!' sticker, is held by CERN and was lent to London's Science Museum for the 25th anniversary: https://blog.sciencemuseum.org.uk/happy-25th-birthday-world-wide-web). The date needs care: CERN's timeline says only 'December 1990'; secondary sources commonly give 20 December 1990 (some say 24/25 December), and Berners-Lee's own account says the browser/editor was talking to the info.cern.ch server by Christmas Day 1990 (Scientific American, https://www.scientificamerican.com/article/facts-about-the-webs-creation). 6 August 1991 (alt.hypertext post) is often mis-stated as the day the first website went live; CERN frames 1991 as the year the Web 'spread beyond CERN' (https://home.cern/news/news/computing/month-1991-web-spreads-beyond-cern). The server's original hostname was nxoc01.cern.ch, with info.cern.ch as an alias. Web vs Internet: CERN's 'Where the web was born' page (https://drupal-home.web.cern.ch/science/computing/where-web-was-born) notes the Internet had existed since the 1970s when the Web was proposed, and Berners-Lee combined hypertext with the existing Internet; ARPANET went live in 1969 (https://www.livescience.com/20727-internet-history.html). Narration should say 'first website running at CERN by December 1990; announced publicly in August 1991' and not say Berners-Lee invented the Internet."
+    },
+    {
+     "claim": "Don Norman joined Apple in 1993 with the title \"User Experience Architect\" and has said he coined/established the term \"user experience\" there, intending it to cover the entire experience, not just the interface.",
+     "verdict": "needs_correction",
+     "correction": "Don Norman joined Apple in 1993, initially as an Apple Fellow, and soon took the title \"User Experience Architect,\" heading a small \"User Experience Architect's Office.\" He has said he invented the term because \"human interface\" and \"usability\" were too narrow: he wanted it to cover all aspects of a person's experience with a system, including industrial design, graphics, the interface, the physical interaction and the manual.",
+     "sources": [
+      {
+       "title": "Where did the term \"User Experience\" (UX) come from?",
+       "url": "https://jnd.org/where-did-the-term-user-experience-ux-come-from/",
+       "publisher": "jnd.org (Don Norman)",
+       "supports": "Norman's own account: when he joined Apple in 1993 his first title was 'Apple Fellow'; he and two colleagues then named themselves 'The User Experience Architect's Office' and he took the title of Apple's User Experience Architect; he notes the abbreviation 'UX' was never used at Apple in his time."
+      },
+      {
+       "title": "Don Norman Curriculum Vitae",
+       "url": "https://jnd.org/wp-content/uploads/2024/01/Don-Norman-Curriculum-Vitae.pdf",
+       "publisher": "jnd.org (Don Norman)",
+       "supports": "Lists 'Apple Fellow, Apple Computer Inc., Cupertino, CA, 1993-1997 (\"User Experience Architect\")' and Vice President and Apple Fellow, Advanced Technology Group / Apple Research Laboratories, 1995-1997."
+      },
+      {
+       "title": "peterme.com: on the origin of the term 'user experience' (Peter Merholz, 1998)",
+       "url": "https://www.peterme.com/index112498.html",
+       "publisher": "peterme.com (Peter Merholz)",
+       "supports": "Quotes Norman's 1998 email: 'I invented the term because I thought Human Interface and usability were too narrow: I wanted to cover all aspects of the person's experience with a system, including industrial design, graphics, the interface, the physical interaction, and the manual,' and reproduces Tom Erickson's 1993 Apple meeting notes describing the 'Architect's office'."
+      }
+     ],
+     "notes": "Core claim is sound; the correction is about precision on the title. Nuances: (1) By Norman's own account his first Apple title was Apple Fellow; the 'User Experience Architect' title was adopted by his three-person office in 1993 (Tom Erickson's 1993 meeting notes corroborate the office existed that year, though Merholz's excerpt renders it 'User Interface [sic] Architect's office', so the exact 1993 wording is slightly uncertain). (2) 'Coined' should be hedged: Norman says he 'invented the term', and NN/g (https://www.nngroup.com/people/don-norman/) and Wikipedia (https://en.wikipedia.org/wiki/Don_Norman) describe it as the first use of 'User Experience' in a job title, but Wikipedia tags that 'first' with [citation needed], and the ordinary phrase 'the user's experience' appears earlier (e.g., Brenda Laurel, 1986). 'Coined/popularized as a professional term and job title at Apple' is the safe wording. (3) The first public presentation of the term is usually cited as CHI '95 (Norman, Miller, Henderson, 'What You See, Some of What's in the Future, and How We Go About Doing It: HI at Apple Computer' \u2014 https://www.webdesignmuseum.org/web-design-history/the-term-user-experience-1995). (4) Do not say 'UX' was used at Apple then; Norman says it was not. (5) Norman later became VP of Apple's Advanced Technology Group (1995\u20131997) and has since lamented that 'user experience' has become a misused buzzword."
+    }
+   ]
+  },
+  "refute": {
+   "chapter": "ch6-web-ux",
+   "challenges": [
+    {
+     "claim": "Don Norman published \"The Psychology of Everyday Things\" in 1988 (later retitled \"The Design of Everyday Things\").",
+     "refuted": false,
+     "reason": "Holds. Library catalog records and the publisher (Hachette/Basic Books) list the hardcover as Basic Books, New York, 1988 (ISBN 0465067093; Hachette gives an on-sale date of June 13, 1988). Norman's own site (jnd.org) states the book was originally published in hard cover as The Psychology of Everyday Things and is the same book except for the preface, introduction, and title. The retitling came with the 1990 Doubleday/Currency paperback reissue; Norman says he changed the title (POET to DOET) to make it 'less cute and more descriptive'. The only nuance is that the day of publication varies by source (March 26 vs June 13, 1988), but the year 1988 is undisputed. No evidence that the original title was ever 'The Design of Everyday Things' or that the year was 1989/1990.",
+     "better_wording": "Don Norman published \"The Psychology of Everyday Things\" (Basic Books, 1988); the 1990 paperback reissue retitled it \"The Design of Everyday Things\", the name it has carried ever since.",
+     "sources": [
+      {
+       "title": "The Design of Everyday Things (first edition)",
+       "url": "https://jnd.org/the-design-of-everyday-things/",
+       "publisher": "jnd.org (Don Norman)"
+      },
+      {
+       "title": "The Psychology of Everyday Things",
+       "url": "https://www.hachettebookgroup.com/titles/don-norman/the-psychology-of-everyday-things/9780465067091/",
+       "publisher": "Hachette Book Group (Basic Books)"
+      },
+      {
+       "title": "The Design of Everyday Things",
+       "url": "https://www.nngroup.com/books/the-design-of-everyday-things/",
+       "publisher": "Nielsen Norman Group"
+      },
+      {
+       "title": "The design of everyday things, 1990, Doubleday Currency (reprint of Basic Books 1988 ed.)",
+       "url": "https://openlibrary.org/books/OL3702614M?v=17",
+       "publisher": "Open Library"
+      },
+      {
+       "title": "The Design of Everyday Things",
+       "url": "https://en.wikipedia.com/wiki/The_Design_of_Everyday_Things",
+       "publisher": "Wikipedia"
+      }
+     ]
+    },
+    {
+     "claim": "Tim Berners-Lee wrote the proposal for what became the World Wide Web at CERN in March 1989.",
+     "refuted": false,
+     "reason": "Holds. CERN's own pages (info.cern.ch, home.cern, CERN timeline, CERN Archives) and W3C's archive all state that Berners-Lee wrote 'Information Management: A Proposal' at CERN in March 1989 and submitted it to his boss Mike Sendall, who annotated it 'Vague but exciting'. CERN's timeline uses almost the exact wording of the claim ('submitted his first proposal for what became the World Wide Web'). Two nuances, neither of which contradicts the claim as worded: (1) the exact day is uncertain; '12 March 1989' is widely repeated (Wikipedia and derivatives) but CERN itself says only 'March 1989' and notes the date is not exact, so a chapter should avoid asserting March 12 as fact; (2) the surviving document is headed 'March 1989, May 1990' because it was redistributed in May 1990 with only the date added (per W3C), and the formal WorldWideWeb project proposal co-written with Robert Cailliau came in November 1990. The claim correctly says 'proposal for what became' the Web rather than claiming the Web itself was built or named in March 1989.",
+     "better_wording": "In March 1989, Tim Berners-Lee wrote \"Information Management: A Proposal\" at CERN, the first proposal for what became the World Wide Web; his manager Mike Sendall annotated it 'Vague but exciting'. (Avoid stating the exact day as March 12, which CERN does not confirm.)",
+     "sources": [
+      {
+       "title": "Tim Berners-Lee's proposal (info.cern.ch)",
+       "url": "https://info.cern.ch/Proposal.html",
+       "publisher": "CERN"
+      },
+      {
+       "title": "Sir Tim Berners-Lee submitted his first proposal for what became the World Wide Web",
+       "url": "https://timeline.web.cern.ch/sir-tim-berners-lee-submitted-his-first-proposal-what-became-world-wide-web",
+       "publisher": "CERN Timeline"
+      },
+      {
+       "title": "A short history of the Web",
+       "url": "https://home.cern/science/computing/the-birth-of-the-web/short-history-web/",
+       "publisher": "CERN"
+      },
+      {
+       "title": "Information Management: A Proposal (W3C History archive)",
+       "url": "https://www.w3.org/History/1989/Proposal.html",
+       "publisher": "W3C"
+      },
+      {
+       "title": "First outline of the World Wide Web",
+       "url": "https://timeline-upgrade.web.cern.ch/node/503",
+       "publisher": "CERN Timeline"
+      },
+      {
+       "title": "CERN Archives: Berners-Lee's first proposal with Sendall's annotations",
+       "url": "https://archives.web.cern.ch/?p=609",
+       "publisher": "CERN Archives"
+      },
+      {
+       "title": "World Wide Web born at CERN 25 years ago",
+       "url": "https://home.cern/about/updates/2014/03/world-wide-web-born-cern-25-years-ago",
+       "publisher": "CERN"
+      },
+      {
+       "title": "History of the Web",
+       "url": "https://webfoundation.org/about/vision/history-of-the-web/",
+       "publisher": "World Wide Web Foundation"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "verify": {
+   "chapter": "ch7-mobile",
+   "results": [
+    {
+     "claim": "The W3C published Web Content Accessibility Guidelines (WCAG) 1.0 as a Recommendation on May 5, 1999.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "W3C Issues Web Content Accessibility Guidelines as a Recommendation (press release, 5 May 1999)",
+       "url": "https://www.w3.org/press-releases/1999/wcag/",
+       "publisher": "W3C",
+       "supports": "W3C's own press release announcing WCAG 1.0 as a W3C Recommendation on 5 May 1999."
+      },
+      {
+       "title": "Web Content Accessibility Guidelines 1.0 \u2014 W3C Recommendation 5-May-1999",
+       "url": "https://www.w3.org/TR/wcag10",
+       "publisher": "W3C",
+       "supports": "The specification itself, headed 'W3C Recommendation 5-May-1999'; dated version URL www.w3.org/TR/1999/WAI-WEBCONTENT-19990505; authors Chisholm, Vanderheiden, Jacobs; marked superseded as of 18 May 2021."
+      },
+      {
+       "title": "W3C Issues Recommendation for Web Content Accessibility Guidelines 1.0",
+       "url": "https://www.w3.org/news/1999/w3c-issues-recommendation-for-web-content-accessibility-guidelines-1-0/",
+       "publisher": "W3C",
+       "supports": "W3C news archive entry for the 5 May 1999 Recommendation."
+      }
+     ],
+     "notes": "Date, publisher and status are all correct. Nuances for narration: WCAG 1.0 was a Proposed Recommendation on 24 March 1999 before becoming a full Recommendation on 5 May 1999; it was produced by the WAI's Web Content Guidelines Working Group (editors Wendy Chisholm, Gregg Vanderheiden, Ian Jacobs) and released alongside a companion W3C Note, 'Techniques for WCAG 1.0'. It has 14 guidelines with checkpoints at three priority levels (1/2/3), which map to conformance levels A/AA/AAA. It was formally republished as a Superseded Recommendation on 18 May 2021 (WCAG 2.0 arrived in December 2008), so say 'superseded', not 'withdrawn' or 'still current'. A 1999 HTML Writers Guild newsletter gives '5th of March' but this is a typo contradicted by all W3C sources."
+    },
+    {
+     "claim": "Apple announced the original iPhone on January 9, 2007 (released June 29, 2007), bringing multi-touch to a mainstream mobile phone.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Apple Reinvents the Phone with iPhone (press release, Macworld San Francisco, January 9, 2007)",
+       "url": "https://apple.com/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/",
+       "publisher": "Apple Newsroom",
+       "supports": "Apple's own January 9, 2007 press release introducing iPhone at Macworld, describing 'an entirely new user interface based on a large multi-touch display' and a June shipping target."
+      },
+      {
+       "title": "iPhone Premieres This Friday Night at Apple Retail Stores (press release, June 28, 2007)",
+       "url": "https://www.apple.com/newsroom/2007/06/28iPhone-Premieres-This-Friday-Night-at-Apple-Retail-Stores/",
+       "publisher": "Apple Newsroom",
+       "supports": "Confirms iPhone went on sale Friday June 29, 2007 at 6:00 p.m. local time in US Apple retail stores."
+      },
+      {
+       "title": "iPhone Announced at Macworld Expo 2007",
+       "url": "https://www.engadget.com/2007-01-09-iphone-announced.html",
+       "publisher": "Engadget",
+       "supports": "Contemporary live coverage of the January 9, 2007 Macworld keynote announcement."
+      }
+     ],
+     "notes": "Both dates are correct and the announced-vs-released distinction is properly drawn. Narration nuances: (1) The June 29, 2007 release was US-only (Apple and AT&T/Cingular stores, 6 p.m. local time); the UK, Germany and France followed in November 2007. (2) The iPhone was NOT the first touchscreen phone nor the first capacitive-touchscreen phone: the LG Prada (KE850) was announced in December 2006 and shipped in May 2007 with a stylus-free capacitive screen (single-touch). The claim's wording 'bringing multi-touch to a mainstream mobile phone' is defensible; avoid 'first touchscreen phone' or 'first phone without a keyboard'. (3) In the keynote Steve Jobs claimed Apple had 'invented' multi-touch ('and boy have we patented it'); that claim is contested (see claim 3), so the narration should credit Apple with popularizing/commercializing multi-touch on a phone, not inventing it. (4) Apple's press release framed it as 'three products in one' (widescreen iPod with touch controls, revolutionary phone, breakthrough Internet communicator) and named Cingular (soon AT&T) as exclusive US carrier. (5) One regional (Canadian) copy of the release shows a January 30, 2007 header date; the canonical US release and URL slug are January 9."
+    },
+    {
+     "claim": "Multi-touch technology predates the iPhone (e.g. Bill Buxton's 1980s research at University of Toronto, FingerWorks, Jeff Han's 2006 demonstrations).",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Multi-Touch Systems that I Have Known and Loved",
+       "url": "https://billbuxton.com/multitouchOverview.html",
+       "publisher": "Bill Buxton (billbuxton.com)",
+       "supports": "Buxton's first-hand history: his Toronto group was working on multi-touch in 1984 and publicly demonstrated a capacitive multi-touch tablet in 1985 (Lee, Buxton & Smith, CHI '85); notes Bob Boie's Bell Labs multi-touch display preceded it; records that FingerWorks (Wayne Westerman) was acquired by Apple in 2005, two years before the iPhone."
+      },
+      {
+       "title": "Jeff Han: The radical promise of the multi-touch interface (TED2006)",
+       "url": "https://www.ted.com/talks/jeff_han_the_radical_promise_of_the_multi_touch_interface",
+       "publisher": "TED",
+       "supports": "Han's multi-touch demo was given at TED2006 in February 2006, roughly a year before the iPhone announcement."
+      },
+      {
+       "title": "FingerWorks",
+       "url": "https://en.wikipedia.org/wiki/FingerWorks",
+       "publisher": "Wikipedia",
+       "supports": "FingerWorks was founded in 1998 by John Elias and Wayne Westerman at the University of Delaware, sold multi-touch products (iGesture Pad, TouchStream keyboard), and was acquired by Apple in 2005; Westerman and Elias joined Apple."
+      }
+     ],
+     "notes": "The claim is correct and the three examples are well chosen. Precision nuances: (1) Buxton's Toronto work: the multi-touch tablet was built in 1984 and publicly disclosed/demonstrated and published in April 1985 (Lee, Buxton & Smith, 'A Multi-Touch Three Dimensional Touch-Sensitive Tablet', CHI '85) \u2014 say 'mid-1980s' or '1984-85' rather than a single year. Buxton himself stresses the Toronto tablet was not the first: Nimish Mehta's camera-based 'Flexible Machine Interface' at Toronto (1982) and Bob Boie's capacitive multi-touch screen at Bell Labs (c. 1984) preceded or paralleled it; Buxton is better described as a pioneer and chronicler than 'the inventor'. (2) FingerWorks: founded 1998 (a Purdue alumni bio says 1999) by Wayne Westerman and John Elias, University of Delaware; shipped the iGesture Pad and TouchStream keyboard; Apple acquired it in 2005 (announced it was out of business in June 2005) and Westerman became lead inventor on many Apple multi-touch patents \u2014 this is the direct lineage into the iPhone. (3) Jeff Han: the underlying FTIR technique was published at UIST in October 2005 ('Low-Cost Multi-Touch Sensing through Frustrated Total Internal Reflection'); the famous public demo was TED2006 in February 2006 (Monterey), followed by a 16-foot multi-touch wall at SIGGRAPH 2006 Emerging Technologies. So '2006 demonstrations' is accurate if referring to the demos; the research paper is 2005. Han went on to found Perceptive Pixel."
+    },
+    {
+     "claim": "Ethan Marcotte published the article \"Responsive Web Design\" in A List Apart on May 25, 2010.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Responsive Web Design (Zeldman's post announcing the A List Apart article, dated May 25, 2010)",
+       "url": "https://zeldman.com/2010/05/25/responsive-web-design",
+       "publisher": "Jeffrey Zeldman (zeldman.com), publisher of A List Apart",
+       "supports": "A List Apart's publisher announced Marcotte's 'Responsive Web Design' article on May 25, 2010, fixing the publication date."
+      },
+      {
+       "title": "Responsive Web Design, 2010 \u2014 archived page of Ethan Marcotte's article",
+       "url": "https://www.webdesignmuseum.org/web-design-history/responsive-web-design-2010",
+       "publisher": "Web Design Museum",
+       "supports": "Dates the A List Apart article to May 25, 2010 and credits Marcotte with coining the term."
+      },
+      {
+       "title": "Responsive Web Design's Debut (with video)",
+       "url": "https://zeldman.com/2015/04/06/responsive-web-designs-debut-with-video",
+       "publisher": "Jeffrey Zeldman (zeldman.com)",
+       "supports": "Documents that Marcotte first presented the idea live as the talk 'A Dao of Flexibility' at An Event Apart Seattle in April 2010, before the article."
+      }
+     ],
+     "notes": "Author, title, venue and date are all correct. Nuances for narration: (1) The article was not the very first public airing of the idea \u2014 Marcotte debuted it on stage in his talk 'A Dao of Flexibility' at An Event Apart Seattle in early April 2010 (c. April 6), about seven weeks before the article; the article is where the term 'responsive web design' was coined/fixed in print. (2) The talk and article explicitly paid homage to John Allsopp's 'A Dao of Web Design' (A List Apart, 2000), which argued for embracing the web's flexibility. (3) The article defined responsive design by three ingredients: fluid grids, flexible images, and CSS3 media queries. (4) Marcotte expanded the article into the book 'Responsive Web Design' (A Book Apart, 2011; 2nd edition 2014). (5) A Vimeo listing attributes the talk to An Event Apart San Diego 2010, but Zeldman and Eric Meyer (the event organizers) both say Seattle; prefer Seattle. The current article URL on alistapart.com did not itself surface in search results, so sources above are the publisher's announcement and an archive."
+    }
+   ]
+  },
+  "refute": {
+   "chapter": "ch7-mobile",
+   "challenges": [
+    {
+     "claim": "The W3C published Web Content Accessibility Guidelines (WCAG) 1.0 as a Recommendation on May 5, 1999.",
+     "refuted": false,
+     "reason": "Holds. The W3C's own news release in the w3c-news archive (1999 Apr-Jun) announces WCAG 1.0 as a Recommendation dated 5 May 1999, and the canonical dated URL is /TR/1999/WAI-WEBCONTENT-19990505/. The only discrepancy found is Wikipedia's infobox giving 9 May 1999 as 'first published', which conflicts with W3C's own dating and should be disregarded. Note WCAG 1.0 has since been formally superseded by WCAG 2.x (W3C proposed republishing it as a Superseded Recommendation in 2020), which the chapter may want to mention if it implies WCAG 1.0 is current.",
+     "sources": [
+      {
+       "title": "News Release: W3C Issues Web Content Accessibility Guidelines as a Recommendation",
+       "url": "https://lists.w3.org/Archives/Public/w3c-news/1999AprJun/0001.html",
+       "publisher": "W3C"
+      },
+      {
+       "title": "Proposal to Republish WCAG 1.0 as a Superseded Recommendation",
+       "url": "https://lists.w3.org/Archives/Public/public-review-announce/2020Nov/0003.html",
+       "publisher": "W3C"
+      },
+      {
+       "title": "Web Content Accessibility Guidelines 1.0 W3C Recommendation 5 May 1999",
+       "url": "https://trace.umd.edu/?p=374",
+       "publisher": "Trace R&D Center, University of Maryland"
+      },
+      {
+       "title": "Web Content Accessibility Guidelines",
+       "url": "https://en.wikipedia.org/wiki/Web_Content_Accessibility_Guidelines",
+       "publisher": "Wikipedia"
+      }
+     ]
+    },
+    {
+     "claim": "Apple announced the original iPhone on January 9, 2007 (released June 29, 2007), bringing multi-touch to a mainstream mobile phone.",
+     "refuted": false,
+     "reason": "Holds. Steve Jobs introduced the iPhone in the Macworld San Francisco keynote on January 9, 2007 (Apple's press release 'Apple Reinvents the Phone with iPhone' is dated that day), and it went on sale at 6 PM local time on June 29, 2007. The 'mainstream multi-touch' framing is supported by Bill Buxton's own history, which states the general public became aware of multi-touch with the 2007 iPhone launch. Two nuances rather than errors: (a) June 29, 2007 was the US-only launch; other countries followed later in 2007-2008; (b) the wording correctly avoids calling it the first touchscreen phone (the LG Prada, with a single-touch capacitive screen, was announced in Dec 2006), but I could not run a confirming search on the LG Prada because the search budget was exhausted, so that comparison rests on prior knowledge. No search result returned the apple.com Newsroom page itself; the press release text appeared only via a third-party PDF copy.",
+     "better_wording": "Apple announced the original iPhone on January 9, 2007 at Macworld San Francisco; it went on sale in the US on June 29, 2007, and was the first mass-market phone built around multi-touch.",
+     "sources": [
+      {
+       "title": "Apple Reinvents the Phone with iPhone (press release copy)",
+       "url": "https://www.macfilos.com/wp-content/uploads/2023/01/Apple-Reinvents-the-Phone-with-iPhone-Apple-UK.pdf",
+       "publisher": "Macfilos (copy of Apple press release)"
+      },
+      {
+       "title": "Steve Jobs debuts the iPhone",
+       "url": "https://www.history.com/this-day-in-history/January-9/steve-jobs-debuts-the-iphone",
+       "publisher": "HISTORY.com"
+      },
+      {
+       "title": "Multi-Touch Systems that I Have Known and Loved",
+       "url": "https://billbuxton.com/multitouchOverview.html",
+       "publisher": "Bill Buxton"
+      },
+      {
+       "title": "Steve Jobs' original iPhone announcement, 15 years on",
+       "url": "https://9to5mac.com/2022/01/09/steve-jobs-original-iphone-announcement-15-years/",
+       "publisher": "9to5Mac"
+      }
+     ]
+    },
+    {
+     "claim": "Multi-touch technology predates the iPhone (e.g. Bill Buxton's 1980s research at University of Toronto, FingerWorks, Jeff Han's 2006 demonstrations).",
+     "refuted": false,
+     "reason": "Holds. Buxton's own overview documents his University of Toronto group working on multi-touch in 1984 and publicly demonstrating a capacitive multi-touch tablet in 1985; Apple acquired FingerWorks (co-founded by Wayne Westerman) in 2005; Jeff Han demonstrated his FTIR multi-touch wall at TED in February 2006 after publishing the technique at UIST in October 2005. One attribution nuance: Buxton himself credits the first multi-touch system to Nimish Mehta's 1982 camera-based tablet at Toronto's Input Research Group, so 'Buxton's research' slightly over-personalizes work that was a group effort beginning before his 1984-85 tablet; Bell Labs (Bob Boie) also built a multi-touch screen around 1984. Also, Han's technique was published in 2005, with 2006 being the famous public demo. I could not run a dedicated search on the Mehta 1982 work because the search budget was exhausted; the 1982 date appears in the archived Wikipedia text returned above.",
+     "better_wording": "Multi-touch predates the iPhone by decades: the University of Toronto's Input Research Group (Nimish Mehta, 1982; Bill Buxton's capacitive tablet, 1985), FingerWorks (acquired by Apple in 2005), and Jeff Han's FTIR display (UIST 2005 paper, TED demo February 2006).",
+     "sources": [
+      {
+       "title": "Multi-Touch Systems that I Have Known and Loved",
+       "url": "https://billbuxton.com/multitouchOverview.html",
+       "publisher": "Bill Buxton"
+      },
+      {
+       "title": "Multi-touch (archived Wikipedia article, 2013)",
+       "url": "https://webarchive.library.unt.edu/web/20130320205929/http://en.wikipedia.org/wiki/Multi-touch",
+       "publisher": "UNT Libraries web archive / Wikipedia"
+      },
+      {
+       "title": "Jefferson Han",
+       "url": "https://en.wikipedia.org/wiki/Jefferson_Han",
+       "publisher": "Wikipedia"
+      },
+      {
+       "title": "UIST 2005 Program",
+       "url": "https://uist.acm.org/uist2005/program.html",
+       "publisher": "ACM UIST"
+      },
+      {
+       "title": "Hands-On Computing: How Multi-Touch Screens Could Change the Way We Interact with Computers and Each Other",
+       "url": "https://www.scientificamerican.com/article/hands-on-computing/",
+       "publisher": "Scientific American"
+      },
+      {
+       "title": "The future of interfaces (Jeff Han TED 2006)",
+       "url": "https://makezine.com/2006/03/07/the-future-of-interfaces/",
+       "publisher": "Make:"
+      }
+     ]
+    },
+    {
+     "claim": "Ethan Marcotte published the article \"Responsive Web Design\" in A List Apart on May 25, 2010.",
+     "refuted": false,
+     "reason": "Holds. Jeffrey Zeldman (A List Apart's publisher) posted about the article the same day at a URL dated 2010/05/25, the Web Design Museum entry dates the A List Apart article to May 25, 2010, and a syndicated copy carries the same publish date. Marcotte's author page on alistapart.com confirms his authorship and the later book (A Book Apart, 2011; second edition since). No conflicting date surfaced.",
+     "sources": [
+      {
+       "title": "Responsive Web Design",
+       "url": "https://zeldman.com/2010/05/25/responsive-web-design",
+       "publisher": "Jeffrey Zeldman"
+      },
+      {
+       "title": "Ethan Marcotte author page",
+       "url": "https://alistapart.com/author/emarcotte/",
+       "publisher": "A List Apart"
+      },
+      {
+       "title": "Responsive Web Design (2010)",
+       "url": "https://www.webdesignmuseum.org/web-design-history/responsive-web-design-2010",
+       "publisher": "Web Design Museum"
+      },
+      {
+       "title": "The A List Apart Blog Presents: Responsive Web Design, Second Edition",
+       "url": "https://alistapart.com/blog/post/responsive-web-design-second-ed/",
+       "publisher": "A List Apart"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "verify": {
+   "chapter": "ch9-modern",
+   "results": [
+    {
+     "claim": "Figma, a browser-based collaborative design tool, was released publicly in September 2016 (free public release 27 Sept 2016) after a closed/free preview in December 2015.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "Design, Meet the Internet (Dylan Field, 3 Dec 2015)",
+       "url": "https://www.figma.com/blog/design-meet-the-internet/",
+       "publisher": "Figma (company blog)",
+       "supports": "Primary source for the December 2015 stage: Figma announced a free, invite-only 'Preview Release' giving teams early access; simultaneous multiplayer editing was still a goal for 2016, not yet shipped."
+      },
+      {
+       "title": "Figma now lets interface designers collaborate on projects",
+       "url": "https://techcrunch.com/2016/09/28/design-tool-figma-launches-multiplayer-collaboration-mode-for-interface-designers/",
+       "publisher": "TechCrunch",
+       "supports": "Press coverage dated 28 Sept 2016 reporting that Figma, with its new real-time multiplayer collaboration, is 'now available for everyone' (the public launch)."
+      },
+      {
+       "title": "Figma",
+       "url": "https://en.wikipedia.org/wiki/Figma",
+       "publisher": "Wikipedia",
+       "supports": "States Figma began a free invite-only preview on 3 December 2015 and had its first public release on 27 September 2016."
+      }
+     ],
+     "notes": "Substance confirmed. Nuances for narration: (1) The December 2015 stage was a free, invite-only 'Preview Release' in Figma's own words (3 Dec 2015); Figma and Sequoia later refer to it as a 'closed beta'. Either term is defensible; 'closed/free preview' is fine. (2) The public launch is dated 27 Sept 2016 by Wikipedia and the Web Design Museum, but the primary press coverage (TechCrunch, The Next Web) and Figma's own 'Multiplayer Editing in Figma' post (https://www.figma.com/blog/multiplayer-editing-in-figma/) and the Product Hunt 'Figma 1.0' page are all dated 28 Sept 2016. To be safe, narration should say 'late September 2016' or 'September 2016' rather than hang on the 27th. (3) Real-time multiplayer editing went live at the September 2016 public release, not at the 2015 preview, so describing the 2015 preview as a 'collaborative' tool would be premature. (4) Figma stayed free through 2016 and only started charging in 2017 (first paid plans), so 'free public release' is accurate. (5) Figma's Product Hunt announcement said 'nine months in closed beta'; Dec 2015 to Sept 2016 is closer to ten months \u2014 avoid stating a month count."
+    },
+    {
+     "claim": "WCAG 2.2 became a W3C Recommendation on October 5, 2023.",
+     "verdict": "confirmed",
+     "sources": [
+      {
+       "title": "WCAG 2.2 is a Web Standard (W3C Recommendation)",
+       "url": "https://www.w3.org/WAI/news/2023-10-05/wcag22rec",
+       "publisher": "W3C Web Accessibility Initiative (WAI)",
+       "supports": "W3C's own announcement dated 5 October 2023 that WCAG 2.2 was published as a W3C Recommendation."
+      },
+      {
+       "title": "Web Content Accessibility Guidelines (WCAG) 2.2 publication history",
+       "url": "https://w3.org/standards/history/WCAG22",
+       "publisher": "W3C",
+       "supports": "Official publication history listing the 5 October 2023 Recommendation (and a later 12 December 2024 Recommendation entry)."
+      },
+      {
+       "title": "WCAG 2.1 and WCAG 2.2 published with minor editorial updates",
+       "url": "https://www.w3.org/WAI/news/2024-12-12/wcag2updates/",
+       "publisher": "W3C Web Accessibility Initiative (WAI)",
+       "supports": "Clarifies that the 12 December 2024 entry is an editorial re-publication (minor editorial updates, success criteria unchanged), not a new Recommendation date."
+      }
+     ],
+     "notes": "Date is correct and primary-sourced (canonical URL https://www.w3.org/TR/2023/REC-WCAG22-20231005/). Nuances: (1) W3C republished WCAG 2.2 on 12 December 2024 with minor editorial updates; that edition is now the 'current' version, but WCAG 2.2 first became a Recommendation on 5 Oct 2023. Some third-party sites wrongly give 12 Dec 2024 as the Recommendation date \u2014 do not use it. (2) WCAG 2.2 adds nine new success criteria over 2.1 (2 Level A, 4 AA, 3 AAA), marks 4.1.1 Parsing as obsolete, and does not deprecate WCAG 2.0 or 2.1. (3) The release came after more than a year of delays from its originally expected 2021-2022 timeline, if the narration wants to mention the long gestation."
+    },
+    {
+     "claim": "Design systems and design tokens became widespread practice in the 2010s (e.g. Salesforce Lightning Design System and its design tokens ~2014, Google Material Design 2014).",
+     "verdict": "needs_correction",
+     "correction": "Design systems and design tokens became widespread practice in the 2010s: Google announced Material Design at Google I/O on 25 June 2014; Salesforce's design team introduced the 'design tokens' concept and open-sourced its token tool Theo in 2014, and in 2015 released the Salesforce Lightning Design System, the first open-source enterprise design system, built on those tokens.",
+     "sources": [
+      {
+       "title": "Living Design System (S\u00f6nke Rohde, Salesforce UX, 11 Sept 2014)",
+       "url": "https://medium.com/salesforce-ux/3ab1f2280ef7",
+       "publisher": "Salesforce UX (Medium)",
+       "supports": "Primary 2014 source describing Salesforce's design tokens as a single source of truth, delivered cross-platform via the open-sourced Theo tool \u2014 this is the 2014 token work, which predates SLDS."
+      },
+      {
+       "title": "Learn How and Why We Developed SLDS",
+       "url": "https://trailhead.salesforce.com/content/learn/modules/lightning-design-system-basics/learn-how-and-why-we-developed-slds",
+       "publisher": "Salesforce Trailhead",
+       "supports": "Salesforce's own history: the Lightning Design System was launched at lightningdesignsystem.com as the 'world's first open-source enterprise design system' (2015, alongside Lightning Experience); corroborated by TechCentral coverage dated 31 Aug 2015 (https://www.techcentral.ie/salesforce-aura-ventures-into-open-source-to-a-point/)."
+      },
+      {
+       "title": "Material Design",
+       "url": "https://en.wikipedia.org/wiki/Material_Design",
+       "publisher": "Wikipedia",
+       "supports": "Google announced Material Design on 25 June 2014 at the Google I/O conference as a design language for Android, Chrome OS and the web; corroborated by the Android Developers Blog (https://android-developers.googleblog.com/2014/08/material-design-in-2014-google-io-app.html)."
+      }
+     ],
+     "notes": "The broad claim (design systems and tokens became widespread in the 2010s) and the Material Design 2014 date are confirmed. The correction concerns the Salesforce example: the Salesforce Lightning Design System (SLDS) was not released in 2014 \u2014 it launched publicly in late August 2015 with Lightning Experience (open-source, lightningdesignsystem.com; TechCentral reported it available 31 Aug 2015; Salesforce showcased it at Dreamforce, 15-18 Sept 2015). What dates to 2014 is Salesforce's design-token work: S\u00f6nke Rohde's 'Living Design System' post (11 Sept 2014) documented Salesforce1 design tokens and the open-sourced Theo tool, and Jina Anne (with engineer Jon Levine) is credited by the W3C Design Tokens Community Group with coining the term 'design tokens' while at Salesforce (https://www.w3.org/community/design-tokens/2026/06/17/thank-you-jina-and-val/). So narration should say 'Salesforce's design tokens (2014) and Lightning Design System (2015)', not 'SLDS and its tokens ~2014'. Additional supporting timeline if wanted: Brad Frost first proposed Atomic Design in 2013 (book 2016); Shopify launched Polaris at Unite in April 2017 (https://www.shopify.com/partners/blog/use-polaris-to-build-an-app-ui). Note that Material Design was 'announced' on 25 June 2014; Android 5.0 Lollipop, the first OS release built on it, shipped later in 2014, so say 'announced' rather than 'released' for the June date. 'Design tokens' as an industry-wide standardized practice is more a late-2010s/2020s phenomenon (W3C Design Tokens Community Group formed 2019; first stable spec Oct 2025), so 'became widespread practice in the 2010s' fits design systems well but tokens only began spreading then."
+    }
+   ]
+  },
+  "refute": {
+   "chapter": "ch9-modern",
+   "challenges": [
+    {
+     "claim": "Figma, a browser-based collaborative design tool, was released publicly in September 2016 (free public release 27 Sept 2016) after a closed/free preview in December 2015.",
+     "refuted": false,
+     "reason": "Not refuted. Figma opened a free, invite-only preview on 3 December 2015 and made the product free and open to the public on 27 September 2016 (Dylan Field's blog post 'Figma is free and open to the public' and same-day press coverage). The dates and sequence in the claim match that record. Minor nuances only: the 2015 phase is best described as 'invite-only' rather than 'closed', and the September 2016 release was free of charge with paid plans introduced later (2017), so 'free public release' is accurate for that moment. The chronology also leaves open when real-time multiplayer editing arrived (it was highlighted at the September 2016 opening), but the claim does not assert a date for that feature. VERIFICATION CAVEAT: no web search could be run in this turn (the shared WebSearch budget was already exhausted) and WebFetch could not resolve www.figma.com or en.wikipedia.org, so this verdict rests on prior knowledge; no source URLs appeared in any result and none are reported.",
+     "better_wording": "Figma, a browser-based collaborative design tool, began as a free invite-only preview on 3 December 2015 and opened to the public, free of charge, on 27 September 2016.",
+     "sources": []
+    },
+    {
+     "claim": "WCAG 2.2 became a W3C Recommendation on October 5, 2023.",
+     "refuted": false,
+     "reason": "Not refuted. The Web Content Accessibility Guidelines (WCAG) 2.2 were published as a W3C Recommendation on 5 October 2023 (after the Proposed Recommendation of 20 July 2023), and W3C's press release carries that date. One nuance worth knowing but not a refutation: W3C republished WCAG 2.2 as a revised Recommendation on 12 December 2024 with editorial/errata changes, so a reader checking the current /TR/WCAG22/ page will see the later date at the top; the original Recommendation date remains 5 October 2023. VERIFICATION CAVEAT: no web search could be run in this turn (the shared WebSearch budget was already exhausted) and WebFetch could not resolve www.w3.org, so this verdict rests on prior knowledge; no source URLs appeared in any result and none are reported.",
+     "better_wording": "WCAG 2.2 was published as a W3C Recommendation on 5 October 2023 (a revised edition with errata followed on 12 December 2024).",
+     "sources": []
+    }
+   ]
+  }
+ }
+]
