@@ -170,7 +170,7 @@ export default {
       const zCam = 10 - 1.5 - k * speed;
       cam.position.set(Math.sin(k * 0.35) * 0.05, 0.02 + 1.15 - 1.15 + 0.0, zCam);
       cam.position.y = 0.02 + 1.15 - 1.15; // eye at corridor centre line (corridor group is at y=1.15 → world 1.15); camera in corridor-local terms
-      cam.position.y = 1.15 + 0.02;
+      cam.position.y = 1.15 + 0.12;
       const zPt = zCam - 3.2 - Math.min(2.5, k * 0.5);
       const px = Math.sin(k * 1.3) * 0.12, py = 1.15 + Math.sin(k * 0.9 + 1) * 0.08;
       this.point.group.position.set(px, py, zPt);
@@ -180,7 +180,7 @@ export default {
       this.point.setIntensity(1.1 + rush).setScale(1.9 + rush * 2.5).pulse(t, 0.06, 1.2);
       this.point.group.visible = true;
       this.corLight.position.copy(this.point.group.position).sub(this.corridor.position); this.corLight.intensity = 4;
-      cam.lookAt(px * 0.5, 1.15 - 0.05, zCam - 6);
+      cam.lookAt(px * 0.5, 1.15 + 0.55, zCam - 6);
     }
   },
 
@@ -197,9 +197,9 @@ export default {
     const ta = fadeIO(t, B.title, this.end - 0.6, 0.9, 0.7);
     if (ta > 0) {
       const rise = (1 - easeOut(seg(t, B.title, B.title + 1.2))) * 18;
-      titleCard(ctx, 'THE INVISIBLE CONVERSATION', 'HOW UX & UI CAME TO LIFE', ta, { y: H / 2 - 150 + rise, size: 86, tracking: 3 });
+      titleCard(ctx, 'THE INVISIBLE CONVERSATION', 'HOW UX & UI CAME TO LIFE', ta, { y: H / 2 - 200 + rise, size: 86, tracking: 3 });
       // thin amber rule under the title
-      ctx.save(); ctx.globalAlpha = ta * 0.9; ctx.fillStyle = PALETTE.amber; const w = 120 * easeOut(seg(t, B.title + 0.3, B.title + 1.3)); ctx.fillRect(W / 2 - w / 2, H / 2 - 92 + rise, w, 2); ctx.restore();
+      ctx.save(); ctx.globalAlpha = ta * 0.9; ctx.fillStyle = PALETTE.amber; const w = 120 * easeOut(seg(t, B.title + 0.3, B.title + 1.3)); ctx.fillRect(W / 2 - w / 2, H / 2 - 142 + rise, w, 2); ctx.restore();
     }
     // hand-off bloom
     bloom(ctx, seg(t, this.end - 0.7, this.end));
