@@ -1,0 +1,176 @@
+[
+ {
+  "id": "s01",
+  "start": 0.0,
+  "end": 24.0,
+  "cues": {
+   "footstep_1": 0.7,
+   "footstep_2": 1.65,
+   "footstep_3": 2.6,
+   "footstep_4": 3.55,
+   "door_push_thud_1": 5.5,
+   "door_push_thud_2": 8.5,
+   "door_latch_click": 11.5,
+   "door_pull_open_start": 11.7,
+   "door_pull_open_end": 13.5,
+   "freeze": 15.0,
+   "point_appear": 16.0,
+   "corridor_whoosh": 19.0
+  }
+ },
+ {
+  "id": "s02",
+  "start": 24.0,
+  "end": 53.0,
+  "cues": {
+   "switch_click_1": 24.5,
+   "switch_click_2": 27.0,
+   "switch_click_3": 29.5,
+   "dial_wind": 31.0,
+   "dial_return": 32.12,
+   "lever_move": 37.0,
+   "book_set_down": 42.5,
+   "transition_point": 52.0
+  }
+ },
+ {
+  "id": "s03",
+  "start": 53.0,
+  "end": 76.0,
+  "cues": {
+   "card_shuffle": 54.0,
+   "key_strike_1": 57.0,
+   "key_strike_2": 57.4,
+   "key_strike_3": 57.9,
+   "key_strike_4": 58.5,
+   "key_strike_5": 59.0,
+   "key_strike_6": 59.8,
+   "key_strike_7": 60.3,
+   "key_strike_8": 61.1,
+   "tape_reel_spin": 64.0,
+   "error_beep": 66.0,
+   "lightpen_draw_1": 68.3,
+   "lightpen_draw_2": 70.2,
+   "lightpen_draw_3": 72.3,
+   "transition_point": 75.5
+  }
+ },
+ {
+  "id": "s04",
+  "start": 76.0,
+  "end": 108.0,
+  "cues": {
+   "mouse_click_1": 84.0,
+   "mouse_click_2": 86.5,
+   "keyset_chord": 89.0,
+   "mouse_click_3": 92.0,
+   "mouse_click_4": 95.0,
+   "screen_text_type": 97.5,
+   "transition_point": 107.5
+  }
+ },
+ {
+  "id": "s05",
+  "start": 108.0,
+  "end": 138.0,
+  "cues": {
+   "click_1": 112.0,
+   "click_2": 118.0,
+   "window_open": 120.5,
+   "click_3": 124.0,
+   "folder_morph": 126.0,
+   "click_4": 130.0,
+   "trash_morph": 131.0,
+   "click_5": 134.0,
+   "transition_point": 137.5
+  }
+ },
+ {
+  "id": "s06",
+  "start": 138.0,
+  "end": 168.0,
+  "cues": {
+   "page_turn": 138.5,
+   "modem_hint": 146.0,
+   "link_click_1": 150.0,
+   "link_click_2": 152.0,
+   "link_click_3": 154.5,
+   "link_click_4": 157.0,
+   "network_grow": 161.0,
+   "transition_point": 167.5
+  }
+ },
+ {
+  "id": "s07",
+  "start": 168.0,
+  "end": 200.0,
+  "cues": {
+   "tap_1": 184.0,
+   "tap_2": 185.0,
+   "tap_3": 186.5,
+   "flick_1": 187.5,
+   "flick_2": 189.0,
+   "pinch": 190.5,
+   "reflow_1": 194.3,
+   "reflow_2": 195.4,
+   "reflow_3": 196.5,
+   "transition_point": 199.5
+  }
+ },
+ {
+  "id": "s08",
+  "start": 200.0,
+  "end": 242.0,
+  "cues": {
+   "ui_tap_1": 204.0,
+   "ui_tap_2": 208.0,
+   "ui_tap_3": 212.0,
+   "ui_tap_4": 216.0,
+   "ui_tap_5": 220.0,
+   "error_reveal": 225.5,
+   "freeze_sting": 226.5,
+   "process_tick_1": 232.0,
+   "process_tick_2": 234.0,
+   "process_tick_3": 236.0,
+   "process_tick_4": 238.0,
+   "process_tick_5": 240.0,
+   "process_tick_6": 242.0,
+   "success_chime": 239.0,
+   "transition_point": 241.5
+  }
+ },
+ {
+  "id": "s09",
+  "start": 242.0,
+  "end": 273.0,
+  "cues": {
+   "collab_tick_1": 246.3,
+   "collab_tick_2": 247.1,
+   "collab_tick_3": 248.4,
+   "collab_tick_4": 249.0,
+   "collab_tick_5": 250.6,
+   "collab_tick_6": 251.5,
+   "focus_tick_1": 258.0,
+   "focus_tick_2": 259.0,
+   "focus_tick_3": 260.0,
+   "focus_tick_4": 261.0,
+   "toggle": 265.0,
+   "transition_point": 272.5
+  }
+ },
+ {
+  "id": "s10",
+  "start": 273.0,
+  "end": 300.0,
+  "cues": {
+   "voice_wave": 274.0,
+   "reply_chime": 278.0,
+   "spatial_whoosh": 281.0,
+   "corridor_return": 285.0,
+   "door_open_clean": 289.5,
+   "footsteps_out": 291.2,
+   "cards_in": 293.2,
+   "final_point_tone": 294.0
+  }
+ }
+]

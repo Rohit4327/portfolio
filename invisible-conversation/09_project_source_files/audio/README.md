@@ -32,6 +32,88 @@ ffmpeg -i audio/out/music_bed.wav -af astats -f null -                # peak / R
 
 Requirements: `python3`, `numpy`, `scipy`, `soundfile`. Output `.wav` files are git-ignored.
 
+## Re-timing to the locked picture
+
+Both scripts are written against the storyboard timeline and reproduce it when run without
+arguments. Once picture is locked to the recorded narration, re-time everything with two commands:
+
+```bash
+cd 09_project_source_files
+python3 audio/music.py --sections sections.json --duration 303.0 --out audio/out/music_bed.wav
+python3 audio/sfx.py   --cues cues.json         --duration 303.0 --out audio/out/sfx_bed.wav
+```
+
+Output length always equals `--duration` exactly (without it: the sections' `total` / the last
+scene end). Worked examples of both formats are in `audio/retime_examples/`
+(`sections.storyboard.json` and `cues.storyboard.json` reproduce the storyboard timing;
+`*.example_303.json` are shifted 303 s test files).
+
+**music.py `--sections`** — `{"total": 303.0, "chapters": [{"id": 1, "start": 0.0, "end": 27.8}, ...],
+"moments": {"freeze": 15.3, "title": 21.9, "point_to": 101.2, "ux_lift": 163.4, "checkout_tension": 228.1,
+"checkout_release": 231.0, "door_open": 291.4, "final_resolve": 296.5}}`. A piecewise-linear time map is
+built from the chapter starts (by id, section 1 = chapter 1 ... section 10 = chapter 10) and the named
+moments; every musical event lands at the proportional position inside its real chapter. Rhythms,
+attacks and decays stay in tempo; only onsets and sustained spans move. The music fades to silence by
+`total − 0.7` s and is digital zero from `total − 0.5` s. Storyboard anchors behind the moment names:
+
+| moment | storyboard anchor | what sits on it |
+|---|---|---|
+| `freeze` | 15.0 | room tone ends; 0.45 s hard silence; realisation tone at +0.5 s |
+| `title` | 19.0 | title pad swell (motif follows at +0.6 s) |
+| `point_to` | 100.5 | leitmotif in F |
+| `ux_lift` | 160.0 | C(add9) lift, high dyad + motif echo |
+| `checkout_tension` | 224.0 | Abmaj7#11 + riser (riser spans to the release) |
+| `checkout_release` | 227.0 | D(add9) release, pulse returns |
+| `door_open` | 289.5 | high D5+A4 dyad |
+| `final_resolve` | 293.0 | final sustained D(add9) begins |
+
+**sfx.py `--cues`** — a list of scenes `[{"id": "s01", "start": 0, "end": 27.8, "cues": {"footstep_1": 0.8, ...}}, ...]`.
+Each cue name is matched (full match, regex) against the table below; unknown names are logged to
+stderr and skipped. `freeze` places nothing and forces 0.8 s of silence after it; 0.0–0.6 s is always
+silent. Era ambiences span the chapter by scene number: 2 → machine-room hum, 3 → CRT hum,
+4 → auditorium air. Outputs: the composite at `--out`, `<out dir>/sfx_placement.csv` (cue, time,
+generator, gain, file) and one file per placed sound in `<out dir>/sfx_cues/`.
+
+| cue name pattern | generator | gain (dBFS peak) |
+|---|---|---|
+| `footstep_N` | one indoor footstep | −24 |
+| `footsteps_out` | three outdoor footsteps (0 / 0.9 / 1.8 s) + 5 s outdoor air (−46) | −24 |
+| `door_push_thud_N` | push thud, harder with N | −20 (+1 dB per N) |
+| `door_latch_click` | latch click | −22 |
+| `door_pull_open_start` … `door_pull_open_end` | hinge sweep lasting until `_end` (adds the latch if no `door_latch_click` in the scene) | −22 |
+| `door_open_clean` | latch + brighter, quicker sweep | −22 |
+| `freeze` | nothing; 0.8 s silence | — |
+| `point_appear` / `transition_point` / `final_point_tone` | amber point 1.2 s / quiet 0.9 s / warm 3 s | −22 / −30 / −22 |
+| `corridor_whoosh` / `spatial_whoosh` / `corridor_return[_whoosh]` | whoosh / mono-to-wide whoosh / reverse-shaped whoosh | −30 |
+| `switch_click_N` | toggle switch | −22 |
+| `dial_wind` / `dial_return` | rotary wind-up / return pulses + stop | −24 |
+| `lever_move` | friction slide + end-of-travel clack | −24 |
+| `book_set_down` | book thump + page flutter | −24 |
+| `tape_reel_spin` | motor spin-up with flutter, 2.2 s | −34 |
+| `card_shuffle` | five card flicks | −26 |
+| `key_strike_N` | one teletype strike | −22 |
+| `error_beep` | early terminal beep (880 Hz) | −28 |
+| `lightpen_draw_N` | one gliding light-pen phrase | −30 |
+| `mouse_click_N` | 1960s wooden-shell click | −26 |
+| `keyset_chord` | 3–4 near-simultaneous key strikes | −26 |
+| `screen_text_type` | run of tiny character ticks, 1 s | −32 |
+| `click_N` | 1980s plastic click | −26 |
+| `window_open` | short rising air + two blips | −28 |
+| `folder_morph` / `trash_morph` / `page_turn` | as in the storyboard sheet | −28 |
+| `link_click_N` | two-note connection blip | −30 |
+| `network_grow` | accelerating, spreading blips, 2.5 s | −30 |
+| `modem_hint` | abstract handshake nod | −38 |
+| `focus_tick_N` | tab-key focus tick | −30 |
+| `tap_N` / `flick_N` / `pinch` / `reflow_N` | touch tap / swipe (direction alternates) / pinch tones / settle | −28 / −32 / −30 / −30 |
+| `ui_tap_N` | clean modern tap | −28 |
+| `error_reveal` / `freeze_sting` | descending wrong-tone / beating tone + swell | −24 / −28 |
+| `process_tick_N` | confirmation tick, pitch rises with N (G A B C D E F# G) | −28 |
+| `success_chime` / `reply_chime` | G5→D6 chime / D6→A5 answer | −26 |
+| `collab_tick_N` | tiny cursor tick, random pan | −36 |
+| `toggle` | settings toggle click + two-tone | −28 |
+| `voice_wave` | tremolo voice tone, 3 s | −32 |
+| `cards_in` | very soft air swell | −36 |
+
 ## The score
 
 **Palette.** Slow additive pads (3 detuned voices per note, every partial breathing on its own

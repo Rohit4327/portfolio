@@ -2,34 +2,50 @@
 """
 sfx.py — procedural sound design for "The Invisible Conversation: How UX & UI Came to Life"
 
-Renders
-  audio/out/sfx/<cue>.wav       one stereo 48 kHz file per cue-sheet row, peak-normalised to -12 dBFS,
-                                with the row's internal timing baked in (t = 0 is the row's start time)
-  audio/out/sfx/cue_sheet.csv   name, start, end, file, gain applied in the composite
-  audio/out/sfx_bed.wav         composite stem, stereo 48 kHz 24-bit PCM, exactly 300.000 s,
-                                peaks at or below -12 dBFS, silence 0.0-0.6 s and 15.0-15.8 s
+Default (storyboard timing):
+    cd 09_project_source_files && python3 audio/sfx.py
+  renders
+    audio/out/sfx/<cue>.wav        one stereo 48 kHz file per cue-sheet row, peak-normalised to -12 dBFS,
+                                   with the row's internal timing baked in (t = 0 is the row's start time)
+    audio/out/sfx/cue_sheet.csv    name, start, end, file, gain applied in the composite
+    audio/out/sfx_bed.wav          composite stem, stereo 48 kHz 24-bit PCM, exactly 300.000 s,
+                                   peaks at or below -12 dBFS, silence 0.0-0.6 s and 15.0-15.8 s
+    audio/out/sfx_placement.csv    every placed sound (cue, time, generator, gain)
+
+Re-timed to the locked picture:
+    python3 audio/sfx.py --cues cues.json --duration 303.0 --out audio/out/sfx_bed.wav
+  cues.json = [{"id": "s01", "start": 0, "end": 27.8,
+                "cues": {"footstep_1": 0.8, "door_push_thud_1": 5.6, "freeze": 15.3, "point_appear": 16.2, ...}}, ...]
+  Cue names are matched against the RULES table below (regex -> generator, gain).  Unknown names are
+  logged and skipped.  Era ambiences span chapters 2 (machine room), 3 (CRT) and 4 (auditorium) by scene
+  id.  "freeze" places nothing and forces 0.8 s of silence after it.  Writes
+    <out dir>/sfx_cues/<scene>_<cue>.wav   each placed sound (-12 dBFS peak)
+    <out dir>/sfx_placement.csv            cue, time, generator, gain
+    <out>                                  the composite (exactly --duration seconds)
 
 Everything is synthesized from noise and oscillators with numpy + scipy; no samples.
-Deterministic (fixed seed).  Re-render:
-    cd 09_project_source_files && python3 audio/sfx.py
+Deterministic (fixed seed).
 """
+import argparse
 import csv
+import json
 import os
+import re
+import sys
 import time
 import numpy as np
 import soundfile as sf
 from scipy import signal
 
 SR = 48000
-DUR = 300.0
-N = int(SR * DUR)
+DEFAULT_DUR = 300.0
 SEED = 7340032
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(HERE, "out")
-SFX_DIR = os.path.join(OUT_DIR, "sfx")
 BED_FILE = os.path.join(OUT_DIR, "sfx_bed.wav")
 FILE_PEAK_DB = -12.0        # individual files
 BED_CEILING_DB = -12.0      # composite
+FREEZE_GAP = 0.8            # seconds of enforced silence after a "freeze" cue
 
 rng = np.random.default_rng(SEED)
 
@@ -100,12 +116,11 @@ def tail(x, frac=0.25):
 
 
 def smooth_curve(points, n):
-    """smooth (cosine-interpolated) curve through [(pos 0..1, value), ...] over n samples"""
+    """smooth curve through [(pos 0..1, value), ...] over n samples"""
     xs = np.linspace(0, 1, n)
     ps = np.array([p[0] for p in points])
     vs = np.array([p[1] for p in points])
     out = np.interp(xs, ps, vs)
-    # soften the corners
     k = max(3, int(0.03 * n))
     win = np.hanning(k)
     win /= win.sum()
@@ -286,11 +301,17 @@ def hinge_sweep(dur=1.8, bright=False):
     return sig + air
 
 
-def door_open(bright=False):
+def door_open(bright=False, sweep_dur=None, with_latch=True):
     """latch click then the hinge sweep (and the air moving through the gap)"""
-    latch = latch_click(bright)
-    sweep = hinge_sweep(1.25 if bright else 1.8, bright)
-    ev = [(0.0, pan(latch, 0.1)), (0.18 if bright else 0.2, pan_move(sweep, 0.1, -0.25))]
+    if sweep_dur is None:
+        sweep_dur = 1.25 if bright else 1.8
+    gap = 0.18 if bright else 0.2
+    ev = []
+    if with_latch:
+        ev.append((0.0, pan(latch_click(bright), 0.1)))
+        ev.append((gap, pan_move(hinge_sweep(sweep_dur, bright), 0.1, -0.25)))
+    else:
+        ev.append((0.0, pan_move(hinge_sweep(sweep_dur, bright), 0.1, -0.25)))
     s = seq(ev, tail_s=0.5)
     return tail(room(s, wet=0.2 if bright else 0.32), 0.2)
 
@@ -349,10 +370,9 @@ def ratchet_tick(level=1.0):
     return level * (bp(noise(n), 1500, 5500) * expd(t, 0.0025) + 0.5 * np.sin(2 * np.pi * 950 * t) * expd(t, 0.008))
 
 
-def rotary_dial():
-    """wind-up (finger pulls the dial, soft ratchet) -> pause -> return pulses slowing down -> stop"""
+def dial_wind():
+    """the finger pulls the dial round: soft whirr + ratchet ticks (0.95 s)"""
     ev = []
-    # wind-up whirr
     n, t = T(0.95)
     whirr = bp(noise(n), 500, 2600) * asym_hann(n, 0.4) * 0.22
     ev.append((0.0, pan(whirr, 0.1)))
@@ -362,22 +382,72 @@ def rotary_dial():
         ev.append((tt, pan(ratchet_tick(0.55 + 0.1 * rng.uniform()), 0.1)))
         tt += 0.11 - 0.004 * k
         k += 1
-    # return: pulses slowing, with a soft governor whirr underneath
-    t0 = 1.12
+    return seq(ev, 0.2)
+
+
+def dial_return():
+    """the dial returns: pulses slowing down over a soft governor whirr, then the stop"""
+    ev = []
     n2, t2 = T(1.9)
     gov = bp(noise(n2), 300, 1300) * (1 - t2 / 1.9) ** 1.5 * 0.2
-    ev.append((t0, pan(gov, 0.12)))
+    ev.append((0.0, pan(gov, 0.12)))
     gaps = [0.10, 0.115, 0.13, 0.15, 0.175, 0.205, 0.245, 0.3, 0.37]
-    tt = t0
+    tt = 0.0
     for g in gaps:
         ev.append((tt, pan(ratchet_tick(0.9), 0.12)))
         tt += g
-    # the stop
     n3, t3 = T(0.3)
     f = 210 * (1 + 0.6 * expd(t3, 0.01))
     stop = np.sin(2 * np.pi * np.cumsum(f) / SR) * expd(t3, 0.03) + bp(noise(n3), 400, 2200) * expd(t3, 0.006) * 0.8
     ev.append((tt, pan(stop * 0.9, 0.12)))
-    return room(seq(ev, 0.4), wet=0.15)
+    return seq(ev, 0.2)
+
+
+def rotary_dial():
+    """wind-up -> pause -> return pulses slowing down -> stop"""
+    return room(seq([(0.0, dial_wind()), (1.12, dial_return())], 0.3), wet=0.15)
+
+
+def lever_move():
+    """a mechanical lever: friction slide, then the clack at the end of travel"""
+    n, t = T(0.9)
+    fc = smooth_curve([(0, 300), (0.6, 720), (1.0, 520)], n)
+    slide = norm(tv_bandpass(noise(n), fc, 3.0)) * asym_hann(n, 0.55, 1.2) * np.clip(1 - (t - 0.5) / 0.1, 0, 1)
+    i = int(0.5 * SR)
+    m = n - i
+    tt = t[:m]
+    f = 180 * (1 + 0.8 * expd(tt, 0.01))
+    clack = bp(noise(m), 800, 3200) * expd(tt, 0.003) * 1.2 + np.sin(2 * np.pi * np.cumsum(f) / SR) * expd(tt, 0.04)
+    clack += 0.3 * partials(tt, [2400, 3900], [0.05, 0.03], [1, 0.5]) + lp(noise(m), 500) * expd(tt, 0.015) * 0.6
+    sig = slide * 0.45
+    sig[i:] += clack
+    return tail(room(pan(sig, -0.1), wet=0.2), 0.25)
+
+
+def book_set_down():
+    """a heavy book set on a table: soft thump + a flutter of pages"""
+    n, t = T(0.8)
+    f = 60 * (1 + 1.2 * expd(t, 0.02))
+    thump = np.sin(2 * np.pi * np.cumsum(f) / SR) * expd(t, 0.1) + lp(noise(n), 500) * expd(t, 0.04) * 0.8
+    i = int(0.05 * SR)
+    m = int(0.3 * SR)
+    tt = t[:m]
+    flutter = bp(noise(m), 800, 4000) * (0.6 + 0.4 * np.sin(2 * np.pi * 25 * tt)) * expd(tt, 0.09) * 0.35
+    sig = thump
+    sig[i:i + m] += flutter
+    return tail(room(pan(sig, 0.05), wet=0.22), 0.25)
+
+
+def tape_reel_spin(dur=2.2):
+    """a tape reel spinning up: buzzy motor sweeping up with flutter, hiss swelling"""
+    n, t = T(dur)
+    f = smooth_curve([(0, 55), (0.5, 100), (1.0, 110)], n)
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    motor = sum(np.sin(h * ph) / h for h in range(1, 7)) * (0.85 + 0.15 * np.sin(2 * np.pi * 8 * t))
+    motor = lp(motor, 1200) * 0.5
+    hiss = bp(noise(n), 2000, 6000) * 0.12
+    sig = (motor + hiss) * fade_io(np.ones(n), 0.3, 0.5)
+    return pan(sig, 0.0)
 
 
 def machine_room_ambience(dur=29.0):
@@ -396,7 +466,8 @@ def machine_room_ambience(dur=29.0):
             chug[i:i + m] += lp(noise(m), 300) * expd(t[:m], 0.03) * 0.5
             tt += 0.52 * rng.uniform(0.97, 1.03)
         out[:, ch] = hum * 0.35 + rumble * 0.6 + chug * 0.6
-    return fade_io(out, 3.0, 3.0)
+    fd = min(3.0, dur / 3)
+    return fade_io(out, fd, fd)
 
 
 def card_flick():
@@ -441,6 +512,14 @@ def teletype_keys():
     return room(seq(ev, 0.3), wet=0.12)
 
 
+def error_beep():
+    """an early terminal beep: soft square-ish 880 Hz, 110 ms"""
+    n, t = T(0.16)
+    env = fade_io(np.ones(n), 0.004, 0.06)
+    sig = (np.sin(2 * np.pi * 880 * t) + np.sin(2 * np.pi * 2640 * t) / 3 + np.sin(2 * np.pi * 4400 * t) / 5) * env
+    return pan(lp(sig, 6000), 0.0)
+
+
 def crt_hum(dur=23.0):
     n, t = T(dur)
     hum = (np.sin(2 * np.pi * 60 * t) + 0.6 * np.sin(2 * np.pi * 120 * t + 0.7) + 0.3 * np.sin(2 * np.pi * 180 * t + 1.3)
@@ -451,7 +530,8 @@ def crt_hum(dur=23.0):
     out = np.zeros((n, 2))
     out[:, 0] = hum * 0.6 + whine * 0.12 + hiss * 0.12
     out[:, 1] = hum * 0.6 + whine * 0.12 + hp(noise(n), 5000) * 0.15 * 0.12
-    return fade_io(out, 2.0, 2.0)
+    fd = min(2.0, dur / 3)
+    return fade_io(out, fd, fd)
 
 
 def light_pen_phrase(dur):
@@ -483,7 +563,8 @@ def room_air(dur=32.0):
         low *= 0.85 + 0.15 * np.sin(2 * np.pi * 0.15 * t + ch)
         high = bp(noise(n), 3000, 7000) * 0.06 * (0.8 + 0.2 * np.sin(2 * np.pi * 0.11 * t + ch))
         out[:, ch] = low + high
-    return fade_io(out, 3.0, 3.0)
+    fd = min(3.0, dur / 3)
+    return fade_io(out, fd, fd)
 
 
 def mouse_click_60s():
@@ -494,6 +575,31 @@ def mouse_click_60s():
     i = int(rng.uniform(0.11, 0.14) * SR)
     sig[i:] += 0.6 * (bp(noise(n - i), 1200, 4500) * expd(t[:n - i], 0.003) + wood[:n - i] * 0.7)
     return tail(sig, 0.3)
+
+
+def keyset_chord():
+    """Engelbart's five-key chord keyset: 3-4 soft key strikes within ~35 ms"""
+    ev = []
+    for k in range(int(rng.integers(3, 5))):
+        n, t = T(0.12)
+        f = 260 * (1 + 0.4 * expd(t, 0.005)) * rng.uniform(0.95, 1.05)
+        key = bp(noise(n), 1000, 4000) * expd(t, 0.003) + 0.6 * np.sin(2 * np.pi * np.cumsum(f) / SR) * expd(t, 0.014)
+        key += lp(noise(n), 700) * expd(t, 0.01) * 0.4
+        ev.append((k * rng.uniform(0.008, 0.014), pan(tail(key, 0.3), -0.2 + 0.13 * k)))
+    return seq(ev, 0.15)
+
+
+def screen_text_type(dur=1.0):
+    """characters appearing on a 1968 screen: a run of tiny electronic ticks"""
+    ev = []
+    tt = 0.0
+    while tt < dur:
+        n, t = T(0.03)
+        f = rng.uniform(1500, 2600)
+        b = np.sin(2 * np.pi * f * t) * fade_io(np.ones(n), 0.002, 0.02) * rng.uniform(0.5, 1.0)
+        ev.append((tt, pan(b, rng.uniform(-0.1, 0.1))))
+        tt += rng.uniform(0.06, 0.11)
+    return seq(ev, 0.1)
 
 
 def mouse_click_80s():
@@ -510,6 +616,12 @@ def blip(freq, dur=0.03, h2=0.2, attack=0.003):
     n, t = T(dur)
     env = (0.5 - 0.5 * np.cos(np.pi * np.clip(t / attack, 0, 1))) * (0.5 + 0.5 * np.cos(np.pi * np.clip((t - attack) / (dur - attack), 0, 1)))
     return (np.sin(2 * np.pi * freq * t) + h2 * np.sin(2 * np.pi * 2 * freq * t)) * env
+
+
+def window_open():
+    """an 80s GUI window opening: a short rising air + two soft blips"""
+    sw = whoosh(0.3, ((0, 600), (0.7, 2400), (1.0, 2000)), peak=0.6, q=1.4, pan_from=-0.1, pan_to=0.1) * 0.5
+    return seq([(0.0, sw), (0.12, pan(blip(660, 0.035), -0.1)), (0.2, pan(blip(990, 0.04), 0.1))], 0.15)
 
 
 def folder_morph():
@@ -559,6 +671,9 @@ def page_turn():
     return pan_move(sig, -0.3, 0.3)
 
 
+LINK_PAIRS = [(987.8, 1318.5), (1046.5, 1396.9), (880.0, 1318.5), (1174.7, 1568.0)]
+
+
 def link_blip(f1, f2):
     ev = [(0.0, pan(blip(f1, 0.045, 0.15), -0.15)), (0.07, pan(blip(f2, 0.05, 0.15), 0.15))]
     n2, t2 = T(0.01)
@@ -568,8 +683,24 @@ def link_blip(f1, f2):
 
 
 def web_link_blips():
-    pairs = [(987.8, 1318.5), (1046.5, 1396.9), (880.0, 1318.5), (1174.7, 1568.0)]
-    ev = [(tr, link_blip(*p)) for tr, p in zip([0.0, 2.0, 4.5, 7.0], pairs)]
+    ev = [(tr, link_blip(*p)) for tr, p in zip([0.0, 2.0, 4.5, 7.0], LINK_PAIRS)]
+    return seq(ev, 0.2)
+
+
+def network_grow(dur=2.5):
+    """a network growing: connection blips accelerating and spreading outward, a soft air under it"""
+    ev = []
+    pitches = [698.5, 880.0, 1046.5, 1174.7, 1396.9, 1568.0, 1760.0, 2093.0, 2349.3]
+    tt = 0.0
+    gap = 0.4
+    for k, f in enumerate(pitches):
+        side = (1 if k % 2 else -1) * min(0.8, 0.1 + 0.09 * k)
+        ev.append((tt, pan(blip(f, 0.05, 0.15) * (0.9 - 0.04 * k), side)))
+        tt += gap
+        gap = max(0.12, gap * 0.82)
+    n, t = T(dur)
+    air = np.stack([bp(noise(n), 3000, 7000), bp(noise(n), 3000, 7000)], axis=1) * asym_hann(n, 0.6)[:, None] * 0.05
+    ev.append((0.0, air))
     return seq(ev, 0.2)
 
 
@@ -641,6 +772,13 @@ def ui_tap_modern():
     return tail(sig, 0.3)
 
 
+def toggle():
+    """a settings toggle: tiny click + a quick two-tone 'on'"""
+    n, t = T(0.02)
+    click = bp(noise(n), 1500, 5000) * expd(t, 0.0015) * 0.6
+    return seq([(0.0, pan(click, 0.0)), (0.01, pan(blip(520, 0.03, 0.15), -0.1)), (0.045, pan(blip(780, 0.035, 0.15), 0.1))], 0.1)
+
+
 def error_buzz():
     n, t = T(0.34)
     sig = np.zeros(n)
@@ -663,6 +801,9 @@ def freeze_sting():
     return pan(norm(tone) * 0.8, -0.1) + pan(norm(sw) * 0.5, 0.1)
 
 
+PROCESS_FREQS = [784.0, 880.0, 987.8, 1046.5, 1174.7, 1318.5, 1480.0, 1568.0]  # G A B C D E F# G (G major)
+
+
 def confirm_tick(freq):
     n, t = T(0.09)
     click = bp(noise(n), 1500, 6000) * expd(t, 0.0015) * 0.3
@@ -671,8 +812,7 @@ def confirm_tick(freq):
 
 
 def process_steps():
-    freqs = [784.0, 880.0, 987.8, 1046.5, 1174.7, 1318.5]  # G A B C D E (G major)
-    ev = [(2.0 * k, pan(confirm_tick(f), -0.25 + 0.1 * k)) for k, f in enumerate(freqs)]
+    ev = [(2.0 * k, pan(confirm_tick(f), -0.25 + 0.1 * k)) for k, f in enumerate(PROCESS_FREQS[:6])]
     return seq(ev, 0.2)
 
 
@@ -685,6 +825,18 @@ def success_chime():
         tone = (np.sin(2 * np.pi * f * tt) + 0.2 * np.sin(2 * np.pi * 2 * f * tt) + 0.05 * np.sin(2 * np.pi * 3 * f * tt))
         sig[i:] += amp * tone * (1 - expd(tt, 0.008)) * expd(tt, tau)
     return pan(lp(sig, 5000), 0.05)
+
+
+def reply_chime():
+    """the system answers the voice: a soft descending pair (D6 -> A5)"""
+    n, t = T(1.1)
+    sig = np.zeros(n)
+    for f, t0, tau, amp in [(1174.7, 0.0, 0.2, 0.9), (880.0, 0.18, 0.3, 1.0)]:
+        i = int(t0 * SR)
+        tt = t[:n - i]
+        tone = np.sin(2 * np.pi * f * tt) + 0.2 * np.sin(2 * np.pi * 2 * f * tt)
+        sig[i:] += amp * tone * (1 - expd(tt, 0.01)) * expd(tt, tau)
+    return pan(lp(sig, 5000), -0.05)
 
 
 def cursor_tick():
@@ -748,6 +900,14 @@ def outdoor_air(dur=5.0):
     return fade_io(out, 1.0, 2.0)
 
 
+def cards_in():
+    """the final title cards: a very soft air swell"""
+    n, t = T(1.6)
+    out = np.stack([lp(noise(n), 1500) + 0.3 * bp(noise(n), 3000, 6000),
+                    lp(noise(n), 1500) + 0.3 * bp(noise(n), 3000, 6000)], axis=1)
+    return out * asym_hann(n, 0.5, 1.3)[:, None]
+
+
 def footsteps_seq(times, outdoor=False):
     ev = [(tr, footstep(rng.uniform(0.8, 1.0), outdoor)) for tr in times]
     return seq(ev, 0.3)
@@ -762,7 +922,7 @@ def dial_to_wheel_transition():
 
 
 # --------------------------------------------------------------------------------------
-# cue sheet: (name, start, end, builder, level_db in the composite, note)
+# storyboard cue sheet: (name, start, end, builder, level_db in the composite, note)
 # --------------------------------------------------------------------------------------
 def cue_sheet():
     tp = ("transition_point", point_variant, -30.0, "amber point, quiet variant (scene transition)")
@@ -829,11 +989,169 @@ def cue_sheet():
 
 
 # --------------------------------------------------------------------------------------
-def main():
+# cue-name -> generator rules for the picture department's cues.json
+# each `make(m, ctx)` returns a list of (offset_s, stereo array, gain_db, generator_name)
+# ctx = {"scene": scene dict, "cues": its cues dict, "time": cue time}
+# --------------------------------------------------------------------------------------
+def _idx(m, default=1):
+    try:
+        return int(m.group(1))
+    except (IndexError, TypeError, ValueError):
+        return default
+
+
+def _one(x, gain, gen, offset=0.0):
+    return [(offset, stereo(x), gain, gen)]
+
+
+def _door_pull(m, ctx):
+    start = ctx["time"]
+    end = ctx["cues"].get("door_pull_open_end")
+    dur = float(np.clip((end - start) - 0.2, 0.6, 4.0)) if end is not None else 1.8
+    with_latch = "door_latch_click" not in ctx["cues"]
+    return _one(door_open(False, sweep_dur=dur, with_latch=with_latch), -22.0,
+                "hinge_sweep" + ("+latch" if with_latch else ""))
+
+
+def _lightpen(m, ctx):
+    k = _idx(m)
+    return _one(pan(light_pen_phrase([1.2, 1.6, 1.3][(k - 1) % 3]), -0.1 + 0.1 * ((k - 1) % 3)), -30.0, "light_pen_phrase")
+
+
+def _process_tick(m, ctx):
+    k = _idx(m)
+    return _one(pan(confirm_tick(PROCESS_FREQS[(k - 1) % len(PROCESS_FREQS)]), -0.25 + 0.1 * ((k - 1) % 6)), -28.0, "confirm_tick")
+
+
+def _footsteps_out(m, ctx):
+    return (_one(footsteps_seq([0.0, 0.9, 1.8], outdoor=True), -24.0, "footsteps_out")
+            + _one(outdoor_air(5.0), -46.0, "outdoor_air", offset=-0.2))
+
+
+RULES = [
+    # pattern                           gain   generator                        make
+    (r"footstep_(\d+)",                 lambda m, c: _one(footstep(rng.uniform(0.85, 1.0)), -24.0, "footstep")),
+    (r"footsteps_out",                  _footsteps_out),
+    (r"door_push_thud_(\d+)",           lambda m, c: _one(door_push_thud(1.0 + 0.1 * (_idx(m) - 1)), -20.0 + 1.0 * (_idx(m) - 1), "door_push_thud")),
+    (r"door_latch_click",               lambda m, c: _one(pan(latch_click(False), 0.1), -22.0, "latch_click")),
+    (r"door_pull_open_start",           _door_pull),
+    (r"door_pull_open_end",             None),                       # consumed by door_pull_open_start
+    (r"door_open_clean",                lambda m, c: _one(door_open(True), -22.0, "door_open_clean")),
+    (r"freeze",                         None),                       # silence gap, handled by the renderer
+    (r"point_appear",                   lambda m, c: _one(point_tone(1.2), -22.0, "point_tone")),
+    (r"transition_point",               lambda m, c: _one(point_tone(0.9), -30.0, "point_tone_quiet")),
+    (r"final_point_tone",               lambda m, c: _one(point_tone(3.0, warm=True, attack=0.6), -22.0, "point_tone_warm")),
+    (r"corridor_whoosh",                lambda m, c: _one(whoosh(1.5), -30.0, "whoosh")),
+    (r"spatial_whoosh",                 lambda m, c: _one(spatial_whoosh(), -30.0, "spatial_whoosh")),
+    (r"corridor_return(_whoosh)?",      lambda m, c: _one(reverse_whoosh(), -30.0, "reverse_whoosh")),
+    (r"switch_click_(\d+)",             lambda m, c: _one(switch_click(), -22.0, "switch_click")),
+    (r"dial_wind",                      lambda m, c: _one(room(dial_wind(), 0.15), -24.0, "dial_wind")),
+    (r"dial_return",                    lambda m, c: _one(room(dial_return(), 0.15), -24.0, "dial_return")),
+    (r"lever_move",                     lambda m, c: _one(lever_move(), -24.0, "lever_move")),
+    (r"book_set_down",                  lambda m, c: _one(book_set_down(), -24.0, "book_set_down")),
+    (r"tape_reel_spin",                 lambda m, c: _one(tape_reel_spin(), -34.0, "tape_reel_spin")),
+    (r"card_shuffle",                   lambda m, c: _one(punch_card_shuffle(), -26.0, "punch_card_shuffle")),
+    (r"key_strike_(\d+)",               lambda m, c: _one(pan(teletype_strike(rng.uniform(0.7, 1.0)), rng.uniform(-0.15, 0.15)), -22.0, "teletype_strike")),
+    (r"error_beep",                     lambda m, c: _one(error_beep(), -28.0, "error_beep")),
+    (r"lightpen_draw_(\d+)",            _lightpen),
+    (r"mouse_click_(\d+)",              lambda m, c: _one(pan(mouse_click_60s(), -0.1 + 0.05 * (_idx(m) % 4)), -26.0, "mouse_click_60s")),
+    (r"keyset_chord",                   lambda m, c: _one(keyset_chord(), -26.0, "keyset_chord")),
+    (r"screen_text_type",               lambda m, c: _one(screen_text_type(), -32.0, "screen_text_type")),
+    (r"click_(\d+)",                    lambda m, c: _one(pan(mouse_click_80s(), -0.1 + 0.05 * (_idx(m) % 4)), -26.0, "mouse_click_80s")),
+    (r"window_open",                    lambda m, c: _one(window_open(), -28.0, "window_open")),
+    (r"folder_morph",                   lambda m, c: _one(folder_morph(), -28.0, "folder_morph")),
+    (r"trash_morph",                    lambda m, c: _one(trash_morph(), -28.0, "trash_morph")),
+    (r"page_turn",                      lambda m, c: _one(page_turn(), -28.0, "page_turn")),
+    (r"link_click_(\d+)",               lambda m, c: _one(link_blip(*LINK_PAIRS[(_idx(m) - 1) % len(LINK_PAIRS)]), -30.0, "link_blip")),
+    (r"network_grow",                   lambda m, c: _one(network_grow(), -30.0, "network_grow")),
+    (r"modem_hint",                     lambda m, c: _one(modem_hint(), -38.0, "modem_hint")),
+    (r"focus_tick_(\d+)",               lambda m, c: _one(pan(focus_tick(), -0.15 + 0.1 * ((_idx(m) - 1) % 4)), -30.0, "focus_tick")),
+    (r"tap_(\d+)",                      lambda m, c: _one(pan(touch_tap(), -0.1 + 0.1 * ((_idx(m) - 1) % 3)), -28.0, "touch_tap")),
+    (r"flick_(\d+)",                    lambda m, c: _one(swipe(1 if _idx(m) % 2 else -1), -32.0, "swipe")),
+    (r"pinch",                          lambda m, c: _one(pinch_zoom(), -30.0, "pinch_zoom")),
+    (r"reflow_(\d+)",                   lambda m, c: _one(pan(settle(1.0 - 0.07 * ((_idx(m) - 1) % 3)), -0.3 + 0.3 * ((_idx(m) - 1) % 3)), -30.0, "settle")),
+    (r"ui_tap_(\d+)",                   lambda m, c: _one(pan(ui_tap_modern(), -0.2 + 0.1 * ((_idx(m) - 1) % 5)), -28.0, "ui_tap_modern")),
+    (r"error_reveal",                   lambda m, c: _one(error_buzz(), -24.0, "error_buzz")),
+    (r"freeze_sting",                   lambda m, c: _one(freeze_sting(), -28.0, "freeze_sting")),
+    (r"process_tick_(\d+)",             _process_tick),
+    (r"success_chime",                  lambda m, c: _one(success_chime(), -26.0, "success_chime")),
+    (r"collab_tick_(\d+)",              lambda m, c: _one(pan(cursor_tick() * rng.uniform(0.6, 1.0), rng.uniform(-0.6, 0.6)), -36.0, "cursor_tick")),
+    (r"toggle",                         lambda m, c: _one(toggle(), -28.0, "toggle")),
+    (r"voice_wave",                     lambda m, c: _one(voice_wave_tone(), -32.0, "voice_wave_tone")),
+    (r"reply_chime",                    lambda m, c: _one(reply_chime(), -26.0, "reply_chime")),
+    (r"cards_in",                       lambda m, c: _one(cards_in(), -36.0, "cards_in")),
+]
+RULES = [(re.compile(p), mk) for p, mk in RULES]
+
+# era ambiences by chapter id: (generator(dur), gain, name)
+AMBIENCES = {2: (machine_room_ambience, -42.0, "machine_room_ambience"),
+             3: (crt_hum, -46.0, "crt_hum"),
+             4: (room_air, -46.0, "audience_room_tone")}
+
+
+def match_rule(name):
+    for pat, mk in RULES:
+        m = pat.fullmatch(name)
+        if m:
+            return m, mk
+    return None, None
+
+
+def scene_number(scene_id):
+    m = re.search(r"(\d+)", str(scene_id))
+    return int(m.group(1)) if m else None
+
+
+# --------------------------------------------------------------------------------------
+# rendering
+# --------------------------------------------------------------------------------------
+def place(bed, x, t0, gain_db):
+    i0 = int(round(t0 * SR))
+    if i0 < 0:
+        x = x[-i0:]
+        i0 = 0
+    n = min(len(x), len(bed) - i0)
+    if n > 0:
+        bed[i0:i0 + n] += x[:n] * db(gain_db)
+
+
+def finish_bed(bed, silences, out_path):
+    """silence windows, 25 Hz high-pass, end fade, -12 dBFS ceiling, DC removal, write"""
+    n = len(bed)
+    for a, b in silences:
+        bed[int(a * SR):int(b * SR)] = 0.0
+    bed = signal.sosfilt(sos(25, "high", 2), bed, axis=0)
+    for a, b in silences:
+        bed[int(a * SR):int(b * SR)] = 0.0
+    k = int(0.4 * SR)
+    bed[n - k:] *= np.linspace(1, 0, k)[:, None]
+    peak = np.max(np.abs(bed))
+    if peak > db(BED_CEILING_DB):
+        bed *= db(BED_CEILING_DB) / peak
+    bed -= bed.mean(axis=0, keepdims=True)
+    for a, b in silences:
+        bed[int(a * SR):int(b * SR)] = 0.0
+    sf.write(out_path, bed.astype(np.float64), SR, subtype="PCM_24")
+    return bed
+
+
+def write_placements(path, rows):
+    with open(path, "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["cue", "time_s", "generator", "gain_db", "file"])
+        for r in rows:
+            w.writerow(r)
+
+
+def render_default(out_path, duration):
     t0 = time.time()
-    os.makedirs(SFX_DIR, exist_ok=True)
-    bed = np.zeros((N, 2), dtype=np.float64)
+    out_dir = os.path.dirname(os.path.abspath(out_path))
+    sfx_dir = os.path.join(out_dir, "sfx")
+    os.makedirs(sfx_dir, exist_ok=True)
+    n_total = int(round(duration * SR))
+    bed = np.zeros((n_total, 2), dtype=np.float64)
     rows = []
+    placements = []
     rendered = {}
     for (name, start, end, build, level, note) in cue_sheet():
         if name in rendered:
@@ -842,35 +1160,96 @@ def main():
             x = norm(stereo(build()), 0.0)
             x = np.nan_to_num(x)
             rendered[name] = x
-            sf.write(os.path.join(SFX_DIR, f"{name}.wav"), (x * db(FILE_PEAK_DB)).astype(np.float64), SR, subtype="PCM_24")
-        i0 = int(round(start * SR))
-        n = min(len(x), N - i0)
-        bed[i0:i0 + n] += x[:n] * db(level)
+            sf.write(os.path.join(sfx_dir, f"{name}.wav"), (x * db(FILE_PEAK_DB)).astype(np.float64), SR, subtype="PCM_24")
+        place(bed, x, start, level)
         rows.append((name, start, end, f"sfx/{name}.wav", level, f"{len(x)/SR:.2f}", note))
+        gen = getattr(build, "__name__", name)
+        placements.append((name, f"{start:.3f}", name if gen == "<lambda>" else gen, level, f"sfx/{name}.wav"))
 
-    # guarantees: absolute silence 0.0-0.6 and 15.0-15.8, exact length, DC-free, ceiling
-    bed[:int(0.6 * SR)] = 0.0
-    bed[int(15.0 * SR):int(15.8 * SR)] = 0.0
-    bed = signal.sosfilt(sos(25, "high", 2), bed, axis=0)
-    bed[:int(0.6 * SR)] = 0.0
-    bed[int(15.0 * SR):int(15.8 * SR)] = 0.0
-    bed[int(299.6 * SR):] *= np.linspace(1, 0, N - int(299.6 * SR))[:, None]
-    peak = np.max(np.abs(bed))
-    if peak > db(BED_CEILING_DB):
-        bed *= db(BED_CEILING_DB) / peak
-    bed -= bed.mean(axis=0, keepdims=True)
-    bed[:int(0.6 * SR)] = 0.0
-    bed[int(15.0 * SR):int(15.8 * SR)] = 0.0
-    sf.write(BED_FILE, bed.astype(np.float64), SR, subtype="PCM_24")
+    bed = finish_bed(bed, [(0.0, 0.6), (15.0, 15.8)], out_path)
 
-    with open(os.path.join(SFX_DIR, "cue_sheet.csv"), "w", newline="") as fh:
+    with open(os.path.join(sfx_dir, "cue_sheet.csv"), "w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["cue", "start_s", "end_s", "file", "gain_db_in_composite", "file_len_s", "description"])
         for r in rows:
             w.writerow(r)
-
+    write_placements(os.path.join(out_dir, "sfx_placement.csv"), placements)
     print(f"composite peak {20*np.log10(np.max(np.abs(bed))):.2f} dBFS, {len(bed)} frames = {len(bed)/SR:.3f} s")
-    print(f"wrote {BED_FILE} and {len(rendered)} files in {SFX_DIR}  ({time.time()-t0:.1f} s)")
+    print(f"wrote {out_path} and {len(rendered)} files in {sfx_dir}  ({time.time()-t0:.1f} s)")
+
+
+def render_from_cues(cues_path, out_path, duration):
+    t0 = time.time()
+    with open(cues_path) as fh:
+        scenes = json.load(fh)
+    if duration is None:
+        duration = max(float(s["end"]) for s in scenes)
+    out_dir = os.path.dirname(os.path.abspath(out_path))
+    cue_dir = os.path.join(out_dir, "sfx_cues")
+    os.makedirs(cue_dir, exist_ok=True)
+    n_total = int(round(duration * SR))
+    bed = np.zeros((n_total, 2), dtype=np.float64)
+    placements = []
+    unknown = []
+    silences = [(0.0, 0.6)]
+
+    def emit(sid, cue, t, items):
+        multi = len(items) > 1
+        for off, x, gain, gen in items:
+            x = np.nan_to_num(norm(x, 0.0))
+            fname = f"{sid}_{cue}" + (f"_{gen}" if multi else "") + ".wav"
+            sf.write(os.path.join(cue_dir, fname), (x * db(FILE_PEAK_DB)).astype(np.float64), SR, subtype="PCM_24")
+            place(bed, x, t + off, gain)
+            placements.append((f"{sid}:{cue}", f"{t + off:.3f}", gen, gain, f"sfx_cues/{fname}"))
+
+    # era ambiences spanning their chapters
+    for s in scenes:
+        num = scene_number(s["id"])
+        if num in AMBIENCES:
+            gen, gain, name = AMBIENCES[num]
+            dur = float(s["end"]) - float(s["start"])
+            if dur > 0.5:
+                emit(s["id"], name, float(s["start"]), [(0.0, gen(dur), gain, name)])
+
+    # cues, in time order
+    for s in scenes:
+        cues = s.get("cues", {})
+        for name, t in sorted(cues.items(), key=lambda kv: float(kv[1])):
+            t = float(t)
+            if name == "freeze":
+                silences.append((t, t + FREEZE_GAP))
+                placements.append((f"{s['id']}:freeze", f"{t:.3f}", "silence", "", ""))
+                continue
+            m, mk = match_rule(name)
+            if m is None:
+                unknown.append((s["id"], name, t))
+                continue
+            if mk is None:
+                continue                          # consumed by a sibling cue
+            ctx = {"scene": s, "cues": cues, "time": t}
+            emit(s["id"], name, t, mk(m, ctx))
+
+    bed = finish_bed(bed, silences, out_path)
+    placements.sort(key=lambda r: float(r[1]))
+    write_placements(os.path.join(out_dir, "sfx_placement.csv"), placements)
+    for sid, name, t in unknown:
+        print(f"unknown cue skipped: {sid} '{name}' at {t:.2f} s", file=sys.stderr)
+    n_placed = sum(1 for p in placements if p[2] != "silence")
+    print(f"placed {n_placed} sounds from {len(scenes)} scenes; {len(unknown)} unknown cue(s) skipped")
+    print(f"composite peak {20*np.log10(np.max(np.abs(bed))+1e-12):.2f} dBFS, {len(bed)} frames = {len(bed)/SR:.3f} s")
+    print(f"wrote {out_path}, {os.path.join(out_dir, 'sfx_placement.csv')} and {n_placed} files in {cue_dir}  ({time.time()-t0:.1f} s)")
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--cues", help="cues.json from the picture department (scenes with cue name -> time)")
+    ap.add_argument("--duration", type=float, help="output length in seconds (default: 300.0, or the last scene end with --cues)")
+    ap.add_argument("--out", default=BED_FILE, help="composite output wav path")
+    args = ap.parse_args(argv)
+    if args.cues:
+        render_from_cues(args.cues, args.out, args.duration)
+    else:
+        render_default(args.out, DEFAULT_DUR if args.duration is None else args.duration)
 
 
 if __name__ == "__main__":

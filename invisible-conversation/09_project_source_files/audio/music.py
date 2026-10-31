@@ -2,7 +2,7 @@
 """
 music.py — procedural score for "The Invisible Conversation: How UX & UI Came to Life"
 
-Renders  audio/out/music_bed.wav  (stereo, 48 kHz, 24-bit PCM, exactly 300.000 s).
+Renders  audio/out/music_bed.wav  (stereo, 48 kHz, 24-bit PCM, exactly 300.000 s by default).
 
 Everything is synthesized from scratch with numpy + scipy (no samples):
   * slow additive pads with per-partial LFOs, 3-voice detune/chorus, stereo spread
@@ -15,10 +15,26 @@ Everything is synthesized from scratch with numpy + scipy (no samples):
   * section-dependent stereo width, a voice-band EQ dip (1-4 kHz), BS.1770 loudness
     normalisation to -27 LUFS integrated, a safety peak limiter at -6.5 dBFS
 
-Deterministic (fixed seed).  Re-render:
+Deterministic (fixed seed).  Re-render the storyboard timing:
     cd 09_project_source_files && python3 audio/music.py
+
+Re-time to the locked picture:
+    python3 audio/music.py --sections sections.json --duration 303.0 --out audio/out/music_bed.wav
+
+sections.json = {"total": 303.0,
+                 "chapters": [{"id": 1, "start": 0.0, "end": 27.8}, ..., {"id": 10, "start": ..., "end": 303.0}],
+                 "moments":  {"freeze": 15.3, "title": 21.9, "point_to": 101.2, "ux_lift": 163.4,
+                              "checkout_tension": 228.1, "checkout_release": 231.0,
+                              "door_open": 291.4, "final_resolve": 296.5}}
+The score is written against the storyboard timeline (chapters 1-10 below).  A piecewise-linear
+time map is built from the chapter boundaries (by id) and the named moments; every musical event
+lands at the equivalent position inside the real chapter (proportional interpolation between
+anchors).  Note rhythms, attacks and decays stay in tempo; only onsets and sustained spans move.
 """
+import argparse
+import json
 import os
+import sys
 import time
 import numpy as np
 import soundfile as sf
@@ -29,11 +45,9 @@ from scipy.ndimage import maximum_filter1d, minimum_filter1d
 # constants
 # --------------------------------------------------------------------------------------
 SR = 48000
-DUR = 300.0
-N = int(SR * DUR)
+DEFAULT_DUR = 300.0
 PAD_SR = 12000                 # pads are rendered here, then upsampled x4
 PAD_UP = SR // PAD_SR
-N_PAD = N // PAD_UP
 PIANO_SR = 24000               # piano partials are rendered here, then upsampled x2
 SEED = 20260131
 BPM = 66.0
@@ -45,7 +59,18 @@ OUT_FILE = os.path.join(OUT_DIR, "music_bed.wav")
 TARGET_LUFS = -27.0
 PEAK_CEILING_DB = -6.5
 
+# set in main() from the requested duration
+DUR = DEFAULT_DUR
+N = int(SR * DUR)
+N_PAD = N // PAD_UP
+
 rng = np.random.default_rng(SEED)
+
+# storyboard timeline the score is written against (seconds)
+SB_CHAPTERS = {1: (0.0, 24.0), 2: (24.0, 53.0), 3: (53.0, 76.0), 4: (76.0, 108.0), 5: (108.0, 138.0),
+               6: (138.0, 168.0), 7: (168.0, 200.0), 8: (200.0, 242.0), 9: (242.0, 273.0), 10: (273.0, 300.0)}
+SB_MOMENTS = {"freeze": 15.0, "title": 19.0, "point_to": 100.5, "ux_lift": 160.0,
+              "checkout_tension": 224.0, "checkout_release": 227.0, "door_open": 289.5, "final_resolve": 293.0}
 
 
 def midi(m):
@@ -69,6 +94,67 @@ def n2m(name):
 
 def hz(name):
     return midi(n2m(name))
+
+
+# --------------------------------------------------------------------------------------
+# time map: storyboard seconds -> picture seconds
+# --------------------------------------------------------------------------------------
+class TimeMap:
+    def __init__(self, knots):
+        knots = sorted(knots)
+        self.sb = np.array([k[0] for k in knots], dtype=float)
+        self.ac = np.array([k[1] for k in knots], dtype=float)
+        if np.any(np.diff(self.sb) <= 0) or np.any(np.diff(self.ac) <= 0):
+            raise SystemExit("time map is not monotonic:\n" + self.table())
+        self.total = float(self.ac[-1])
+
+    def __call__(self, t):
+        return float(np.interp(t, self.sb, self.ac)) if np.isscalar(t) else np.interp(t, self.sb, self.ac)
+
+    def inv(self, t):
+        return float(np.interp(t, self.ac, self.sb))
+
+    def table(self):
+        return "\n".join(f"  storyboard {a:7.2f} s  ->  picture {b:7.2f} s" for a, b in zip(self.sb, self.ac))
+
+
+def build_timemap(sections_path=None, duration=None):
+    """
+    No sections: identity up to the final cards (293 s); the final-cards chapter stretches to
+    `duration` if one is given.  With sections: chapter starts by id + named moments are anchors.
+    """
+    if sections_path is None:
+        total = DEFAULT_DUR if duration is None else float(duration)
+        knots = [(0.0, 0.0), (293.0, 293.0), (300.0, total)] if total != 300.0 else [(0.0, 0.0), (300.0, 300.0)]
+        return TimeMap(knots)
+    with open(sections_path) as fh:
+        sec = json.load(fh)
+    total = float(sec.get("total", 0.0) or 0.0)
+    if duration is not None:
+        if total and abs(total - float(duration)) > 1e-3:
+            print(f"warning: --duration {duration} overrides sections total {total}", file=sys.stderr)
+        total = float(duration)
+    chapters = {int(c["id"]): (float(c["start"]), float(c["end"])) for c in sec.get("chapters", [])}
+    if not total:
+        total = max(e for _, e in chapters.values())
+    knots = [(0.0, 0.0)]
+    for cid, (s, e) in chapters.items():
+        if cid not in SB_CHAPTERS:
+            print(f"warning: unknown chapter id {cid} ignored", file=sys.stderr)
+            continue
+        if cid > 1:
+            knots.append((SB_CHAPTERS[cid][0], s))
+    knots.append((300.0, total))
+    for name, t in sec.get("moments", {}).items():
+        if name not in SB_MOMENTS:
+            print(f"warning: unknown moment '{name}' ignored", file=sys.stderr)
+            continue
+        knots.append((SB_MOMENTS[name], float(t)))
+    # de-duplicate storyboard anchors (a moment that coincides with a chapter start)
+    uniq = {}
+    for a, b in knots:
+        uniq[a] = b
+    return TimeMap(list(uniq.items()))
 
 
 # --------------------------------------------------------------------------------------
@@ -136,12 +222,21 @@ def peaking_sos(f0, gain_db, q, sr=SR):
     return np.array([[b0 / a0, b1 / a0, b2 / a0, 1.0, a1 / a0, a2 / a0]])
 
 
-def interp_env(points, n=N, sr=SR):
+def interp_env(points, n=None, sr=SR):
     """piecewise-linear envelope over the whole timeline from [(t, v), ...]"""
+    if n is None:
+        n = N
     ts = np.array([p[0] for p in points], dtype=float)
     vs = np.array([p[1] for p in points], dtype=float)
     t = np.arange(n) / sr
     return np.interp(t, ts, vs)
+
+
+def fit(x, n):
+    """trim or zero-pad along axis 0 to exactly n frames"""
+    if len(x) >= n:
+        return x[:n]
+    return np.concatenate([x, np.zeros((n - len(x),) + x.shape[1:], dtype=x.dtype)], axis=0)
 
 
 # --------------------------------------------------------------------------------------
@@ -349,12 +444,21 @@ def peak_limiter(x, ceiling_db=-6.5, look_ms=6.0, release_ms=120.0):
 # --------------------------------------------------------------------------------------
 # the score
 # --------------------------------------------------------------------------------------
-def main():
+def render(W, out_file):
+    """W maps storyboard seconds -> picture seconds; W.total is the output length"""
+    global DUR, N, N_PAD
+    DUR = W.total
+    N = int(round(SR * DUR))
+    N_PAD = (N + PAD_UP - 1) // PAD_UP
     t_start = time.time()
-    os.makedirs(OUT_DIR, exist_ok=True)
+    os.makedirs(os.path.dirname(os.path.abspath(out_file)), exist_ok=True)
 
     def lap(msg):
         print(f"[{time.time() - t_start:6.1f} s] {msg}", flush=True)
+
+    total = DUR
+    t_freeze = W(15.0)
+    end_cards = total - 0.5                        # the final chord ends here; zeros after it
 
     pad_lo = np.zeros((N_PAD, 2), dtype=np.float64)   # pads at 12 kHz
     piano_bus = np.zeros((N, 2), dtype=np.float32)
@@ -362,22 +466,22 @@ def main():
     sub_bus = np.zeros((N, 2), dtype=np.float32)
     misc_bus = np.zeros((N, 2), dtype=np.float32)      # arps, air, risers, room tone, realisation tone
 
-    # ---------------------------------------------------------------- 0. room tone (0-15)
-    n_rt = int(15.0 * SR)
+    # ---------------------------------------------------------------- 0. room tone (0 -> freeze)
+    n_rt = int(t_freeze * SR)
     rt = rng.standard_normal((n_rt, 2))
     rt = signal.sosfilt(butter_sos(160, "low", 2), rt, axis=0)
-    rt_env = smoothstep_env(n_rt, 1.5, 1.0)             # reaches zero exactly at 15.0 (the freeze)
+    rt_env = smoothstep_env(n_rt, 1.5, 1.0)             # reaches zero exactly at the freeze
     add_at(misc_bus, rt * rt_env[:, None], 0.0, gain=db(-20))   # ~ -62 dBFS after normalisation
 
-    # ---------------------------------------------------------------- 1. realisation tone 15.5-24.5
+    # ---------------------------------------------------------------- 1. realisation tone (freeze + 0.5 s)
     n_tone = int(9.0 * SR)
     tt = np.arange(n_tone) / SR
     tone = np.sin(2 * np.pi * hz("A3") * tt) + 0.25 * np.sin(2 * np.pi * hz("A4") * tt + 1.0)
     tone *= (0.9 + 0.1 * np.sin(2 * np.pi * 0.35 * tt))
     tone *= smoothstep_env(n_tone, 1.6, 4.0)
-    add_at(misc_bus, tone, 15.5, gain=db(-24))
+    add_at(misc_bus, tone, t_freeze + 0.5, gain=db(-24))
 
-    # ---------------------------------------------------------------- 2. chord map
+    # ---------------------------------------------------------------- 2. chord map (storyboard seconds)
     # Key path: D dorian/minor -> F major (76) -> C (160) -> G (168) -> D major (273):
     # the second half climbs the circle of fifths, and the film ends in the parallel major
     # of the key it began in.
@@ -442,34 +546,38 @@ def main():
         (273.0, 281.0, ["D2", "A2", "F#3", "E4"], P_FINAL, 1),        # D(add9)
         (281.0, 287.0, ["D2", "G3", "B3", "D4"], P_FINAL, 0),         # G/D   (plagal)
         (287.0, 293.0, ["D2", "A2", "F#3", "E4", "A4"], P_FINAL, 0),  # D(add9)
-        # ---- final cards 293-299.5 (faded by the master fade)
-        (293.0, 299.5, ["D2", "A2", "F#3", "E4"], P_FINAL, -2),
+        # ---- final cards 293 -> end (faded by the master fade)
+        (293.0, None, ["D2", "A2", "F#3", "E4"], P_FINAL, -2),
     ]
 
     lap("rendering pads")
     for (t0, t1, notes, p, lvl) in chords:
         att = p["attack"]
-        rel = 0.1 if t1 >= 299.0 else p["release"]
+        final = t1 is None
+        rel = 0.1 if final else p["release"]
+        a0 = W(t0)
+        a1 = end_cards if final else W(t1)
         lead = 0.35 * att                      # start a little early so the change lands on the cue
-        dur = (t1 - t0) + lead + rel
+        dur = (a1 - a0) + lead + rel
         for i, nm in enumerate(notes):
             f = hz(nm)
             g = db(lvl) * (1.0 if i < 2 else 0.75) * (0.8 if f > 400 else 1.0)
             voice = pad_note(f, dur, attack=att, release=rel, bright=p["bright"], nharm=p["nharm"],
                              detune=p["detune"], spread=p["spread"])
-            add_at(pad_lo, voice, t0 - lead, gain=g, sr=PAD_SR)
-    pad_bus = signal.resample_poly(pad_lo, PAD_UP, 1, axis=0)[:N].astype(np.float32)
+            add_at(pad_lo, voice, a0 - lead, gain=g, sr=PAD_SR)
+    pad_bus = fit(signal.resample_poly(pad_lo, PAD_UP, 1, axis=0), N).astype(np.float32)
     del pad_lo
 
     # ---------------------------------------------------------------- 3. sub drone
     lap("rendering sub")
-    sub_roots = [  # (time, root)  - glides over 0.4 s before each change
+    sub_roots = [  # (storyboard time, root)  - glides over 0.4 s before each change
         (19.0, "D1"), (53.0, "D1"), (76.0, "F1"), (84.0, "C2"), (92.0, "D1"), (100.0, "Bb1"),
         (108.0, "F1"), (115.5, "G1"), (123.0, "Bb1"), (130.5, "C2"), (138.0, "F1"), (160.0, "C2"),
         (168.0, "G1"), (176.0, "D2"), (184.0, "E1"), (192.0, "C2"), (200.0, "G1"), (208.0, "E1"),
         (216.0, "C2"), (224.0, "Ab1"), (227.0, "D2"), (231.5, "G1"), (236.5, "C2"), (242.0, "E1"),
-        (250.0, "C2"), (258.0, "G1"), (265.5, "A1"), (273.0, "D1"), (299.0, "D1"),
+        (250.0, "C2"), (258.0, "G1"), (265.5, "A1"), (273.0, "D1"),
     ]
+    sub_roots = [(W(tm), nm) for tm, nm in sub_roots] + [(total - 1.0, "D1")]
     pts = []
     for i, (tm, nm) in enumerate(sub_roots):
         if i > 0:
@@ -480,11 +588,12 @@ def main():
     t_all = np.arange(N) / SR
     sub = np.sin(phase) + 0.3 * np.sin(2 * phase + 0.5)      # a little 2nd harmonic for small speakers
     sub *= 0.88 + 0.12 * np.sin(2 * np.pi * 0.05 * t_all)
-    sub_env = interp_env([
+    sub_env_pts = [
         (0, 0), (19.0, 0), (24.0, 0.25), (30.0, 0.9), (53.0, 0.9), (56.0, 0.55), (74.0, 0.55),
         (76.0, 0.9), (108.0, 0.9), (138.0, 1.0), (168.0, 0.75), (200.0, 0.9), (224.0, 0.7),
-        (227.0, 0.9), (242.0, 0.9), (246.0, 0.45), (271.0, 0.45), (273.0, 0.9), (293.0, 0.8), (299.0, 0.0),
-    ])
+        (227.0, 0.9), (242.0, 0.9), (246.0, 0.45), (271.0, 0.45), (273.0, 0.9), (293.0, 0.8),
+    ]
+    sub_env = interp_env([(W(tm), v) for tm, v in sub_env_pts] + [(total - 1.0, 0.0)])
     sub_bus[:, 0] = (sub * sub_env * db(-15)).astype(np.float32)
     sub_bus[:, 1] = sub_bus[:, 0]
     del phase, sub, f_track, t_all
@@ -495,6 +604,7 @@ def main():
     MOTIF_T = [0.0, BEAT / 2, BEAT, 2 * BEAT]  # eighth, eighth, quarter, held
 
     def motif(t0, root_name, vel=0.55, stretch=1.0, full=False, pan_center=0.0):
+        base = W(t0)
         root = n2m(root_name)
         degs = list(MOTIF)
         times = list(MOTIF_T)
@@ -504,13 +614,13 @@ def main():
         for k, (d, tm) in enumerate(zip(degs, times)):
             v = vel * (0.85 + 0.15 * (k == len(degs) - 1))
             pan = pan_center + 0.12 * (k - 1.5)
-            add_at(piano_bus, felt_piano(midi(root + d), vel=v), t0 + tm * stretch, pan=pan)
+            add_at(piano_bus, felt_piano(midi(root + d), vel=v), base + tm * stretch, pan=pan)
 
     def note(t0, name, vel=0.45, pan=None):
         m = n2m(name)
         if pan is None:
             pan = float(np.clip((m - 64) / 30.0, -0.6, 0.6))
-        add_at(piano_bus, felt_piano(midi(m), vel=vel), t0, pan=pan)
+        add_at(piano_bus, felt_piano(midi(m), vel=vel), W(t0), pan=pan)
 
     # title reveal: the point motif appears
     motif(19.6, "D4", vel=0.55)
@@ -572,19 +682,24 @@ def main():
 
     # ---------------------------------------------------------------- 5. textures
     lap("rendering textures")
+
+    def ramp(tm, sb_pts, vals):
+        """gain ramp defined at storyboard times, evaluated at picture time tm"""
+        return float(np.interp(tm, [W(p) for p in sb_pts], vals))
+
     # 5a. distant machine pulse 24-53 (period = 2 beats, drifting slightly)
-    tm = 24.4
-    while tm < 52.5:
-        g = db(-30) * np.interp(tm, [24, 29, 48, 52.5], [0.0, 1.0, 1.0, 0.0]) * rng.uniform(0.8, 1.0)
+    tm = W(24.4)
+    while tm < W(52.5):
+        g = db(-30) * ramp(tm, [24, 29, 48, 52.5], [0.0, 1.0, 1.0, 0.0]) * rng.uniform(0.8, 1.0)
         add_at(pulse_bus, machine_thump(), tm, gain=g, pan=rng.uniform(-0.15, 0.15))
         tm += 2 * BEAT * rng.uniform(0.985, 1.015)
 
     # 5b. faint electronic sine arpeggio 55-75.5 (mono-ish)
     arp_pool = [n2m(x) for x in ["D5", "F5", "A5", "C6", "D6", "A5", "G5"]]
-    tm = 55.0
+    tm = W(55.0)
     k = 0
-    while tm < 75.3:
-        g = db(-33) * np.interp(tm, [55, 59, 72.5, 75.3], [0.0, 1.0, 1.0, 0.0])
+    while tm < W(75.3):
+        g = db(-33) * ramp(tm, [55, 59, 72.5, 75.3], [0.0, 1.0, 1.0, 0.0])
         m = arp_pool[(k * 3 + (k // 7)) % len(arp_pool)]
         if rng.uniform() < 0.82:
             add_at(misc_bus, sine_blip(midi(m), vel=0.5), tm, gain=g, pan=rng.uniform(-0.08, 0.08))
@@ -592,47 +707,48 @@ def main():
         k += 1
 
     # 5c. gentle rhythmic pulse 108-138 (soft 'tock' on beats, lighter on 2 & 4)
-    tm = 108.0
+    tm = W(108.0)
     b = 0
-    while tm < 137.6:
+    while tm < W(137.6):
         strength = 1.0 if b % 4 == 0 else (0.55 if b % 2 == 0 else 0.38)
-        g = db(-33) * strength * np.interp(tm, [108, 111, 135, 137.6], [0.0, 1.0, 1.0, 0.0])
+        g = db(-33) * strength * ramp(tm, [108, 111, 135, 137.6], [0.0, 1.0, 1.0, 0.0])
         add_at(pulse_bus, tick(freq=165.0), tm, gain=g, pan=0.18 * (1 if b % 2 else -1))
         tm += BEAT
         b += 1
 
     # 5d. the web: high air 138-168 (extra wide); a faint shimmer under the finale
-    add_at(misc_bus, air_noise(30.0), 138.0, gain=db(-8))
-    add_at(misc_bus, air_noise(16.0, lo=5000, hi=9000), 277.0, gain=db(-14))
+    add_at(misc_bus, air_noise(W(168.0) - W(138.0)), W(138.0), gain=db(-8))
+    add_at(misc_bus, air_noise(W(293.0) - W(277.0), lo=5000, hi=9000), W(277.0), gain=db(-14))
 
     # 5e. mobile: light pluck ostinato (dotted-eighth motion) + soft high ticks 168-200
     mob_chords = {168: ["G4", "B4", "D5", "A5"], 176: ["F#4", "A4", "D5", "E5"],
                   184: ["E4", "G4", "B4", "D5"], 192: ["E4", "G4", "C5", "D5"]}
-    tm = 168.0
+    tm = W(168.0)
     k = 0
-    while tm < 199.4:
-        base = 168 + 8 * int((tm - 168) // 8)
+    while tm < W(199.4):
+        sb = W.inv(tm)
+        base = int(np.clip(168 + 8 * int((sb - 168) // 8), 168, 192))
         pool = mob_chords[base]
         nm = pool[(k * 2 + k // 3) % len(pool)]
-        g = db(-31) * np.interp(tm, [168, 171, 197, 199.4], [0.0, 1.0, 1.0, 0.0])
+        g = db(-31) * ramp(tm, [168, 171, 197, 199.4], [0.0, 1.0, 1.0, 0.0])
         if rng.uniform() < 0.85:
             add_at(pulse_bus, soft_pluck(hz(nm), vel=0.5), tm, gain=g, pan=0.35 * np.sin(k * 1.3))
         tm += 0.75 * BEAT
         k += 1
-    tm = 168.0
+    tm = W(168.0)
     b = 0
-    while tm < 199.4:
-        g = db(-38) * (1.0 if b % 2 == 0 else 0.6) * np.interp(tm, [168, 171, 197, 199.4], [0, 1, 1, 0])
+    while tm < W(199.4):
+        g = db(-38) * (1.0 if b % 2 == 0 else 0.6) * ramp(tm, [168, 171, 197, 199.4], [0, 1, 1, 0])
         add_at(pulse_bus, tick(freq=520.0, dur=0.15, decay=0.03, noise_amt=0.5, noise_band=(1500, 4000)),
                tm, gain=g, pan=0.25 * (1 if b % 2 else -1))
         tm += BEAT / 2
         b += 1
 
     # 5f. UX vs UI: more present pulse 200-242 (quarter 'tock' + low pulse on 1 and 3), ducked at the tension
-    tm = 200.0
+    tm = W(200.0)
     b = 0
-    while tm < 241.6:
-        env_p = np.interp(tm, [200, 202, 223.5, 224.2, 227.0, 228.0, 240, 241.6], [0, 1, 1, 0.15, 0.15, 1, 1, 0])
+    while tm < W(241.6):
+        env_p = ramp(tm, [200, 202, 223.5, 224.2, 227.0, 228.0, 240, 241.6], [0, 1, 1, 0.15, 0.15, 1, 1, 0])
         strength = 1.0 if b % 4 == 0 else (0.6 if b % 2 == 0 else 0.42)
         add_at(pulse_bus, tick(freq=150.0, decay=0.08, noise_amt=0.25), tm,
                gain=db(-30) * strength * env_p, pan=0.15 * (1 if b % 2 else -1))
@@ -641,25 +757,27 @@ def main():
         tm += BEAT
         b += 1
 
-    # 5g. tension riser 224.0-226.9 (filtered noise swell + beating low tone), cut at the release
-    n_r = int(2.9 * SR)
+    # 5g. tension riser (checkout_tension -> checkout_release): filtered noise swell + beating low tone
+    r_dur = max(0.8, W(227.0) - W(224.0) - 0.1)
+    n_r = int(r_dur * SR)
     tr = np.arange(n_r) / SR
     nz = rng.standard_normal((n_r, 2))
     nz = signal.sosfilt(butter_sos([220, 1600], "band", 2), nz, axis=0)
-    rise = (tr / 2.9) ** 2.2
-    swell = rise * (1 - np.exp(-(2.9 - tr) / 0.05))
+    rise = (tr / r_dur) ** 2.2
+    swell = rise * (1 - np.exp(-(r_dur - tr) / 0.05))
     riser = nz * swell[:, None]
     beat_tone = np.sin(2 * np.pi * hz("D3") * tr) + np.sin(2 * np.pi * (hz("D3") * 1.012) * tr)
     riser[:, 0] += 0.5 * beat_tone * swell
     riser[:, 1] += 0.5 * beat_tone * swell
-    add_at(misc_bus, riser, 224.0, gain=db(-36))
+    add_at(misc_bus, riser, W(224.0), gain=db(-36))
 
     # ---------------------------------------------------------------- 6. mix
     lap("mixing")
-    width = interp_env([
+    width_pts = [
         (0, 0.6), (19, 0.6), (24, 0.85), (53, 0.85), (55, 0.35), (74, 0.35), (76, 0.95), (108, 1.0),
         (138, 1.0), (141, 1.25), (166, 1.25), (168, 1.0), (200, 0.9), (242, 0.8), (273, 1.15), (300, 1.15),
-    ]).astype(np.float32)
+    ]
+    width = interp_env([(W(tm), v) for tm, v in width_pts]).astype(np.float32)
 
     dry = pad_bus + piano_bus + pulse_bus + misc_bus
     mid = 0.5 * (dry[:, 0] + dry[:, 1])
@@ -692,20 +810,22 @@ def main():
     mix = signal.sosfilt(butter_sos(15000, "low", 2), mix, axis=0)              # nothing hissy above 15 k
 
     # the dynamic arc of the film (dB), smooth section-to-section level automation
-    arc_db = interp_env([
+    arc_pts = [
         (0, 0), (19, -2.0), (24, 0.0), (53, 0.0), (55, -2.5), (74, -2.5), (76, 0.5), (108, 0.5),
         (110, 0.5), (138, 0.8), (158, 0.8), (160, 1.8), (166, 1.8), (168, -0.5), (200, -0.5),
         (201, 1.0), (223.5, 1.0), (224.5, 0.0), (227.0, 0.0), (227.5, 1.2), (242, 1.2), (244, -2.5),
         (271, -2.5), (273, -0.5), (281, 1.8), (287, 0.5), (293, 0.0), (300, 0.0),
-    ])
+    ]
+    arc_db = interp_env([(W(tm), v) for tm, v in arc_pts])
     mix *= (10.0 ** (arc_db / 20.0))[:, None]
 
     # hard guarantees around the cues
-    mix[int(15.0 * SR):int(15.45 * SR)] = 0.0                                   # the freeze
-    fade = interp_env([(0, 1), (293.5, 1), (299.3, 0), (300, 0)])               # master fade
+    mix[int(t_freeze * SR):int((t_freeze + 0.45) * SR)] = 0.0                   # the freeze
+    fade_start = min(W(293.5), total - 1.5)
+    fade = interp_env([(0, 1), (fade_start, 1), (total - 0.7, 0), (total, 0)])   # master fade
     fade = np.where(fade > 0, 0.5 - 0.5 * np.cos(np.pi * fade), 0.0)
     mix *= fade[:, None]
-    mix[int(299.5 * SR):] = 0.0
+    mix[int(end_cards * SR):] = 0.0
     mix[:int(0.05 * SR)] *= np.linspace(0, 1, int(0.05 * SR))[:, None]
 
     # loudness normalisation + safety limiter
@@ -714,15 +834,27 @@ def main():
     mix *= gain
     mix, limited = peak_limiter(mix, PEAK_CEILING_DB)
     mix -= np.mean(mix, axis=0, keepdims=True)
-    mix[int(299.5 * SR):] = 0.0
+    mix[int(end_cards * SR):] = 0.0
     lufs_out = integrated_lufs(mix) if limited else TARGET_LUFS
     peak = np.max(np.abs(mix))
     print(f"pre-gain loudness {lufs:.2f} LUFS -> gain {20*np.log10(gain):+.2f} dB, limiter engaged: {limited}")
     print(f"result: {lufs_out:.2f} LUFS integrated, peak {20*np.log10(peak):.2f} dBFS, "
           f"{len(mix)} frames = {len(mix)/SR:.3f} s")
 
-    sf.write(OUT_FILE, mix.astype(np.float64), SR, subtype="PCM_24")
-    lap(f"wrote {OUT_FILE}")
+    sf.write(out_file, mix.astype(np.float64), SR, subtype="PCM_24")
+    lap(f"wrote {out_file}")
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--sections", help="sections.json from the locked picture (chapters by id + moments)")
+    ap.add_argument("--duration", type=float, help="output length in seconds (default: sections total, else 300.0)")
+    ap.add_argument("--out", default=OUT_FILE, help="output wav path")
+    args = ap.parse_args(argv)
+    W = build_timemap(args.sections, args.duration)
+    if args.sections or args.duration:
+        print("time map (storyboard -> picture):\n" + W.table())
+    render(W, args.out)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,65 @@
+{
+ "total": 303.0,
+ "chapters": [
+  {
+   "id": 1,
+   "start": 0,
+   "end": 27.8
+  },
+  {
+   "id": 2,
+   "start": 27.8,
+   "end": 56.5
+  },
+  {
+   "id": 3,
+   "start": 56.5,
+   "end": 79.9
+  },
+  {
+   "id": 4,
+   "start": 79.9,
+   "end": 111.2
+  },
+  {
+   "id": 5,
+   "start": 111.2,
+   "end": 141.0
+  },
+  {
+   "id": 6,
+   "start": 141.0,
+   "end": 171.3
+  },
+  {
+   "id": 7,
+   "start": 171.3,
+   "end": 203.6
+  },
+  {
+   "id": 8,
+   "start": 203.6,
+   "end": 245.9
+  },
+  {
+   "id": 9,
+   "start": 245.9,
+   "end": 276.0
+  },
+  {
+   "id": 10,
+   "start": 276.0,
+   "end": 303.0
+  }
+ ],
+ "moments": {
+  "freeze": 15.3,
+  "title": 21.9,
+  "point_to": 101.2,
+  "ux_lift": 163.4,
+  "checkout_tension": 228.1,
+  "checkout_release": 231.0,
+  "door_open": 291.4,
+  "final_resolve": 296.5
+ }
+}
