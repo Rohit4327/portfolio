@@ -179,13 +179,14 @@ export default {
     caps(ctx, 'Mid-1990s web page · fictional · reconstruction', 120, 128, { size: 18, color: PALETTE.gray, tracking: 3, alpha: capA });
     // annotation callouts, one at a time
     const items = [['Unclear links', this.anchors.links, 'L'], ['Crowded layout', this.anchors.crowded, 'R'], ['Poor readability', this.anchors.readability, 'L'], ['Confusing hierarchy', this.anchors.hierarchy, 'R']];
+    const edgeL = this.proj(scr, 0, 480, cam)[0], edgeR = this.proj(scr, 1280, 480, cam)[0];
     items.forEach(([label, a, side], i) => {
       const t0 = B.callouts[i]; const al = fadeIO(t, t0, t0 + B.calloutDur, 0.3, 0.3); if (al <= 0) return;
-      const [px, py] = this.proj(scr, a[0], a[1], cam); const grow = easeOut(seg(t, t0, t0 + 0.4));
-      const lx = side === 'L' ? 150 : W - 150; const ex = lerp(px, lx + (side === 'L' ? 40 : -40), grow);
+      const [px, py] = this.proj(scr, a[0], a[1], cam); const grow = easeOut(seg(t, t0, t0 + 0.45));
+      const endX = side === 'L' ? edgeL - 70 : edgeR + 70; const ex = lerp(px, endX, grow); const lx = endX + (side === 'L' ? -14 : 14);
       ctx.save(); ctx.globalAlpha = al; ctx.strokeStyle = PALETTE.cyan; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(ex, py); ctx.stroke();
       ctx.fillStyle = PALETTE.cyan; ctx.beginPath(); ctx.arc(px, py, 5, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(px, py, 11, 0, 7); ctx.stroke();
-      if (grow > 0.6) { const ta = (grow - 0.6) / 0.4; const tw = ctx.measureText ? 0 : 0; ctx.globalAlpha = al * ta; text(ctx, label, lx, py + 9, { size: 26, weight: 500, color: PALETTE.cyan, align: side === 'L' ? 'right' : 'left' }); }
+      if (grow > 0.6) { const ta = (grow - 0.6) / 0.4; ctx.globalAlpha = al * ta; text(ctx, label, lx, py + 9, { size: 26, weight: 500, color: PALETTE.cyan, align: side === 'L' ? 'right' : 'left' }); }
       ctx.restore();
     });
     // the keyboard-focus ring (the amber point as the era's mechanism)

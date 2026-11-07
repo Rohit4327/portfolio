@@ -117,7 +117,7 @@ export default {
     mk('phone', 1.25, 0.21, 0.43, 0.19, 0.4, 256, 540, 0.215);
 
     // ---- dimmer between the canvas and the accessibility panel ----
-    this.dimmer = new THREE.Mesh(new THREE.PlaneGeometry(14, 8), new THREE.MeshBasicMaterial({ color: 0x0D1016, transparent: true, opacity: 0, depthWrite: false })); this.dimmer.position.set(0, 1.3, 1.3); g.add(this.dimmer);
+    this.dimmer = new THREE.Mesh(new THREE.PlaneGeometry(14, 8), new THREE.MeshBasicMaterial({ color: 0x0D1016, transparent: true, opacity: 0, depthWrite: false })); this.dimmer.position.set(0, 1.3, 0.9); g.add(this.dimmer);
 
     // ---- the accessibility panel ----
     const pn = (this.panel = { group: new THREE.Group(), key: '' });
@@ -127,7 +127,7 @@ export default {
 
     // ---- spatial layers for the hand-off ----
     this.layers = [];
-    const L = [[-0.95, 1.6, 2.35, 0.55], [1.15, 1.55, 2.25, -0.55], [-0.7, 0.95, 1.35, 0.35], [0.95, 0.98, 1.1, -0.35], [0.15, 1.8, 0.7, 0.0], [-1.25, 1.25, 0.45, 0.6]];
+    const L = [[-0.85, 1.62, -0.15, 0.5], [1.05, 1.58, -0.3, -0.5], [-0.75, 0.9, -0.5, 0.35], [0.95, 0.95, -0.65, -0.35], [0.15, 1.9, -0.85, 0.0], [-1.3, 1.3, -0.95, 0.6]];
     L.forEach((p, i) => {
       const grp = new THREE.Group(); let mesh;
       if (i < 3) { const scr = makeScreen(0.8, 0.47, 512, 300); drawMessagePanel(scr.ctx, 512, 300, i); scr.update(); scr.material.transparent = true; scr.material.depthWrite = false; mesh = scr.mesh; grp.userData.mat = scr.material; }
@@ -224,10 +224,10 @@ export default {
     const markerY = PANEL.y + PANEL.h / 2 - 0.082, markerX = PANEL.x - PANEL.w / 2 + 0.05;
     V.set(lerp(dx, markerX, toPanel), lerp(dy, markerY, toPanel), lerp(0.1, PANEL.z + 0.03, toPanel));
     const toCentre = ease(t, B.layers + 0.2, this.end - 0.25, easeInOut);
-    V.lerp(new THREE.Vector3(PANEL.x, PANEL.y, PANEL.z + 0.6), toCentre);
+    V.lerp(new THREE.Vector3(PANEL.x, PANEL.y, PANEL.z + 0.45), toCentre);
     this.point.group.position.copy(V);
     const focusDip = fadeIO(t, B.focus, B.error, 0.3, 0.3); // the point lends itself to the focus ring
-    this.point.setIntensity(lerp(1, 0.25, focusDip) * (1 + 0.8 * toCentre)).setScale(1 + 0.4 * toPanel + 4.5 * easeIn(toCentre)).pulse(t, 0.08, 1.3);
+    this.point.setIntensity(lerp(1, 0.25, focusDip) * (1 + 0.8 * toCentre)).setScale(1 + 0.4 * toPanel + 2.2 * easeIn(toCentre)).pulse(t, 0.08, 1.3);
 
     // ---- spatial layers for the hand-off ----
     const lk = seg(t, B.layers, this.end - 0.3);

@@ -218,7 +218,7 @@ export function drawA11y(ctx, w, h, st, alphaIn = 1) {
     }
     case 'choice': {
       // two halves: helpful (left) vs manipulative (right). Quiet, not preachy.
-      const half = (w - 144 - 60) / 2, lx = 72, rx = 72 + half + 60, top = bodyY - 10, hh = h - top - 110;
+      const half = (w - 144 - 60) / 2, lx = 72, rx = 72 + half + 60, top = bodyY - 10, hh = 480;
       const kL = easeOut(seg(k, 0.1, 0.7)), kR = easeOut(seg(k, 0.9, 1.5)), kX = easeOutBack(seg(k, 2.6, 3.0));
       // left
       ctx.save(); ctx.globalAlpha = kL;
@@ -238,12 +238,13 @@ export function drawA11y(ctx, w, h, st, alphaIn = 1) {
       fillRoundRect(ctx, rx + 40, top + 220, half - 80, 112, 24, P.ivory); label(ctx, 'KEEP MY DISCOUNT', rx + half / 2, top + 290, { size: 36, weight: 700, color: P.graphite, align: 'center', tracking: 1 });
       label(ctx, 'no thanks', rx + half / 2, top + 384, { size: 15, weight: 400, color: '#3A4049', align: 'center' });
       ctx.restore();
+      label(ctx, 'The same decision — made easy, or made costly', 72, h - 150, { size: 24, weight: 400, color: P.gray, alpha: easeOut(seg(k, 1.8, 2.3)) });
       if (kX > 0) { ctx.save(); ctx.globalAlpha = clamp(kX); ctx.strokeStyle = P.gray; ctx.lineWidth = 3; const cx = rx + half - 36, cy = top + 10 - 8, r = 10 * kX; ctx.beginPath(); ctx.moveTo(cx - r, cy - r); ctx.lineTo(cx + r, cy + r); ctx.moveTo(cx + r, cy - r); ctx.lineTo(cx - r, cy + r); ctx.stroke(); ctx.restore(); }
       break;
     }
     case 'labels': {
       const icons = ['edit', 'delete', 'share', 'search'], names = ['Edit', 'Delete', 'Share', 'Search'];
-      const bw = 150, gap = 54, x0 = 72, y0 = bodyY + 90;
+      const bw = 150, gap = 54, x0 = (w - (bw * 4 + gap * 3)) / 2, y0 = bodyY + 150;
       icons.forEach((ic, i) => {
         const x = x0 + i * (bw + gap); fillRoundRect(ctx, x, y0, bw, bw, 30, INK.surface2, INK.line2, 1.5);
         ctx.save(); ctx.strokeStyle = P.ivory; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; const cx = x + bw / 2, cy = y0 + bw / 2;
@@ -262,7 +263,7 @@ export function drawA11y(ctx, w, h, st, alphaIn = 1) {
     case 'motion': {
       // a notification card with a bouncing badge; a Reduce-motion toggle flips at st.flip (seconds) and the bounce settles.
       const flipT = st.flip ?? 1.2, on = k >= flipT; const kf = easeInOut(seg(k, flipT, flipT + 0.35));
-      const cardX = 72, cardY = bodyY + 60, cardW = 760, cardH = 150;
+      const cardX = 72, cardY = bodyY + 120, cardW = 760, cardH = 150;
       fillRoundRect(ctx, cardX, cardY, cardW, cardH, 24, INK.surface2, INK.line2, 1.5);
       label(ctx, 'New comment on “Checkout flow”', cardX + 118, cardY + 66, { size: 26, weight: 500, color: P.ivory });
       label(ctx, 'Researcher · just now', cardX + 118, cardY + 102, { size: 20, weight: 400, color: P.gray });

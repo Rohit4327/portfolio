@@ -2,3 +2,7 @@
   synth  1.28s  A door stands before you.
   synth  1.89s  There is no clear handle, so you push.
   synth  0.51s  Nothing.
+  synth  0.54s  You pull.
+  synth  0.68s  It opens.
+  synth  0.88s  You feel foolish.
+  synth  1.62s  But what if the problem was never you?
