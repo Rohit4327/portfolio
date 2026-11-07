@@ -28,7 +28,7 @@ export function drawCard(ctx, w, h, kind, styled, sel = 0) {
   // tokens applied: hairline + title in ivory; wireframe: dashed gray outline
   const ink = k > 0.5 ? P.ivory : P.gray, accent = k > 0.5 ? P.cyan : P.gray2, dim = k > 0.5 ? P.gray : P.gray2;
   ctx.save(); roundRect(ctx, 1, 1, w - 2, h - 2, 25); ctx.strokeStyle = k > 0.5 ? `rgba(128,201,248,${0.25 + 0.6 * sel})` : INK.line2; ctx.lineWidth = k > 0.5 ? 2 : 1.5; if (k <= 0.5) ctx.setLineDash([10, 8]); ctx.stroke(); ctx.restore();
-  label(ctx, kind.toUpperCase(), 32, 46, { size: 17, weight: 600, color: dim, tracking: 3 });
+  label(ctx, kind.toUpperCase(), 32, 48, { size: 20, weight: 600, color: dim, tracking: 3 });
   const cx = w / 2, cy = h / 2 + 18;
   const wire = (x, y, ww, hh, r = 10) => { ctx.save(); roundRect(ctx, x, y, ww, hh, r); ctx.strokeStyle = INK.line2; ctx.lineWidth = 2; ctx.setLineDash([8, 6]); ctx.stroke(); ctx.restore(); };
   switch (kind) {
@@ -87,39 +87,40 @@ export const TOKEN_COLORS = [P.graphite3, P.ivory, P.cyan, P.amber, P.gray, P.gr
 export function drawTokens(ctx, w, h, glow = 0) {
   ctx.clearRect(0, 0, w, h);
   fillRoundRect(ctx, 0, 0, w, h, 28, INK.surface, `rgba(128,201,248,${0.18 + 0.5 * glow})`, 2);
-  label(ctx, 'DESIGN TOKENS', 36, 56, { size: 19, weight: 600, color: P.cyan, tracking: 3.5 });
-  label(ctx, 'Colour', 36, 118, { size: 17, weight: 600, color: P.gray, tracking: 2 });
-  TOKEN_COLORS.forEach((c, i) => { const x = 36 + (i % 3) * 150, y = 140 + Math.floor(i / 3) * 110; fillRoundRect(ctx, x, y, 120, 76, 14, c, INK.line2, 1); label(ctx, ['surface', 'text', 'accent', 'point', 'muted', 'hint'][i], x, y + 100, { size: 15, weight: 500, color: P.gray }); });
-  label(ctx, 'Type scale', 36, 420, { size: 17, weight: 600, color: P.gray, tracking: 2 });
-  [[56, 'Display'], [40, 'Title'], [28, 'Body'], [20, 'Caption']].forEach(([s, n], i) => { const y = 480 + [0, 70, 125, 168][i]; label(ctx, 'Aa', 36, y, { size: s, weight: i < 2 ? 300 : 400, color: P.ivory, family: i < 2 ? 'Inter Display' : 'Inter' }); label(ctx, `${n} · ${s}`, 180, y, { size: 16, weight: 400, color: P.gray }); });
-  label(ctx, 'Spacing', 36, 720, { size: 17, weight: 600, color: P.gray, tracking: 2 });
-  [8, 16, 24, 40, 64].forEach((s, i) => { const x = 36 + [0, 40, 88, 148, 236][i]; fillRoundRect(ctx, x, 820 - s, s, s, Math.min(6, s / 3), 'rgba(128,201,248,0.28)', 'rgba(128,201,248,0.7)', 1.5); label(ctx, String(s), x + s / 2, 850, { size: 14, weight: 500, color: P.gray, align: 'center' }); });
-  label(ctx, 'Radius 14 · Stroke 1.5', 36, 912, { size: 15, weight: 400, color: P.gray2 });
+  label(ctx, 'DESIGN TOKENS', 36, 58, { size: 22, weight: 600, color: P.cyan, tracking: 3.5 });
+  label(ctx, 'Colour', 36, 118, { size: 20, weight: 600, color: P.gray, tracking: 2 });
+  TOKEN_COLORS.forEach((c, i) => { const x = 36 + (i % 3) * 150, y = 140 + Math.floor(i / 3) * 110; fillRoundRect(ctx, x, y, 120, 76, 14, c, INK.line2, 1); label(ctx, ['surface', 'text', 'accent', 'point', 'muted', 'hint'][i], x, y + 102, { size: 19, weight: 500, color: P.gray }); });
+  label(ctx, 'Type scale', 36, 420, { size: 20, weight: 600, color: P.gray, tracking: 2 });
+  [[56, 'Display'], [40, 'Title'], [28, 'Body'], [20, 'Caption']].forEach(([s, n], i) => { const y = 480 + [0, 70, 125, 168][i]; label(ctx, 'Aa', 36, y, { size: s, weight: i < 2 ? 300 : 400, color: P.ivory, family: i < 2 ? 'Inter Display' : 'Inter' }); label(ctx, `${n} · ${s}`, 180, y, { size: 20, weight: 400, color: P.gray }); });
+  label(ctx, 'Spacing', 36, 720, { size: 20, weight: 600, color: P.gray, tracking: 2 });
+  [8, 16, 24, 40, 64].forEach((s, i) => { const x = 36 + [0, 40, 88, 148, 236][i]; fillRoundRect(ctx, x, 820 - s, s, s, Math.min(6, s / 3), 'rgba(128,201,248,0.28)', 'rgba(128,201,248,0.7)', 1.5); label(ctx, String(s), x + s / 2, 852, { size: 18, weight: 500, color: P.gray, align: 'center' }); });
+  label(ctx, 'Radius 14 · Stroke 1.5', 36, 914, { size: 19, weight: 400, color: P.gray2 });
 }
 
 // ---------- device screens (consistent layout assembled with progress k 0..1) ----------
 // kind: 'phone' | 'tablet' | 'desktop'. Width/height are texture px.
 export function drawDeviceScreen(ctx, w, h, kind, k) {
   ctx.clearRect(0, 0, w, h); ctx.fillStyle = P.graphite; ctx.fillRect(0, 0, w, h);
-  const step = (i, n = 6) => easeOut(seg(k, i / n, (i + 1) / n)); // staggered element reveal
-  const pad = kind === 'phone' ? 28 : 40, s = kind === 'phone' ? 1 : kind === 'tablet' ? 1.15 : 1.25;
-  const navH = 56 * s;
+  const step = (i, n = 7) => easeOut(seg(k, i / n, (i + 1) / n)); // staggered element reveal
+  const phone = kind === 'phone', pad = phone ? 28 : 40, s = 1;
+  const navH = 56;
   // 0 nav bar
-  let a = step(0); if (a > 0) { ctx.save(); ctx.globalAlpha = a; fillRoundRect(ctx, pad, pad, w - pad * 2, navH, 14 * s, INK.surface2); ctx.fillStyle = P.cyan; ctx.beginPath(); ctx.arc(pad + navH / 2, pad + navH / 2, 9 * s, 0, Math.PI * 2); ctx.fill();
-    if (kind !== 'phone') ['Home', 'Library', 'Teams'].forEach((t, i) => label(ctx, t, pad + navH + 10 + i * 96 * s, pad + navH / 2 + 7 * s, { size: 18 * s, weight: i === 0 ? 600 : 400, color: i === 0 ? P.ivory : P.gray }));
+  let a = step(0); if (a > 0) { ctx.save(); ctx.globalAlpha = a; fillRoundRect(ctx, pad, pad, w - pad * 2, navH, 14, INK.surface2); ctx.fillStyle = P.cyan; ctx.beginPath(); ctx.arc(pad + navH / 2, pad + navH / 2, 9, 0, Math.PI * 2); ctx.fill();
+    if (!phone) ['Home', 'Library', 'Teams'].forEach((t, i) => label(ctx, t, pad + navH + 10 + i * 96, pad + navH / 2 + 7, { size: 18, weight: i === 0 ? 600 : 400, color: i === 0 ? P.ivory : P.gray }));
     else { ctx.fillStyle = P.ivory; for (let i = 0; i < 3; i++) ctx.fillRect(w - pad - 34, pad + navH / 2 - 9 + i * 8, 22, 2.5); }
     ctx.restore(); }
   // 1 title
-  a = step(1); if (a > 0) { label(ctx, 'Library', pad, pad + navH + 62 * s, { size: 36 * s, weight: 300, family: 'Inter Display', color: P.ivory, alpha: a }); label(ctx, 'Shared components, one source', pad, pad + navH + 94 * s, { size: 17 * s, weight: 400, color: P.gray, alpha: a }); }
-  // 2 cards row (1 on phone, 2 on tablet, 3 on desktop)
-  const y0 = pad + navH + 124 * s, n = kind === 'phone' ? 1 : kind === 'tablet' ? 2 : 3, gap = 18 * s, cw = (w - pad * 2 - gap * (n - 1)) / n, ch = 118 * s;
-  for (let i = 0; i < n; i++) { a = step(2 + Math.min(i, 1), 7) * (i === 2 ? step(3, 7) : 1); if (a <= 0) continue; const x = pad + i * (cw + gap); ctx.save(); ctx.globalAlpha = a; fillRoundRect(ctx, x, y0, cw, ch, 14 * s, INK.surface2); fillRoundRect(ctx, x + 16 * s, y0 + 18 * s, 52 * s, 52 * s, 12 * s, 'rgba(128,201,248,0.3)'); const tw1 = Math.max(40 * s, cw - 110 * s), tw2 = Math.max(28 * s, cw - 150 * s); fillRoundRect(ctx, x + 84 * s, y0 + 26 * s, tw1, 12 * s, 6 * s, P.ivory); fillRoundRect(ctx, x + 84 * s, y0 + 50 * s, tw2, 10 * s, 5 * s, P.gray); fillRoundRect(ctx, x + 16 * s, y0 + 86 * s, 70 * s, 20 * s, 10 * s, 'rgba(128,201,248,0.18)'); ctx.restore(); }
-  // 3 input
-  const yi = y0 + ch + 30 * s; a = step(4, 7); if (a > 0) { ctx.save(); ctx.globalAlpha = a; label(ctx, 'Email', pad, yi, { size: 16 * s, weight: 500, color: P.ivory }); fillRoundRect(ctx, pad, yi + 12 * s, Math.min(w - pad * 2, 420 * s), 48 * s, 12 * s, INK.surface2, INK.line2, 1.5); label(ctx, 'name@example.com', pad + 18 * s, yi + 44 * s, { size: 17 * s, weight: 400, color: P.gray }); ctx.restore(); }
-  // 4 button
-  a = step(5, 7); if (a > 0) { ctx.save(); ctx.globalAlpha = a; const bw = kind === 'phone' ? w - pad * 2 : 200 * s; fillRoundRect(ctx, pad, yi + 80 * s, bw, 52 * s, 26 * s, P.cyan); label(ctx, 'Continue', pad + bw / 2, yi + 114 * s, { size: 19 * s, weight: 600, color: P.graphite, align: 'center' }); ctx.restore(); }
-  // 5 toggle row
-  a = step(6, 7); if (a > 0 && (kind !== 'phone' || h > yi + 200 * s)) { ctx.save(); ctx.globalAlpha = a; const yt = yi + 170 * s; label(ctx, 'Notifications', pad, yt + 8 * s, { size: 17 * s, weight: 500, color: P.ivory }); const tx = pad + 150 * s; fillRoundRect(ctx, tx, yt - 12 * s, 56 * s, 32 * s, 16 * s, P.cyan); ctx.fillStyle = P.graphite; ctx.beginPath(); ctx.arc(tx + 40 * s, yt + 4 * s, 12 * s, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+  a = step(1); if (a > 0) { label(ctx, 'Library', pad, pad + navH + 62, { size: 36, weight: 300, family: 'Inter Display', color: P.ivory, alpha: a }); label(ctx, 'Shared components, one source', pad, pad + navH + 94, { size: 17, weight: 400, color: P.gray, alpha: a }); }
+  // 2–3 cards row (1 on phone, 2 on tablet, 3 on desktop)
+  const y0 = pad + navH + 124, n = phone ? 1 : kind === 'tablet' ? 2 : 3, gap = 18, cw = (w - pad * 2 - gap * (n - 1)) / n, ch = 112;
+  for (let i = 0; i < n; i++) { a = step(2 + Math.min(i, 1)); if (a <= 0) continue; const x = pad + i * (cw + gap); ctx.save(); ctx.globalAlpha = a; fillRoundRect(ctx, x, y0, cw, ch, 14, INK.surface2); fillRoundRect(ctx, x + 16, y0 + 18, 52, 52, 12, 'rgba(128,201,248,0.3)'); const tw1 = Math.max(40, cw - 110), tw2 = Math.max(28, cw - 150); fillRoundRect(ctx, x + 84, y0 + 26, tw1, 12, 6, P.ivory); fillRoundRect(ctx, x + 84, y0 + 50, tw2, 10, 5, P.gray); fillRoundRect(ctx, x + 16, y0 + 84, 70, 18, 9, 'rgba(128,201,248,0.18)'); ctx.restore(); }
+  // 4 input (+ 5 button: stacked on phone, side by side otherwise)
+  const yi = y0 + ch + 34, iw = phone ? w - pad * 2 : 300;
+  a = step(4); if (a > 0) { ctx.save(); ctx.globalAlpha = a; label(ctx, 'Email', pad, yi, { size: 16, weight: 500, color: P.ivory }); fillRoundRect(ctx, pad, yi + 12, iw, 48, 12, INK.surface2, INK.line2, 1.5); label(ctx, 'name@example.com', pad + 18, yi + 44, { size: 17, weight: 400, color: P.gray }); ctx.restore(); }
+  a = step(5); if (a > 0) { ctx.save(); ctx.globalAlpha = a; const bw = phone ? w - pad * 2 : 170, bx = phone ? pad : pad + iw + 18, by = phone ? yi + 80 : yi + 10; fillRoundRect(ctx, bx, by, bw, 52, 26, P.cyan); label(ctx, 'Continue', bx + bw / 2, by + 34, { size: 19, weight: 600, color: P.graphite, align: 'center' }); ctx.restore(); }
+  // 6 toggle row where it fits
+  const yt = phone ? yi + 170 : yi + 112;
+  a = step(6); if (a > 0 && h > yt + 36) { ctx.save(); ctx.globalAlpha = a; label(ctx, 'Notifications', pad, yt + 8, { size: 17, weight: 500, color: P.ivory }); const tx = pad + 150; fillRoundRect(ctx, tx, yt - 12, 56, 32, 16, P.cyan); ctx.fillStyle = P.graphite; ctx.beginPath(); ctx.arc(tx + 40, yt + 4, 12, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
 }
 
 // ---------- cursor + role label (256 x 96) ----------
@@ -163,21 +164,21 @@ export function drawA11y(ctx, w, h, st, alphaIn = 1) {
   const { idea, k } = st;
   const title = IDEA_TITLE[idea] || '';
   const tA = clamp(k / 0.35);
-  label(ctx, title, 72, 92, { size: 26, weight: 600, color: P.cyan, tracking: 4.5, alpha: tA });
-  ctx.fillStyle = 'rgba(128,201,248,0.35)'; ctx.fillRect(72, 112, 220 * easeOut(tA), 2);
+  label(ctx, title, 112, 92, { size: 26, weight: 600, color: P.cyan, tracking: 4.5, alpha: tA });
+  ctx.fillStyle = 'rgba(128,201,248,0.35)'; ctx.fillRect(112, 112, 220 * easeOut(tA), 2);
   const bodyY = 180;
   switch (idea) {
     case 'text': {
       // phase A (0–1.5 s): tiny text on long lines becomes larger text on a comfortable measure.
       // phase B (1.5–2.4 s): a low-contrast grey line becomes readable ivory.
       const kA = easeInOut(seg(k, 0.25, 1.45)), kB = easeInOut(seg(k, 1.7, 2.4));
-      const size = lerp(21, 34, kA), measure = lerp(w - 144, 760, kA), lh = lerp(1.18, 1.5, kA);
-      const words = LOREM.join(' ').split(' '); let line = '', y = bodyY + 60; const lines = [];
+      const size = lerp(22, 40, kA), measure = lerp(w - 144, 900, kA), lh = lerp(1.18, 1.5, kA);
+      const words = LOREM.join(' ').split(' '); let line = '', y = bodyY + 90; const lines = [];
       ctx.font = F(400, size); for (const wd of words) { const test = line ? line + ' ' + wd : wd; if (ctx.measureText(test).width > measure && line) { lines.push(line); line = wd; } else line = test; } if (line) lines.push(line);
       lines.forEach((l, i) => label(ctx, l, 72, y + i * size * lh, { size, weight: 400, color: P.ivory }));
       const yc = y + lines.length * size * lh + 30;
       const grey = [lerp(72, 246, kB), lerp(76, 242, kB), lerp(84, 232, kB)].map(Math.round);
-      label(ctx, 'Order no. 48213 · Placed 14 May', 72, yc + 20, { size: lerp(18, 26, kA), weight: 400, color: `rgb(${grey.join(',')})` });
+      label(ctx, 'Order no. 48213 · Placed 14 May', 72, yc + 30, { size: lerp(19, 28, kA), weight: 400, color: `rgb(${grey.join(',')})` });
       // measure rule + annotation
       const ann = seg(k, 0.9, 1.5) * (1 - seg(k, 1.6, 2.0));
       if (ann > 0) { ctx.save(); ctx.globalAlpha = ann; ctx.strokeStyle = P.cyan; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(72, h - 170); ctx.lineTo(72 + measure, h - 170); ctx.stroke(); for (const x of [72, 72 + measure]) { ctx.beginPath(); ctx.moveTo(x, h - 182); ctx.lineTo(x, h - 158); ctx.stroke(); } label(ctx, 'about 60–70 characters per line', 72 + measure / 2, h - 186, { size: 22, weight: 500, color: P.cyan, align: 'center' }); ctx.restore(); }

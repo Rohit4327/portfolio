@@ -72,8 +72,8 @@ export function makeToggle() {
   const nut = cylinder(0.0128, 0.0128, 0.006, MAT.brushed, 6); nut.rotation.x = Z90; nut.position.z = 0.005; g.add(nut);
   const bush = cylinder(0.0072, 0.0072, 0.007, MAT.steel, 24); bush.rotation.x = Z90; bush.position.z = 0.0105; g.add(bush);
   const pivot = new THREE.Group(); pivot.position.z = 0.012; g.add(pivot);
-  const bat = cylinder(0.0046, 0.0028, 0.03, MAT.steel, 20); bat.rotation.x = Z90; bat.position.z = 0.015; pivot.add(bat);
-  const tip = sphere(0.0052, MAT.steel, 16); tip.position.z = 0.03; pivot.add(tip);
+  const bat = cylinder(0.0046, 0.0028, 0.034, MAT.steel, 20); bat.rotation.x = Z90; bat.position.z = 0.017; pivot.add(bat);
+  const tip = sphere(0.0052, MAT.steel, 16); tip.position.z = 0.034; pivot.add(tip);
   g.userData.pivot = pivot; return g;
 }
 // ---------- indicator lamp ----------

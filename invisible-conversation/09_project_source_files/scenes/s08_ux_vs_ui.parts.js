@@ -161,11 +161,10 @@ function nav(ctx, S) {
     for (const [i, it] of items.entries()) { const cur = i === 0; tx(ctx, it, x, 46, { size: 18, weight: cur ? 600 : 500, color: cur ? INK : INK2 }); if (cur) { ctx.fillStyle = INK; ctx.fillRect(x, 56, measure(ctx, it, { size: 18, weight: 600 }), 1.5); } x += measure(ctx, it, { size: 18, weight: 500 }) + 44; }
   } else {
     tx(ctx, S.view === 'checkout' ? (S.redesign ? 'Checkout · 2 steps' : 'Checkout') : '', 660, 46, { size: 18, weight: 600, align: 'center' });
-    lockGlyph(ctx, 1178, 40); tx(ctx, 'Secure', 1192, 46, { size: 18, color: INK2 });
+    lockGlyph(ctx, 1108, 40); tx(ctx, 'Secure checkout', 1124, 46, { size: 18, color: INK2 });
   }
-  if (S.view === 'pdp') searchGlyph(ctx, L.nav.search.x, L.nav.search.y);
-  bagGlyph(ctx, L.nav.bag.x, L.nav.bag.y);
-  if (S.bag > 0) { const b = L.nav.bag; const pop = 1 + 0.25 * Math.sin(Math.PI * clamp(S.bagK ?? 1)); ctx.save(); ctx.translate(b.x + 13, b.y - 11); ctx.scale(pop, pop); ctx.fillStyle = PALETTE.amber; ctx.beginPath(); ctx.arc(0, 0, 11, 0, Math.PI * 2); ctx.fill(); tx(ctx, String(S.bag), 0, 5.5, { size: 15, weight: 700, align: 'center' }); ctx.restore(); }
+  if (S.view === 'pdp') { searchGlyph(ctx, L.nav.search.x, L.nav.search.y); bagGlyph(ctx, L.nav.bag.x, L.nav.bag.y); }
+  if (S.bag > 0 && S.view === 'pdp') { const b = L.nav.bag; const pop = 1 + 0.25 * Math.sin(Math.PI * clamp(S.bagK ?? 1)); ctx.save(); ctx.translate(b.x + 13, b.y - 11); ctx.scale(pop, pop); ctx.fillStyle = PALETTE.amber; ctx.beginPath(); ctx.arc(0, 0, 11, 0, Math.PI * 2); ctx.fill(); tx(ctx, String(S.bag), 0, 5.5, { size: 15, weight: 700, align: 'center' }); ctx.restore(); }
   hairline(ctx, 0, h, SW);
 }
 
@@ -177,7 +176,7 @@ function pdp(ctx, S) {
   tx(ctx, 'Aurora Table Lamp', c.x, P.titleY, { size: 44, weight: 500, family: 'Inter Display' });
   tx(ctx, '€89', c.x, P.priceY, { size: 28, weight: 500 });
   if (S.redesign) { truckGlyph(ctx, c.x + 10, P.deliveryY - 6); tx(ctx, 'Delivery €14.90 · 2–3 days', c.x + 30, P.deliveryY, { size: 19, weight: 500 }); }
-  tx(ctx, 'Hand-blown opal glass on a turned oak base.', c.x, P.descY, { size: 19, color: INK2, weight: 400 });
+  tx(ctx, 'Hand-blown opal glass on a blackened steel base.', c.x, P.descY, { size: 19, color: INK2, weight: 400 });
   tx(ctx, 'Warm, dimmable light for evenings in.', c.x, P.descY + 28, { size: 19, color: INK2, weight: 400 });
   tx(ctx, 'Colour — Opal', c.x, P.colourY, { size: 18, color: INK2 });
   const sw = [[PAPER2, 'rgba(13,16,22,0.25)'], [INK, null], [PALETTE.beige2, null]];

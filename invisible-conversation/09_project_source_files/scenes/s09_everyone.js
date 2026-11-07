@@ -11,7 +11,7 @@ import { ROLES, CARD_KINDS, drawCard, drawTokens, drawDeviceScreen, drawCursor, 
 
 const CH = 9;
 const V = new THREE.Vector3();
-const BOARD = { x: 0.1, y: 1.35, w: 3.9, h: 1.7 };
+const BOARD = { x: 0.1, y: 1.36, w: 3.9, h: 1.5 };
 const CARD = { w: 0.64, h: 0.4 };
 const PANEL = { x: 0.1, y: 1.3, z: 1.9, w: 1.44, h: 0.96 };
 const cardPos = (j) => ({ x: -0.4 + (j % 4) * 0.7, y: j < 4 ? 1.62 : 1.1 });
@@ -67,7 +67,7 @@ export default {
 
     rig(g, { key: [2.5, 5, 4.5], keyI: 1.6, keyColor: 0xf3f0ff, fill: [-4, 2.5, 3.5], fillI: 0.35, fillColor: 0xbfe0ff, rim: [0, 3, -5], rimI: 0.8, ambient: 0.16 });
     this.keyLight = new THREE.PointLight(0x80C9F8, 0.9, 9, 1.4); this.keyLight.position.set(0.2, 2.4, 2.4); g.add(this.keyLight);
-    g.add(floor(40, mat.graphite({ roughness: 0.32, metalness: 0.35 })));
+    g.add(floor(40, mat.graphite({ roughness: 0.38, metalness: 0.2 })));
 
     // ---- the canvas board: dark slab with a faint dot grid ----
     const grid = document.createElement('canvas'); grid.width = grid.height = 128; const gx = grid.getContext('2d'); gx.fillStyle = '#10141b'; gx.fillRect(0, 0, 128, 128); gx.fillStyle = 'rgba(246,242,232,0.16)'; gx.beginPath(); gx.arc(64, 64, 2, 0, 7); gx.fill();
@@ -156,7 +156,7 @@ export default {
     // ---- camera ----
     const K = [
       [this.start, 0.1, 1.45, 4.6, 0.1, 1.35, 0], [B.devices - 0.2, 0.3, 1.5, 4.3, 0.2, 1.3, 0],
-      [B.assemble + 1.3, 0.35, 1.0, 3.3, 0.2, 0.55, 0.75], [B.a11yIn - 0.3, -0.2, 1.5, 5.0, 0.2, 1.1, 0.3],
+      [B.assemble + 1.3, 0.35, 1.15, 3.5, 0.2, 0.7, 0.75], [B.a11yIn - 0.3, -0.1, 1.75, 5.7, 0.2, 1.1, 0.3],
       [B.text, PANEL.x, PANEL.y, PANEL.z + 1.8, PANEL.x, PANEL.y, PANEL.z], [B.layers, PANEL.x + 0.06, PANEL.y + 0.04, PANEL.z + 1.76, PANEL.x, PANEL.y, PANEL.z],
       [this.end, PANEL.x, PANEL.y, PANEL.z + 2.0, PANEL.x, PANEL.y, PANEL.z],
     ];
@@ -195,11 +195,11 @@ export default {
       const k = ease(t, B.assemble + i * 0.12, B.assemble + 2.2 + i * 0.12, easeOut); const key = String(Math.round(k * 48));
       if (key !== d.key) { d.key = key; drawDeviceScreen(d.screen.ctx, d.screen.pxW, d.screen.pxH, d.kind, k); d.screen.update(); }
     });
-    this.keyLight.intensity = 0.9 + 1.2 * rise;
+    this.keyLight.intensity = 0.9 + 0.5 * rise;
 
     // ---- the canvas recedes behind a dimmer; the accessibility panel comes forward ----
-    const dim = ease(t, B.a11yIn + 0.2, B.text - 0.2); this.dimmer.material.opacity = 0.82 * dim; this.dimmer.visible = dim > 0;
-    const pIn = ease(t, B.a11yIn + 0.4, B.text - 0.1, easeOut), pOut = ease(t, B.layers, B.layers + 0.8);
+    const dim = ease(t, B.a11yIn, B.a11yIn + 1.4); this.dimmer.material.opacity = 0.82 * dim; this.dimmer.visible = dim > 0;
+    const pIn = ease(t, B.a11yIn + 0.5, B.a11yIn + 1.7, easeOut), pOut = ease(t, B.layers, B.layers + 0.8);
     const pA = pIn * (1 - pOut);
     this.panel.group.visible = pA > 0.001;
     this.panel.group.position.set(PANEL.x, lerp(PANEL.y - 0.35, PANEL.y, pIn), lerp(PANEL.z - 0.6, PANEL.z, pIn) + 0.5 * easeIn(pOut));
@@ -221,7 +221,7 @@ export default {
     // ---- amber point: Designer's cursor → the panel's idea marker → centre for the bloom ----
     const [dx, dy] = this.cursorPos(0, t);
     const toPanel = ease(t, B.a11yIn + 0.3, B.text - 0.2);
-    const markerY = PANEL.y + PANEL.h / 2 - 0.085, markerX = PANEL.x - PANEL.w / 2 + 0.045;
+    const markerY = PANEL.y + PANEL.h / 2 - 0.082, markerX = PANEL.x - PANEL.w / 2 + 0.05;
     V.set(lerp(dx, markerX, toPanel), lerp(dy, markerY, toPanel), lerp(0.1, PANEL.z + 0.03, toPanel));
     const toCentre = ease(t, B.layers + 0.2, this.end - 0.25, easeInOut);
     V.lerp(new THREE.Vector3(PANEL.x, PANEL.y, PANEL.z + 0.6), toCentre);

@@ -17,9 +17,9 @@ export const M = {
   lampAmber: () => mat.emissive(0xffb86a, 1.4),
   lampGreen: () => mat.emissive(0x9fffb0, 1.1),
   tube: () => mat.emissive(0xe6f5ee, 2.2),
-  tape: () => mat.std(0x3a2a1e, { roughness: 0.4, metalness: 0.3 }),
-  flange: () => mat.std(0x15181b, { roughness: 0.3, metalness: 0.6 }),
-  glass: () => mat.std(0x0b1210, { roughness: 0.12, metalness: 0.7 }),
+  tape: () => mat.std(0x4a3626, { roughness: 0.45, metalness: 0.25 }),
+  flange: () => mat.std(0x454b52, { roughness: 0.35, metalness: 0.5 }),
+  glass: () => mat.std(0x141c1a, { roughness: 0.2, metalness: 0.5 }),
   desk: () => mat.std(0x7f8d87, { roughness: 0.5, metalness: 0.05 }),
   housing: () => mat.std(0xb8b3a5, { roughness: 0.6 }),
   bezel: () => mat.std(0x2b2926, { roughness: 0.5 }),
@@ -102,7 +102,7 @@ export function makeTapeDrive(seed = 0) {
     const flange = cylinder(0.14, 0.14, 0.012, M.flange(), 40); flange.rotation.x = Math.PI / 2; r.add(flange);
     const tr = sx < 0 ? 0.118 : 0.075; const tape = cylinder(tr, tr, 0.034, M.tape(), 36); tape.rotation.x = Math.PI / 2; tape.position.z = 0.012; r.add(tape);
     const hub = cylinder(0.034, 0.034, 0.05, mat.brushed(), 24); hub.rotation.x = Math.PI / 2; hub.position.z = 0.02; r.add(hub);
-    for (let i = 0; i < 3; i++) { const s = box(0.21, 0.014, 0.004, mat.ivory({ roughness: 0.5 })); s.rotation.z = i * Math.PI / 3 + (sx < 0 ? 0.3 : 0.9); s.position.z = 0.0085; r.add(s); }
+    for (let i = 0; i < 3; i++) { const s = box(0.21, 0.014, 0.004, mat.ivory({ roughness: 0.5 })); s.rotation.z = i * Math.PI / 3 + (sx < 0 ? 0.3 : 0.9); s.position.z = 0.031; r.add(s); }
     g.add(r); reels.push(r);
   }
   // tape path across the top + two guide rollers + vacuum columns
@@ -125,7 +125,7 @@ export function makeCardReader() {
   const hop = new THREE.Group(); hop.position.set(-0.3, h + 0.07, 0.02); hop.rotation.x = -deg(22); g.add(hop);
   const tray = box(0.24, 0.012, 0.12, M.panel()); tray.position.y = -0.006; hop.add(tray);
   for (const sx of [-1, 1]) { const rail = box(0.012, 0.09, 0.12, M.bezel()); rail.position.set(sx * 0.115, 0.04, 0); hop.add(rail); }
-  const deckIn = makeDeck(0.06); hop.add(deckIn);
+  const deckIn = makeDeck(0.09); hop.add(deckIn);
   const weight = box(0.16, 0.012, 0.07, M.bezel()); hop.add(weight);
   // throat / slot in the middle
   const slot = box(0.21, 0.006, 0.09, M.plinth()); slot.position.set(-0.05, h + 0.075, 0.02); g.add(slot);
@@ -134,7 +134,7 @@ export function makeCardReader() {
   const stk = new THREE.Group(); stk.position.set(0.3, h + 0.07, 0.02); g.add(stk);
   const tray2 = box(0.24, 0.012, 0.12, M.panel()); tray2.position.y = -0.006; stk.add(tray2);
   for (const sx of [-1, 1]) { const rail = box(0.012, 0.07, 0.12, M.bezel()); rail.position.set(sx * 0.115, 0.03, 0); stk.add(rail); }
-  const deckOut = makeDeck(0.06); stk.add(deckOut);
+  const deckOut = makeDeck(0.09); stk.add(deckOut);
   // moving card
   const card = makeCard(); card.rotation.x = -Math.PI / 2; g.add(card);
   // control buttons on the front
@@ -143,15 +143,14 @@ export function makeCardReader() {
   const api = { group: g, deckIn, deckOut, card, weight, hop, stk };
   // k = fraction fed (0..1); phase = card in flight (0..1) or -1 for none
   api.setFeed = (k, phase) => {
-    const hIn = 0.06 * (1 - k), hOut = 0.06 * k;
+    const hIn = 0.09 * (1 - k), hOut = 0.09 * k;
     deckIn.setHeight(hIn); weight.position.y = hIn + 0.008;
     deckOut.setHeight(hOut); deckOut.visible = hOut > 0.003;
     if (phase < 0) { card.visible = false; return; }
     card.visible = true;
     // from the hopper throat to the stacker: a short arc
-    const x = lerp(-0.17, 0.2, phase), y = h + 0.085 + Math.sin(phase * Math.PI) * 0.03 + 0.004, z = 0.02;
-    card.position.set(x, y, z); card.rotation.set(-Math.PI / 2, 0, 0); card.rotation.y = 0; card.rotateY(0); card.rotation.z = 0;
-    card.rotation.x = -Math.PI / 2 + Math.sin(phase * Math.PI) * 0.35;
+    const x = lerp(-0.2, 0.22, phase), y = h + 0.09 + Math.sin(phase * Math.PI) * 0.075 + 0.004, z = 0.02;
+    card.position.set(x, y, z); card.rotation.set(-Math.PI / 2 + Math.sin(phase * Math.PI) * 0.5, 0, 0);
   };
   return api;
 }
@@ -200,7 +199,7 @@ export function makeRoomShell(g) {
   const back = plane(16, 3.2, M.wall()); back.position.set(0, 1.6, -4.3); g.add(back);
   const left = plane(14, 3.2, M.wall()); left.rotation.y = Math.PI / 2; left.position.set(-5.2, 1.6, -1); g.add(left);
   const right = plane(14, 3.2, M.wall()); right.rotation.y = -Math.PI / 2; right.position.set(5.2, 1.6, -1); g.add(right);
-  const ceil = plane(16, 14, mat.std(0x3b4443, { roughness: 1 })); ceil.rotation.x = Math.PI / 2; ceil.position.set(0, 3.0, -1); g.add(ceil);
+  const ceil = plane(16, 14, mat.std(0x3b4443, { roughness: 1, emissive: 0x222a28, emissiveIntensity: 0.6 })); ceil.rotation.x = Math.PI / 2; ceil.position.set(0, 3.0, -1); g.add(ceil);
   // fluorescent fixtures (emissive only)
   for (const z of [-3.4, -1.6, 0.4, 2.2]) for (const x of [-2.4, 0.4, 3.2]) {
     const trough = box(1.3, 0.05, 0.22, mat.std(0xd8dcd9, { roughness: 0.6 })); trough.position.set(x, 2.975, z); g.add(trough);

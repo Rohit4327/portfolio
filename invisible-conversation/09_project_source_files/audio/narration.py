@@ -22,19 +22,19 @@ TOTAL = 303.0   # brief: 300 s with ~3 s tolerance; the extra seconds give the c
 
 # (display text, speak text or None, pause_after override or None, min absolute start or None)
 CHAPTERS = [
- dict(id=1, title="The Question", target=(0,24), lead=1.6, sentences=[
-  ("A door stands before you.", None, None, 1.6),
-  ("There is no clear handle, so you push.", None, None, 4.6),
-  ("Nothing.", None, 0.5, 8.9),
-  ("You pull.", None, 0.35, 10.9),
-  ("It opens.", None, 0.6, 12.7),
-  ("You feel foolish.", None, 0.6, 15.3),
+ dict(id=1, title="The Question", target=(0,24), lead=1.2, sentences=[
+  ("A door stands before you.", None, None, 1.2),
+  ("There is no clear handle, so you push.", None, None, 3.9),
+  ("Nothing.", None, 0.45, 7.4),
+  ("You pull.", None, 0.3, 9.0),
+  ("It opens.", None, 0.5, 10.5),
+  ("You feel foolish.", None, 0.5, 12.7),
   ("But what if the problem was never you?", None, 0.35, None),
   ("What if it was the design?", None, 0.6, None),
   ("That tiny moment reveals the question behind user experience: can a product make sense to a human being?",
    "That tiny moment reveals the question behind user experience: can a product make sense to a human being?", None, None),
  ]),
- dict(id=2, title="Before Screens", target=(24,53), lead=0.7, sentences=[
+ dict(id=2, title="Before Screens", target=(24,53), lead=0.5, sentences=[
   ("Long before apps, people struggled with tools, machines, and everyday objects.", None, None, None),
   ("During the twentieth century, industrial designers and human-factors researchers began asking how controls should fit human bodies and minds.", None, None, None),
   ("In 1955, Henry Dreyfuss published Designing for People, bringing measurements, observation, and testing into the design conversation.",
@@ -42,7 +42,7 @@ CHAPTERS = [
   ("Think telephone dials, cockpit switches, and confusing appliances.", None, None, None),
   ("Good design was becoming less about the machine alone, and more about the person using it.", None, None, None),
  ]),
- dict(id=3, title="The Early Computer", target=(53,76), lead=0.7, sentences=[
+ dict(id=3, title="The Early Computer", target=(53,76), lead=0.5, sentences=[
   ("Early computers demanded that people adapt to them.", None, None, None),
   ("Instructions arrived through punched cards or typed commands.", None, None, None),
   ("Without knowing the language, you were locked out.", None, 0.6, None),
@@ -51,7 +51,7 @@ CHAPTERS = [
   ("In 1963, Ivan Sutherland's Sketchpad made it possible to draw directly on a computer screen.",
    "In nineteen sixty-three, Ivan Sutherland's Sketchpad made it possible to draw directly on a computer screen.", None, None),
  ]),
- dict(id=4, title="The Mouse", target=(76,108), lead=0.7, sentences=[
+ dict(id=4, title="The Mouse", target=(76,108), lead=0.5, sentences=[
   ("In 1968, Douglas Engelbart and his team stunned an audience with what we now call the Mother of All Demos.",
    "In nineteen sixty-eight, Douglas Engelbart and his team stunned an audience with what we now call the Mother of All Demos.", None, None),
   ("They showed a mouse, linked documents, on-screen editing, and collaboration, long before those ideas felt ordinary.", None, None, None),
@@ -60,7 +60,7 @@ CHAPTERS = [
   ("But the famous 1968 demonstration used a later model.", "But the famous nineteen sixty-eight demonstration used a later model.", 0.5, None),
   ("Computing began to feel like something you could point to, not simply program.", None, None, None),
  ]),
- dict(id=5, title="The Graphical Interface", target=(108,138), lead=0.7, sentences=[
+ dict(id=5, title="The Graphical Interface", target=(108,138), lead=0.5, sentences=[
   ("In 1973, Xerox PARC built the Alto, bringing graphical displays, windows, and the mouse into one experimental machine.",
    "In nineteen seventy-three, Zerox Park built the Alto, bringing graphical displays, windows, and the mouse into one experimental machine.", None, None),
   ("Xerox's Star followed in 1981 with a more complete desktop metaphor.", "Zerox's Star followed in nineteen eighty-one with a more complete desktop metaphor.", None, None),
@@ -71,7 +71,7 @@ CHAPTERS = [
   ("A trash can meant delete.", None, 0.4, None),
   ("Complex systems borrowed the language of everyday life.", None, None, None),
  ]),
- dict(id=6, title="The Web and UX", target=(138,168), lead=0.7, sentences=[
+ dict(id=6, title="The Web and UX", target=(138,168), lead=0.5, sentences=[
   ("In 1988, Don Norman explained why everyday objects confuse us.", "In nineteen eighty-eight, Don Norman explained why everyday objects confuse us.", None, None),
   ("A year later, Tim Berners-Lee proposed the World Wide Web at CERN.", "A year later, Tim Berners-Lee proposed the World Wide Web at Sern.", None, None),
   ("By 1991, its first website made linked information navigable.", "By nineteen ninety-one, its first website made linked information navigable.", 0.5, None),
@@ -79,7 +79,7 @@ CHAPTERS = [
   ("In 1993, Norman helped establish 'user experience' as a professional term at Apple.", "In nineteen ninety-three, Norman helped establish user experience as a professional term at Apple.", None, None),
   ("That experience extended far beyond the screen.", None, None, None),
  ]),
- dict(id=7, title="The Mobile World", target=(168,200), lead=0.7, sentences=[
+ dict(id=7, title="The Mobile World", target=(168,200), lead=0.5, sentences=[
   ("As websites multiplied, navigation, readability, trust, and speed began to matter as much as appearance.", None, None, None),
   ("Accessibility gained shared standards, including the first Web Content Accessibility Guidelines in 1999.",
    "Accessibility gained shared standards, including the first Web Content Accessibility Guidelines in nineteen ninety-nine.", 0.5, None),
@@ -89,7 +89,7 @@ CHAPTERS = [
    "In twenty ten, responsive web design offered a way for layouts to adapt to different screens.", None, None),
   ("The interface no longer belonged to one desk or one kind of user.", None, None, None),
  ]),
- dict(id=8, title="UX versus UI", target=(200,242), lead=0.7, sentences=[
+ dict(id=8, title="UX versus UI", target=(200,242), lead=0.5, sentences=[
   ("So what exactly are UX and UI?", "So what exactly are U X and U I?", 0.5, None),
   ("UI, or user interface, is the layer of controls and feedback: buttons, labels, sounds, color, and interaction patterns.",
    "U I, or user interface, is the layer of controls and feedback: buttons, labels, sounds, color, and interaction patterns.", None, None),
@@ -102,7 +102,7 @@ CHAPTERS = [
   ("Great experiences are not born from guessing.", None, None, None),
   ("They are improved by observing.", None, None, None),
  ]),
- dict(id=9, title="Design for Everyone", target=(242,273), lead=0.7, sentences=[
+ dict(id=9, title="Design for Everyone", target=(242,273), lead=0.5, sentences=[
   ("Today, designers collaborate and use shared components and design systems to keep products consistent.", None, None, None),
   ("Browser-based tools allow teams to design together.", None, 0.5, None),
   ("But progress is not just faster software.", None, None, None),
@@ -110,7 +110,7 @@ CHAPTERS = [
   ("Standards such as WCAG 2.2 advance inclusion.", "Standards such as W C A G two point two advance inclusion.", 0.5, None),
   ("What counts is not how polished a screen looks, but who it works for, and who it leaves out.", None, None, None),
  ]),
- dict(id=10, title="The Future", target=(273,303), lead=0.7, tail=6.8, sentences=[
+ dict(id=10, title="The Future", target=(273,303), lead=0.5, tail=10.5, sentences=[
   ("Now interfaces are changing again: conversations with AI, voice commands, spatial computing, and experiences that may not look like screens at all.",
    "Now interfaces are changing again: conversations with A.I., voice commands, spatial computing, and experiences that may not look like screens at all.", 0.5, None),
   ("The tools will change.", None, None, None),
@@ -150,17 +150,24 @@ def synth_all(k, voice, speed, lang):
 def fit(audios, speed_note):
     """Lay sentences on the 300 s timeline. Returns chapters with absolute times."""
     SR = 24000
-    GAP, GAPQ, TAIL = 0.32, 0.5, 0.9
+    GAP, GAPQ, TAIL = 0.28, 0.42, 0.7
     plan = []
     for ch in CHAPTERS:
         items = []
         for (disp, speak, pause, at) in ch["sentences"]:
             a = audios[speak or disp]
-            g = pause if pause is not None else (GAPQ if disp.rstrip().endswith("?") else GAP)
+            g = pause * 0.85 if pause is not None else (GAPQ if disp.rstrip().endswith("?") else GAP)
             items.append(dict(text=disp, speak=speak or disp, dur=len(a) / SR, gap=g, at=at, words=wc(disp)))
         speech = sum(i["dur"] for i in items); gaps = sum(i["gap"] for i in items[:-1])
         tail = ch.get("tail", TAIL)
-        plan.append(dict(ch=ch, items=items, tail=tail, req=ch["lead"] + speech + gaps + tail, speech=speech, words=sum(i["words"] for i in items)))
+        req = ch["lead"] + speech + gaps + tail
+        if any(i["at"] is not None for i in items):   # anchored beats (chapter 1): simulate the minimal layout
+            cur = ch["target"][0] + ch["lead"]
+            for i, it in enumerate(items):
+                if it["at"] is not None: cur = max(cur, it["at"])
+                cur += it["dur"] + (it["gap"] if i < len(items) - 1 else 0)
+            req = max(req, cur + tail - ch["target"][0])
+        plan.append(dict(ch=ch, items=items, tail=tail, req=req, speech=speech, words=sum(i["words"] for i in items)))
     req = sum(p["req"] for p in plan)
     slack = TOTAL - req
     print(f"[{speed_note}] required {req:.1f}s of {TOTAL:.0f}s -> slack {slack:+.1f}s")
@@ -203,7 +210,7 @@ def fit(audios, speed_note):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--voice", default="af_heart"); ap.add_argument("--speed", type=float, default=1.06)
+    ap.add_argument("--voice", default="af_heart"); ap.add_argument("--speed", type=float, default=1.11)
     ap.add_argument("--lang", default="en-us"); ap.add_argument("--max-speed", type=float, default=1.12)
     args = ap.parse_args()
     from kokoro_onnx import Kokoro

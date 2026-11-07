@@ -146,8 +146,8 @@ export default {
       { t: B.start, pos: [reel.x + 0.03, reel.y + 0.01, reel.z + 0.5], look: [reel.x, reel.y, reel.z], fov: 35 },
       { t: B.pull0, pos: [reel.x + 0.03, reel.y + 0.01, reel.z + 0.5], look: [reel.x, reel.y, reel.z], fov: 35 },
       { t: B.pull1, pos: [1.9, 1.78, 2.9], look: [-0.6, 1.0, -1.8], fov: 38 },
-      { t: B.cards0 + 1.0, pos: [1.15, 1.32, -0.15], look: [1.62, 0.98, -1.33], fov: 34 },
-      { t: B.term0, pos: [1.15, 1.32, -0.15], look: [1.62, 0.98, -1.33], fov: 34 },
+      { t: B.cards0 + 1.0, pos: [1.28, 1.38, -0.45], look: [1.7, 1.0, -1.3], fov: 29 },
+      { t: B.term0, pos: [1.32, 1.37, -0.5], look: [1.71, 1.0, -1.3], fov: 29 },
       { t: B.term0 + 0.75, pos: [-0.45, 1.12, 0.55], look: [-1.0, 0.955, -0.28], fov: 34 },
       { t: B.termFull, pos: [-1.0, 0.955, -0.28 + 0.355], look: [-1.0, 0.955, -0.28], fov: 35 },
     ];
@@ -185,7 +185,7 @@ export default {
       // spinning reels (take-up and supply counter-rotate; a slight start/stop rhythm like a real drive)
       for (const { r, dir, speed } of this.reels) { const w = 1 + 0.35 * Math.sin((t - B.start) * 1.7 * speed); r.rotation.z = dir * (t - B.start) * 2.3 * speed * w; }
       // card feed: the hopper empties over the "punched cards" beat
-      const k = ease(t, B.cards0, B.cards1, (x) => x), phase = k > 0 && k < 1 ? ((t - B.cards0) * 3.2) % 1 : -1;
+      const k = ease(t, B.cards0, B.cards1, (x) => x); const phase = k > 0 && k < 1 ? ((t - B.cards0) * 3.2) % 1 : -1;
       this.reader.setFeed(k, phase);
       // the terminal screen shows the same terminal as the overlay later (continuity through the push-in)
       const st = this.termState(t);
@@ -193,8 +193,8 @@ export default {
       this.termLight.intensity = 0.25 + 1.3 * ease(t, B.term0, B.termFull);
       // the point: arrives inside the reel hub (the bloom resolves into the spinning reel) and dissolves into it
       const reel = this.reels[0].r.getWorldPosition(V);
-      const pa = 1 - ease(t, B.start + 0.5, B.start + 1.5, easeInOut);
-      this.point.group.position.copy(reel).add(V2.set(0, 0, 0.06)); this.point.setIntensity(pa * 1.2).setScale(1.1).pulse(t, 0.06, 1.3); this.point.group.visible = pa > 0;
+      const pa = 1 - ease(t, B.start + 1.0, B.start + 2.4, easeInOut);
+      this.point.group.position.copy(reel).add(V2.set(0, 0, 0.06)); this.point.setIntensity(pa * 1.3).setScale(0.9).pulse(t, 0.06, 1.3); this.point.group.visible = pa > 0;
     } else if (inSketch) {
       const st = this.skState(t);
       if (st.key !== this.crtKey) { this.crtKey = st.key; drawCRT(this.console.screen.ctx, this.console.screen.pxW, { pts: st.pts, edges: st.edges, pen: st.pen && t < B.dot + 0.3 ? st.pen : null, flash: st.flash, dot: st.dot, glow: 1 }); this.console.screen.update(); }
@@ -249,7 +249,7 @@ export default {
       text(ctx, 'Illustrative reconstruction · early command-line interaction · composite, not one specific machine', 120, H - 70, { size: 18, weight: 400, color: PALETTE.gray, alpha: ca });
     }
     // ----- room lower third -----
-    const lt = fadeIO(t, B.pull0 + 0.9, B.cards1 - 0.2, 0.6, 0.5);
+    const lt = fadeIO(t, B.pull0 + 0.9, B.cards0 + 0.5, 0.6, 0.5);
     if (lt > 0) lowerThird(ctx, { title: 'A 1960s computer room', sub: 'Tape drives · punched-card reader · keyboard terminal', source: 'Composite reconstruction after period documentation · not a photograph', alpha: lt, reveal: seg(t, B.pull0 + 0.9, B.pull0 + 1.8), width: 820 });
     // ----- Sketchpad labels: only once the narrator reaches "In 1963" -----
     const ya = fadeIO(t, B.year + 0.1, B.out + 0.1, 0.6, 0.5);

@@ -44,7 +44,7 @@ export default {
       tap2: s3.start + 1.1, tap3: s3.start + 3.1, tap4: s3.start + 6.2,
       reveal: f(s4, 0.71), freeze: s5.start, caps2: f(s5, 0.5), capsOut: s6.start - 0.05,
       pull: s5.end - 0.1,
-      ribbonIn: s6.start - 0.2, ticks: [f(s6, 0.08), f(s6, 0.28), f(s6, 0.44), f(s6, 0.60), f(s6, 0.82), s7.start + 0.1],
+      ribbonIn: s6.start + 0.05, ticks: [f(s6, 0.08), f(s6, 0.28), f(s6, 0.44), f(s6, 0.60), f(s6, 0.82), s7.start + 0.1],
       ret0: s7.start + 0.15, ret1: s7.start + 0.85,
       tap6: s8.start + 0.3, tap7: s8.start + 1.3, tap5: f(s8, 0.92),
       strips: s9.start + 0.3, dis0: this.end - 1.45,
@@ -120,7 +120,7 @@ export default {
     const in3d = this.phase(t) === 'layers'; this.slabGroup.visible = in3d;
     // camera: frontal (exact overlay match) → three-quarter pull-back → slow push → back to frontal
     const k = easeInOut(seg(t, B.pull, B.pullEnd)), drift = seg(t, B.pullEnd, B.ret0), r = easeInOut(seg(t, B.ret0, B.ret1));
-    const p1 = new THREE.Vector3(2.35 - 0.2 * drift, 1.25 + 0.05 * drift, 4.3 - 0.3 * drift), l1 = new THREE.Vector3(0.15, 0.12, -1.3);
+    const p1 = new THREE.Vector3(2.55 - 0.2 * drift, 1.15 + 0.05 * drift, 4.75 - 0.3 * drift), l1 = new THREE.Vector3(0.2, -0.12, -1.3);
     const pos = new THREE.Vector3(0, 0, D).lerp(p1, k).lerp(new THREE.Vector3(0, 0, D), r), look = new THREE.Vector3(0, 0, 0).lerp(l1, k).lerp(new THREE.Vector3(0, 0, 0), r);
     cam.position.copy(pos); cam.lookAt(look);
     if (!in3d) return;
@@ -148,7 +148,7 @@ export default {
   },
   ring(ctx, r, alpha, label) { // cyan callout ring over a slab-local rect (+ optional small tag)
     if (alpha <= 0) return; ctx.save(); ctx.globalAlpha *= alpha; ctx.strokeStyle = PALETTE.cyan; ctx.lineWidth = 1.6; roundRect(ctx, SX + r.x, SY + r.y, r.w, r.h, 12); ctx.stroke();
-    if (label) { const w = measure(ctx, label, { size: 15, weight: 700, tracking: 2 }) + 24; fillRoundRect(ctx, SX + r.x, SY + r.y - 34, w, 26, 13, PALETTE.cyan); text(ctx, label, SX + r.x + w / 2, SY + r.y - 16, { size: 15, weight: 700, color: PALETTE.graphite, align: 'center', tracking: 2 }); }
+    if (label) { const w = measure(ctx, label, { size: 15, weight: 700, tracking: 2 }) + 24, x0 = SX + r.x + r.w + 14, y0 = SY + r.y + r.h / 2; fillRoundRect(ctx, x0, y0 - 13, w, 26, 13, PALETTE.cyan); text(ctx, label, x0 + w / 2, y0 + 5, { size: 15, weight: 700, color: PALETTE.graphite, align: 'center', tracking: 2 }); }
     ctx.restore();
   },
   defBlock(ctx, big, sub, y, alpha, rise = 0) {
@@ -226,17 +226,17 @@ export default {
   callouts(ctx, t) { // cyan rings on the sentence "buttons, labels, … colour"
     const B = this.B, c = L.pdp.col, P = L.pdp;
     const items = [[{ x: P.btn.x - 8, y: P.btn.y - 8, w: P.btn.w + 16, h: P.btn.h + 16 }, 'BUTTON'], [{ x: c.x - 12, y: P.eyebrowY - 26, w: 420, h: 110 }, 'LABELS'], [{ x: c.x - 10, y: P.swatchY - 30, w: 170, h: 60 }, 'COLOUR']];
-    items.forEach(([r, tag], i) => this.ring(ctx, r, fadeIO(t, B.call[i], B.call[i] + 1.05, 0.25, 0.3), tag));
+    items.forEach(([r, tag], i) => this.ring(ctx, r, fadeIO(t, B.call[i], B.call[i] + 0.8, 0.22, 0.28), tag));
   },
   layerLabels(ctx, t, cam) {
     const B = this.B;
     for (let p = 0; p < 4; p++) {
       const t0 = B.pull + 0.55 + p * 1.0, a = fadeIO(t, t0, t0 + 1.02, 0.28, 0.3); if (a <= 0) continue;
       for (const i of [p, p + 4]) {
-        const m = this.layers[i]; const s = this.project(cam, m.position.x + SLAB_W / 2, m.position.y + SLAB_H / 2, m.position.z);
+        const m = this.layers[i]; const s = this.project(cam, m.position.x - SLAB_W / 2, m.position.y + SLAB_H / 2, m.position.z);
         ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = PALETTE.cyan; ctx.beginPath(); ctx.arc(s.x, s.y, 4, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = 'rgba(128,201,248,0.6)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x + 26, s.y - 18); ctx.lineTo(s.x + 40, s.y - 18); ctx.stroke();
-        text(ctx, LAYERS[i], s.x + 48, s.y - 12, { size: 22, weight: 600, color: PALETTE.ivory, tracking: 0.5 }); ctx.restore();
+        ctx.strokeStyle = 'rgba(128,201,248,0.6)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - 26, s.y - 18); ctx.lineTo(s.x - 40, s.y - 18); ctx.stroke();
+        text(ctx, LAYERS[i], s.x - 48, s.y - 12, { size: 22, weight: 600, color: PALETTE.ivory, tracking: 0.5, align: 'right' }); ctx.restore();
       }
     }
   },
@@ -348,7 +348,7 @@ export default {
     }
     // the freeze: soft pulse + dim, then the two statements
     dip(ctx, 0.2 * fadeIO(t, B.freeze, B.freeze + 1.0, 0.08, 0.9), PALETTE.graphite);
-    dip(ctx, 0.58 * fadeIO(t, B.freeze + 0.08, B.pull + 0.7, 0.45, 0.6), PALETTE.graphite);
+    dip(ctx, 0.64 * fadeIO(t, B.freeze + 0.08, B.pull + 0.7, 0.45, 0.6), PALETTE.graphite);
     const a1 = fadeIO(t, B.freeze + 0.12, B.capsOut, 0.45, 0.4), a2 = fadeIO(t, B.caps2, B.capsOut, 0.45, 0.4);
     if (a1 > 0) { const rise = (1 - easeOut(seg(t, B.freeze + 0.12, B.freeze + 1.0))) * 18; text(ctx, 'BEAUTIFUL UI.', W / 2, 500 + rise, { size: 118, weight: 300, family: 'Inter Display', color: PALETTE.ivory, align: 'center', alpha: a1, tracking: 2, shadow: 24 }); }
     if (a2 > 0) { const rise = (1 - easeOut(seg(t, B.caps2, B.caps2 + 0.9))) * 18; text(ctx, 'FRUSTRATING UX.', W / 2, 640 + rise, { size: 118, weight: 300, family: 'Inter Display', color: PALETTE.amber, align: 'center', alpha: a2, tracking: 2, shadow: 24 }); }

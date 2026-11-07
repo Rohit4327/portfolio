@@ -68,7 +68,7 @@ export default {
     // ---------------- lighting: warm tungsten key (shadows), cool fill, rim; a tungsten desk spot; the point's own light ----------------
     const L = rig(g, { key: [2.0, 3.6, 2.6], keyI: 2.5, keyColor: 0xffd3a2, fill: [-3.5, 2.2, 2.5], fillI: 0.32, fillColor: 0xbfd3ff, rim: [-1.2, 3.2, -3.5], rimI: 1.1, rimColor: 0xfff4e6, ambient: 0.1 });
     const sc = L.key.shadow.camera; sc.left = sc.bottom = -2.4; sc.right = sc.top = 2.4; sc.near = 0.5; sc.far = 14; sc.updateProjectionMatrix(); L.key.shadow.bias = -0.0004; L.key.shadow.normalBias = 0.015;
-    const spot = new THREE.SpotLight(0xffc48a, 7, 7, deg(42), 0.65, 1.3); spot.position.set(0.7, 2.3, 0.9); spot.target.position.set(0.3, 0.8, 0.0); g.add(spot, spot.target);
+    const spot = new THREE.SpotLight(0xffc48a, 4.5, 7, deg(42), 0.65, 1.3); spot.position.set(0.7, 2.3, 0.9); spot.target.position.set(0.3, 0.8, 0.0); g.add(spot, spot.target);
 
     // ---------------- the room ----------------
     g.add(floor(30, mat.graphite({ roughness: 0.32, metalness: 0.3 })));
@@ -101,10 +101,12 @@ export default {
     // ---------------- telephone, book, stool ----------------
     this.phone = makePhone(); this.phone.position.set(1.15, CONSOLE.deskY, 0.17); this.phone.rotation.y = deg(-6); g.add(this.phone);
     this.book = makeBook(); this.bookRest = vec(0.40, CONSOLE.deskY, 0.185); this.book.position.copy(this.bookRest); this.book.rotation.y = deg(-12); this.book.visible = false; g.add(this.book);
-    this.stool = makeStool(); this.stool.position.set(0.39, 0, 0.78); g.add(this.stool);
+    this.stool = makeStool(); this.stool.position.set(0.39, 0, 0.88); g.add(this.stool);
 
     // ---------------- the amber point ----------------
-    this.point = new AmberPoint(0.011, { lightIntensity: 2.5, lightDistance: 2.5 }); g.add(this.point.group);
+    this.point = new AmberPoint(0.011, { lightIntensity: 2.5, lightDistance: 2.2 }); g.add(this.point.group);
+    // the halos sit millimetres in front of tilted panels: never depth-clip them (otherwise the quad cuts a hard line into the panel)
+    this.point.halo.material.depthTest = false; this.point.halo2.material.depthTest = false; this.point.halo.renderOrder = this.point.halo2.renderOrder = 10;
 
     // ---------------- world anchors (computed once) ----------------
     g.updateMatrixWorld(true);
@@ -115,16 +117,16 @@ export default {
     const gripTo = (k) => slope.localToWorld(vec(this.leverPos[k].to[0], this.leverPos[k].to[1], 0.106));
     this.hoverLevers = gripFrom('gear').add(gripFrom('flaps')).multiplyScalar(0.5).add(vec(0, 0.075, 0.06));
     this.hoverGear = gripTo('gear').add(vec(0, 0.065, 0.045));
-    this.hoverBook = this.bookRest.clone().add(vec(0.0, 0.11, 0));
+    this.hoverBook = this.bookRest.clone().add(vec(-0.02, 0.17, -0.05));
     this.dialC = this.phone.userData.dial.getWorldPosition(new THREE.Vector3());
     this.dialN = vec(0, 0, 1).applyQuaternion(this.phone.userData.dial.getWorldQuaternion(new THREE.Quaternion()));
     // the operator (profile diagram at x = xs, facing -z)
-    const xs = 0.39; this.figure = { xs, hip: vec(xs, 0.475, 0.70), shoulder: vec(xs, 0.99, 0.60), head: vec(xs, 1.165, 0.56), headR: 0.095, knee: vec(xs, 0.49, 0.30), ankle: vec(xs, 0.02, 0.33), toe: vec(xs, 0.0, 0.17), reach: 0.62, upper: 0.31, fore: 0.33 };
+    const xs = 0.39; this.figure = { xs, hip: vec(xs, 0.475, 0.80), shoulder: vec(xs, 0.99, 0.70), head: vec(xs, 1.165, 0.66), headR: 0.095, knee: vec(xs, 0.49, 0.38), ankle: vec(xs, 0.02, 0.41), toe: vec(xs, 0.0, 0.25), reach: 0.68, upper: 0.33, fore: 0.36 };
 
     // ---------------- camera keyframes ----------------
     const levMid = gripFrom('gear').add(gripFrom('flaps')).multiplyScalar(0.5);
     const K = (t, pos, look, fov = 35) => ({ t, pos, look, fov });
-    const lampCam = this.lampW.clone().addScaledVector(n, 0.5).add(vec(0.13, 0.015, 0.0));
+    const lampCam = this.lampW.clone().addScaledVector(n, 0.52).add(vec(0.15, -0.02, 0.03));
     this.keys = [
       K(start, lampCam, this.lampW.clone(), 35),
       K(start + 1.7, lampCam, this.lampW.clone(), 35),
@@ -169,10 +171,10 @@ export default {
     const holeW = this.phone.userData.holeMarker.getWorldPosition(V3).clone();
     if (t < B.pointLand) { const k = seg(t, this.start, B.pointLand); return { p: this.lampW.clone().addScaledVector(this.slopeN, 0.05 * (1 - easeOut(k))), s: lerp(1.6, 1.0, easeOut(k)), i: 1.0 }; }
     if (t < B.pointLeaveLamp) return { p: this.lampW.clone(), s: 1.0, i: 1.0 };
-    if (t < B.camLevers + 0.3) return { p: arc(this.lampW, this.hoverLevers, seg(t, B.pointLeaveLamp, B.camLevers + 0.3), 0.14), s: 1.1, i: 1.0 };
-    if (t < B.slide) return { p: this.hoverLevers.clone().add(bob(0.006)), s: 1.1, i: 1.0 };
+    if (t < B.camLevers + 0.3) { const k = seg(t, B.pointLeaveLamp, B.camLevers + 0.3); return { p: arc(this.lampW, this.hoverLevers, k, 0.14), s: lerp(1.0, 0.8, k), i: 1.0 }; }
+    if (t < B.slide) return { p: this.hoverLevers.clone().add(bob(0.006)), s: 0.8, i: 1.0 };
     const gearHover = gripGear.clone().add(vec(0, 0.065, 0.045));
-    if (t < B.slide + 1.3) return { p: arc(this.hoverLevers, gearHover, seg(t, B.slide, B.slide + 1.3), 0.03), s: 1.1, i: 1.0 };
+    if (t < B.slide + 1.3) { const k = seg(t, B.slide, B.slide + 1.3); return { p: arc(this.hoverLevers, gearHover, k, 0.03), s: lerp(0.8, 1.1, k), i: 1.0 }; }
     if (t < B.camBook) return { p: gearHover.add(bob(0.006)), s: 1.1, i: 1.0 };
     if (t < B.camBook + 1.1) return { p: arc(this.hoverGear, this.hoverBook.clone().add(vec(0, 0.1, 0)), seg(t, B.camBook, B.camBook + 1.1), 0.12), s: 1.1, i: 1.0 };
     if (t < B.bookLand) return { p: this.hoverBook.clone().add(vec(0, 0.1 * (1 - easeInOut(seg(t, B.bookDrop, B.bookLand))), 0)), s: 1.1, i: 1.0 };
@@ -188,7 +190,7 @@ export default {
     const cp = this.camPose(t); cam.position.copy(cp.pos); cam.fov = cp.fov; cam.updateProjectionMatrix(); cam.lookAt(cp.look);
 
     // toggles & lamps
-    this.toggles.forEach((tg, i) => { const k = snap(seg(t, tg.userData.onTime, tg.userData.onTime + 0.14)); tg.userData.pivot.rotation.x = lerp(deg(26), deg(-26), k); });
+    this.toggles.forEach((tg, i) => { const k = snap(seg(t, tg.userData.onTime, tg.userData.onTime + 0.14)); tg.userData.pivot.rotation.x = lerp(deg(28), deg(-20), k); });
     this.lamps.forEach((lp, i) => { const on = t >= lp.userData.onTime + 0.07; lp.userData.lens.material = on ? MAT.lensOn : MAT.lensOff; if (i === 2) { lp.userData.lens.visible = t >= B.pointLeaveLamp; lp.userData.lens.material = MAT.lensOff; } });
     // gauges: slow drift; the big ones respond to the big lever
     const bigK = ease(t, B.bigLever + 0.15, B.bigLever + 1.6, easeOut);
@@ -215,6 +217,7 @@ export default {
     const gripGear = this.lever.gear.userData.gripG.getWorldPosition(V2); this.group.updateMatrixWorld(true);
     const pp = this.pointPose(t, gripGear);
     this.point.group.position.copy(pp.p); this.point.setScale(pp.s).setIntensity(pp.i).pulse(t, 0.06, 1.3);
+    this.point.light.intensity = 1.15 * pp.i; // gentler than the default: the panel is close and would blow out
     this.point.group.visible = t < B.wheelXfade[1];
   },
 
@@ -258,7 +261,7 @@ export default {
       const dimA = fadeIO(t, B.dimIdent[0], B.dimIdent[1], 0.5, 0.5);
       const pts = { gear: P(gripW.gear), flaps: P(gripW.flaps) };
       for (const k of ['gear', 'flaps']) { const [x, y] = pts[k]; const lift = k === 'gear' ? 0 : 0; caps(ctx, k, x, y - 44 - lift, { size: 22, color: PALETTE.cyan, align: 'center', tracking: 3.5, alpha: la }); ctx.save(); ctx.globalAlpha = la * 0.8; ctx.strokeStyle = PALETTE.cyan; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x, y - 36); ctx.lineTo(x, y - 22); ctx.stroke(); ctx.restore(); }
-      if (dimA > 0) { const yd = Math.min(pts.gear[1], pts.flaps[1]) - 100; ctx.save(); ctx.globalAlpha = dimA * 0.5; ctx.strokeStyle = PALETTE.cyan; ctx.lineWidth = 1; ctx.setLineDash([3, 5]); for (const k of ['gear', 'flaps']) { ctx.beginPath(); ctx.moveTo(pts[k][0], pts[k][1] - 60); ctx.lineTo(pts[k][0], yd + 8); ctx.stroke(); } ctx.restore(); dimension(ctx, pts.gear[0], yd, pts.flaps[0], yd, 'IDENTICAL GRIPS', { alpha: dimA, size: 18 }); }
+      if (dimA > 0) { const yd = Math.max(pts.gear[1], pts.flaps[1]) + 120; ctx.save(); ctx.globalAlpha = dimA * 0.5; ctx.strokeStyle = PALETTE.cyan; ctx.lineWidth = 1; ctx.setLineDash([3, 5]); for (const k of ['gear', 'flaps']) { ctx.beginPath(); ctx.moveTo(pts[k][0], pts[k][1] + 40); ctx.lineTo(pts[k][0], yd - 8); ctx.stroke(); } ctx.restore(); dimension(ctx, pts.gear[0], yd, pts.flaps[0], yd, 'IDENTICAL GRIPS', { alpha: dimA, size: 18 }); }
     }
     // ---- the operator diagram + reach arcs + measurement guides (wide shot) ----
     const fa = fadeIO(t, B.figure, B.figureOut + 0.5, 0.4, 0.5);
