@@ -164,9 +164,9 @@ export default {
       cam.position.set(lerp(-1.15, -1.0, k), lerp(2.25, 2.2, k), lerp(-3.85, -3.95, k));
       look.copy(CONSOLE_POS).add(new THREE.Vector3(0.1, 0.78, 0.05));
     } else if (t < B.shotD) {     // C2: the 1964 wooden prototype on its plinth
-      const k = seg(t, B.shotC2, B.shotD); const a = lerp(-0.55, -0.35, k);
+      const k = seg(t, B.shotC2, B.shotD); const a = lerp(-0.1, 0.1, k);
       look.copy(EXHIBIT_POS).add(new THREE.Vector3(0, 0.955, 0));
-      cam.position.set(look.x + Math.sin(a) * 0.5, 1.03, look.z + Math.cos(a) * 0.5);
+      cam.position.set(look.x + Math.sin(a) * 0.4, 1.0 + 0.02 * k, look.z + Math.cos(a) * 0.4);
     } else if (t < B.shotE) {     // D: the three-button mouse from the front
       const k = seg(t, B.shotD, B.shotE);
       this.mouse.getWorldPosition(look);

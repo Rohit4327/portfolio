@@ -47,9 +47,11 @@ export function buildAuditorium() {
   for (let r = 0; r < rows; r++) { const st = box(10, 0.11, rowPitch, dark); st.position.set(0, r * 0.11 - 0.055 + 0.11, -2.4 + r * rowPitch + 0.1); st.castShadow = false; g.add(st); }
   // projector beam (faint square pyramid of haze from the back of the hall to the screen)
   const beamLen = 17.2; const cone = new THREE.ConeGeometry(1, beamLen, 4, 1, true); cone.rotateY(Math.PI / 4); cone.rotateX(Math.PI / 2);
-  // vertex colours: bright at the projector (apex, +z), fading toward the screen
-  { const pos = cone.attributes.position; const col = new Float32Array(pos.count * 3); for (let k = 0; k < pos.count; k++) { const z = pos.getZ(k); const b = 0.12 + 0.88 * Math.pow((z + beamLen / 2) / beamLen, 1.2); col[k * 3] = b; col[k * 3 + 1] = b; col[k * 3 + 2] = b; } cone.setAttribute('color', new THREE.BufferAttribute(col, 3)); }
-  const beam = new THREE.Mesh(cone, new THREE.MeshBasicMaterial({ color: 0xbfd3cf, vertexColors: true, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
+  // alpha gradient along the beam (bright at the projector, fading toward the screen) via a tiny canvas texture on the cone's v axis
+  const gc = document.createElement('canvas'); gc.width = 4; gc.height = 256; const gx = gc.getContext('2d');
+  const gg = gx.createLinearGradient(0, 0, 0, 256); gg.addColorStop(0, 'rgba(255,255,255,1)'); gg.addColorStop(0.5, 'rgba(255,255,255,0.35)'); gg.addColorStop(1, 'rgba(255,255,255,0.04)');
+  gx.fillStyle = gg; gx.fillRect(0, 0, 4, 256); const gTex = new THREE.CanvasTexture(gc); gTex.colorSpace = THREE.SRGBColorSpace;
+  const beam = new THREE.Mesh(cone, new THREE.MeshBasicMaterial({ color: 0xbfd3cf, map: gTex, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
   // apex (+z, the projector) → base at the screen plane; the 4-sided cone's corners sit at radius 1, so half-side = 1/√2
   beam.scale.set(SCREEN.w / 2 * Math.SQRT2 * 1.03, SCREEN.h / 2 * Math.SQRT2 * 1.03, 1);
   beam.position.set(SCREEN.center.x, SCREEN.center.y, SCREEN.center.z + beamLen / 2); g.add(beam);
@@ -115,19 +117,26 @@ export function makeThreeButtonMouse() {
 // 1964 wooden prototype: a hand-sized wooden block, one button on top, two perpendicular metal wheels underneath.
 export function makeWoodenMouse() {
   const g = new THREE.Group();
-  const wood = mat.std(0x9a6a3e, { roughness: 0.72 });
-  const body = roundedBox(0.1, 0.066, 0.118, 0.006, wood, 3); body.position.y = 0.012 + 0.033; g.add(body);
-  // subtle darker grain stripes (thin boxes just under the top surface would clip; use slightly darker side band instead)
-  const band = box(0.1004, 0.012, 0.1184, mat.std(0x74502c, { roughness: 0.75 })); band.position.y = 0.012 + 0.02; g.add(band);
-  const plate = box(0.098, 0.004, 0.116, mat.darkMetal({ roughness: 0.5 })); plate.position.y = 0.012 + 0.002; g.add(plate);
-  const button = roundedBox(0.022, 0.008, 0.022, 0.002, mat.std(0xb8322a, { roughness: 0.5 })); button.position.set(-0.028, 0.012 + 0.066 + 0.004, -0.03); g.add(button); g.userData.button = button;
-  // two wheels, perpendicular: one rolls along z (axis x), one along x (axis z)
+  // wood grain: a small canvas texture of soft streaks (deterministic)
+  const c = document.createElement('canvas'); c.width = 256; c.height = 256; const x = c.getContext('2d');
+  x.fillStyle = '#a06c3c'; x.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 90; i++) { const y = hash(i + 0.7) * 256, w = 1 + hash(i + 3.1) * 3, a = 0.08 + hash(i + 9.2) * 0.2; x.fillStyle = `rgba(70,40,18,${a})`; x.fillRect(0, y, 256, w); }
+  for (let i = 0; i < 40; i++) { const y = hash(i + 21.3) * 256; x.fillStyle = `rgba(230,190,140,${0.05 + hash(i + 5.5) * 0.1})`; x.fillRect(0, y, 256, 1.5); }
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  const wood = mat.std(0xffffff, { map: tex, roughness: 0.7 });
+  const LIFT = 0.016;                                   // the block rides on its wheels: a visible gap underneath
+  const body = roundedBox(0.1, 0.066, 0.118, 0.005, wood, 3); body.position.y = LIFT + 0.004 + 0.033; g.add(body);
+  const plate = box(0.098, 0.004, 0.116, mat.darkMetal({ roughness: 0.5 })); plate.position.y = LIFT + 0.002; g.add(plate);
+  const button = roundedBox(0.022, 0.009, 0.022, 0.002, mat.std(0xb8322a, { roughness: 0.5 })); button.position.set(-0.028, LIFT + 0.004 + 0.066 + 0.0045, -0.03); g.add(button); g.userData.button = button;
+  // two wheels, perpendicular: one rolls along z (axis x), one along x (axis z); they protrude beneath the plate
   const wheelMat = mat.brushed();
-  const w1 = cylinder(0.024, 0.024, 0.005, wheelMat, 40); w1.rotation.z = Math.PI / 2; w1.position.set(0.0, 0.012 - 0.008, 0.03); g.add(w1);
-  const w2 = cylinder(0.024, 0.024, 0.005, wheelMat, 40); w2.rotation.x = Math.PI / 2; w2.position.set(-0.025, 0.012 - 0.008, -0.025); g.add(w2);
-  for (const w of [w1, w2]) { const axle = cylinder(0.003, 0.003, 0.03, mat.darkMetal()); axle.rotation.copy(w.rotation); axle.position.copy(w.position); g.add(axle); }
-  const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0.0, 0.062, -0.056), new THREE.Vector3(0.0, 0.06, -0.085), new THREE.Vector3(-0.012, 0.04, -0.115), new THREE.Vector3(-0.03, 0.012, -0.14)]);
-  const cord = new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.0035, 8, false), mat.std(0x2a2a2e, { roughness: 0.55 })); cord.castShadow = true; g.add(cord);
+  const r = 0.026;
+  const w1 = cylinder(r, r, 0.005, wheelMat, 40); w1.rotation.z = Math.PI / 2; w1.position.set(0.0, r, 0.03); g.add(w1);
+  const w2 = cylinder(r, r, 0.005, wheelMat, 40); w2.rotation.x = Math.PI / 2; w2.position.set(-0.025, r, -0.025); g.add(w2);
+  // small third contact (a pin) so the block sits level on its wheels
+  const pin = cylinder(0.004, 0.004, LIFT, mat.darkMetal()); pin.position.set(0.035, LIFT / 2, -0.04); g.add(pin);
+  const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0.0, LIFT + 0.055, -0.058), new THREE.Vector3(0.0, LIFT + 0.05, -0.1), new THREE.Vector3(-0.03, 0.02, -0.17), new THREE.Vector3(-0.09, 0.0035, -0.24), new THREE.Vector3(-0.17, 0.0035, -0.27)]);
+  const cord = new THREE.Mesh(new THREE.TubeGeometry(curve, 32, 0.0035, 8, false), mat.std(0x2a2a2e, { roughness: 0.55 })); cord.castShadow = true; g.add(cord);
   return g;
 }
 
@@ -137,10 +146,9 @@ export function buildExhibit() {
   g.add(floor(14, mat.graphite({ roughness: 0.4, metalness: 0.3 })));
   const plinth = roundedBox(0.7, 0.9, 0.7, 0.006, mat.std(0x171b22, { roughness: 0.85 })); plinth.position.y = 0.45; g.add(plinth);
   const topPad = roundedBox(0.62, 0.012, 0.62, 0.004, mat.std(0x101318, { roughness: 1 })); topPad.position.y = 0.906; g.add(topPad);
-  // wedge cradle tilts the object so the wheels underneath read on camera
-  const cradle = new THREE.Group(); cradle.position.set(0, 0.912, 0); cradle.rotation.z = -0.48; cradle.rotation.y = -0.3; g.add(cradle);
-  const wedge = box(0.14, 0.012, 0.16, mat.std(0x101318, { roughness: 1 })); wedge.position.y = -0.006 + 0.0; cradle.add(wedge);
-  const mouse = makeWoodenMouse(); mouse.position.y = 0.006; cradle.add(mouse);
+  // the object sits upright on the plinth; a low camera shows the wheels beneath the block
+  const cradle = new THREE.Group(); cradle.position.set(0, 0.912, 0); cradle.rotation.set(0, 0.42, 0); g.add(cradle);
+  const mouse = makeWoodenMouse(); cradle.add(mouse);
   const key = new THREE.SpotLight(0xfff0dc, 34, 8, Math.PI / 11, 0.7, 1.4); key.position.set(-0.9, 2.3, 1.0); key.target.position.set(0, 0.95, 0); key.castShadow = true; key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.01; g.add(key, key.target);
   const fill = new THREE.DirectionalLight(0xcfe3ff, 0.35); fill.position.set(1.5, 1.5, 1.5); g.add(fill);
   const rim = new THREE.PointLight(0xffd9a8, 2.5, 4, 1.6); rim.position.set(0.5, 1.4, -0.7); g.add(rim);
