@@ -31,8 +31,7 @@ export default {
     const B = (this.B = {
       start: this.start, end: this.end,
       click: this.start + 1.0, netEnd: this.start + 1.9, pushEnd: s1.start + 1.7,
-      callouts: [0, 1, 2, 3].map((i) => s1.start + 0.6 + i * 1.32), calloutDur: 1.38,
-      restructure: s1.start + 5.9, restructureDur: 1.3,
+      restructure: s1.start + 5.9, restructureDur: 1.3, calloutDur: 1.3,
       focusForm: s2.start + 1.4, ticks: [0, 1, 2, 3].map((i) => s2.start + 2.1 + i), wcag: s2.end - 1.15,
       cutB: s3.start + 0.35, caps2007: s3.start + 1.0, phoneLabel: s3.start + 1.5, footnote: s3.start + 2.9,
       tap1: s3.start + 2.2, tap2: s3.start + 2.6, flick1: s3.start + 3.1, flick2: s3.start + 3.7, tap3: s3.start + 4.3, pinch: s3.start + 4.8, pinchDur: 1.1,
@@ -40,6 +39,7 @@ export default {
       reflow1: s4.start + 1.4, reflow2: s4.start + 3.0, reflow3: s4.start + 4.5, reflowDur: 0.9, narrowDur: 1.5,
       pushStart: s5.start + 0.6, pushEnd2: s5.start + 2.9, expand: s5.start + 2.3, expandEnd: this.end - 1.0,
     });
+    { const base = Math.max(s1.start + 0.6, B.netEnd + 0.3); const sp = (B.restructure - base - B.calloutDur) / 3; B.callouts = [0, 1, 2, 3].map((i) => base + i * sp); }
     this.cues = {
       link_click: B.click, focus_tick_1: B.ticks[0], focus_tick_2: B.ticks[1], focus_tick_3: B.ticks[2], focus_tick_4: B.ticks[3],
       tap_1: B.tap1, tap_2: B.tap2, tap_3: B.tap3, flick_1: B.flick1, flick_2: B.flick2, pinch: B.pinch,
@@ -228,7 +228,7 @@ export default {
   },
   updateB(t, cam) {
     const B = this.B; const st = this.phoneState(t);
-    cam.position.set(-0.052 + noise1(t * 0.3) * 0.002, 0.232, 0.082); cam.lookAt(-0.05, 0.006, -0.004);
+    cam.position.set(-0.054 + noise1(t * 0.3) * 0.002, 0.252, 0.088); cam.lookAt(-0.052, 0.006, 0.004);
     const key = st.screen === 'home' ? 'home' : st.screen === 'photo' && st.photoK >= 1 && t >= B.pinch + B.pinchDur ? 'photoEnd' : 'f' + t.toFixed(3);
     paintOnce(this.scrB, key, (x, w, h) => {
       if (st.screen === 'home' || st.openK < 1) x.drawImage(this.cHome, 0, 0);
@@ -287,7 +287,7 @@ export default {
     const B = this.B;
     // camera: slow drift across the trio, then a push into the phone screen
     const k1 = easeInOut(seg(t, B.cutC, B.pushStart + 0.3)), k2 = easeInOut(seg(t, B.pushStart, B.pushEnd2));
-    const p0 = new THREE.Vector3(lerp(0.0, 0.22, k1), lerp(0.43, 0.37, k1), lerp(1.52, 1.32, k1)), l0 = new THREE.Vector3(lerp(0.02, 0.17, k1), lerp(0.2, 0.17, k1), 0);
+    const p0 = new THREE.Vector3(lerp(0.0, 0.14, k1), lerp(0.43, 0.41, k1), lerp(1.52, 1.42, k1)), l0 = new THREE.Vector3(lerp(0.02, 0.12, k1), lerp(0.2, 0.19, k1), 0);
     const pc = this.phone10.position.clone().add(new THREE.Vector3(0, 0.001, 0.005)); const p1 = pc.clone().addScaledVector(this.phoneNormal, 0.30);
     cam.position.copy(p0.lerp(p1, k2)); cam.lookAt(l0.lerp(pc, k2));
     // desktop: the article in a browser window; narrows live across breakpoints after reflow_3
@@ -323,7 +323,10 @@ export default {
       const x0 = Math.min(...c.map((p) => p[0])), x1 = Math.max(...c.map((p) => p[0])), y0 = Math.min(...c.map((p) => p[1])), y1 = Math.max(...c.map((p) => p[1]));
       const rx = lerp(x0, 0, ek), ry = lerp(y0, 0, ek), rw = lerp(x1 - x0, W, ek), rh = lerp(y1 - y0, H, ek);
       ctx.save(); roundRect(ctx, rx, ry, rw, rh, lerp(14, 0, ek)); ctx.clip();
-      drawWorkspace(ctx, W, H, { alpha: seg(ek, 0, 0.35), layouts: this.L });
+      // the page itself grows with the window, then dissolves into the workspace
+      const k2 = easeInOut(seg(ek, 0.25, 0.8)); const sc = rw / 480;
+      ctx.save(); ctx.translate(rx, ry); ctx.fillStyle = PALETTE.ivory; ctx.fillRect(0, 0, rw, rh); ctx.scale(sc, sc); drawArticle(ctx, this.L.p); ctx.restore();
+      drawWorkspace(ctx, W, H, { alpha: k2, layouts: this.L });
       ctx.restore();
       // the point rides on the overlay now: from the phone to the centre of the frame
       const pw = this.projWorld(this.point.group.position, cam); const ck = easeInOut(seg(t, this.end - 1.7, this.end - 0.75));

@@ -218,7 +218,7 @@ export default {
     const gripGear = this.lever.gear.userData.gripG.getWorldPosition(V2); this.group.updateMatrixWorld(true);
     const pp = this.pointPose(t, gripGear);
     this.point.group.position.copy(pp.p); this.point.setScale(pp.s).setIntensity(pp.i).pulse(t, 0.06, 1.3);
-    this.point.light.intensity = 1.15 * pp.i; // gentler than the default: the panel is close and would blow out
+    this.point.light.intensity = 1.15 * pp.i * (0.45 + 0.55 * Math.min(1, pp.s)); // gentler than the default; softer still when the point is small (dial close-up)
     this.point.group.visible = t < B.wheelXfade[1];
   },
 

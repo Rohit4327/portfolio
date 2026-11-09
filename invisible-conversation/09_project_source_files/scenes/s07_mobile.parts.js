@@ -298,9 +298,9 @@ export function layoutFor(w, h, mode) {
     const heroW = Math.round((w - 2 * m) * 0.6), heroH = Math.round(heroW * 0.5);
     B.hero = { x: m, y: top, w: heroW, h: heroH };
     const tx0 = m + heroW + 36, tw = w - m - tx0;
-    B.kicker = { x: tx0, y: top + 24, w: tw, h: 12 };
-    B.title = { x: tx0, y: top + 48, w: tw, h: 0, size: 42 };
-    B.dek = { x: tx0, y: top + 48 + 3 * 46 + 16, w: tw, h: 0, size: 18 };
+    B.kicker = { x: tx0, y: top + 22, w: tw, h: 12 };
+    B.title = { x: tx0, y: top + 70, w: tw, h: 0, size: 42 };
+    B.dek = { x: tx0, y: top + 70 + 2 * 46 + 22, w: tw, h: 0, size: 18 };
     B.byline = { x: tx0, y: top + heroH - 10, w: tw, h: 12 };
     const by = top + heroH + 36, sideW = Math.round((w - 2 * m) * 0.26), gap = 36;
     const colW = Math.round((w - 2 * m - sideW - gap * 2) / 2);
@@ -311,9 +311,9 @@ export function layoutFor(w, h, mode) {
     const heroW = w - 2 * m, heroH = Math.round(heroW * 0.42);
     B.hero = { x: m, y: top, w: heroW, h: heroH };
     B.kicker = { x: m, y: top + heroH + 40, w: heroW, h: 12 };
-    B.title = { x: m, y: top + heroH + 64, w: heroW, h: 0, size: 38 };
-    B.dek = { x: m, y: top + heroH + 64 + 2 * 44 + 12, w: heroW, h: 0, size: 18 };
-    B.byline = { x: m, y: top + heroH + 64 + 2 * 44 + 12 + 2 * 26 + 10, w: heroW, h: 12 };
+    B.title = { x: m, y: top + heroH + 84, w: heroW, h: 0, size: 38 };
+    B.dek = { x: m, y: top + heroH + 84 + 1 * 44 + 24, w: heroW, h: 0, size: 18 };
+    B.byline = { x: m, y: top + heroH + 84 + 1 * 44 + 24 + 2 * 26 + 10, w: heroW, h: 12 };
     const by = B.byline.y + 36, gap = 32, colW = Math.round((heroW - gap) / 2);
     B.cols = [{ x: m, y: by, w: colW, h: 300 }, { x: m + colW + gap, y: by, w: colW, h: 300 }];
     B.side = { x: m, y: by + 320, w: heroW, h: 150 };
@@ -322,9 +322,9 @@ export function layoutFor(w, h, mode) {
     const heroW = w - 2 * m, heroH = Math.round(heroW * 0.56);
     B.hero = { x: m, y: top, w: heroW, h: heroH };
     B.kicker = { x: m, y: top + heroH + 34, w: heroW, h: 12 };
-    B.title = { x: m, y: top + heroH + 58, w: heroW, h: 0, size: 34 };
-    B.dek = { x: m, y: top + heroH + 58 + 3 * 40 + 8, w: heroW, h: 0, size: 17 };
-    B.byline = { x: m, y: top + heroH + 58 + 3 * 40 + 8 + 2 * 24 + 10, w: heroW, h: 12 };
+    B.title = { x: m, y: top + heroH + 74, w: heroW, h: 0, size: 34 };
+    B.dek = { x: m, y: top + heroH + 74 + 1 * 38 + 24, w: heroW, h: 0, size: 17 };
+    B.byline = { x: m, y: top + heroH + 74 + 1 * 38 + 24 + 2 * 24 + 10, w: heroW, h: 12 };
     const by = B.byline.y + 34;
     B.cols = [{ x: m, y: by, w: heroW, h: Math.max(240, h - by - 230) }];
     B.side = { x: m, y: B.cols[0].y + B.cols[0].h + 24, w: heroW, h: 170 };
@@ -419,8 +419,8 @@ export function drawWorkspace(x, W, H, { alpha = 1, t = 0, layouts } = {}) {
   props.forEach(([k, v], i) => { const yy = 124 + i * 48; tx(x, k, W - RP + 24, yy, { size: 13, weight: 500, color: PALETTE.gray }); roundRect(x, W - RP + 120, yy - 17, RP - 144, 26, 4); x.fillStyle = 'rgba(255,255,255,0.05)'; x.fill(); tx(x, v, W - RP + 130, yy, { size: 13, weight: 500, color: PALETTE.ivory }); if (i === 2) { roundRect(x, W - 60, yy - 12, 30, 16, 8); x.fillStyle = PALETTE.cyan; x.fill(); x.fillStyle = PALETTE.graphite; x.beginPath(); x.arc(W - 38, yy - 4, 6, 0, 7); x.fill(); } });
   // artboards
   if (layouts) {
-    const boards = [['DESKTOP', layouts.d, 0.42], ['TABLET', layouts.t, 0.26], ['PHONE', layouts.p, 0.26]];
-    let bx = LP + 70; const by = TB + 120;
+    const boards = [['DESKTOP', layouts.d, 0.58], ['TABLET', layouts.t, 0.34], ['PHONE', layouts.p, 0.34]];
+    let bx = LP + 36; const by = TB + 150;
     boards.forEach(([label, L, s], i) => {
       const bw = L.w * s, bh = L.h * s; const sel = i === 2;
       tx(x, label, bx, by - 14, { size: 12, weight: 700, color: sel ? PALETTE.cyan : PALETTE.gray2, tracking: 2.2 });
