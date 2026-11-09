@@ -49,7 +49,7 @@ export default {
       choice: s4.start + 5.15,                // helpful vs manipulative (≈ 4.2 s)
       labels: s5.start + 2.55,                // labels on icon-only buttons
       motion: s5.start + 4.15,                // reduce-motion toggle
-      inputs: s6.start + 1.75,                // four input methods + silhouettes
+      inputs: s6.start + 1.55,                // four input methods + silhouettes
       wcag: s5.start, wcagOut: s5.start + 3.9,
       layers: this.end - 1.95,                // cards separate into spatial layers
       end: this.end,

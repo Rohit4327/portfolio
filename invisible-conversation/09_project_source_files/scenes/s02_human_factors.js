@@ -52,6 +52,7 @@ export default {
       dial1: s4.start + 0.95, dial1Hold: s4.start + 1.7, dial1Return: s4.start + 1.95, dial1End: s4.start + 2.75,
       camDial: s5.start + 0.3,
       dial2: s5.start + 1.3, dial2Hold: s5.start + 2.15, dial2Return: s5.start + 2.35,
+      camDialEnd: Math.min(s5.start + 3.1, end - 2.6),
       wheelXfade: [end - 2.45, end - 1.45],
       spiral: [end - 1.5, end - 0.65],
       transition: end - 0.7,
@@ -139,7 +140,7 @@ export default {
       K(B.camPhone, vec(0.1, 1.32, 0.86), this.bookRest.clone().add(vec(-0.01, 0.015, 0.0)), 35),
       K(B.camPhone + 1.2, this.dialC.clone().addScaledVector(this.dialN, 0.7).add(vec(-0.26, 0.04, 0.0)), this.dialC.clone().add(vec(0, 0.015, 0)), 35),
       K(B.camDial, this.dialC.clone().addScaledVector(this.dialN, 0.7).add(vec(-0.26, 0.04, 0.0)), this.dialC.clone().add(vec(0, 0.015, 0)), 35),
-      K(B.camDial + 2.8, this.dialC.clone().addScaledVector(this.dialN, 0.158), this.dialC.clone(), 35),
+      K(B.camDialEnd, this.dialC.clone().addScaledVector(this.dialN, 0.158), this.dialC.clone(), 35),
       K(end + 1, this.dialC.clone().addScaledVector(this.dialN, 0.158), this.dialC.clone(), 35),
     ];
   },
@@ -180,7 +181,7 @@ export default {
     if (t < B.bookLand) return { p: this.hoverBook.clone().add(vec(0, 0.1 * (1 - easeInOut(seg(t, B.bookDrop, B.bookLand))), 0)), s: 1.1, i: 1.0 };
     if (t < B.camPhone) return { p: this.hoverBook.clone().add(bob(0.005)), s: 1.1, i: 1.0 };
     if (t < B.camPhone + 1.0) { const k = seg(t, B.camPhone, B.camPhone + 1.0); return { p: arc(this.hoverBook, holeW, k, 0.12), s: lerp(1.1, 0.42, easeInOut(k)), i: 1.0 }; }
-    const s = lerp(0.42, 0.33, ease(t, B.camDial, B.camDial + 2.8));
+    const s = lerp(0.42, 0.33, ease(t, B.camDial, B.camDialEnd));
     return { p: holeW, s, i: 1.0 };
   },
 

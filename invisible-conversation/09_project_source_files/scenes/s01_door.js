@@ -75,6 +75,7 @@ export default {
     const cor = makeCorridor({ length: 90, spacing: 2.4, width: 3.4, height: 2.3, amber: 0.75 });
     this.corridor = cor.group; this.corridor.visible = false; this.corridor.position.set(0, 1.15, 10); g.add(this.corridor);
     this.corLight = new THREE.PointLight(0xFFAB5B, 0, 7, 1.5); this.corridor.add(this.corLight);
+    for (const f of this.corridor.children) if (f.children && f.children.length >= 5) f.children[4].userData.on = f.children[4].visible;
     this.corAmbient = new THREE.AmbientLight(0xffffff, 0.08); this.corridor.add(this.corAmbient);
   },
 
@@ -180,6 +181,8 @@ export default {
       this.point.setIntensity(1.1 + rush).setScale(1.9 + rush * 2.5).pulse(t, 0.06, 1.2);
       this.point.group.visible = true;
       this.corLight.position.copy(this.point.group.position).sub(this.corridor.position); this.corLight.intensity = 4;
+      // hide luminous strips of arches close to the camera so they never cut through the title
+      for (const f of this.corridor.children) { if (f.children && f.children.length >= 5) { const zWorld = f.position.z + this.corridor.position.z; f.children[4].visible = (zWorld < zCam - 7.5) && f.children[4].userData.on !== false; } }
       cam.lookAt(px * 0.5, 1.15 + 0.55, zCam - 6);
     }
   },
