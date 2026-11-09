@@ -1,0 +1,40 @@
+THE INVISIBLE CONVERSATION — How UX & UI Came to Life
+Render & delivery settings
+
+PICTURE
+  Engine ............ Three.js r170 (WebGL 2 via ANGLE/SwiftShader software rasterizer) + Canvas 2D overlay, inside headless Chromium
+                      driven by Playwright. Every frame is a deterministic function of film time t; no wall-clock dependence.
+  Master resolution . 1920 × 1080 (16:9), progressive, 24.000 fps, 7,272 frames, 303.000 s
+                      (4K was not rendered: the brief allows prioritising a complete, stable 1080p film when render resources are limited;
+                      the project is resolution-independent — set deviceScaleFactor 2 in tools/browser.mjs openFilm() and W/H in lib/stage.js to re-render at 3840 × 2160.)
+  Frame capture ..... in-page composite (GL canvas + UI canvas) → PNG (lossless) → ffmpeg image2pipe
+  Intermediate ...... 4 parallel chunks, libx264 preset medium, CRF 14, yuv420p; concatenated losslessly (-c copy)
+  Final encode ...... libx264 High@4.1, preset slow, CRF 18, yuv420p, 24 fps, +faststart  →  01_final_documentary.mp4
+  Colour ............ sRGB output, ACES filmic tone mapping (exposure 1.0), palette: graphite #0D1016 · ivory #F6F2E8 · amber #FFAB5B · cyan #80C9F8
+  Post ............... per-frame deterministic film grain (hash-keyed) and vignette on the 2D overlay
+  Typography ........ Inter / Inter Display (OFL), DejaVu Sans Mono for CRT text; all titles are real text rendering, no raster text
+  Lighting .......... direct lights only (key/fill/rim/ambient rigs, ≤ 2 extra lights per scene); one 1024² PCF shadow map per scene;
+                      image-based lighting disabled (≈3 s/frame cost under SwiftShader)
+  Measured cost ..... 0.3–1.5 s per frame single-threaded including capture; full film with 4 workers on 4 vCPUs — see README for the measured wall time
+
+AUDIO
+  Narration ......... Kokoro-82M v1.0 (quantized ONNX, voice af_heart, speed 1.11) via kokoro-onnx; synthesized per sentence, trimmed,
+                      RMS-matched (±3 dB), 70 Hz high-pass, resampled 24 → 48 kHz, peak −3 dBFS  →  02_english_narration.wav (48 kHz, stereo, 24-bit)
+  Score ............. original, procedurally synthesized (audio/music.py), re-timed to the recorded chapter map (audio/out/sections.json), −27 LUFS
+  Sound design ...... original, procedurally synthesized (audio/sfx.py), placed from the scenes' exported visual cues (audio/out/visual_cues.json)
+  Mix ............... narration dominant; music and SFX side-chain ducked under speech; loudnorm I=−14 LUFS, TP=−1.5 dBTP, LRA 11 (two-pass EBU R128 via ffmpeg)
+  Delivery audio .... AAC-LC 192 kb/s, 48 kHz, stereo (in the MP4); narration stem delivered as PCM WAV
+
+SUBTITLES
+  03_english_subtitles.srt / 04_english_subtitles.vtt — one cue per narrated sentence (long sentences split at clause boundaries),
+  ≤ 42 characters per line, ≤ 2 lines, timings taken from the actual synthesized sentence boundaries.
+
+REPRODUCE
+  cd 09_project_source_files
+  python3 audio/narration.py                      # narration + timing + subtitles + transcript
+  node tools/sync-timing.mjs                      # lib/timing.json ← audio/out/narration_timing.json
+  python3 tools/sections.py && python3 audio/music.py --sections audio/out/sections.json --duration 303.0 --out audio/out/music_bed.wav
+  node tools/export-cues.mjs && python3 audio/sfx.py --cues audio/out/visual_cues.json --duration 303.0 --out audio/out/sfx_bed.wav
+  node tools/render.mjs --from 0 --to 303 --fps 24 --workers 4 --crf 14 --out ../renders/film_video.mp4
+  bash tools/assemble.sh ../renders/film_video.mp4   # → ../01_final_documentary.mp4
+  Stills for review: node tools/preview.mjs --times 12.5,80,200 --out <dir>
