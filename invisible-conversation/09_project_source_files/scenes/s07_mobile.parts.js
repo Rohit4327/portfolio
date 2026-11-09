@@ -420,7 +420,7 @@ export function drawWorkspace(x, W, H, { alpha = 1, t = 0, layouts } = {}) {
   // artboards
   if (layouts) {
     const boards = [['DESKTOP', layouts.d, 0.58], ['TABLET', layouts.t, 0.34], ['PHONE', layouts.p, 0.34]];
-    let bx = LP + 36; const by = TB + 150;
+    let bx = LP + 36; const by = TB + Math.round((H - TB - layouts.d.h * 0.58) / 2);
     boards.forEach(([label, L, s], i) => {
       const bw = L.w * s, bh = L.h * s; const sel = i === 2;
       tx(x, label, bx, by - 14, { size: 12, weight: 700, color: sel ? PALETTE.cyan : PALETTE.gray2, tracking: 2.2 });

@@ -324,8 +324,8 @@ export default {
       const rx = lerp(x0, 0, ek), ry = lerp(y0, 0, ek), rw = lerp(x1 - x0, W, ek), rh = lerp(y1 - y0, H, ek);
       ctx.save(); roundRect(ctx, rx, ry, rw, rh, lerp(14, 0, ek)); ctx.clip();
       // the page itself grows with the window, then dissolves into the workspace
-      const k2 = easeInOut(seg(ek, 0.25, 0.8)); const sc = rw / 480;
-      ctx.save(); ctx.translate(rx, ry); ctx.fillStyle = PALETTE.ivory; ctx.fillRect(0, 0, rw, rh); ctx.scale(sc, sc); drawArticle(ctx, this.L.p); ctx.restore();
+      const k2 = easeInOut(seg(ek, 0.35, 0.85)); const sc = rh / 1040;
+      ctx.save(); ctx.translate(rx, ry); ctx.fillStyle = PALETTE.ivory; ctx.fillRect(0, 0, rw, rh); ctx.translate((rw - 480 * sc) / 2, 0); ctx.scale(sc, sc); drawArticle(ctx, this.L.p); ctx.restore();
       drawWorkspace(ctx, W, H, { alpha: k2, layouts: this.L });
       ctx.restore();
       // the point rides on the overlay now: from the phone to the centre of the frame
