@@ -82,7 +82,7 @@ export default {
   },
 
   // cursor position on the projection (canvas uv), pure function of t
-  cursorUV(t) {
+  cursorUV(t, tremor = true) {
     const B = this.B;
     const moves = [[B.move1, LINK_UV], [B.move2, WORD_UV], [B.move3, { u: 0.42, v: 0.5 }], [B.move4, PANE_UV]];
     let u = 0.55, v = 0.5;
@@ -93,7 +93,7 @@ export default {
       if (t < t1) break;
     }
     // tiny hand tremor while idle on the desk
-    u += (noise1(t * 1.7) - 0.5) * 0.004; v += (noise1(t * 1.3 + 9) - 0.5) * 0.004;
+    if (tremor) { u += (noise1(t * 1.7) - 0.5) * 0.004; v += (noise1(t * 1.3 + 9) - 0.5) * 0.004; }
     return { u, v };
   },
 
@@ -102,7 +102,8 @@ export default {
     const mode = t < B.click1 ? 'outline' : t < B.split ? 'linked' : 'split';
     const sel = t >= B.click2 && t < B.typeStart;
     const typed = t < B.typeStart ? 0 : Math.min(INSERT.length, Math.floor((t - B.typeStart) / B.typeStep) + 1);
-    return { mode, sel, typed, detached: t >= B.detach[0] };
+    const c = this.cursorUV(t, false); const q = (x) => Math.round(x * 256) / 256;
+    return { mode, sel, typed, detached: t >= B.detach[0], cur: { u: q(c.u), v: q(c.v) } };
   },
 
   update(t, stage) {
@@ -152,8 +153,8 @@ export default {
     } else if (t < B.shotB2) {    // B1: the three-button mouse moving, the screen glowing behind
       const k = seg(t, B.shotB1, B.shotB2);
       this.mouse.getWorldPosition(look);
-      cam.position.set(look.x + lerp(0.2, 0.16, k), look.y + 0.13, look.z + lerp(0.32, 0.3, k));
-      look.y += 0.02; look.z -= 0.04;
+      cam.position.set(look.x + lerp(0.34, 0.3, k), look.y + 0.26, look.z + lerp(0.5, 0.46, k));
+      look.x -= 0.2; look.y += 0.07; look.z -= 0.12;
     } else if (t < B.shotC1) {    // B2: the projection full-frame — link, edit, split
       const k = seg(t, B.shotB2, B.shotC1);
       cam.fov = 38; cam.updateProjectionMatrix();
@@ -196,7 +197,7 @@ export default {
     const lt1 = fadeIO(t, B.engelbart, B.shotB1 - 0.15, 0.5, 0.5);
     if (lt1 > 0) lowerThird(ctx, { title: 'DOUGLAS ENGELBART', sub: 'SRI Augmentation Research Center · 9 Dec 1968, San Francisco', source: src, alpha: lt1, reveal: seg(t, B.engelbart, B.engelbart + 0.8) });
     const cp = fadeIO(t, B.demos, B.shotB2 - 0.2, 0.5, 0.5);
-    if (cp > 0) caps(ctx, '1968 — THE MOTHER OF ALL DEMOS', 120, 150, { alpha: cp });
+    if (cp > 0) caps(ctx, '1968 — THE MOTHER OF ALL DEMOS', W - 120, H - 124, { alpha: cp, align: 'right' });
     const lt2 = fadeIO(t, B.protoLabel, B.shotD - 0.1, 0.5, 0.4);
     if (lt2 > 0) lowerThird(ctx, { title: 'FIRST MOUSE PROTOTYPE · 1964', sub: 'Wooden shell · built by Bill English, 1964 · concept Douglas Engelbart', source: src, alpha: lt2, reveal: seg(t, B.protoLabel, B.protoLabel + 0.8) });
     const lt3 = fadeIO(t, B.threeLabel, B.shotE - 0.15, 0.5, 0.4);

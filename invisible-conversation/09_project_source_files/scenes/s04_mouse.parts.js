@@ -180,7 +180,7 @@ export const LINK_UV = { u: 0.735, v: 0.405 };   // where "> SEE 3A" sits (click
 export const WORD_UV = { u: 0.315, v: 0.385 };   // the word "responds" in the linked view (click target 2)
 export const INSERT = 'instantly ';
 // state: { mode: 'outline'|'linked'|'split', typed, sel, detached }
-export function stateKey(s) { return `${s.mode}|${s.typed}|${s.sel ? 1 : 0}|${s.detached ? 1 : 0}`; }
+export function stateKey(s) { return `${s.mode}|${s.typed}|${s.sel ? 1 : 0}|${s.detached ? 1 : 0}|${s.cur ? s.cur.u + ',' + s.cur.v : ''}`; }
 export function drawProjection(scr, s) {
   const key = stateKey(s); if (scr.key === key) return; scr.key = key;
   const { ctx, pxW: Wp, pxH: Hp } = scr;
@@ -234,6 +234,8 @@ export function drawProjection(scr, s) {
       drawPane(ctx, PANE.x, PANE.y, s.detached);
     }
   }
+  // the tracking spot ("bug"): a small bright block that follows the mouse (the amber point sits on it on the big screen)
+  if (s.cur) { ctx.fillStyle = INK; ctx.globalAlpha = 0.85; ctx.fillRect(s.cur.u * Wp - 5, s.cur.v * Hp - 9, 10, 16); ctx.globalAlpha = 1; }
   // footer status line
   ctx.fillStyle = INK_DIM; ctx.font = MONO(18); ctx.fillText(s.mode === 'outline' ? 'C:  COMMAND   J:  JUMP   I:  INSERT' : s.mode === 'linked' ? 'J:  JUMP   I:  INSERT   R:  REPLACE' : 'SHARED SCREEN   BOTH POINTERS VISIBLE', 64, Hp - 40);
   scr.update();
