@@ -189,7 +189,7 @@ export function drawA11y(ctx, w, h, st, alphaIn = 1) {
     case 'focus': case 'error': {
       // a short form: Name, Email, Password, Continue. Focus ring (amber) hops across the four controls.
       const fx = 72, fw = 760, fields = ['Full name', 'Email', 'Password'];
-      const ys = [bodyY + 40, bodyY + 190, bodyY + 340]; const by = bodyY + 500;
+      const ys = [bodyY + 40, bodyY + 190, bodyY + 372]; const by = bodyY + 532;
       fields.forEach((f, i) => { label(ctx, f, fx, ys[i], { size: 24, weight: 500, color: P.ivory }); fillRoundRect(ctx, fx, ys[i] + 18, fw, 76, 16, INK.surface2, INK.line2, 1.5); label(ctx, ['Alex Rivera', 'alex@example', '••••••••'][i], fx + 26, ys[i] + 66, { size: 26, weight: 400, color: i === 2 ? P.ivory : P.ivory }); });
       fillRoundRect(ctx, fx, by, 260, 72, 36, P.cyan); label(ctx, 'Continue', fx + 130, by + 46, { size: 26, weight: 600, color: P.graphite, align: 'center' });
       if (idea === 'focus') {

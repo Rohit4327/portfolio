@@ -90,7 +90,7 @@ export default {
     this.console = makeSketchpadConsole(); sk.add(this.console.group);
     this.crtLight = new THREE.PointLight(0xcfeee0, 0.6, 1.6, 1.8); this.crtLight.position.set(0, 1.35, 0.35); sk.add(this.crtLight);
     // a small instance of the point for the light-pen tip (same identity, closer scale)
-    this.point2 = new AmberPoint(0.011, { lightIntensity: 0.6, lightDistance: 0.7 }); this.point2.setIntensity(0); sk.add(this.point2.group);
+    this.point2 = new AmberPoint(0.011, { lightIntensity: 0.45, lightDistance: 0.6 }); this.point2.setIntensity(0); sk.add(this.point2.group);
     this.crtKey = '';
     g.updateMatrixWorld(true);
     this.crtCenter = this.console.screen.mesh.getWorldPosition(new THREE.Vector3());
