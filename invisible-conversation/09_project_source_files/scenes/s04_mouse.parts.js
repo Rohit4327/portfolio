@@ -47,9 +47,11 @@ export function buildAuditorium() {
   for (let r = 0; r < rows; r++) { const st = box(10, 0.11, rowPitch, dark); st.position.set(0, r * 0.11 - 0.055 + 0.11, -2.4 + r * rowPitch + 0.1); st.castShadow = false; g.add(st); }
   // projector beam (faint square pyramid of haze from the back of the hall to the screen)
   const beamLen = 17.2; const cone = new THREE.ConeGeometry(1, beamLen, 4, 1, true); cone.rotateY(Math.PI / 4); cone.rotateX(Math.PI / 2);
-  const beam = new THREE.Mesh(cone, new THREE.MeshBasicMaterial({ color: 0xbfd3cf, transparent: true, opacity: 0.045, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
-  // cone apex at origin (+y before rotation) → after rotateX(π/2) the axis is along -z; scale base to screen size
-  beam.scale.set(SCREEN.w / 2 / Math.SQRT2 * 1.02, SCREEN.h / 2 / Math.SQRT2 * 1.02, 1);
+  // vertex colours: bright at the projector (apex, +z), fading toward the screen
+  { const pos = cone.attributes.position; const col = new Float32Array(pos.count * 3); for (let k = 0; k < pos.count; k++) { const z = pos.getZ(k); const b = 0.12 + 0.88 * Math.pow((z + beamLen / 2) / beamLen, 1.2); col[k * 3] = b; col[k * 3 + 1] = b; col[k * 3 + 2] = b; } cone.setAttribute('color', new THREE.BufferAttribute(col, 3)); }
+  const beam = new THREE.Mesh(cone, new THREE.MeshBasicMaterial({ color: 0xbfd3cf, vertexColors: true, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
+  // apex (+z, the projector) → base at the screen plane; the 4-sided cone's corners sit at radius 1, so half-side = 1/√2
+  beam.scale.set(SCREEN.w / 2 * Math.SQRT2 * 1.03, SCREEN.h / 2 * Math.SQRT2 * 1.03, 1);
   beam.position.set(SCREEN.center.x, SCREEN.center.y, SCREEN.center.z + beamLen / 2); g.add(beam);
   const projector = roundedBox(0.34, 0.2, 0.5, 0.02, mat.darkMetal()); projector.position.set(0, SCREEN.center.y, SCREEN.center.z + beamLen + 0.2); projector.castShadow = false; g.add(projector);
   return g;
@@ -87,7 +89,7 @@ export function buildConsole(screenMaterial) {
   const monScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.225), screenMaterial); monScreen.position.set(0, 0.17, 0.151); mon.add(monScreen);
   const stand = cylinder(0.05, 0.08, 0.03, mat.darkMetal()); stand.position.set(0, 0.015, -0.02); mon.add(stand);
   // an empty chair behind the desk (the operator is not depicted)
-  const chair = new THREE.Group(); chair.position.set(0.02, 0, 0.75); g.add(chair);
+  const chair = new THREE.Group(); chair.position.set(0.02, 0, -0.78); chair.rotation.y = Math.PI; g.add(chair);
   const seat = roundedBox(0.46, 0.06, 0.44, 0.01, mat.std(0x23272e, { roughness: 0.8 })); seat.position.y = 0.46; chair.add(seat);
   const cb = roundedBox(0.44, 0.42, 0.05, 0.01, mat.std(0x23272e, { roughness: 0.8 })); cb.position.set(0, 0.72, 0.21); cb.rotation.x = -0.1; chair.add(cb);
   const post = cylinder(0.02, 0.02, 0.42, mat.darkMetal()); post.position.y = 0.22; chair.add(post);
@@ -113,18 +115,18 @@ export function makeThreeButtonMouse() {
 // 1964 wooden prototype: a hand-sized wooden block, one button on top, two perpendicular metal wheels underneath.
 export function makeWoodenMouse() {
   const g = new THREE.Group();
-  const wood = mat.std(0xa8784a, { roughness: 0.72 });
+  const wood = mat.std(0x9a6a3e, { roughness: 0.72 });
   const body = roundedBox(0.1, 0.066, 0.118, 0.006, wood, 3); body.position.y = 0.012 + 0.033; g.add(body);
   // subtle darker grain stripes (thin boxes just under the top surface would clip; use slightly darker side band instead)
-  const band = box(0.1004, 0.012, 0.1184, mat.std(0x8d6238, { roughness: 0.75 })); band.position.y = 0.012 + 0.02; g.add(band);
+  const band = box(0.1004, 0.012, 0.1184, mat.std(0x74502c, { roughness: 0.75 })); band.position.y = 0.012 + 0.02; g.add(band);
   const plate = box(0.098, 0.004, 0.116, mat.darkMetal({ roughness: 0.5 })); plate.position.y = 0.012 + 0.002; g.add(plate);
   const button = roundedBox(0.022, 0.008, 0.022, 0.002, mat.std(0xb8322a, { roughness: 0.5 })); button.position.set(-0.028, 0.012 + 0.066 + 0.004, -0.03); g.add(button); g.userData.button = button;
   // two wheels, perpendicular: one rolls along z (axis x), one along x (axis z)
   const wheelMat = mat.brushed();
-  const w1 = cylinder(0.02, 0.02, 0.004, wheelMat, 40); w1.rotation.z = Math.PI / 2; w1.position.set(0.0, 0.012 - 0.006, 0.03); g.add(w1);
-  const w2 = cylinder(0.02, 0.02, 0.004, wheelMat, 40); w2.rotation.x = Math.PI / 2; w2.position.set(-0.025, 0.012 - 0.006, -0.025); g.add(w2);
+  const w1 = cylinder(0.024, 0.024, 0.005, wheelMat, 40); w1.rotation.z = Math.PI / 2; w1.position.set(0.0, 0.012 - 0.008, 0.03); g.add(w1);
+  const w2 = cylinder(0.024, 0.024, 0.005, wheelMat, 40); w2.rotation.x = Math.PI / 2; w2.position.set(-0.025, 0.012 - 0.008, -0.025); g.add(w2);
   for (const w of [w1, w2]) { const axle = cylinder(0.003, 0.003, 0.03, mat.darkMetal()); axle.rotation.copy(w.rotation); axle.position.copy(w.position); g.add(axle); }
-  const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0.0, 0.07, -0.056), new THREE.Vector3(0.0, 0.07, -0.1), new THREE.Vector3(-0.03, 0.04, -0.17), new THREE.Vector3(-0.09, 0.0, -0.22)]);
+  const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0.0, 0.062, -0.056), new THREE.Vector3(0.0, 0.06, -0.085), new THREE.Vector3(-0.012, 0.04, -0.115), new THREE.Vector3(-0.03, 0.012, -0.14)]);
   const cord = new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.0035, 8, false), mat.std(0x2a2a2e, { roughness: 0.55 })); cord.castShadow = true; g.add(cord);
   return g;
 }
@@ -136,10 +138,10 @@ export function buildExhibit() {
   const plinth = roundedBox(0.7, 0.9, 0.7, 0.006, mat.std(0x171b22, { roughness: 0.85 })); plinth.position.y = 0.45; g.add(plinth);
   const topPad = roundedBox(0.62, 0.012, 0.62, 0.004, mat.std(0x101318, { roughness: 1 })); topPad.position.y = 0.906; g.add(topPad);
   // wedge cradle tilts the object so the wheels underneath read on camera
-  const cradle = new THREE.Group(); cradle.position.set(0, 0.912, 0); cradle.rotation.z = 0.5; cradle.rotation.y = -0.35; g.add(cradle);
+  const cradle = new THREE.Group(); cradle.position.set(0, 0.912, 0); cradle.rotation.z = -0.48; cradle.rotation.y = -0.3; g.add(cradle);
   const wedge = box(0.14, 0.012, 0.16, mat.std(0x101318, { roughness: 1 })); wedge.position.y = -0.006 + 0.0; cradle.add(wedge);
   const mouse = makeWoodenMouse(); mouse.position.y = 0.006; cradle.add(mouse);
-  const key = new THREE.SpotLight(0xfff0dc, 40, 8, Math.PI / 7, 0.6, 1.4); key.position.set(-0.9, 2.4, 1.1); key.target.position.set(0, 0.95, 0); key.castShadow = true; key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.01; g.add(key, key.target);
+  const key = new THREE.SpotLight(0xfff0dc, 34, 8, Math.PI / 11, 0.7, 1.4); key.position.set(-0.9, 2.3, 1.0); key.target.position.set(0, 0.95, 0); key.castShadow = true; key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.01; g.add(key, key.target);
   const fill = new THREE.DirectionalLight(0xcfe3ff, 0.35); fill.position.set(1.5, 1.5, 1.5); g.add(fill);
   const rim = new THREE.PointLight(0xffd9a8, 2.5, 4, 1.6); rim.position.set(0.5, 1.4, -0.7); g.add(rim);
   g.add(new THREE.AmbientLight(0xffffff, 0.06));

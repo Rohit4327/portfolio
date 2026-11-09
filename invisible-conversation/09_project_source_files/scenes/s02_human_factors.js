@@ -30,7 +30,7 @@ export default {
       pointLand: start + 1.1,
       click1: Math.max(start + 1.2, s1.start + 0.45), click2: Math.max(start + 1.95, s1.start + 1.2), click3: Math.max(start + 2.65, s1.start + 1.9),
       bigLever: s1.start + 2.7,
-      pointLeaveLamp: s2.start - 0.75,
+      pointLeaveLamp: s2.start - 1.7,
       camLevers: s2.start + 0.45,
       leverLabels: s2.start + 0.85,
       wrongLever: s2.start + 1.35, leverBack: s2.start + 3.05,
@@ -171,7 +171,7 @@ export default {
     const holeW = this.phone.userData.holeMarker.getWorldPosition(V3).clone();
     if (t < B.pointLand) { const k = seg(t, this.start, B.pointLand); return { p: this.lampW.clone().addScaledVector(this.slopeN, 0.05 * (1 - easeOut(k))), s: lerp(1.6, 1.0, easeOut(k)), i: 1.0 }; }
     if (t < B.pointLeaveLamp) return { p: this.lampW.clone(), s: 1.0, i: 1.0 };
-    if (t < B.camLevers + 0.3) { const k = seg(t, B.pointLeaveLamp, B.camLevers + 0.3); return { p: arc(this.lampW, this.hoverLevers, k, 0.14), s: lerp(1.0, 0.8, k), i: 1.0 }; }
+    if (t < B.camLevers - 0.2) { const k = seg(t, B.pointLeaveLamp, B.camLevers - 0.2); return { p: arc(this.lampW, this.hoverLevers, k, 0.1), s: lerp(1.0, 0.8, k), i: 1.0 }; }
     if (t < B.slide) return { p: this.hoverLevers.clone().add(bob(0.006)), s: 0.8, i: 1.0 };
     const gearHover = gripGear.clone().add(vec(0, 0.065, 0.045));
     if (t < B.slide + 1.3) { const k = seg(t, B.slide, B.slide + 1.3); return { p: arc(this.hoverLevers, gearHover, k, 0.03), s: lerp(0.8, 1.1, k), i: 1.0 }; }

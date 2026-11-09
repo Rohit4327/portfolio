@@ -60,7 +60,8 @@ export default {
     // cursor paths (slab-local UI px): the amber point as the touch/pointer mechanism
     const A = PT.addBtn, G = PT.bag, C = PT.cont, K = PT.back;
     this.K1 = [[B.start, 480, 412], [B.start + 1.7, 850, 330], [B.toBtn0, 850, 330], [B.toBtn1, A.x, A.y], [B.tap1 + 0.6, A.x, A.y], [B.tap1 + 1.7, 1010, 660], [B.tap2 - 0.9, 1010, 660], [B.tap2 - 0.2, G.x, G.y], [B.tap2 + 0.9, G.x, G.y], [B.tap3 - 0.25, C.x, C.y], [B.tap3 + 0.7, C.x, C.y], [B.tap3 + 1.5, 320, 470], [B.tap4 - 1.1, 320, 470], [B.tap4 - 0.25, C.x, C.y], [B.tap4 + 0.9, C.x, C.y], [B.tap4 + 1.9, 620, 540], [B.reveal - 1.5, 620, 540], [B.reveal - 0.35, C.x, C.y], [B.reveal + 0.9, C.x, C.y], [B.freeze + 0.35, K.x, K.y]];
-    this.K2 = [[B.ret1, 920, 330], [B.tap6 - 0.5, 920, 330], [B.tap6 - 0.1, G.x, G.y], [B.tap7 - 0.5, G.x, G.y], [B.tap7 - 0.1, C.x, C.y], [B.confirmed + 0.6, C.x, C.y], [B.dis0 + 0.55, 480, 412]];
+    const cF = pathPos(this.K1, B.freeze); // the point resumes exactly where it froze
+    this.K2 = [[B.ret1, cF.x, cF.y], [B.ret1 + 0.3, cF.x, cF.y], [B.tap6 - 0.5, 920, 330], [B.tap6 - 0.1, G.x, G.y], [B.tap7 - 0.5, G.x, G.y], [B.tap7 - 0.1, C.x, C.y], [B.confirmed + 0.6, C.x, C.y], [B.dis0 + 0.55, 480, 412]];
     this.tapsA = [B.tap1, B.tap2, B.tap3, B.tap4]; this.tapsR = [B.tap6, B.tap7, B.tap5];
 
     // ---- offscreen UI canvas (drawn 1:1 onto the overlay)
@@ -241,7 +242,7 @@ export default {
     }
   },
   ribbon(ctx, t) {
-    const B = this.B, a = fadeIO(t, B.ribbonIn, B.ret1 + 0.15, 0.5, 0.45); if (a <= 0) return;
+    const B = this.B, a = fadeIO(t, B.ribbonIn, B.ret0 + 0.45, 0.5, 0.4); if (a <= 0) return;
     const y = 918, x0 = 330, x1 = 1590, n = PROCESS.length, xs = PROCESS.map((_, i) => x0 + i * (x1 - x0) / (n - 1));
     ctx.save(); ctx.globalAlpha *= a;
     ctx.strokeStyle = 'rgba(138,143,152,0.35)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(xs[0], y); ctx.lineTo(xs[n - 1], y); ctx.stroke();
@@ -292,14 +293,14 @@ export default {
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
       const i = r * cols + c, scx = SX + (c + 0.5) * cw, scy = SY + (r + 0.5) * ch, tcx = (c + 0.5) * W / cols, tcy = (r + 0.5) * H / rows;
       const dist = Math.hypot((scx - (SX + SW / 2)) / SW, (scy - (SY + SH / 2)) / SH) * 1.6;
-      const k2 = easeInOut(seg(t, B.dis0 + 0.18 + 0.22 * dist, B.dis0 + 0.62 + 0.22 * dist));
+      const k2 = easeInOut(seg(t, B.dis0 + 0.14 + 0.16 * dist, B.dis0 + 0.5 + 0.16 * dist));
       const x = lerp(scx, tcx, k2), y = lerp(scy, tcy, k2), w = lerp(cw * (1 - 0.1 * k1), TW, k2), h = lerp(ch * (1 - 0.1 * k1), TH, k2);
       ctx.save(); roundRect(ctx, x - w / 2, y - h / 2, w, h, lerp(4, 14, k1)); ctx.clip();
-      if (k2 < 1) { ctx.save(); ctx.globalAlpha *= 1 - k2; ctx.drawImage(this.uiCanvas, c * cw, r * ch, cw, ch, x - w / 2, y - h / 2, w, h); ctx.restore(); }
+      if (k2 < 1) { const s = Math.max(w / cw, h / ch); ctx.save(); ctx.globalAlpha *= 1 - k2; ctx.drawImage(this.uiCanvas, c * cw, r * ch, cw, ch, x - cw * s / 2, y - ch * s / 2, cw * s, ch * s); ctx.restore(); }
       if (k2 > 0) {
         ctx.save(); ctx.globalAlpha *= k2; fillRoundRect(ctx, x - w / 2, y - h / 2, w, h, 14, 'rgba(31,38,50,0.96)', 'rgba(246,242,232,0.12)', 1);
-        const iw = w - 20, ih = h - 56; fillRoundRect(ctx, x - iw / 2, y - h / 2 + 10, iw, ih, 10, PALETTE.ivory);
-        ctx.save(); ctx.translate(x - iw / 2, y - h / 2 + 10); roundRect(ctx, 0, 0, iw, ih, 10); ctx.clip(); drawComponent(ctx, i, iw, ih); ctx.restore();
+        const iw = w - 28, ih = h - 66; fillRoundRect(ctx, x - iw / 2, y - h / 2 + 14, iw, ih, 10, PALETTE.ivory);
+        ctx.save(); ctx.translate(x - iw / 2, y - h / 2 + 14); roundRect(ctx, 0, 0, iw, ih, 10); ctx.clip(); drawComponent(ctx, i, iw, ih); ctx.restore();
         text(ctx, COMPONENTS[i], x, y + h / 2 - 17, { size: 17, weight: 500, color: PALETTE.gray, align: 'center' }); ctx.restore();
       }
       ctx.restore();
@@ -330,16 +331,19 @@ export default {
     if (ph === 'redesign') {
       const dis = this.dissolve(ctx, t);
       if (!dis) {
-        const S = this.uiStateR(t); const xf = seg(t, B.ret1, B.ret1 + 0.45);
-        if (xf < 1) this.drawSlabUI(ctx, this.uiStateA(B.freeze), 1); // the broken checkout still visible for a beat
-        this.drawSlabUI(ctx, S, easeOut(xf));
+        const S = this.uiStateR(t); const xf = seg(t, B.ret1, B.ret1 + 0.5);
+        if (xf < 1) { // the broken checkout clears to a blank page, then the revised one loads
+          fillRoundRect(ctx, SX, SY, SW, SH, 18, PALETTE.ivory);
+          this.drawSlabUI(ctx, this.uiStateA(B.freeze), 1 - seg(xf, 0, 0.45));
+        }
+        this.drawSlabUI(ctx, S, easeOut(seg(xf, 0.5, 1)));
         // cyan rings on what changed
         const P = L.pdp, c = L.pdp.col;
         if (S.view === 'pdp') this.ring(ctx, { x: c.x - 4, y: P.deliveryY - 30, w: 300, h: 46 }, fadeIO(t, B.ret1 + 0.35, B.tap6 + 0.25, 0.3, 0.25), null);
         if (S.view === 'checkout' && S.step === 0) this.ring(ctx, { x: 200, y: L.co.stepperY - 34, w: 476, h: 90 }, fadeIO(t, B.tap6 + 0.6, B.tap7, 0.3, 0.25), null);
         if (S.view === 'checkout' && S.step === 0) this.ring(ctx, { x: L.co.summary.x + 16, y: PT.summaryDelivery.y - 24, w: L.co.summary.w - 32, h: 38 }, fadeIO(t, B.tap6 + 0.6, B.tap7, 0.3, 0.25), null);
         if (S.pay === 'confirmed') this.ring(ctx, { x: L.co.content.x + 150, y: L.co.content.y + 120, w: L.co.content.w - 300, h: 270 }, fadeIO(t, B.confirmed + 0.35, B.dis0, 0.3, 0.3), null);
-        this.drawCursor(ctx, this.cursorR(t), t, this.tapsR, easeOut(xf));
+        this.drawCursor(ctx, this.cursorR(t), t, this.tapsR, 1);
       } else {
         const c = this.cursorR(t); amberDot(ctx, SX + c.x, SY + c.y, 8 + 10 * seg(t, B.dis0, this.end - 0.7), 1, { glow: 6 });
       }

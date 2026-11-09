@@ -127,7 +127,7 @@ export default {
 
     // ---- spatial layers for the hand-off ----
     this.layers = [];
-    const L = [[-0.85, 1.62, -0.15, 0.5], [1.05, 1.58, -0.3, -0.5], [-0.75, 0.9, -0.5, 0.35], [0.95, 0.95, -0.65, -0.35], [0.15, 1.9, -0.85, 0.0], [-1.3, 1.3, -0.95, 0.6]];
+    const L = [[-0.85, 1.62, -0.15, 0.5], [0.8, 1.6, -0.35, -0.45], [-0.75, 0.9, -0.5, 0.35], [0.95, 0.95, -0.65, -0.35], [0.15, 1.9, -0.85, 0.0], [-1.3, 1.3, -0.95, 0.6]];
     L.forEach((p, i) => {
       const grp = new THREE.Group(); let mesh;
       if (i < 3) { const scr = makeScreen(0.8, 0.47, 512, 300); drawMessagePanel(scr.ctx, 512, 300, i); scr.update(); scr.material.transparent = true; scr.material.depthWrite = false; mesh = scr.mesh; grp.userData.mat = scr.material; }
@@ -222,7 +222,7 @@ export default {
     const [dx, dy] = this.cursorPos(0, t);
     const toPanel = ease(t, B.a11yIn + 0.3, B.text - 0.2);
     const markerY = PANEL.y + PANEL.h / 2 - 0.082, markerX = PANEL.x - PANEL.w / 2 + 0.05;
-    V.set(lerp(dx, markerX, toPanel), lerp(dy, markerY, toPanel), lerp(0.1, PANEL.z + 0.03, toPanel));
+    V.set(lerp(dx, markerX, toPanel), lerp(dy, markerY, toPanel), lerp(0.1, PANEL.z + 0.03, easeOut(toPanel)) + 0.45 * Math.sin(Math.PI * toPanel));
     const toCentre = ease(t, B.layers + 0.2, this.end - 0.25, easeInOut);
     V.lerp(new THREE.Vector3(PANEL.x, PANEL.y, PANEL.z + 0.45), toCentre);
     this.point.group.position.copy(V);

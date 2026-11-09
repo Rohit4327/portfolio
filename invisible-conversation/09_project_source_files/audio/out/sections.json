@@ -4,62 +4,62 @@
   {
    "id": 1,
    "start": 0.0,
-   "end": 27.764
+   "end": 24.51
   },
   {
    "id": 2,
-   "start": 27.764,
-   "end": 59.765
+   "start": 24.51,
+   "end": 55.603
   },
   {
    "id": 3,
-   "start": 59.765,
-   "end": 82.532
+   "start": 55.603,
+   "end": 77.72
   },
   {
    "id": 4,
-   "start": 82.532,
-   "end": 113.273
+   "start": 77.72,
+   "end": 107.8
   },
   {
    "id": 5,
-   "start": 113.273,
-   "end": 145.695
+   "start": 107.8,
+   "end": 139.27
   },
   {
    "id": 6,
-   "start": 145.695,
-   "end": 175.512
+   "start": 139.27,
+   "end": 168.341
   },
   {
    "id": 7,
-   "start": 175.512,
-   "end": 207.294
+   "start": 168.341,
+   "end": 199.491
   },
   {
    "id": 8,
-   "start": 207.294,
-   "end": 247.36
+   "start": 199.491,
+   "end": 238.694
   },
   {
    "id": 9,
-   "start": 247.36,
-   "end": 276.823
+   "start": 238.694,
+   "end": 267.55
   },
   {
    "id": 10,
-   "start": 276.823,
+   "start": 267.55,
    "end": 303.0
   }
  ],
  "moments": {
-  "freeze": 15.0,
-  "title": 20.789,
-  "point_to": 110.822,
-  "ux_lift": 166.737,
-  "checkout_tension": 230.687,
-  "checkout_release": 233.977,
-  "door_open": 297.811,
-  "final_resolve": 302.936
+  "freeze": 12.4,
+  "title": 17.77,
+  "point_to": 105.473,
+  "ux_lift": 159.757,
+  "checkout_tension": 222.345,
+  "checkout_release": 225.596,
+  "door_open": 287.859,
+  "final_resolve": 292.9
  }
 }

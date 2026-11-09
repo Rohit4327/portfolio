@@ -226,9 +226,10 @@ export function makeSketchpadConsole() {
   const housing = roundedBox(0.66, 0.64, 0.6, 0.02, M.housing()); hz.add(housing);
   const face = box(0.6, 0.58, 0.012, M.bezel()); face.position.z = 0.305; hz.add(face);
   const screen = makeScreen(CRT_SIZE, CRT_SIZE, 1024, 1024);
+  screen.mesh.geometry.dispose(); screen.mesh.geometry = new THREE.CircleGeometry(CRT_SIZE / 2, 72); // round face: the canvas circle (r = 0.47 S) fills it
   screen.mesh.position.set(0, 0.0, 0.312); hz.add(screen.mesh);
-  const ring = torus(CRT_SIZE * 0.48, 0.02, M.bezel(), 64); ring.position.z = 0.318; hz.add(ring);
-  const ring2 = torus(CRT_SIZE * 0.48 + 0.022, 0.006, mat.brushed(), 64); ring2.position.z = 0.312; hz.add(ring2);
+  const ring = torus(CRT_SIZE * 0.475, 0.011, mat.std(0x23262a, { roughness: 0.7, metalness: 0.15 }), 72); ring.position.z = 0.316; hz.add(ring);
+  const ring2 = torus(CRT_SIZE * 0.475 + 0.014, 0.004, mat.brushed(), 72); ring2.position.z = 0.312; hz.add(ring2);
   // small label plate + two knobs under the screen
   const plate = box(0.16, 0.026, 0.004, mat.ivory({ roughness: 0.6 })); plate.position.set(-0.19, -0.255, 0.313); hz.add(plate);
   for (let i = 0; i < 3; i++) { const k = cylinder(0.016, 0.018, 0.02, M.key(), 20); k.rotation.x = Math.PI / 2; k.position.set(0.12 + i * 0.07, -0.255, 0.318); hz.add(k); }

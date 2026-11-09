@@ -6,3 +6,78 @@
   synth  0.68s  It opens.
   synth  0.88s  You feel foolish.
   synth  1.62s  But what if the problem was never you?
+  synth  1.15s  What if it was the design?
+  synth  6.24s  That tiny moment reveals the question behind user experience
+  synth  4.18s  Long before apps, people struggled with tools, machines, and
+  synth  8.14s  During the twentieth century, industrial designers and human
+  synth  8.44s  In nineteen fifty-five, Henry Dryfuss published Designing fo
+  synth  3.68s  Think telephone dials, cockpit switches, and confusing appli
+  synth  4.33s  Good design was becoming less about the machine alone, and m
+  synth  2.61s  Early computers demanded that people adapt to them.
+  synth  3.15s  Instructions arrived through punched cards or typed commands
+  synth  2.16s  Without knowing the language, you were locked out.
+  synth  2.01s  But researchers imagined something different.
+  synth  3.16s  What if information could be seen and moved, not just comman
+  synth  5.86s  In nineteen sixty-three, Ivan Sutherland's Sketchpad made it
+  synth  6.49s  In nineteen sixty-eight, Douglas Engelbart and his team stun
+  synth  6.59s  They showed a mouse, linked documents, on-screen editing, an
+  synth  6.57s  The mouse itself had emerged from experiments earlier in the
+  synth  3.63s  But the famous nineteen sixty-eight demonstration used a lat
+  synth  3.91s  Computing began to feel like something you could point to, n
+  synth  8.04s  In nineteen seventy-three, Zerox Park built the Alto, bringi
+  synth  4.96s  Zerox's Star followed in nineteen eighty-one with a more com
+  synth  7.95s  Apple's Lisa arrived in nineteen eighty-three, and the Macin
+  synth  1.93s  Icons looked like familiar objects.
+  synth  1.22s  A folder held files.
+  synth  1.16s  A trash can meant delete.
+  synth  3.14s  Complex systems borrowed the language of everyday life.
+  synth  4.46s  In nineteen eighty-eight, Don Norman explained why everyday 
+  synth  3.54s  A year later, Tim Berners-Lee proposed the World Wide Web at
+  synth  4.17s  By nineteen ninety-one, its first website made linked inform
+  synth  6.30s  The question now reached beyond operating a machine: could p
+  synth  5.22s  In nineteen ninety-three, Norman helped establish user exper
+  synth  2.28s  That experience extended far beyond the screen.
+  synth  6.29s  As websites multiplied, navigation, readability, trust, and 
+  synth  6.69s  Accessibility gained shared standards, including the first W
+  synth  6.80s  Then, in two thousand seven, the eye-Phone made touching, fl
+  synth  5.03s  In twenty ten, responsive web design offered a way for layou
+  synth  3.68s  The interface no longer belonged to one desk or one kind of 
+  synth  1.83s  So what exactly are U X and U I?
+  synth  7.56s  U I, or user interface, is the layer of controls and feedbac
+  synth  7.79s  U X, or user experience, is the broader journey: can someone
+  synth  4.02s  Imagine a stunning checkout page that hides the delivery cos
+  synth  2.06s  Beautiful U I; frustrating U X.
+  synth  6.33s  Designers research real needs, map journeys, sketch options,
+  synth  0.85s  Then they revise.
+  synth  2.31s  Great experiences are not born from guessing.
+  synth  1.48s  They are improved by observing.
+  synth  5.62s  Today, designers collaborate and use shared components and d
+  synth  2.79s  Browser-based tools allow teams to design together.
+  synth  2.21s  But progress is not just faster software.
+  synth  6.41s  It is readable text, keyboard access, clear error recovery, 
+  synth  3.82s  Standards such as W C A G two point two advance inclusion.
+  synth  4.63s  What counts is not how polished a screen looks, but who it w
+  synth  8.92s  Now interfaces are changing again: conversations with A.I., 
+  synth  1.07s  The tools will change.
+  synth  1.43s  The responsibility will not.
+  synth  1.26s  Find the human problem.
+  synth  1.91s  Design with people, not assumptions.
+  synth  1.05s  Test what you have made.
+  synth  1.13s  And remember that door?
+  synth  3.70s  When it finally opens the way you expect, you barely notice 
+  synth  1.10s  That is often the point.
+[speed 1.110] required 300.9s of 303s -> slack +2.1s
+
+CHAPTER TIMING (actual vs storyboard target):
+  01 The Question               0.00- 24.51  (target   0- 24)  speech  14.8s words  53
+  02 Before Screens            24.51- 55.60  (target  24- 53)  speech  28.8s words  72
+  03 The Early Computer        55.60- 77.72  (target  53- 76)  speech  18.9s words  55
+  04 The Mouse                 77.72-107.80  (target  76-108)  speech  27.2s words  76
+  05 The Graphical Interface  107.80-139.27  (target 108-138)  speech  28.4s words  69
+  06 The Web and UX           139.27-168.34  (target 138-168)  speech  26.0s words  71
+  07 The Mobile World         168.34-199.49  (target 168-200)  speech  28.5s words  72
+  08 UX versus UI             199.49-238.69  (target 200-242)  speech  34.2s words  93
+  09 Design for Everyone      238.69-267.55  (target 242-273)  speech  25.5s words  72
+  10 The Future               267.55-303.00  (target 273-303)  speech  21.6s words  66
+  words 699, speech 253.8s, speaking rate 165 wpm (gross 138 wpm), speed 1.11
+wrote /home/user/portfolio/invisible-conversation/02_english_narration.wav

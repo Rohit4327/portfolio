@@ -85,10 +85,12 @@ export default {
     rig(sk, { key: [1.6, 3.2, 2.2], keyI: 1.2, keyColor: 0xdfeee8, fill: [-2.5, 2, 1.5], fillI: 0.45, fillColor: 0xb9cfe0, rim: [0, 2.5, -3], rimI: 0.7, rimColor: 0xe0f3ec, ambient: 0.22 });
     const skFloor = box(8, 0.02, 8, mat.std(0x2f3836, { roughness: 0.35, metalness: 0.15 })); skFloor.position.y = -0.01; sk.add(skFloor);
     const skWall = box(8, 3.2, 0.1, mat.std(0x5c6a66, { roughness: 0.95 })); skWall.position.set(0, 1.6, -2.4); sk.add(skWall);
-    const sideCab = makeCabinet({ seed: 21, w: 0.7, h: 1.8 }); sideCab.position.set(-1.6, 0, -1.3); sideCab.rotation.y = deg(30); sk.add(sideCab);
+    const sideCab = makeCabinet({ seed: 21, w: 0.7, h: 1.8, lamps: false }); sideCab.position.set(-2.0, 0, -1.7); sideCab.rotation.y = deg(30); sk.add(sideCab);
     const td2 = makeTapeDrive(7); td2.group.position.set(1.5, 0, -1.6); td2.group.rotation.y = deg(-20); sk.add(td2.group);
     this.console = makeSketchpadConsole(); sk.add(this.console.group);
     this.crtLight = new THREE.PointLight(0xcfeee0, 0.6, 1.6, 1.8); this.crtLight.position.set(0, 1.35, 0.35); sk.add(this.crtLight);
+    // a small instance of the point for the light-pen tip (same identity, closer scale)
+    this.point2 = new AmberPoint(0.011, { lightIntensity: 0.6, lightDistance: 0.7 }); this.point2.setIntensity(0); sk.add(this.point2.group);
     this.crtKey = '';
     g.updateMatrixWorld(true);
     this.crtCenter = this.console.screen.mesh.getWorldPosition(new THREE.Vector3());
@@ -113,19 +115,19 @@ export default {
   // ---------- Sketchpad state (corner positions, drawn edges, pen) ----------
   skState(t) {
     const B = this.B;
-    const A = { x: -0.26, y: -0.22 }, Bp = { x: 0.26, y: -0.22 }, C = { x: 0.26, y: 0.24 }, D = { x: -0.26, y: 0.24 };
+    const A = { x: -0.2, y: -0.17 }, Bp = { x: 0.2, y: -0.17 }, C = { x: 0.2, y: 0.19 }, D = { x: -0.2, y: 0.19 };
     const edges = seg(t, B.draw1, B.draw1End) * 4;
     // drag corner C outward (resize), then the constraint snaps B and D to it
     const drag = easeInOut(seg(t, B.draw2, B.draw2End));
-    C.x = lerp(0.26, 0.37, drag); C.y = lerp(0.24, 0.33, drag);
+    C.x = lerp(0.2, 0.3, drag); C.y = lerp(0.19, 0.27, drag);
     const snap = easeOut(seg(t, B.snap, B.snap + 0.3));
-    Bp.x = lerp(0.26, C.x, snap); D.y = lerp(0.24, C.y, snap);
+    Bp.x = lerp(0.2, C.x, snap); D.y = lerp(0.19, C.y, snap);
     const pts = [A, Bp, C, D];
     // pen position
     let pen = null, lift = 0;
     if (t < B.draw1) { const k = easeInOut(seg(t, B.dissolve0, B.draw1)); pen = { x: lerp(0, A.x, k), y: lerp(0, A.y, k) }; lift = 0.012 * (1 - k); }
     else if (t < B.draw1End) { const e = Math.min(3, Math.floor(edges)), k = edges - e; const a = pts[e], b = pts[(e + 1) % 4]; pen = { x: lerp(a.x, b.x, k), y: lerp(a.y, b.y, k) }; }
-    else if (t < B.draw2) { const k = easeInOut(seg(t, B.draw1End, B.draw2)); pen = { x: lerp(A.x, 0.26, k), y: lerp(A.y, 0.24, k) }; lift = 0.01 * Math.sin(k * Math.PI); }
+    else if (t < B.draw2) { const k = easeInOut(seg(t, B.draw1End, B.draw2)); pen = { x: lerp(A.x, 0.2, k), y: lerp(A.y, 0.19, k) }; lift = 0.01 * Math.sin(k * Math.PI); }
     else if (t < B.dot) { pen = { x: C.x, y: C.y }; }
     else { const k = easeInOut(seg(t, B.dot, B.dot + 0.9)); pen = { x: C.x + 0.55 * k, y: C.y - 0.35 * k }; lift = 0.05 * k; }
     const flash = fadeIO(t, B.snap + 0.1, B.snap + 0.6, 0.06, 0.4);
@@ -204,17 +206,19 @@ export default {
       const tip = this.console.screen.mesh.localToWorld(V.set(p.x * CRT_SIZE, p.y * CRT_SIZE, 0.006));
       const corner = this.skCorner(t);
       const stay = ease(t, B.dot, B.dot + 0.4, easeInOut);
-      this.point.group.position.copy(tip).lerp(corner, stay);
+      this.point.group.visible = false;
+      this.point2.group.position.copy(tip).lerp(corner, stay).sub(SK_OFFSET);
       const fadeIn = ease(t, B.dissolve0, B.dissolve1 + 0.2, easeInOut);
       const grow = ease(t, B.dot, B.dot + 0.6, easeOut);
       const toCursor = ease(t, B.cursor + 0.1, B.cursor + 0.5, easeInOut);
-      this.point.setIntensity(fadeIn * (0.55 + 0.9 * grow) * (1 - toCursor)).setScale(lerp(0.5, 0.95, grow)).pulse(t, 0.05, 1.4);
-      this.point.group.visible = this.point.intensity > 0.01;
+      this.point2.setIntensity(fadeIn * (0.6 + 0.8 * grow) * (1 - toCursor)).setScale(lerp(0.8, 1.3, grow)).pulse(t, 0.05, 1.4);
+      this.point2.group.visible = this.point2.intensity > 0.01;
       this.crtLight.intensity = 0.5 + 0.35 * st.flash;
       this.cursorNow = this.project2d(corner, pose);
     } else {
       this.point.group.visible = false;
     }
+    if (!inSketch) this.point2.group.visible = false;
   },
 
   draw2d(ctx, t) {
@@ -227,7 +231,7 @@ export default {
       ctx.save();
       // the glow dissolves into a circle (the round CRT) during the hand-over
       const dk = seg(t, B.dissolve0, B.dissolve1);
-      if (dk > 0) { const r = lerp(Math.hypot(W, H) * 0.6, H * 0.14, easeInOut(dk)); ctx.beginPath(); ctx.arc(W / 2, H / 2, r, 0, Math.PI * 2); ctx.clip(); }
+      if (dk > 0) { const r = lerp(Math.hypot(W, H) * 0.6, H * 0.42, easeInOut(dk)); ctx.beginPath(); ctx.arc(W / 2, H / 2, r, 0, Math.PI * 2); ctx.clip(); }
       ctx.globalAlpha = termA;
       drawTerminal(ctx, W, H, { lines: st.lines, cursor: st.cursor, scale: 1, glow: 1 - 0.5 * dk, dim: dimK + 0.6 * dk });
       ctx.restore();
@@ -252,9 +256,9 @@ export default {
     const lt = fadeIO(t, B.pull0 + 0.9, B.cards0 + 0.5, 0.6, 0.5);
     if (lt > 0) lowerThird(ctx, { title: 'A 1960s computer room', sub: 'Tape drives · punched-card reader · keyboard terminal', source: 'Composite reconstruction after period documentation · not a photograph', alpha: lt, reveal: seg(t, B.pull0 + 0.9, B.pull0 + 1.8), width: 820 });
     // ----- Sketchpad labels: only once the narrator reaches "In 1963" -----
-    const ya = fadeIO(t, B.year + 0.1, B.out + 0.1, 0.6, 0.5);
+    const ya = fadeIO(t, B.year + 0.2, B.out + 0.1, 0.6, 0.5);
     if (ya > 0) {
-      const rise = (1 - easeOut(seg(t, B.year + 0.1, B.year + 1.1))) * 14;
+      const rise = (1 - easeOut(seg(t, B.year + 0.2, B.year + 1.2))) * 14;
       yearStamp(ctx, '1963', 120, 250 + rise, ya, { size: 140 });
       caps(ctx, 'Ivan Sutherland — Sketchpad', 124, 300 + rise, { alpha: ya * seg(t, B.year + 0.5, B.year + 1.0) });
     }
@@ -264,7 +268,7 @@ export default {
     if (t >= B.cursor && this.cursorNow) {
       const ck = ease(t, B.cursor, B.cursor + 0.5, easeOut); const p = this.cursorNow;
       amberDot(ctx, p.x, p.y, 10 * ck, 0.9 * (1 - seg(t, B.out, B.out + 0.3)), { glow: 6 });
-      cursor(ctx, p.x, p.y, { scale: 1.6 * ck, alpha: ck, color: PALETTE.amber, outline: '#2a1a08' });
+      cursor(ctx, p.x, p.y, { scale: 2.0 * ck, alpha: ck, color: PALETTE.amber, outline: '#2a1a08' });
     }
     // ----- provenance badge whenever a reconstruction is on screen -----
     badge(ctx, BADGE.RECON, W - 120, H - 70, fadeIO(t, B.start + 0.8, B.out + 0.2, 0.5, 0.4), { align: 'right' });

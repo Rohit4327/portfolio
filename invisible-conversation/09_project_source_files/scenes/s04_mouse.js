@@ -156,24 +156,26 @@ export default {
       look.y += 0.02; look.z -= 0.04;
     } else if (t < B.shotC1) {    // B2: the projection full-frame — link, edit, split
       const k = seg(t, B.shotB2, B.shotC1);
-      cam.position.set(lerp(0.3, 0.22, k), lerp(3.35, 3.4, k), lerp(-1.85, -2.35, k));
-      look.set(0.05, 3.42, SCREEN.center.z);
+      cam.fov = 38; cam.updateProjectionMatrix();
+      cam.position.set(lerp(0.3, 0.2, k), lerp(3.4, 3.45, k), lerp(-0.9, -1.4, k));
+      look.set(0.05, 3.45, SCREEN.center.z);
     } else if (t < B.shotC2) {    // C1: the whole console — keyset, keyboard, mouse, display
       const k = seg(t, B.shotC1, B.shotC2);
       cam.position.set(lerp(-1.15, -1.0, k), lerp(2.25, 2.2, k), lerp(-3.85, -3.95, k));
       look.copy(CONSOLE_POS).add(new THREE.Vector3(0.1, 0.78, 0.05));
     } else if (t < B.shotD) {     // C2: the 1964 wooden prototype on its plinth
       const k = seg(t, B.shotC2, B.shotD); const a = lerp(-0.55, -0.35, k);
-      look.copy(EXHIBIT_POS).add(new THREE.Vector3(0, 0.975, 0));
-      cam.position.set(look.x + Math.sin(a) * 0.46, 1.17, look.z + Math.cos(a) * 0.46);
+      look.copy(EXHIBIT_POS).add(new THREE.Vector3(0, 0.955, 0));
+      cam.position.set(look.x + Math.sin(a) * 0.5, 1.03, look.z + Math.cos(a) * 0.5);
     } else if (t < B.shotE) {     // D: the three-button mouse from the front
       const k = seg(t, B.shotD, B.shotE);
       this.mouse.getWorldPosition(look);
       cam.position.set(look.x - lerp(0.1, 0.14, k), look.y + 0.15, look.z - lerp(0.33, 0.31, k));
       look.y += 0.015;
     } else {                      // E: the screen, the window detaches, we fly into it
+      cam.fov = 38; cam.updateProjectionMatrix();
       const k = easeInOut(seg(t, B.fly[0], B.fly[1]));
-      const p0 = new THREE.Vector3(0.22, 3.38, -2.3), l0 = new THREE.Vector3(0.05, 3.42, SCREEN.center.z);
+      const p0 = new THREE.Vector3(0.2, 3.45, -1.4), l0 = new THREE.Vector3(0.05, 3.45, SCREEN.center.z);
       const p1 = winPos.clone().add(new THREE.Vector3(0.0, 0.0, 1.05));
       cam.position.lerpVectors(p0, p1, k); look.lerpVectors(l0, winPos, Math.min(1, k * 1.4));
     }

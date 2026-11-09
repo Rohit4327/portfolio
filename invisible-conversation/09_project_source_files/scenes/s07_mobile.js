@@ -90,6 +90,9 @@ export default {
     const homeIcon = canvasPlane(0.0046, 0.0046, 64, (x, w, h) => { x.strokeStyle = 'rgba(255,255,255,0.55)'; x.lineWidth = 4; roundRect(x, 8, 8, w - 16, h - 16, 10); x.stroke(); }); homeIcon.position.set(0, -0.0455, 0.0058 + 0.0014); ph.add(homeIcon);
     const ear = box(0.012, 0.0016, 0.0006, mat.std(0x1a1c20, { roughness: 0.6 })); ear.position.set(0, 0.0485, 0.0058 + 0.0012); ph.add(ear);
     this.cHome = offscreen(640, 960, (x, w, h) => paintHome(x, w, h)); this.cAlbums = offscreen(640, 960, (x, w, h) => paintAlbums(x, w, h));
+    const pool = new THREE.SpotLight(0xfff0e0, 2.2, 1.6, deg(38), 0.7, 1.2); pool.position.set(0.12, 0.55, 0.18); pool.target.position.set(0, 0, 0); Bg.add(pool, pool.target);
+    // a tiny amber point for the phone's scale (no light: at 2 cm any point light blows out the frame)
+    this.pointB = new AmberPoint(0.0022, { light: false }); this.pointB.setIntensity(0); Bg.add(this.pointB.group);
 
     // =============== SET C: desktop monitor, tablet, phone on a table (2010) ===============
     const Cg = (this.setC = new THREE.Group()); g.add(Cg);
@@ -124,7 +127,7 @@ export default {
     this.cross = [solve((1280 - 1000) / (1280 - 600)), solve((1280 - 640) / (1280 - 600))];
 
     // the amber point (3D)
-    this.point = new AmberPoint(0.012, { lightIntensity: 2, lightDistance: 1.5 }); this.point.setIntensity(0); g.add(this.point.group);
+    this.point = new AmberPoint(0.008, { lightIntensity: 2, lightDistance: 1.2 }); this.point.setIntensity(0); g.add(this.point.group);
   },
 
   // ---------- phase helpers ----------
@@ -201,13 +204,12 @@ export default {
       ctx.save(); ctx.globalAlpha = ringA; ctx.shadowColor = 'rgba(255,171,91,0.9)'; ctx.shadowBlur = 18; ctx.strokeStyle = PALETTE.amber; ctx.lineWidth = 3.5; roundRect(ctx, x0, y0, w, h, 8); ctx.stroke(); ctx.shadowBlur = 0; ctx.fillStyle = 'rgba(255,171,91,0.1)'; ctx.fill(); ctx.restore();
       // tick pulse
       if (idx > 0) { const pk = seg(t, B.ticks[idx - 1], B.ticks[idx - 1] + 0.4); if (pk < 1) { ctx.save(); ctx.globalAlpha = ringA * (1 - pk) * 0.8; ctx.strokeStyle = PALETTE.amber; ctx.lineWidth = 2; roundRect(ctx, x0 - 8 * pk, y0 - 8 * pk, w + 16 * pk, h + 16 * pk, 10); ctx.stroke(); ctx.restore(); } }
-      this._ringCenter = [x0 + w / 2, y0 + h / 2];
     }
     // the point gathers from the cursor into the ring, and from the ring to the centre before the cut
     const gather = seg(t, B.restructure + 0.9, B.focusForm + 0.2);
     if (gather > 0 && gather < 1) { const a = this.anchors.links; const p = this.proj(scr, a[0] + 60, a[1] + 10, cam); const c = this.controls[0]; const q = this.proj(scr, c[0] + c[2] / 2, c[1] + c[3] / 2, cam); const k = easeInOut(gather); amberDot(ctx, lerp(p[0], q[0], k), lerp(p[1], q[1], k), 6, 1 - Math.abs(k - 0.5) * 0.4, { glow: 6 }); }
-    const leave = seg(t, B.cutB - 0.55, B.cutB - 0.05);
-    if (leave > 0 && this._ringCenter) { const k = easeIn(leave); amberDot(ctx, lerp(this._ringCenter[0], W / 2, k), lerp(this._ringCenter[1], H / 2, k), 8 + 10 * k, 1, { glow: 6 }); }
+    const leave = seg(t, B.cutB - 0.75, B.cutB - 0.3);
+    if (leave > 0 && leave < 1) { const c = this.controls[4]; const q = this.proj(scr, c[0] + c[2] / 2, c[1] + c[3] / 2, cam); const k = easeIn(leave); amberDot(ctx, lerp(q[0], W / 2, k), lerp(q[1], H / 2, k), 8 + 8 * k, 1, { glow: 6 }); }
     // labels
     caps(ctx, '1999 — WCAG 1.0', 120, 128, { alpha: fadeIO(t, B.wcag, B.cutB + 0.4, 0.4, 0.4) });
     badge(ctx, BADGE.RECON, W - 120, H - 70, fadeIO(t, B.netEnd - 0.3, B.cutB, 0.5, 0.4), { align: 'right' });
@@ -226,7 +228,7 @@ export default {
   },
   updateB(t, cam) {
     const B = this.B; const st = this.phoneState(t);
-    cam.position.set(0.012 + noise1(t * 0.3) * 0.002, 0.185, 0.072); cam.lookAt(0, 0.006, -0.004);
+    cam.position.set(-0.052 + noise1(t * 0.3) * 0.002, 0.232, 0.082); cam.lookAt(-0.05, 0.006, -0.004);
     const key = st.screen === 'home' ? 'home' : st.screen === 'photo' && st.photoK >= 1 && t >= B.pinch + B.pinchDur ? 'photoEnd' : 'f' + t.toFixed(3);
     paintOnce(this.scrB, key, (x, w, h) => {
       if (st.screen === 'home' || st.openK < 1) x.drawImage(this.cHome, 0, 0);
@@ -241,9 +243,10 @@ export default {
     const land = easeInOut(seg(t, B.cutB + 0.2, B.tap1 - 0.15)); const [ix, iy] = PHONE_ICON_POS(8);
     V.set((ix / 640 - 0.5) * 0.0493, (0.5 - iy / 960) * 0.074, 0.001); this.scrB.mesh.localToWorld(V);
     const rise = easeInOut(seg(t, B.pinch + B.pinchDur + 0.25, B.cutC - 0.35));
-    if (t < B.tap1 - 0.05) { this.point.group.position.set(lerp(0.0, V.x, land), lerp(0.09, V.y + 0.006, land), lerp(0.03, V.z, land)); this.point.setIntensity(0.9).setScale(0.9).pulse(t, 0.06, 1.3); this.point.group.visible = true; }
-    else if (t > B.pinch + B.pinchDur + 0.25) { this.point.group.position.set(lerp(0.01, 0.0, rise), lerp(0.012, 0.10, rise), lerp(0.0, 0.03, rise)); this.point.setIntensity(0.4 + 0.6 * rise).setScale(0.8 + 0.6 * rise).pulse(t, 0.06, 1.3); this.point.group.visible = true; }
-    else this.point.group.visible = false;
+    this.point.group.visible = false; const P = this.pointB;
+    if (t < B.tap1 - 0.05) { P.group.position.set(lerp(-0.02, V.x, land), lerp(0.05, V.y + 0.004, land), lerp(0.02, V.z, land)); P.setIntensity(0.9).setScale(1).pulse(t, 0.06, 1.3); P.group.visible = true; }
+    else if (t > B.pinch + B.pinchDur + 0.25) { P.group.position.set(lerp(0.005, -0.01, rise), lerp(0.01, 0.06, rise), lerp(0.0, 0.03, rise)); P.setIntensity(0.4 + 0.6 * rise).setScale(0.8 + 0.6 * rise).pulse(t, 0.06, 1.3); P.group.visible = true; }
+    else P.group.visible = false;
   },
   touch(ctx, px, py, alpha, { tapK = -1, r = 26 } = {}) {
     if (alpha <= 0) return;
@@ -262,7 +265,7 @@ export default {
     if (pa > 0) { const d = st.sep / 2; const ang = deg(-38); for (const sg of [-1, 1]) { const [px, py] = this.proj(scr, 320 + sg * Math.cos(ang) * d, 500 + sg * Math.sin(ang) * d, cam); this.touch(ctx, px, py, pa); } }
     // labels
     caps(ctx, '2007 — MULTI-TOUCH GOES MAINSTREAM', 120, 128, { alpha: fadeIO(t, B.caps2007, B.cutC - 0.1, 0.4, 0.4) });
-    lowerThird(ctx, { title: 'Original iPhone, announced Jan 2007 (reconstruction)', sub: 'Rounded black slab · 3.5-inch multi-touch screen · single home button · aluminium back', alpha: fadeIO(t, B.phoneLabel, B.cutC - 0.2, 0.5, 0.4), reveal: seg(t, B.phoneLabel, B.phoneLabel + 0.8) });
+    lowerThird(ctx, { title: 'Original iPhone, announced Jan 2007 (reconstruction)', sub: 'Reconstruction after period documentation · not a photograph', alpha: fadeIO(t, B.phoneLabel, B.cutC - 0.2, 0.5, 0.4), reveal: seg(t, B.phoneLabel, B.phoneLabel + 0.8) });
     text(ctx, 'Multi-touch research predates the iPhone (1980s onward)', 148, H - 92, { size: 18, weight: 400, color: PALETTE.gray, alpha: fadeIO(t, B.footnote, B.cutC - 0.2, 0.5, 0.4) });
     badge(ctx, BADGE.RECON, W - 120, H - 70, fadeIO(t, B.cutB, B.cutC, 0.5, 0.4), { align: 'right' });
   },
@@ -343,7 +346,7 @@ export default {
     const B = this.B, cam = stage.camera; const ph = this.phase(t);
     if (ph === 0) this.drawA(ctx, t, cam); else if (ph === 1) this.drawB(ctx, t, cam); else this.drawC(ctx, t, cam);
     // dips between sets, the point carried across the cut
-    for (const cut of [B.cutB, B.cutC]) { const d = fadeIO(t, cut - 0.4, cut + 0.4, 0.4, 0.4); if (d > 0) { dip(ctx, d, PALETTE.graphite); amberDot(ctx, W / 2, H / 2, 16, d, { glow: 7 }); } }
+    for (const cut of [B.cutB, B.cutC]) { const d = fadeIO(t, cut - 0.4, cut + 0.4, 0.4, 0.4); if (d > 0) { dip(ctx, d, PALETTE.graphite); amberDot(ctx, W / 2, H / 2, 16, seg(t, cut - 0.32, cut - 0.1) * (1 - seg(t, cut + 0.1, cut + 0.4)), { glow: 7 }); } }
     // hand-off blooms
     bloom(ctx, 1 - seg(t, this.start, this.start + 0.8));
     bloom(ctx, seg(t, this.end - 0.7, this.end));

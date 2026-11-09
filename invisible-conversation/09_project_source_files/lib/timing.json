@@ -1,7 +1,7 @@
 {
  "total": 303.0,
  "voice": "af_heart",
- "speed": 1.097,
+ "speed": 1.11,
  "engine": "Kokoro-82M v1.0 (quantized ONNX) via kokoro-onnx",
  "sample_rate": 48000,
  "chapters": [
@@ -9,7 +9,7 @@
    "id": 1,
    "title": "The Question",
    "start": 0.0,
-   "end": 27.764,
+   "end": 24.51,
    "target": [
     0,
     24
@@ -18,56 +18,56 @@
    "sentences": [
     {
      "text": "A door stands before you.",
-     "start": 1.6,
-     "end": 2.88
+     "start": 1.2,
+     "end": 2.48
     },
     {
      "text": "There is no clear handle, so you push.",
-     "start": 4.6,
-     "end": 6.494
+     "start": 3.9,
+     "end": 5.786
     },
     {
      "text": "Nothing.",
-     "start": 8.9,
-     "end": 9.412
+     "start": 7.4,
+     "end": 7.911
     },
     {
      "text": "You pull.",
-     "start": 10.9,
-     "end": 11.44
+     "start": 9.0,
+     "end": 9.54
     },
     {
      "text": "It opens.",
-     "start": 12.7,
-     "end": 13.4
+     "start": 10.5,
+     "end": 11.18
     },
     {
      "text": "You feel foolish.",
-     "start": 15.3,
-     "end": 16.176
+     "start": 12.7,
+     "end": 13.576
     },
     {
      "text": "But what if the problem was never you?",
-     "start": 16.809,
-     "end": 18.426
+     "start": 14.001,
+     "end": 15.617
     },
     {
      "text": "What if it was the design?",
-     "start": 18.809,
-     "end": 19.955
+     "start": 15.914,
+     "end": 17.06
     },
     {
      "text": "That tiny moment reveals the question behind user experience: can a product make sense to a human being?",
-     "start": 20.589,
-     "end": 26.864
+     "start": 17.57,
+     "end": 23.81
     }
    ]
   },
   {
    "id": 2,
    "title": "Before Screens",
-   "start": 27.764,
-   "end": 59.765,
+   "start": 24.51,
+   "end": 55.603,
    "target": [
     24,
     53
@@ -76,36 +76,36 @@
    "sentences": [
     {
      "text": "Long before apps, people struggled with tools, machines, and everyday objects.",
-     "start": 28.464,
-     "end": 32.723
+     "start": 25.01,
+     "end": 29.192
     },
     {
      "text": "During the twentieth century, industrial designers and human-factors researchers began asking how controls should fit human bodies and minds.",
-     "start": 33.043,
-     "end": 41.211
+     "start": 29.472,
+     "end": 37.615
     },
     {
      "text": "In 1955, Henry Dreyfuss published Designing for People, bringing measurements, observation, and testing into the design conversation.",
-     "start": 41.531,
-     "end": 50.045
+     "start": 37.895,
+     "end": 46.334
     },
     {
      "text": "Think telephone dials, cockpit switches, and confusing appliances.",
-     "start": 50.365,
-     "end": 54.07
+     "start": 46.614,
+     "end": 50.291
     },
     {
      "text": "Good design was becoming less about the machine alone, and more about the person using it.",
-     "start": 54.39,
-     "end": 58.865
+     "start": 50.571,
+     "end": 54.903
     }
    ]
   },
   {
    "id": 3,
    "title": "The Early Computer",
-   "start": 59.765,
-   "end": 82.532,
+   "start": 55.603,
+   "end": 77.72,
    "target": [
     53,
     76
@@ -114,41 +114,41 @@
    "sentences": [
     {
      "text": "Early computers demanded that people adapt to them.",
-     "start": 60.465,
-     "end": 63.12
+     "start": 56.103,
+     "end": 58.715
     },
     {
      "text": "Instructions arrived through punched cards or typed commands.",
-     "start": 63.445,
-     "end": 66.597
+     "start": 59.019,
+     "end": 62.168
     },
     {
      "text": "Without knowing the language, you were locked out.",
-     "start": 66.922,
-     "end": 69.116
+     "start": 62.471,
+     "end": 64.634
     },
     {
      "text": "But researchers imagined something different.",
-     "start": 69.721,
-     "end": 71.728
+     "start": 65.167,
+     "end": 67.175
     },
     {
      "text": "What if information could be seen and moved, not just commanded?",
-     "start": 72.053,
-     "end": 75.228
+     "start": 67.478,
+     "end": 70.635
     },
     {
      "text": "In 1963, Ivan Sutherland's Sketchpad made it possible to draw directly on a computer screen.",
-     "start": 75.733,
-     "end": 81.615
+     "start": 71.084,
+     "end": 76.941
     }
    ]
   },
   {
    "id": 4,
    "title": "The Mouse",
-   "start": 82.532,
-   "end": 113.273,
+   "start": 77.72,
+   "end": 107.8,
    "target": [
     76,
     108
@@ -157,36 +157,36 @@
    "sentences": [
     {
      "text": "In 1968, Douglas Engelbart and his team stunned an audience with what we now call the Mother of All Demos.",
-     "start": 83.232,
-     "end": 89.769
+     "start": 78.22,
+     "end": 84.71
     },
     {
      "text": "They showed a mouse, linked documents, on-screen editing, and collaboration, long before those ideas felt ordinary.",
-     "start": 90.122,
-     "end": 96.784
+     "start": 85.054,
+     "end": 91.641
     },
     {
      "text": "The mouse itself had emerged from experiments earlier in the decade; a wooden prototype came in 1964.",
-     "start": 97.137,
-     "end": 103.788
+     "start": 91.985,
+     "end": 98.554
     },
     {
      "text": "But the famous 1968 demonstration used a later model.",
-     "start": 104.141,
-     "end": 107.817
+     "start": 98.898,
+     "end": 102.525
     },
     {
      "text": "Computing began to feel like something you could point to, not simply program.",
-     "start": 108.35,
-     "end": 112.285
+     "start": 103.014,
+     "end": 106.928
     }
    ]
   },
   {
    "id": 5,
    "title": "The Graphical Interface",
-   "start": 113.273,
-   "end": 145.695,
+   "start": 107.8,
+   "end": 139.27,
    "target": [
     108,
     138
@@ -195,46 +195,46 @@
    "sentences": [
     {
      "text": "In 1973, Xerox PARC built the Alto, bringing graphical displays, windows, and the mouse into one experimental machine.",
-     "start": 113.973,
-     "end": 122.057
+     "start": 108.3,
+     "end": 116.337
     },
     {
      "text": "Xerox's Star followed in 1981 with a more complete desktop metaphor.",
-     "start": 122.377,
-     "end": 127.363
+     "start": 116.617,
+     "end": 121.578
     },
     {
      "text": "Apple's Lisa arrived in 1983, and the Macintosh in 1984 helped bring graphical interaction to a wider audience.",
-     "start": 127.683,
-     "end": 135.73
+     "start": 121.858,
+     "end": 129.805
     },
     {
      "text": "Icons looked like familiar objects.",
-     "start": 136.23,
-     "end": 138.16
+     "start": 130.23,
+     "end": 132.16
     },
     {
      "text": "A folder held files.",
-     "start": 138.48,
-     "end": 139.713
+     "start": 132.44,
+     "end": 133.658
     },
     {
      "text": "A trash can meant delete.",
-     "start": 140.033,
-     "end": 141.206
+     "start": 133.938,
+     "end": 135.094
     },
     {
      "text": "Complex systems borrowed the language of everyday life.",
-     "start": 141.606,
-     "end": 144.795
+     "start": 135.434,
+     "end": 138.57
     }
    ]
   },
   {
    "id": 6,
    "title": "The Web and UX",
-   "start": 145.695,
-   "end": 175.512,
+   "start": 139.27,
+   "end": 168.341,
    "target": [
     138,
     168
@@ -243,41 +243,41 @@
    "sentences": [
     {
      "text": "In 1988, Don Norman explained why everyday objects confuse us.",
-     "start": 146.395,
-     "end": 150.899
+     "start": 139.77,
+     "end": 144.226
     },
     {
      "text": "A year later, Tim Berners-Lee proposed the World Wide Web at CERN.",
-     "start": 151.223,
-     "end": 154.826
+     "start": 144.531,
+     "end": 148.075
     },
     {
      "text": "By 1991, its first website made linked information navigable.",
-     "start": 155.15,
-     "end": 159.398
+     "start": 148.38,
+     "end": 152.553
     },
     {
      "text": "The question now reached beyond operating a machine: could people find what they needed, and feel confident doing it?",
-     "start": 159.902,
-     "end": 166.233
+     "start": 153.003,
+     "end": 159.308
     },
     {
      "text": "In 1993, Norman helped establish 'user experience' as a professional term at Apple.",
-     "start": 166.737,
-     "end": 171.957
+     "start": 159.757,
+     "end": 164.977
     },
     {
      "text": "That experience extended far beyond the screen.",
-     "start": 172.281,
-     "end": 174.599
+     "start": 165.282,
+     "end": 167.558
     }
    ]
   },
   {
    "id": 7,
    "title": "The Mobile World",
-   "start": 175.512,
-   "end": 207.294,
+   "start": 168.341,
+   "end": 199.491,
    "target": [
     168,
     200
@@ -286,36 +286,36 @@
    "sentences": [
     {
      "text": "As websites multiplied, navigation, readability, trust, and speed began to matter as much as appearance.",
-     "start": 176.212,
-     "end": 182.526
+     "start": 168.841,
+     "end": 175.131
     },
     {
      "text": "Accessibility gained shared standards, including the first Web Content Accessibility Guidelines in 1999.",
-     "start": 182.851,
-     "end": 189.593
+     "start": 175.44,
+     "end": 182.134
     },
     {
      "text": "Then, in 2007, the iPhone made touching, flicking, and pinching central to a mainstream mobile interface.",
-     "start": 190.099,
-     "end": 196.926
+     "start": 182.588,
+     "end": 189.387
     },
     {
      "text": "In 2010, responsive web design offered a way for layouts to adapt to different screens.",
-     "start": 197.251,
-     "end": 202.337
+     "start": 189.696,
+     "end": 194.728
     },
     {
      "text": "The interface no longer belonged to one desk or one kind of user.",
-     "start": 202.663,
-     "end": 206.379
+     "start": 195.037,
+     "end": 198.715
     }
    ]
   },
   {
    "id": 8,
    "title": "UX versus UI",
-   "start": 207.294,
-   "end": 247.36,
+   "start": 199.491,
+   "end": 238.694,
    "target": [
     200,
     242
@@ -324,56 +324,56 @@
    "sentences": [
     {
      "text": "So what exactly are UX and UI?",
-     "start": 207.994,
-     "end": 209.855
+     "start": 199.991,
+     "end": 201.82
     },
     {
      "text": "UI, or user interface, is the layer of controls and feedback: buttons, labels, sounds, color, and interaction patterns.",
-     "start": 210.381,
-     "end": 217.968
+     "start": 202.291,
+     "end": 209.854
     },
     {
      "text": "UX, or user experience, is the broader journey: can someone understand it, complete a task, trust the result, and feel in control?",
-     "start": 218.313,
-     "end": 226.145
+     "start": 210.181,
+     "end": 217.971
     },
     {
      "text": "Imagine a stunning checkout page that hides the delivery cost until the end.",
-     "start": 226.77,
-     "end": 230.887
+     "start": 218.528,
+     "end": 222.545
     },
     {
      "text": "Beautiful UI; frustrating UX.",
-     "start": 231.313,
-     "end": 233.377
+     "start": 222.932,
+     "end": 224.996
     },
     {
      "text": "Designers research real needs, map journeys, sketch options, prototype interactions, and test with people.",
-     "start": 234.102,
-     "end": 240.462
+     "start": 225.638,
+     "end": 231.971
     },
     {
      "text": "Then they revise.",
-     "start": 240.807,
-     "end": 241.658
+     "start": 232.298,
+     "end": 233.148
     },
     {
      "text": "Great experiences are not born from guessing.",
-     "start": 242.183,
-     "end": 244.498
+     "start": 233.62,
+     "end": 235.935
     },
     {
      "text": "They are improved by observing.",
-     "start": 244.843,
-     "end": 246.325
+     "start": 236.262,
+     "end": 237.744
     }
    ]
   },
   {
    "id": 9,
    "title": "Design for Everyone",
-   "start": 247.36,
-   "end": 276.823,
+   "start": 238.694,
+   "end": 267.55,
    "target": [
     242,
     273
@@ -382,40 +382,40 @@
    "sentences": [
     {
      "text": "Today, designers collaborate and use shared components and design systems to keep products consistent.",
-     "start": 248.06,
-     "end": 253.708
+     "start": 239.194,
+     "end": 244.811
     },
     {
      "text": "Browser-based tools allow teams to design together.",
-     "start": 254.061,
-     "end": 256.906
+     "start": 245.148,
+     "end": 247.94
     },
     {
      "text": "But progress is not just faster software.",
-     "start": 257.438,
-     "end": 259.652
+     "start": 248.422,
+     "end": 250.636
     },
     {
      "text": "It is readable text, keyboard access, clear error recovery, and choices that respect attention and privacy.",
-     "start": 260.004,
-     "end": 266.415
+     "start": 250.973,
+     "end": 257.384
     },
     {
      "text": "Standards such as WCAG 2.2 advance inclusion.",
-     "start": 266.767,
-     "end": 270.591
+     "start": 257.722,
+     "end": 261.546
     },
     {
      "text": "What counts is not how polished a screen looks, but who it works for, and who it leaves out.",
-     "start": 271.123,
-     "end": 275.815
+     "start": 262.028,
+     "end": 266.658
     }
    ]
   },
   {
    "id": 10,
    "title": "The Future",
-   "start": 276.823,
+   "start": 267.55,
    "end": 303.0,
    "target": [
     273,
@@ -425,48 +425,48 @@
    "sentences": [
     {
      "text": "Now interfaces are changing again: conversations with AI, voice commands, spatial computing, and experiences that may not look like screens at all.",
-     "start": 277.523,
-     "end": 286.445
+     "start": 268.05,
+     "end": 276.972
     },
     {
      "text": "The tools will change.",
-     "start": 286.945,
-     "end": 288.056
+     "start": 277.397,
+     "end": 278.471
     },
     {
      "text": "The responsibility will not.",
-     "start": 288.376,
-     "end": 289.805
+     "start": 278.751,
+     "end": 280.181
     },
     {
      "text": "Find the human problem.",
-     "start": 290.305,
-     "end": 291.572
+     "start": 280.606,
+     "end": 281.864
     },
     {
      "text": "Design with people, not assumptions.",
-     "start": 291.892,
-     "end": 293.806
+     "start": 282.144,
+     "end": 284.053
     },
     {
      "text": "Test what you have made.",
-     "start": 294.126,
-     "end": 295.181
+     "start": 284.333,
+     "end": 285.379
     },
     {
      "text": "And remember that door?",
-     "start": 295.781,
-     "end": 296.911
+     "start": 285.889,
+     "end": 287.019
     },
     {
      "text": "When it finally opens the way you expect, you barely notice the design.",
-     "start": 297.311,
-     "end": 301.033
+     "start": 287.359,
+     "end": 291.057
     },
     {
      "text": "That is often the point.",
-     "start": 301.433,
-     "end": 302.536
+     "start": 291.397,
+     "end": 292.5
     }
    ]
   }
