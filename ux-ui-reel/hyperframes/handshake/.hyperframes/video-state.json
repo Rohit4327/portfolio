@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "historyId": "839e8c42-0e05-41a5-8f78-388b4dc87a21",
+  "currentRevision": "a0b6967d-8e91-401d-b463-a23504c3f0d7",
+  "pendingChanges": false,
+  "files": {
+    "gsap.min.js": {
+      "hash": "28033e449a31ebcc396e5be8b13b63152bf03094288fb5867034321927bce087",
+      "content": "/root/.cache/hyperframes/history/839e8c42-0e05-41a5-8f78-388b4dc87a21/blobs/28/28033e449a31ebcc396e5be8b13b63152bf03094288fb5867034321927bce087"
+    },
+    "index.html": {
+      "hash": "337a7b87495ec5b47d3a18add85e55748e7f58699ef5dfadc311f53536c33034",
+      "content": "/root/.cache/hyperframes/history/839e8c42-0e05-41a5-8f78-388b4dc87a21/blobs/33/337a7b87495ec5b47d3a18add85e55748e7f58699ef5dfadc311f53536c33034"
+    }
+  },
+  "revisions": {
+    "a0b6967d-8e91-401d-b463-a23504c3f0d7": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1794684395358,
+      "endedAt": 1794684395363,
+      "files": {
+        "index.html": {
+          "before": "/root/.cache/hyperframes/history/839e8c42-0e05-41a5-8f78-388b4dc87a21/blobs/44/44c9df1f1888a2062e1b99cec05a812072674239af95129ea2740e0d6869caab",
+          "after": "/root/.cache/hyperframes/history/839e8c42-0e05-41a5-8f78-388b4dc87a21/blobs/33/337a7b87495ec5b47d3a18add85e55748e7f58699ef5dfadc311f53536c33034"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "3dea88da-0d3a-4155-9480-36fd35866506",
+      "completedAt": 1794684443880,
+      "output": "/home/user/portfolio/ux-ui-reel/public/hf/handshake.mov",
+      "status": "completed",
+      "revision": "a0b6967d-8e91-401d-b463-a23504c3f0d7"
+    },
+    "retainedRevisions": [
+      "a0b6967d-8e91-401d-b463-a23504c3f0d7"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}

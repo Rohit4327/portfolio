@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: 'Inter Display'; font-weight: 700 800; src: local('Inter Display Bold'), local('InterDisplay-Bold'), url('file:///usr/share/fonts/opentype/inter/InterDisplay-Bold.otf') format('opentype'); }
+  @font-face { font-family: 'Inter'; font-weight: 700; src: local('Inter Bold'), local('Inter-Bold'), url('file:///usr/share/fonts/opentype/inter/Inter-Bold.otf') format('opentype'); }
+  html, body { margin: 0; background: transparent; }
+  #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: 'Inter Display', 'Inter', system-ui, sans-serif; }
+  .clip { position: absolute; inset: 0; }
+  .label { position: absolute; left: 0; width: 1080px; text-align: center; font-family: 'Inter', system-ui, sans-serif; font-weight: 700; font-size: 30px; letter-spacing: 7px; color: #8A8F98; opacity: 0; }
+  .mask { position: absolute; left: 0; width: 1080px; overflow: hidden; text-align: center; }
+  .word { display: inline-block; font-weight: 800; line-height: 1; color: #F6F2E8; white-space: nowrap; text-shadow: 0 10px 50px rgba(0,0,0,0.55); }
+  #handshake { font-size: 150px; letter-spacing: -7px; }
+  #relationship { font-size: 118px; letter-spacing: -5px; }
+  #ui { color: #80C9F8; }
+  #ux { color: #FFAB5B; }
+  .line { position: absolute; left: 538px; width: 4px; top: 752px; height: 372px; border-radius: 2px; background: linear-gradient(180deg, rgba(128,201,248,0.9) 0%, #FFAB5B 100%); transform-origin: 50% 0%; transform: scaleY(0); box-shadow: 0 0 24px rgba(255,171,91,0.55); }
+  .tick { position: absolute; left: 508px; width: 64px; height: 4px; border-radius: 2px; background: #FFAB5B; opacity: 0; }
+</style>
+<script src="./gsap.min.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="root" data-width="1080" data-height="1920" data-fps="30" data-duration="6">
+  <div class="clip" data-start="0" data-duration="6">
+    <div class="label" id="ui" style="top: 532px">UI IS THE</div>
+    <div class="mask" style="top: 578px; height: 170px"><div class="word" id="handshake">HANDSHAKE</div></div>
+    <div class="line" id="line"></div>
+    <div class="tick" id="tick1" style="top: 752px"></div>
+    <div class="tick" id="tick2" style="top: 1122px"></div>
+    <div class="label" id="ux" style="top: 1152px">UX IS THE</div>
+    <div class="mask" style="top: 1192px; height: 150px"><div class="word" id="relationship">RELATIONSHIP</div></div>
+  </div>
+  <script>
+    // narration: "handshake" lands at 0.88 s of this clip, "relationship" at 2.33 s (clip starts 0.3 s before "UI is the…")
+    const tl = gsap.timeline({ paused: true });
+    tl.set('#handshake', { y: 190 }, 0).set('#relationship', { y: 170 }, 0)
+      .to('#ui', { opacity: 1, y: -6, duration: 0.45, ease: 'power2.out' }, 0.32)
+      .to('#handshake', { y: 0, duration: 0.7, ease: 'power4.out' }, 0.78)
+      .to('#tick1', { opacity: 1, duration: 0.2 }, 1.0)
+      .to('#line', { scaleY: 1, duration: 1.2, ease: 'power2.inOut' }, 1.0)
+      .to('#ux', { opacity: 1, y: -6, duration: 0.45, ease: 'power2.out' }, 1.9)
+      .to('#tick2', { opacity: 1, duration: 0.2 }, 2.15)
+      .to('#relationship', { y: 0, duration: 0.7, ease: 'power4.out' }, 2.24)
+      // settle: a slow breathing scale keeps the frame alive until the bloom takes over
+      .to('#handshake', { scale: 1.025, duration: 3.0, ease: 'sine.inOut' }, 2.9)
+      .to('#relationship', { scale: 1.025, duration: 3.0, ease: 'sine.inOut' }, 2.9);
+    window.__timelines = window.__timelines || {}; window.__timelines['root'] = tl;
+  </script>
+</div>
+</body>
+</html>
