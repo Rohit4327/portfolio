@@ -1,0 +1,144 @@
+[
+ {
+  "id": "hook",
+  "start": 0,
+  "end": 8.6,
+  "cues": {
+   "thumb_tap_1": 1.2,
+   "thumb_tap_2": 1.95,
+   "ui_response": 2.15,
+   "title_hit": 3,
+   "title_split": 6.756,
+   "transition_point": 8.15
+  }
+ },
+ {
+  "id": "ui",
+  "start": 8.6,
+  "end": 30.4,
+  "cues": {
+   "layers_explode": 9.323,
+   "layer_tick_1": 10.46,
+   "layer_tick_2": 10.958,
+   "layer_tick_3": 11.312,
+   "layer_tick_4": 11.761,
+   "layer_tick_5": 12.259,
+   "orbit_whoosh": 10.623000000000001,
+   "tap": 19.12,
+   "confirm": 21.743,
+   "layers_collapse": 23.913,
+   "transition_point": 29.95
+  }
+ },
+ {
+  "id": "ux",
+  "start": 30.4,
+  "end": 52.4,
+  "cues": {
+   "path_draw_start": 31.106,
+   "path_draw_end": 32.931,
+   "station_1": 33.36,
+   "station_2": 33.822,
+   "station_3": 34.377,
+   "station_4": 35.529,
+   "insert_1": 38.6,
+   "insert_2": 39.431,
+   "insert_3": 39.949,
+   "insert_4": 40.817,
+   "email_in": 43.227,
+   "pullback": 45.375,
+   "transition_point": 51.949999999999996
+  }
+ },
+ {
+  "id": "trap",
+  "start": 52.4,
+  "end": 72.4,
+  "cues": {
+   "slab_in": 52.4,
+   "ui_tap_1": 53.587999999999994,
+   "ui_tap_2": 54.861999999999995,
+   "ui_tap_3": 57.016,
+   "fee_reveal": 58.42,
+   "crack": 59.133,
+   "punch_frustrating": 59.333,
+   "slab2_in": 62.897,
+   "tap_plain_1": 63.637,
+   "tap_plain_2": 64.087,
+   "confirmed": 64.316,
+   "punch_brilliant": 64.566,
+   "type_handshake": 67.983,
+   "type_relationship": 69.431,
+   "transition_point": 71.95
+  }
+ },
+ {
+  "id": "process",
+  "start": 72.4,
+  "end": 100.4,
+  "cues": {
+   "card_slam_1": 77.288,
+   "card_slam_2": 78.806,
+   "card_slam_3": 80.498,
+   "card_slam_4": 81.638,
+   "card_slam_5": 82.778,
+   "card_slam_6": 84.503,
+   "loop_turn": 84.733,
+   "insert_test": 89.4,
+   "heatmap": 90.377,
+   "note_in": 91.546,
+   "morph_1": 92.661,
+   "morph_2": 93.875,
+   "fix_lights": 95.25900000000001,
+   "transition_point": 99.95
+  }
+ },
+ {
+  "id": "door",
+  "start": 100.4,
+  "end": 125.4,
+  "cues": {
+   "door_footsteps_start": 100.55000000000001,
+   "door_footsteps_end": 102.45,
+   "door_push_thud_1": 102.89999999999999,
+   "door_push_thud_2": 103.343,
+   "door_pull_open": 104.36399999999999,
+   "freeze": 105.596,
+   "point_appear": 106.256,
+   "bar_assemble": 112.92999999999999,
+   "door_open_clean": 114.991,
+   "footsteps_out_start": 115.822,
+   "footsteps_out_end": 121.4,
+   "transition_point": 124.86666666666667
+  }
+ },
+ {
+  "id": "line",
+  "start": 125.4,
+  "end": 142.2,
+  "cues": {
+   "type_lock_1": 125.4,
+   "type_lock_2": 126.505,
+   "type_lock_3": 127.096,
+   "type_lock_4": 128.138,
+   "strike": 129.692,
+   "underline": 131.948,
+   "glow": 135.568,
+   "stack_1": 136.233,
+   "stack_2": 137.038,
+   "stack_3": 138.376,
+   "transition_point": 141.75
+  }
+ },
+ {
+  "id": "outro",
+  "start": 142.2,
+  "end": 150,
+  "cues": {
+   "collapse": 142.7,
+   "title_in": 143.14999999999998,
+   "credit_in": 144.6,
+   "fade_out": 148.6
+  }
+ }
+]

@@ -35,6 +35,7 @@ export const DrawnTube: React.FC<{ progress: number; glow?: number }> = ({ progr
   return (
     <group>
       <mesh geometry={core}><meshBasicMaterial color={c} toneMapped={false} /></mesh>
+      <mesh position={at(0)}><sphereGeometry args={[0.034, 12, 12]} /><meshBasicMaterial color={c} toneMapped={false} /></mesh>
       <mesh geometry={halo}><meshBasicMaterial color={PALETTE.amber} transparent opacity={0.13 * glow} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} /></mesh>
     </group>
   );

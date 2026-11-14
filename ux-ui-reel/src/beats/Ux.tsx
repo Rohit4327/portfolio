@@ -33,7 +33,7 @@ export const cues = {
 export const transition = { kind: 'bloom' as const, frames: 14, cx: 540, cy: 960 };
 
 const P0 = at(0);
-const CENTRE: [number, number, number] = [0.1, 0.5, -3.9];      // where the point settles (and where the pull-back looks)
+const CENTRE: [number, number, number] = [0.1, 0.25, -3.9];      // where the point settles (and where the pull-back looks)
 const HH = 0.01;
 // ---------------------------------------------------------------- camera: one function for the rig and the DOM projector
 const travelCam = (u: number): Cam => {
@@ -42,10 +42,10 @@ const travelCam = (u: number): Cam => {
   return { pos: [p[0] + 0.5, p[1] + 0.9, p[2] + 5.5], look: [l[0], l[1] + 0.25, l[2]], fov: 42, roll: -0.18 * tg.x };
 };
 const A0: Cam = { pos: [P0[0], P0[1] + 0.25, P0[2] + 3.4], look: [P0[0], P0[1], P0[2]], fov: 38, roll: 0 };
-const A1: Cam = { pos: [1.9, -0.6, 7.3], look: [-0.3, 0.8, -4.4], fov: 40, roll: 0 };
-const A2: Cam = { pos: [1.5, -0.3, 6.9], look: [-0.2, 0.95, -4.4], fov: 40, roll: 0 };
+const A1: Cam = { pos: [1.9, -0.6, 8.0], look: [-0.3, 0.8, -4.4], fov: 40, roll: 0 };
+const A2: Cam = { pos: [1.5, -0.3, 7.6], look: [-0.2, 0.95, -4.4], fov: 40, roll: 0 };
 const U_TRAVEL: [number, number] = [0.1, 0.72];
-const PULL: Cam = { pos: [0.3, 0.6, 9.6], look: CENTRE, fov: 46, roll: 0 };
+const PULL: Cam = { pos: [0.3, 1.6, 9.6], look: CENTRE, fov: 46, roll: 0 };
 const camState = (t: number): Cam => {
   if (t < T.crane) return camLerp(A0, A1, ease(t, 0.35, T.crane, easeInOut));
   if (t < T.travelStart) return camLerp(A1, A2, ease(t, T.crane, T.travelStart, easeInOut));
@@ -85,13 +85,13 @@ export const Beat: React.FC = () => {
           const near = clamp(1 - dist(cam.pos, STATION_POS[i]) / 3.5);
           return <group key={s.id} scale={[0.6 + 0.4 * easeOut(vis), 0.6 + 0.4 * easeOut(vis), 1]} position={STATION_POS[i]}><Station id={s.id} position={[0, 0, 0]} lit={lit[i]} pulse={pulse[i]} near={near} /></group>;
         }) : null}
-        <GlowPoint position={pt} radius={0.06} intensity={0.85 + 0.25 * collapseK + 0.08 * Math.sin(t * 6)} />
+        <GlowPoint position={pt} radius={0.06 + 0.09 * settle} intensity={0.85 + 0.25 * collapseK + 0.5 * settle + 0.08 * Math.sin(t * 6)} />
       </Stage3D>
       {/* station labels anchored above each slab (hidden when behind or under the camera) */}
       {hasStations ? STATIONS.map((s, i) => {
         const vis = clamp((progress - s.u) / 0.06); if (vis <= 0) return null;
         const p = project(cam, [STATION_POS[i][0], STATION_POS[i][1] + 0.5, STATION_POS[i][2]], t, hh);
-        const d = dist(cam.pos, STATION_POS[i]); const band = clamp((Math.abs(p.y - 1470) - 100) / 70); // keep the captions band clear
+        const d = dist(cam.pos, STATION_POS[i]); const band = clamp((Math.abs(p.y - 1470) - 100) / 70) * clamp((1700 - p.y) / 60) * clamp((p.y - 230) / 60); // keep the captions band and safe area clear
         const a = Math.min(vis, clamp((d - 1.4) / 0.8)) * (p.visible ? 1 : 0) * band;
         return <StationLabel key={s.id} x={p.x} y={p.y} n={s.n} text={s.label} lit={lit[i]} a={a} />;
       }) : null}

@@ -88,7 +88,7 @@ const Point3D: React.FC<{ t: number }> = ({ t }) => {
 
 // ---------------------------------------------------------------- DOM insert
 const FINGER: FingerKey[] = [
-  { t: T.insert + 0.15, x: 190, y: 640 }, { t: T.insert + 0.55, x: 150, y: 170, tap: true }, { t: T.heat, x: 250, y: 140, tap: true }, { t: T.heat + 0.33, x: 200, y: 300, tap: true },
+  { t: T.insert + 0.15, x: 190, y: 640 }, { t: T.insert + 0.55, x: 150, y: 170 }, { t: T.heat, x: 250, y: 140, tap: true }, { t: T.heat + 0.33, x: 200, y: 300, tap: true },
   { t: T.heat + 0.66, x: 66, y: 507, tap: true }, { t: T.heat + 0.95, x: 158, y: 507, tap: true }, { t: T.heat + 1.3, x: 240, y: 230, tap: true }, { t: T.heat + 1.65, x: 140, y: 200, tap: true },
   { t: T.heat + 2.0, x: 200, y: 120, tap: true }, { t: T.morph1 - 0.05, x: 230, y: 260 },
 ];
