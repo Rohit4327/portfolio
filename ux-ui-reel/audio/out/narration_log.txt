@@ -1,0 +1,48 @@
+  synth  1.31s  Good UI is obvious.
+  synth  4.98s  Targets you can hit. Contrast you can read. Feedback that co
+  synth  2.54s  It's the handshake between a person and a machine.
+  synth  3.87s  Navigation. Speed. Clear words. Recovering from mistakes.
+  synth  2.30s  Even the email that arrives after you pay.
+  synth  1.55s  All of it is the experience.
+  synth  5.46s  Watching just a handful of people use your prototype exposes
+  synth  1.73s  Fix them before you polish anything.
+  synth  3.35s  Pixel-perfect means nothing if people can't finish the task.
+  synth  3.31s  And a flawless flow still needs an interface people enjoy.
+  0.80-  2.21  You've used a thousand apps.
+  2.51-  4.91  You only remember the ones that felt effortless.
+  5.21-  7.31  That feeling has a name — and it's two names.
+  8.60- 10.16  UI is what you see and touch.
+ 10.46- 12.71  Buttons. Type. Colour. Spacing. Motion.
+ 13.01- 14.66  The surface that answers your hand.
+ 16.60- 17.91  Good UI is obvious.
+ 18.21- 23.19  Targets you can hit. Contrast you can read. Feedback that confirms every action.
+ 23.49- 26.02  It's the handshake between a person and a machine.
+ 30.40- 32.72  UX is what you feel across the whole journey.
+ 33.02- 35.87  Can you find it? Finish it? Trust it? Would you come back?
+ 38.60- 42.47  Navigation. Speed. Clear words. Recovering from mistakes.
+ 42.77- 45.08  Even the email that arrives after you pay.
+ 45.38- 46.92  All of it is the experience.
+ 52.40- 53.24  Here's the trap.
+ 53.54- 56.06  Beautiful UI can hide a frustrating UX.
+ 56.36- 62.32  A stunning checkout that reveals the delivery fee on the last step looks great and feels like a betrayal.
+ 62.62- 67.08  And a plain interface can carry a brilliant experience, because it gets out of your way.
+ 67.38- 70.48  UI is the handshake. UX is the relationship.
+ 72.40- 74.62  So how is great experience actually made?
+ 74.92- 76.77  Not by guessing. By observing.
+ 77.07- 83.74  Research real people. Define the real problem. Design options. Prototype fast. Test with users.
+ 84.04- 87.11  Then repeat — because the first version is never the last.
+ 89.40- 94.86  Watching just a handful of people use your prototype exposes most of the big problems.
+ 95.16- 96.89  Fix them before you polish anything.
+100.40-102.31  Think of a door with no clear handle.
+102.61-103.75  You push. Nothing.
+104.05-105.36  You pull. It opens.
+105.66-108.20  You feel foolish. You weren't. The design was.
+112.40-114.20  Now give that door a proper handle.
+114.50-115.99  You open it without thinking.
+116.29-118.98  That's the goal: design so clear you never notice it.
+125.40-128.66  UI makes a product usable. UX makes it worth using.
+128.97-132.32  Pixel-perfect means nothing if people can't finish the task.
+132.62-135.93  And a flawless flow still needs an interface people enjoy.
+136.23-139.42  Design both. Test with real people. Then do it again.
+142.20-144.11  UX and UI — explained.
+last end 144.111

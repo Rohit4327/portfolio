@@ -1,0 +1,10 @@
+ux-ui-reel/node_modules/
+ux-ui-reel/out/
+ux-ui-reel/public/hf/
+ux-ui-reel/public/*.webm
+ux-ui-reel/public/*.mov
+ux-ui-reel/test-remotion/
+ux-ui-reel/hf-test/
+ux-ui-reel/audio/out/cache/
+ux-ui-reel/audio/out/reel_sfx_cues/
+ux-ui-reel/audio/out/*.wav
