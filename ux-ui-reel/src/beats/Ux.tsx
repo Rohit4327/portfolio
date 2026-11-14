@@ -42,8 +42,8 @@ const travelCam = (u: number): Cam => {
   return { pos: [p[0] + 0.5, p[1] + 0.9, p[2] + 5.5], look: [l[0], l[1] + 0.25, l[2]], fov: 42, roll: -0.18 * tg.x };
 };
 const A0: Cam = { pos: [P0[0], P0[1] + 0.25, P0[2] + 3.4], look: [P0[0], P0[1], P0[2]], fov: 38, roll: 0 };
-const A1: Cam = { pos: [1.6, -0.3, 6.6], look: [0, 1.2, -4.4], fov: 40, roll: 0 };
-const A2: Cam = { pos: [1.2, -0.1, 6.2], look: [0, 1.3, -4.4], fov: 40, roll: 0 };
+const A1: Cam = { pos: [1.9, -0.6, 7.3], look: [-0.3, 0.8, -4.4], fov: 40, roll: 0 };
+const A2: Cam = { pos: [1.5, -0.3, 6.9], look: [-0.2, 0.95, -4.4], fov: 40, roll: 0 };
 const U_TRAVEL: [number, number] = [0.1, 0.72];
 const PULL: Cam = { pos: [0.3, 0.6, 9.6], look: CENTRE, fov: 46, roll: 0 };
 const camState = (t: number): Cam => {
@@ -91,7 +91,8 @@ export const Beat: React.FC = () => {
       {hasStations ? STATIONS.map((s, i) => {
         const vis = clamp((progress - s.u) / 0.06); if (vis <= 0) return null;
         const p = project(cam, [STATION_POS[i][0], STATION_POS[i][1] + 0.5, STATION_POS[i][2]], t, hh);
-        const d = dist(cam.pos, STATION_POS[i]); const a = Math.min(vis, clamp((d - 1.4) / 0.8)) * (p.visible ? 1 : 0);
+        const d = dist(cam.pos, STATION_POS[i]); const band = clamp((Math.abs(p.y - 1470) - 100) / 70); // keep the captions band clear
+        const a = Math.min(vis, clamp((d - 1.4) / 0.8)) * (p.visible ? 1 : 0) * band;
         return <StationLabel key={s.id} x={p.x} y={p.y} n={s.n} text={s.label} lit={lit[i]} a={a} />;
       }) : null}
       {/* quick inserts: two alternating slots in the upper half */}

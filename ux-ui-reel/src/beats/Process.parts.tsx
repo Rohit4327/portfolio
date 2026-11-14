@@ -121,7 +121,7 @@ export const FingerTrail: React.FC<{ keys: FingerKey[]; t: number; alpha: number
 export const Note: React.FC<{ t: number; tIn: number; tOut: number; x: number; y: number; who: string; text: string; time: string; rot?: number }> = ({ t, tIn, tOut, x, y, who, text, time, rot = -3 }) => {
   const k = easeOutExpo(seg(t, tIn, tIn + 0.55)); const out = 1 - seg(t, tOut, tOut + 0.3); if (k <= 0 || out <= 0) return null;
   return (
-    <div style={{ position: 'absolute', left: x + (1 - k) * 160, top: y, width: 440, padding: '26px 30px 28px', borderRadius: 22, background: '#F6F2E8', color: '#15181f', fontFamily: FONT, transform: `rotate(${rot}deg) translateY(${(1 - k) * 20}px)`, opacity: Math.min(1, k * 1.4) * out, boxShadow: '0 30px 70px rgba(0,0,0,0.5)' }}>
+    <div style={{ position: 'absolute', left: x + (1 - k) * 160, top: y, width: 490, boxSizing: 'border-box', padding: '26px 30px 28px', borderRadius: 22, background: '#F6F2E8', color: '#15181f', fontFamily: FONT, transform: `rotate(${rot}deg) translateY(${(1 - k) * 20}px)`, opacity: Math.min(1, k * 1.4) * out, boxShadow: '0 30px 70px rgba(0,0,0,0.5)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}><span style={{ fontSize: 20, fontWeight: 800, letterSpacing: 3, color: PALETTE.amberDeep }}>{who}</span><span style={{ fontSize: 18, fontWeight: 600, color: PALETTE.gray2 }}>{time}</span></div>
       <div style={{ fontSize: 34, fontWeight: 700, letterSpacing: -0.8, lineHeight: 1.12 }}>{text}</div>
     </div>

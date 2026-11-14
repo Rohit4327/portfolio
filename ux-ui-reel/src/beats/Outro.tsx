@@ -8,8 +8,8 @@ import { Dip, AmberDot } from '../lib/Overlay';
 import { Punch, SlideWords } from '../lib/Type';
 import { PALETTE, FONT } from '../lib/theme';
 import { beat, sec, wordAt, local } from '../timeline';
-import { ease, easeIn, easeOut, easeInOut, seg, clamp, lerp } from '../lib/anim';
-import { LINE, W, dotAt, pushScale, pushed, PUSH_ORIGIN } from './Line.parts';
+import { ease, easeIn, easeOut, easeInOut, seg, lerp } from '../lib/anim';
+import { LINE, dotAt, pushScale, pushed, PUSH_ORIGIN } from './Line.parts';
 
 const B = beat('outro');
 const T = {

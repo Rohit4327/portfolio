@@ -126,8 +126,8 @@ const Insert: React.FC<{ t: number }> = ({ t }) => {
       <div style={{ position: 'absolute', left: 72, top: 1222, width: 400, textAlign: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 26, letterSpacing: 6, color: PALETTE.gray, opacity: labelA }}>POLISHED<div style={{ position: 'absolute', left: 120, top: 16, height: 3, width: 160 * strike, background: PALETTE.gray }} /></div>
       <div style={{ position: 'absolute', left: 608, top: 1222, width: 400, textAlign: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 26, letterSpacing: 6, color: PALETTE.amber, opacity: labelA, textShadow: '0 0 24px rgba(255,171,91,0.5)' }}>FIXED</div>
       {/* observation notes */}
-      <Note t={t} tIn={T.note} tOut={T.morph1 - 0.1} x={560} y={1150} who="P3" text="couldn't find the price" time="00:42" />
-      <Note t={t} tIn={T.note2} tOut={T.morph1 - 0.1} x={520} y={975} who="P1" text="tapped the photo 4×" time="01:10" rot={2} />
+      <Note t={t} tIn={T.note} tOut={T.morph1 - 0.1} x={500} y={1150} who="P3" text="couldn't find the price" time="00:42" />
+      <Note t={t} tIn={T.note2} tOut={T.morph1 - 0.1} x={470} y={975} who="P1" text="tapped the photo 4×" time="01:10" rot={2} />
       <AmberDot x={dot.x + dd.x * toCentre} y={dot.y + dd.y * toCentre} r={11 * pulse} alpha={fadeIO(t, T.insert + 0.05, T.end + 2, 0.25, 0.1)} />
     </AbsoluteFill>
   );
@@ -141,7 +141,7 @@ export const Beat: React.FC = () => {
     { t: CARD_T[0], pos: [-0.6, 1.6, 11.6] as [number, number, number], look: [0, -0.15, 0] as [number, number, number], fov: 34 },
     { t: T.turn, pos: [0.8, 1.8, 11.4] as [number, number, number], look: [0, -0.15, 0] as [number, number, number], fov: 34 },
     { t: T.turn + T.turnDur, pos: [0.2, 1.3, 11.2] as [number, number, number], look: [0, -0.15, 0] as [number, number, number], fov: 34 },
-    { t: T.insert, pos: [0.0, 0.9, 8.6] as [number, number, number], look: [0, -0.1, 0] as [number, number, number], fov: 34 },
+    { t: T.insert, pos: [0.0, 0.9, 9.3] as [number, number, number], look: [0, -0.12, 0] as [number, number, number], fov: 34 },
   ];
   return (
     <AbsoluteFill style={{ background: PALETTE.graphite }}>
