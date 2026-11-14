@@ -8,3 +8,4 @@ ux-ui-reel/hf-test/
 ux-ui-reel/audio/out/cache/
 ux-ui-reel/audio/out/reel_sfx_cues/
 ux-ui-reel/audio/out/*.wav
+__pycache__/
