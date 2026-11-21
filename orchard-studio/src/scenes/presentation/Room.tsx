@@ -29,7 +29,7 @@ export function buildTable(): THREE.Group {
   return g;
 }
 
-export function PresentationRoom({ visible }: { visible: boolean }) {
+export function PresentationRoom() {
   const table = useMemo(buildTable, []);
   const room = useMemo(() => {
     const g = new THREE.Group();
@@ -45,7 +45,7 @@ export function PresentationRoom({ visible }: { visible: boolean }) {
     return g;
   }, []);
   return (
-    <group visible={visible} name="presentationRoom">
+    <group name="presentationRoom">
       <primitive object={room} />
       <primitive object={table} />
     </group>

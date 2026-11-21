@@ -35,7 +35,12 @@ export interface Runtime {
   /** Set by the dive director: 0 = model on the table, 1 = full-scale walkthrough. */
   dive: number;
   pathTracing: boolean;
+  pathTracingDone: boolean;
+  /** performance.now() of the last change to the picture (input, layout, animation). */
+  lastTouch: number;
   shadowDirty: boolean;
+  /** Draw calls and triangles of the last complete frame (all passes). */
+  info: { calls: number; triangles: number };
 }
 
 export const rt: Runtime = {
@@ -52,12 +57,16 @@ export const rt: Runtime = {
   nav: new Map(),
   dive: 0,
   pathTracing: false,
+  pathTracingDone: false,
+  lastTouch: 0,
   shadowDirty: true,
+  info: { calls: 0, triangles: 0 },
 };
 
 /** Mark the picture as changed: render and count a few frames before settle() resolves. */
 export function touch(frames = 4): void {
   rt.dirtyUntilFrame = Math.max(rt.dirtyUntilFrame, rt.frame + frames);
+  rt.lastTouch = typeof performance !== 'undefined' ? performance.now() : 0;
   rt.invalidate();
 }
 

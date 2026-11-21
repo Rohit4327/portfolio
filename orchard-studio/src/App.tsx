@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { AdaptiveDpr, PerformanceMonitor } from '@react-three/drei';
@@ -9,6 +9,8 @@ import { Stage } from './scenes/Stage';
 import { rt } from './state/runtime';
 import { DEBUG, useStudio } from './state/store';
 import { Overlay } from './ui/Overlay';
+import { PathTracerStill } from './scenes/presentation/PathTracerStill';
+import { loadContent } from './data/manifest';
 
 function FrameStats() {
   // Records frame times for getFps() and flips the loading flag after the first real frames.
@@ -26,6 +28,12 @@ export function App() {
   useEffect(() => {
     useStudio.getState().set({ tier: initialTier(quality), loading: { progress: 0.3, done: false } });
   }, [quality]);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    // The manifest decides names and artwork, so the scene is built after it arrives (or falls back).
+    void loadContent().then(() => setReady(true));
+  }, []);
+  if (!ready) return <Overlay />;
   if (DEBUG === 'plan') return <PlanView />;
   const spec = TIERS[tier];
   return (
@@ -46,6 +54,7 @@ export function App() {
         <Stage />
         <PostFX />
         <FrameStats />
+        {tier === 'ultra' ? <PathTracerStill /> : null}
         {quality === 'auto' ? (
           <PerformanceMonitor
             bounds={() => [45, 58]}
