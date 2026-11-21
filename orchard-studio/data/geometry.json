@@ -1,0 +1,2531 @@
+{
+ "_units": "Feet. Plan coordinates. Origin (0,0) = ADC-05 south-west interior corner (= Excel Layout cell CG62 corner). +x = east, +y = north. Convert with world = (x*0.3048, height_m, -y*0.3048) so north is -Z in three.js.",
+ "adc05": {
+  "envelopeInterior": [
+   [
+    0,
+    0
+   ],
+   [
+    15,
+    0
+   ],
+   [
+    15,
+    4
+   ],
+   [
+    20,
+    4
+   ],
+   [
+    20,
+    0
+   ],
+   [
+    57,
+    0
+   ],
+   [
+    57,
+    4
+   ],
+   [
+    62,
+    4
+   ],
+   [
+    62,
+    0
+   ],
+   [
+    77,
+    0
+   ],
+   [
+    77,
+    51
+   ],
+   [
+    71,
+    51
+   ],
+   [
+    71,
+    55
+   ],
+   [
+    69,
+    55
+   ],
+   [
+    69,
+    60
+   ],
+   [
+    35,
+    60
+   ],
+   [
+    35,
+    58
+   ],
+   [
+    0,
+    58
+   ]
+  ],
+  "envelopeNote": "The 15-20 notch is the recessed ACD entry (door plane at y=4). The 57-62 notch is the recessed fire door (door plane at y=4). West side between y=17 and y=54 continues into ADC-04 (project team) and is closed off by frosted glass in this build.",
+  "ceilingHeightFt": 9.5,
+  "solidWalls": [
+   [
+    [
+     0,
+     17
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     15,
+     0
+    ],
+    [
+     15,
+     4
+    ],
+    [
+     20,
+     4
+    ],
+    [
+     20,
+     0
+    ],
+    [
+     57,
+     0
+    ],
+    [
+     57,
+     4
+    ],
+    [
+     62,
+     4
+    ],
+    [
+     62,
+     0
+    ],
+    [
+     77,
+     0
+    ],
+    [
+     77,
+     4
+    ]
+   ],
+   [
+    [
+     77,
+     9
+    ],
+    [
+     77,
+     12
+    ]
+   ],
+   [
+    [
+     77,
+     25
+    ],
+    [
+     77,
+     28
+    ]
+   ],
+   [
+    [
+     77,
+     43
+    ],
+    [
+     77,
+     47
+    ]
+   ],
+   [
+    [
+     77,
+     51
+    ],
+    [
+     71,
+     51
+    ],
+    [
+     71,
+     55
+    ],
+    [
+     69,
+     55
+    ],
+    [
+     69,
+     60
+    ],
+    [
+     61,
+     60
+    ]
+   ],
+   [
+    [
+     45,
+     60
+    ],
+    [
+     41,
+     60
+    ]
+   ],
+   [
+    [
+     37,
+     60
+    ],
+    [
+     35,
+     60
+    ],
+    [
+     35,
+     58
+    ]
+   ],
+   [
+    [
+     0,
+     54
+    ],
+    [
+     0,
+     58
+    ]
+   ]
+  ],
+  "windows": {
+   "sillFt": 1.0,
+   "headFt": 9.0,
+   "mullionEveryFt": 5,
+   "segments": [
+    [
+     [
+      77,
+      4
+     ],
+     [
+      77,
+      9
+     ]
+    ],
+    [
+     [
+      77,
+      12
+     ],
+     [
+      77,
+      25
+     ]
+    ],
+    [
+     [
+      77,
+      28
+     ],
+     [
+      77,
+      43
+     ]
+    ],
+    [
+     [
+      77,
+      47
+     ],
+     [
+      77,
+      51
+     ]
+    ],
+    [
+     [
+      45,
+      60
+     ],
+     [
+      61,
+      60
+     ]
+    ],
+    [
+     [
+      37,
+      60
+     ],
+     [
+      41,
+      60
+     ]
+    ],
+    [
+     [
+      0,
+      58
+     ],
+     [
+      35,
+      58
+     ]
+    ]
+   ],
+   "note": "East windows (x=77) face the road, metro line and towers: this is the hero view. North windows on y=60 and y=58."
+  },
+  "pillars": [
+   {
+    "id": "P1",
+    "x0": -2,
+    "y0": 17,
+    "x1": 2,
+    "y1": 21
+   },
+   {
+    "id": "P2",
+    "x0": 33,
+    "y0": 17,
+    "x1": 37,
+    "y1": 21,
+    "role": "Five Point Anyone levels L1-L5, floor to ceiling"
+   },
+   {
+    "id": "P3",
+    "x0": 67,
+    "y0": 17,
+    "x1": 71,
+    "y1": 21
+   },
+   {
+    "id": "P4",
+    "x0": -2,
+    "y0": 50,
+    "x1": 2,
+    "y1": 54
+   },
+   {
+    "id": "P5",
+    "x0": 33,
+    "y0": 50,
+    "x1": 37,
+    "y1": 54
+   },
+   {
+    "id": "P6",
+    "x0": 67,
+    "y0": 51,
+    "x1": 71,
+    "y1": 55
+   }
+  ],
+  "glassPartitions": [
+   {
+    "id": "frostedEntryGlass",
+    "a": [
+     3,
+     17
+    ],
+    "b": [
+     33,
+     17
+    ],
+    "type": "frosted",
+    "fullHeight": true,
+    "note": "Faces the entry. Carries the PRISM graphic x 9-31. Glass team door x 4-7.5 (locked, project team only)."
+   },
+   {
+    "id": "projectGarageGlass",
+    "a": [
+     33,
+     21
+    ],
+    "b": [
+     33,
+     50
+    ],
+    "type": "CONFIG x33GlassType (default frosted to 7 ft, clear above)",
+    "fullHeight": true,
+    "note": "Runs exactly between back-to-back desks."
+   },
+   {
+    "id": "projectNorthGlass",
+    "a": [
+     35,
+     54
+    ],
+    "b": [
+     35,
+     58
+    ],
+    "type": "frosted",
+    "fullHeight": true
+   },
+   {
+    "id": "makeStudioGlassSouth",
+    "a": [
+     58,
+     21
+    ],
+    "b": [
+     58,
+     33
+    ],
+    "type": "clear",
+    "fullHeight": true,
+    "note": "Wall of Voices quotes as white vinyl lettering between 5 and 7 ft."
+   },
+   {
+    "id": "makeStudioGlassNorth",
+    "a": [
+     58,
+     38
+    ],
+    "b": [
+     58,
+     51
+    ],
+    "type": "clear",
+    "fullHeight": true,
+    "note": "Opening y 33-38 aligns with the central aisle."
+   }
+  ],
+  "futureProvisionLine": {
+   "a": [
+    3,
+    21
+   ],
+   "b": [
+    3,
+    50
+   ],
+   "builtByDefault": false,
+   "note": "Red-line growth position. CONFIG futureProvisionBuilt. When false, close the project ODC's west side with frosted glass anyway so visitors cannot enter."
+  },
+  "meetingRooms": [
+   {
+    "id": "room6paxWest",
+    "x0": 0,
+    "y0": 0,
+    "x1": 15,
+    "y1": 12,
+    "door": {
+     "wall": "north",
+     "x0": 11.5,
+     "x1": 14.5
+    },
+    "front": "glass with frosted band 3-6 ft"
+   },
+   {
+    "id": "room6paxEast",
+    "x0": 62,
+    "y0": 0,
+    "x1": 77,
+    "y1": 12,
+    "door": {
+     "wall": "north",
+     "x0": 62.3,
+     "x1": 66.0
+    },
+    "front": "north face solid (App Galleria x 66.5-76.5 is mounted on it, door at x 62.3-66.0), west face glass with frosted band"
+   }
+  ],
+  "entryRecess": {
+   "x0": 15,
+   "x1": 20,
+   "y0": 0,
+   "y1": 4,
+   "doorPlaneY": 4,
+   "badgeReader": {
+    "x": 19.6,
+    "y": 4.3,
+    "heightFt": 3.6
+   }
+  },
+  "fireDoorRecess": {
+   "x0": 57,
+   "x1": 62,
+   "y0": 0,
+   "y1": 4,
+   "doorPlaneY": 4
+  },
+  "fireLane": {
+   "x0": 57,
+   "x1": 62,
+   "y0": 0,
+   "y1": 17,
+   "rule": "Nothing may be placed here."
+  },
+  "spine": {
+   "x0": 15,
+   "x1": 77,
+   "y0": 12,
+   "y1": 17,
+   "rule": "Keep clear end to end. Sightline from the entry recess to the east window must be unobstructed above 3 ft."
+  },
+  "desks": {
+   "projectODC": [
+    [
+     3,
+     17,
+     2,
+     4,
+     "E"
+    ],
+    [
+     3,
+     21,
+     2,
+     4,
+     "E"
+    ],
+    [
+     3,
+     25,
+     2,
+     4,
+     "E"
+    ],
+    [
+     3,
+     29,
+     2,
+     4,
+     "E"
+    ],
+    [
+     3,
+     38,
+     2,
+     4,
+     "E"
+    ],
+    [
+     3,
+     42,
+     2,
+     4,
+     "E"
+    ],
+    [
+     3,
+     46,
+     2,
+     4,
+     "E"
+    ],
+    [
+     3,
+     50,
+     2,
+     4,
+     "E"
+    ],
+    [
+     11,
+     17,
+     2,
+     4,
+     "W"
+    ],
+    [
+     11,
+     21,
+     2,
+     4,
+     "W"
+    ],
+    [
+     11,
+     25,
+     2,
+     4,
+     "W"
+    ],
+    [
+     11,
+     29,
+     2,
+     4,
+     "W"
+    ],
+    [
+     11,
+     38,
+     2,
+     4,
+     "W"
+    ],
+    [
+     11,
+     42,
+     2,
+     4,
+     "W"
+    ],
+    [
+     11,
+     46,
+     2,
+     4,
+     "W"
+    ],
+    [
+     11,
+     50,
+     2,
+     4,
+     "W"
+    ],
+    [
+     13,
+     17,
+     2,
+     4,
+     "E"
+    ],
+    [
+     13,
+     21,
+     2,
+     4,
+     "E"
+    ],
+    [
+     13,
+     25,
+     2,
+     4,
+     "E"
+    ],
+    [
+     13,
+     29,
+     2,
+     4,
+     "E"
+    ],
+    [
+     13,
+     38,
+     2,
+     4,
+     "E"
+    ],
+    [
+     13,
+     42,
+     2,
+     4,
+     "E"
+    ],
+    [
+     13,
+     46,
+     2,
+     4,
+     "E"
+    ],
+    [
+     13,
+     50,
+     2,
+     4,
+     "E"
+    ],
+    [
+     21,
+     17,
+     2,
+     4,
+     "W"
+    ],
+    [
+     21,
+     21,
+     2,
+     4,
+     "W"
+    ],
+    [
+     21,
+     25,
+     2,
+     4,
+     "W"
+    ],
+    [
+     21,
+     29,
+     2,
+     4,
+     "W"
+    ],
+    [
+     21,
+     38,
+     2,
+     4,
+     "W"
+    ],
+    [
+     21,
+     42,
+     2,
+     4,
+     "W"
+    ],
+    [
+     21,
+     46,
+     2,
+     4,
+     "W"
+    ],
+    [
+     21,
+     50,
+     2,
+     4,
+     "W"
+    ],
+    [
+     23,
+     17,
+     2,
+     4,
+     "E"
+    ],
+    [
+     23,
+     21,
+     2,
+     4,
+     "E"
+    ],
+    [
+     23,
+     25,
+     2,
+     4,
+     "E"
+    ],
+    [
+     23,
+     29,
+     2,
+     4,
+     "E"
+    ],
+    [
+     23,
+     38,
+     2,
+     4,
+     "E"
+    ],
+    [
+     23,
+     42,
+     2,
+     4,
+     "E"
+    ],
+    [
+     23,
+     46,
+     2,
+     4,
+     "E"
+    ],
+    [
+     23,
+     50,
+     2,
+     4,
+     "E"
+    ],
+    [
+     31,
+     17,
+     2,
+     4,
+     "E"
+    ],
+    [
+     31,
+     21,
+     2,
+     4,
+     "W"
+    ],
+    [
+     31,
+     25,
+     2,
+     4,
+     "W"
+    ],
+    [
+     31,
+     29,
+     2,
+     4,
+     "W"
+    ],
+    [
+     31,
+     38,
+     2,
+     4,
+     "W"
+    ],
+    [
+     31,
+     42,
+     2,
+     4,
+     "W"
+    ],
+    [
+     31,
+     46,
+     2,
+     4,
+     "W"
+    ],
+    [
+     31,
+     50,
+     2,
+     4,
+     "E"
+    ]
+   ],
+   "garage": [
+    [
+     33,
+     21,
+     2,
+     4,
+     "E"
+    ],
+    [
+     33,
+     25,
+     2,
+     4,
+     "E"
+    ],
+    [
+     33,
+     29,
+     2,
+     4,
+     "E"
+    ],
+    [
+     33,
+     38,
+     2,
+     4,
+     "E"
+    ],
+    [
+     33,
+     42,
+     2,
+     4,
+     "E"
+    ],
+    [
+     33,
+     46,
+     2,
+     4,
+     "E"
+    ],
+    [
+     41,
+     17,
+     2,
+     4,
+     "W"
+    ],
+    [
+     41,
+     21,
+     2,
+     4,
+     "W"
+    ],
+    [
+     41,
+     25,
+     2,
+     4,
+     "W"
+    ],
+    [
+     41,
+     29,
+     2,
+     4,
+     "W"
+    ],
+    [
+     41,
+     38,
+     2,
+     4,
+     "W"
+    ],
+    [
+     41,
+     42,
+     2,
+     4,
+     "W"
+    ],
+    [
+     41,
+     46,
+     2,
+     4,
+     "W"
+    ],
+    [
+     41,
+     50,
+     2,
+     4,
+     "W"
+    ],
+    [
+     41,
+     54,
+     2,
+     4,
+     "W"
+    ],
+    [
+     43,
+     17,
+     2,
+     4,
+     "E"
+    ],
+    [
+     43,
+     21,
+     2,
+     4,
+     "E"
+    ],
+    [
+     43,
+     25,
+     2,
+     4,
+     "E"
+    ],
+    [
+     43,
+     29,
+     2,
+     4,
+     "E"
+    ],
+    [
+     43,
+     38,
+     2,
+     4,
+     "E"
+    ],
+    [
+     43,
+     42,
+     2,
+     4,
+     "E"
+    ],
+    [
+     43,
+     46,
+     2,
+     4,
+     "E"
+    ],
+    [
+     43,
+     50,
+     2,
+     4,
+     "E"
+    ],
+    [
+     43,
+     54,
+     2,
+     4,
+     "E"
+    ],
+    [
+     51,
+     17,
+     2,
+     4,
+     "W"
+    ],
+    [
+     51,
+     21,
+     2,
+     4,
+     "W"
+    ],
+    [
+     51,
+     25,
+     2,
+     4,
+     "W"
+    ],
+    [
+     51,
+     29,
+     2,
+     4,
+     "W"
+    ],
+    [
+     51,
+     38,
+     2,
+     4,
+     "W"
+    ],
+    [
+     51,
+     42,
+     2,
+     4,
+     "W"
+    ],
+    [
+     51,
+     46,
+     2,
+     4,
+     "W"
+    ],
+    [
+     51,
+     50,
+     2,
+     4,
+     "W"
+    ],
+    [
+     51,
+     54,
+     2,
+     4,
+     "W"
+    ],
+    [
+     53,
+     17,
+     2,
+     4,
+     "E"
+    ],
+    [
+     53,
+     21,
+     2,
+     4,
+     "E"
+    ],
+    [
+     53,
+     25,
+     2,
+     4,
+     "E"
+    ],
+    [
+     53,
+     29,
+     2,
+     4,
+     "E"
+    ],
+    [
+     53,
+     38,
+     2,
+     4,
+     "E"
+    ],
+    [
+     53,
+     42,
+     2,
+     4,
+     "E"
+    ],
+    [
+     53,
+     46,
+     2,
+     4,
+     "E"
+    ],
+    [
+     53,
+     50,
+     2,
+     4,
+     "E"
+    ],
+    [
+     53,
+     54,
+     2,
+     4,
+     "E"
+    ]
+   ],
+   "optionalNine_REMOVED": [
+    [
+     61,
+     17,
+     2,
+     4
+    ],
+    [
+     61,
+     21,
+     2,
+     4
+    ],
+    [
+     61,
+     25,
+     2,
+     4
+    ],
+    [
+     61,
+     29,
+     2,
+     4
+    ],
+    [
+     61,
+     38,
+     2,
+     4
+    ],
+    [
+     61,
+     42,
+     2,
+     4
+    ],
+    [
+     61,
+     46,
+     2,
+     4
+    ],
+    [
+     61,
+     50,
+     2,
+     4
+    ],
+    [
+     61,
+     54,
+     2,
+     4
+    ]
+   ],
+   "strip_REMOVED": [
+    [
+     67,
+     21,
+     4,
+     2
+    ],
+    [
+     67,
+     29,
+     4,
+     2
+    ],
+    [
+     67,
+     31,
+     4,
+     2
+    ],
+    [
+     67,
+     39,
+     4,
+     2
+    ],
+    [
+     67,
+     41,
+     4,
+     2
+    ],
+    [
+     67,
+     49,
+     4,
+     2
+    ],
+    [
+     71,
+     17,
+     2,
+     4
+    ],
+    [
+     71,
+     21,
+     4,
+     2
+    ],
+    [
+     71,
+     29,
+     4,
+     2
+    ],
+    [
+     71,
+     31,
+     4,
+     2
+    ],
+    [
+     71,
+     39,
+     4,
+     2
+    ],
+    [
+     71,
+     41,
+     4,
+     2
+    ],
+    [
+     71,
+     49,
+     4,
+     2
+    ]
+   ]
+  },
+  "deskSpec": {
+   "vertical": "2 ft wide x 4 ft deep (x by y), back-to-back pairs, chair on the side given (W/E)",
+   "horizontal": "4 x 2 ft (strip, removed)"
+  },
+  "zones": [
+   {
+    "id": "trail",
+    "name": "The Trail",
+    "polygon": [
+     [
+      20,
+      0
+     ],
+     [
+      57,
+      0
+     ],
+     [
+      57,
+      12
+     ],
+     [
+      20,
+      12
+     ]
+    ]
+   },
+   {
+    "id": "garage",
+    "name": "The Garage",
+    "polygon": [
+     [
+      33,
+      17
+     ],
+     [
+      58,
+      17
+     ],
+     [
+      58,
+      58
+     ],
+     [
+      37,
+      58
+     ],
+     [
+      37,
+      54
+     ],
+     [
+      35,
+      54
+     ],
+     [
+      35,
+      58
+     ],
+     [
+      33,
+      58
+     ]
+    ]
+   },
+   {
+    "id": "windowPause",
+    "name": "Window Pause",
+    "polygon": [
+     [
+      62,
+      12
+     ],
+     [
+      77,
+      12
+     ],
+     [
+      77,
+      21
+     ],
+     [
+      71,
+      21
+     ],
+     [
+      71,
+      17
+     ],
+     [
+      67,
+      17
+     ],
+     [
+      67,
+      21
+     ],
+     [
+      62,
+      21
+     ]
+    ]
+   },
+   {
+    "id": "makeStudio",
+    "name": "Make Studio",
+    "polygon": [
+     [
+      58,
+      21
+     ],
+     [
+      77,
+      21
+     ],
+     [
+      77,
+      51
+     ],
+     [
+      58,
+      51
+     ]
+    ]
+   },
+   {
+    "id": "memoryCorner",
+    "name": "Memory Corner",
+    "polygon": [
+     [
+      58,
+      51
+     ],
+     [
+      67,
+      51
+     ],
+     [
+      67,
+      55
+     ],
+     [
+      69,
+      55
+     ],
+     [
+      69,
+      60
+     ],
+     [
+      58,
+      60
+     ]
+    ]
+   },
+   {
+    "id": "projectODC",
+    "name": "Project ODC (secure, not enterable)",
+    "polygon": [
+     [
+      3,
+      17
+     ],
+     [
+      33,
+      17
+     ],
+     [
+      33,
+      58
+     ],
+     [
+      3,
+      58
+     ]
+    ]
+   }
+  ],
+  "fixtures": {
+   "landingDisplay": {
+    "wall": "south y=0",
+    "x0": 21.5,
+    "x1": 32.5,
+    "bottomFt": 2.5,
+    "aspect": "16:9",
+    "type": "fine-pitch LED, set in an oak slat panel x 20.5-33.5"
+   },
+   "orchardJourneyWall": {
+    "wall": "south y=0",
+    "x0": 34,
+    "x1": 56,
+    "bandBottomFt": 4.0,
+    "bandTopFt": 6.5,
+    "type": "printed timeline on a thin backlit oak-edged panel, reads west to east"
+   },
+   "kiosks": [
+    {
+     "id": "K1",
+     "x": 36.25,
+     "y": 7.5
+    },
+    {
+     "id": "K2",
+     "x": 41.75,
+     "y": 4.5
+    },
+    {
+     "id": "K3",
+     "x": 47.25,
+     "y": 7.5
+    },
+    {
+     "id": "K4",
+     "x": 52.75,
+     "y": 4.5
+    }
+   ],
+   "kioskSpec": {
+    "footprintFt": [
+     1.5,
+     3.0
+    ],
+    "screen": "65 inch portrait touch display",
+    "facing": "west (screen normal = -x)",
+    "heightFt": 6.2,
+    "content": "K1 Tata, K2 TCS, K3 TCS and Orchard West Coast, K4 Pollinator; swappable via manifest"
+   },
+   "prismGraphic": {
+    "on": "frostedEntryGlass",
+    "x0": 9,
+    "x1": 31,
+    "bottomFt": 1.5,
+    "topFt": 8.0,
+    "face": "south"
+   },
+   "teamDoor": {
+    "on": "frostedEntryGlass",
+    "x0": 4,
+    "x1": 7.5,
+    "type": "frameless glass swing door, locked"
+   },
+   "fivePointPillar": {
+    "pillar": "P2",
+    "levels": 5,
+    "note": "five horizontal bands, L1 at floor to L5 at ceiling, all four faces"
+   },
+   "appGalleria": {
+    "wall": "north face of room6paxEast, y=12",
+    "x0": 66.5,
+    "x1": 76.5,
+    "devices": 7,
+    "mix": "5 phones, 2 tablets",
+    "railHeightFt": 3.8,
+    "note": "OVERRIDE of earlier x 63-76: the room door occupies x 62.3-66.0"
+   },
+   "vrSeats": [
+    {
+     "x": 74.6,
+     "y": 14.6
+    },
+    {
+     "x": 74.6,
+     "y": 18.6
+    }
+   ],
+   "vrSeatSpec": "swivel lounge chairs, 2.5 ft diameter, facing east to the glass; small round side table with a spatial headset on a stand",
+   "museumPlinths": {
+    "x0": 58.4,
+    "x1": 60.0,
+    "sizeFt": 1.6,
+    "heightFt": 3.5,
+    "ys": [
+     22.4,
+     25.0,
+     27.6,
+     30.2,
+     39.4,
+     42.0,
+     44.6,
+     47.2
+    ],
+    "newestIndex": 7,
+    "type": "white plinth, low-iron glass vitrine top, oak base reveal"
+   },
+   "crescentSofa": {
+    "center": [
+     69,
+     31
+    ],
+    "outerR": 6.0,
+    "innerR": 3.6,
+    "startDeg": 198,
+    "endDeg": 342,
+    "seats": "6 to 8",
+    "opening": "north toward the board",
+    "seatHeightFt": 1.5,
+    "backHeightFt": 2.6
+   },
+   "crescentRug": {
+    "center": [
+     69,
+     31
+    ],
+    "diameterFt": 16,
+    "type": "round wool, warm grey"
+   },
+   "collabBoard": {
+    "x0": 65.5,
+    "x1": 72.5,
+    "y0": 40.2,
+    "y1": 41.2,
+    "facing": "south",
+    "screen": "86 to 98 inch on a castor stand",
+    "demoPositionY": 36.0,
+    "note": "Perpendicular to the windows. Rolls to y=36 for demos."
+   },
+   "foosball": {
+    "x0": 70.75,
+    "x1": 73.25,
+    "y0": 44.5,
+    "y1": 49.5,
+    "longAxis": "north-south",
+    "players": "stand east and west"
+   },
+   "slatCeilingCloud": {
+    "x0": 61,
+    "x1": 77,
+    "y0": 23,
+    "y1": 43,
+    "dropFt": 1.0,
+    "type": "white oak slats 2 in wide, 1 in gaps, acoustic felt behind"
+   },
+   "memoriesWall": {
+    "wall": "north y=60",
+    "x0": 61,
+    "x1": 69,
+    "bottomFt": 2.5,
+    "topFt": 8.5,
+    "type": "photo mosaic in thin oak frames"
+   },
+   "readNoteStand": {
+    "x": 59.2,
+    "y": 52.0,
+    "type": "small oak card stand: A note to take with you"
+   },
+   "plants": [
+    {
+     "x": -58.5,
+     "y": -9.0,
+     "type": "tall planter (ficus)",
+     "zone": "Lift Lobby 02"
+    },
+    {
+     "x": -44.5,
+     "y": -9.0,
+     "type": "tall planter (ficus)",
+     "zone": "Lift Lobby 02"
+    },
+    {
+     "x": 21.2,
+     "y": 10.8,
+     "type": "olive tree, low planter",
+     "zone": "Trail entrance"
+    },
+    {
+     "x": 39.0,
+     "y": 9.8,
+     "type": "low pod 1.5 ft",
+     "zone": "Trail"
+    },
+    {
+     "x": 50.0,
+     "y": 9.8,
+     "type": "low pod 1.5 ft",
+     "zone": "Trail"
+    },
+    {
+     "x": 76.0,
+     "y": 22.2,
+     "type": "low pod 1.5 ft",
+     "zone": "Window Pause corner"
+    },
+    {
+     "x": 59.2,
+     "y": 50.2,
+     "type": "low pod 1.5 ft",
+     "zone": "Make Studio, museum line north end"
+    },
+    {
+     "x": 76.2,
+     "y": 50.3,
+     "type": "mid planter r 0.6 ft",
+     "zone": "Make Studio north-east"
+    },
+    {
+     "x": 59.5,
+     "y": 58.8,
+     "type": "tall ficus",
+     "zone": "Memory Corner"
+    },
+    {
+     "x": 1.2,
+     "y": 10.8,
+     "type": "small corner pod",
+     "zone": "west 6-pax room"
+    },
+    {
+     "x": 75.8,
+     "y": 1.2,
+     "type": "small corner pod",
+     "zone": "east 6-pax room"
+    }
+   ],
+   "selfieDisc": {
+    "x": 65.0,
+    "y": 58.0,
+    "diameterFt": 2.0,
+    "engraving": "Stand here"
+   },
+   "selfieTripod": {
+    "x": 65.0,
+    "y": 53.5,
+    "facing": "north",
+    "device": "tablet on a slim tripod at 5 ft"
+   },
+   "foosballScoreboard": {
+    "wall": "y=51 (solid, x 71-77)",
+    "x0": 72,
+    "x1": 74,
+    "centreHeightFt": 6.0
+   },
+   "kioskRug": {
+    "x0": 34,
+    "x1": 56,
+    "y0": 2,
+    "y1": 11,
+    "type": "wool, warm light grey"
+   },
+   "tabletopPlants": "small succulents on every second back-to-back desk pair (Garage and Project ODC)"
+  }
+ },
+ "approach": {
+  "_source": "Measured from 01_Floor_Plan_Group_402.jpg (8000 x 5556 px) at 45.26 px per ft, ADC-05 origin at pixel (4299, 2889). Accuracy about 1 ft. Overlay the image to confirm.",
+  "corridor2000": {
+   "y0": -6.56,
+   "y1": 0.0,
+   "x0": -78,
+   "x1": 30,
+   "clearWidthMm": 2000,
+   "ceilingHeightFt": 9.0
+  },
+  "liftCore1": {
+   "label": "#1",
+   "x0": -77.3,
+   "x1": -60.4,
+   "y0": -51.5,
+   "y1": -16.2,
+   "cars": [
+    {
+     "id": "PL02",
+     "column": "west",
+     "y0": -28.8,
+     "y1": -21.2
+    },
+    {
+     "id": "PL07",
+     "column": "east",
+     "y0": -28.8,
+     "y1": -21.2,
+     "arrival": true
+    },
+    {
+     "id": "car-mid-west",
+     "column": "west",
+     "y0": -37.7,
+     "y1": -29.6
+    },
+    {
+     "id": "car-mid-east",
+     "column": "east",
+     "y0": -37.7,
+     "y1": -29.6
+    },
+    {
+     "id": "PL06",
+     "column": "west",
+     "y0": -46.9,
+     "y1": -38.8
+    },
+    {
+     "id": "PL11",
+     "column": "east",
+     "y0": -46.9,
+     "y1": -38.8
+    }
+   ],
+   "eastColumnX": [
+    -68.8,
+    -61.5
+   ],
+   "westColumnX": [
+    -76.2,
+    -68.8
+   ],
+   "note": "East-column cars open east into Lift Lobby 02. Shafts at the north and south ends."
+  },
+  "liftLobby02": {
+   "x0": -60.4,
+   "x1": -42.7,
+   "y0": -51.5,
+   "y1": -6.56,
+   "note": "Opens north into the 2000 mm corridor. Second lift core (PL16) forms its east side."
+  },
+  "liftCore2": {
+   "x0": -42.7,
+   "x1": -34.2,
+   "y0": -46.0,
+   "y1": -16.5
+  },
+  "collabLoungeNorthOfCore1": {
+   "x0": -77.3,
+   "x1": -60.4,
+   "y0": -16.2,
+   "y1": -6.56,
+   "type": "curved-front lounge: 4 armchairs, 2 round tables, low bench"
+  },
+  "collabLoungeSouthOfCorridor": {
+   "x0": -42.7,
+   "x1": -28.8,
+   "y0": -16.0,
+   "y1": -6.56
+  },
+  "southBlock": [
+   {
+    "id": "itStore",
+    "x0": -28.8,
+    "x1": -10.0,
+    "door": [
+     -13.5,
+     -10.4
+    ]
+   },
+   {
+    "id": "adminStore",
+    "x0": -10.0,
+    "x1": 5.0,
+    "door": [
+     1.5,
+     4.6
+    ]
+   },
+   {
+    "id": "lvRoom",
+    "x0": 5.0,
+    "x1": 12.7,
+    "door": [
+     9.6,
+     12.3
+    ]
+   }
+  ],
+  "southBlockNote": "These rooms form the corridor's south wall at y=-6.56 (solid). Doors are flush grey panels.",
+  "northSideRooms": [
+   {
+    "id": "adc04FireDoor",
+    "x0": -43.8,
+    "x1": -38.8
+   },
+   {
+    "id": "adc04Collab",
+    "x0": -38.8,
+    "x1": -29.2
+   },
+   {
+    "id": "adc04Room6pax",
+    "x0": -29.2,
+    "x1": -14.2
+   },
+   {
+    "id": "adc04GlCubicle",
+    "x0": -13.8,
+    "x1": -5.0
+   },
+   {
+    "id": "adc04Acd",
+    "x0": -4.6,
+    "x1": -0.4
+   },
+   {
+    "id": "adc05Room6paxWest",
+    "x0": 0,
+    "x1": 15
+   },
+   {
+    "id": "adc05EntryRecess",
+    "x0": 15,
+    "x1": 20
+   }
+  ],
+  "posterBays": [
+   {
+    "id": "bayA",
+    "wall": "south y=-6.56",
+    "x0": -27.0,
+    "x1": -15.0,
+    "content": "3 framed TCS posters"
+   },
+   {
+    "id": "bayB",
+    "wall": "south y=-6.56",
+    "x0": -9.0,
+    "x1": 0.5,
+    "content": "55 inch screen: TCS, with you for the long run (center) + 1 poster"
+   },
+   {
+    "id": "bayC",
+    "wall": "south y=-6.56",
+    "x0": 5.0,
+    "x1": 9.0,
+    "content": "1 framed poster + Orchard Studio wayfinding arrow"
+   }
+  ],
+  "visitorPath": [
+   [
+    -66,
+    -25
+   ],
+   [
+    -58,
+    -25
+   ],
+   [
+    -51.5,
+    -25
+   ],
+   [
+    -51.5,
+    -3.3
+   ],
+   [
+    17.5,
+    -3.3
+   ],
+   [
+    17.5,
+    2.0
+   ],
+   [
+    17.5,
+    8.0
+   ]
+  ],
+  "fifteenPaxRoom": {
+   "x0": -56.5,
+   "x1": -38.4,
+   "y0": 18.5,
+   "y1": 44.0,
+   "note": "In ADC-04. Replaces the Capsule for formal sessions. Model it as context in the table model; not walkable."
+  }
+ },
+ "doorLabels": [
+  {
+   "door": "lift cars (core #1)",
+   "text": "PL02 / PL07 / PL06 / PL11 / middle pair + Level 09",
+   "where": "above each car door"
+  },
+  {
+   "door": "Lift Lobby 02",
+   "text": "Lift Lobby 02 + Orchard Studio ↑",
+   "where": "wall opposite PL07"
+  },
+  {
+   "door": "IT Store",
+   "text": "IT Store · Staff only",
+   "at": [
+    -11.95,
+    -6.56
+   ]
+  },
+  {
+   "door": "Admin Store",
+   "text": "Admin Store · Staff only",
+   "at": [
+    3.05,
+    -6.56
+   ]
+  },
+  {
+   "door": "LV Room",
+   "text": "LV Room · Staff only",
+   "at": [
+    10.95,
+    -6.56
+   ]
+  },
+  {
+   "door": "ADC-04 ACD",
+   "text": "ADC-04 · Restricted",
+   "at": [
+    -2.5,
+    0
+   ]
+  },
+  {
+   "door": "ADC-04 fire door",
+   "text": "Fire Exit",
+   "at": [
+    -41.3,
+    0
+   ]
+  },
+  {
+   "door": "ADC-05 entry",
+   "text": "Orchard Studio · ADC-05 / Tap watch to enter",
+   "at": [
+    17.5,
+    4
+   ]
+  },
+  {
+   "door": "west 6-pax room",
+   "text": "CONFIG.roomNames[0] (default: Discussion Room A · 6)",
+   "at": [
+    13.0,
+    12
+   ]
+  },
+  {
+   "door": "east 6-pax room",
+   "text": "CONFIG.roomNames[1] (default: Discussion Room B · 6)",
+   "at": [
+    64.15,
+    12
+   ]
+  },
+  {
+   "door": "team door",
+   "text": "Project ODC · Team only",
+   "at": [
+    5.75,
+    17
+   ]
+  },
+  {
+   "door": "ADC-05 fire door",
+   "text": "Fire Exit (green pictogram)",
+   "at": [
+    59.5,
+    4
+   ]
+  },
+  {
+   "door": "Make Studio opening",
+   "text": "Make Studio (vinyl on glass)",
+   "at": [
+    58,
+    35.5
+   ]
+  },
+  {
+   "door": "zone markers",
+   "text": "Window Pause / Memory Corner (small wall markers)",
+   "at": [
+    [
+     62.5,
+     13.5
+    ],
+    [
+     61,
+     59.6
+    ]
+   ]
+  },
+  {
+   "door": "15-pax room (model only)",
+   "text": "15-pax Meeting Room",
+   "where": "ADC-04"
+  }
+ ],
+ "layouts": {
+  "today": {
+   "desks": "all: projectODC + garage + optionalNine_REMOVED + strip_REMOVED (112)",
+   "glass": "none of the new partitions; future-provision line dashed red at x=3",
+   "furniture": [
+    {
+     "id": "glCubicleArun",
+     "x0": 21,
+     "x1": 28,
+     "y0": 1,
+     "y1": 11,
+     "spec": "4.5 ft glass partitions, L-desk, 2 visitor chairs"
+    },
+    {
+     "id": "centreCollabSofa",
+     "x": 38,
+     "y": 2.5,
+     "spec": "3-seat sofa against the south wall"
+    },
+    {
+     "id": "centreCollabCoffeeTable",
+     "x": 38,
+     "y": 6.0
+    },
+    {
+     "id": "centreCollabRoundTable",
+     "x": 43.5,
+     "y": 8.5,
+     "spec": "round table with 4 chairs"
+    },
+    {
+     "id": "glCubiclePrasanna",
+     "x0": 49,
+     "x1": 56,
+     "y0": 1,
+     "y1": 11,
+     "spec": "same as Arun's"
+    }
+   ],
+   "studioFixtures": "none",
+   "summary": "112 desks · 2 GL cubicles · no studio"
+  },
+  "recommended": {
+   "desks": "projectODC (48) + garage (42)",
+   "fixtures": "adc05.fixtures",
+   "zones": "adc05.zones",
+   "summary": "Garage 42 desks · Make Studio 19 × 30 ft · play area about 1,225 sq ft",
+   "default": true
+  },
+  "keep9": {
+   "desks": "projectODC (48) + garage (42) + optionalNine_REMOVED restored (9, chairs W) = 51 in the Garage",
+   "makeStudioGlass": [
+    [
+     [
+      63.7,
+      21
+     ],
+     [
+      63.7,
+      33
+     ]
+    ],
+    [
+     [
+      63.7,
+      38
+     ],
+     [
+      63.7,
+      51
+     ]
+    ]
+   ],
+   "zones": [
+    {
+     "id": "trail",
+     "polygon": [
+      [
+       20,
+       0
+      ],
+      [
+       57,
+       0
+      ],
+      [
+       57,
+       12
+      ],
+      [
+       20,
+       12
+      ]
+     ]
+    },
+    {
+     "id": "windowPause",
+     "polygon": [
+      [
+       62,
+       12
+      ],
+      [
+       77,
+       12
+      ],
+      [
+       77,
+       21
+      ],
+      [
+       71,
+       21
+      ],
+      [
+       71,
+       17
+      ],
+      [
+       67,
+       17
+      ],
+      [
+       67,
+       21
+      ],
+      [
+       64,
+       21
+      ],
+      [
+       64,
+       17
+      ],
+      [
+       62,
+       17
+      ]
+     ]
+    },
+    {
+     "id": "makeStrip",
+     "name": "Make Strip",
+     "polygon": [
+      [
+       64,
+       21
+      ],
+      [
+       77,
+       21
+      ],
+      [
+       77,
+       51
+      ],
+      [
+       64,
+       51
+      ]
+     ]
+    },
+    {
+     "id": "memoryCorner",
+     "polygon": [
+      [
+       64,
+       55
+      ],
+      [
+       69,
+       55
+      ],
+      [
+       69,
+       60
+      ],
+      [
+       64,
+       60
+      ]
+     ]
+    },
+    {
+     "id": "garage",
+     "polygon": [
+      [
+       33,
+       17
+      ],
+      [
+       64,
+       17
+      ],
+      [
+       64,
+       58
+      ],
+      [
+       37,
+       58
+      ],
+      [
+       37,
+       54
+      ],
+      [
+       35,
+       54
+      ],
+      [
+       35,
+       58
+      ],
+      [
+       33,
+       58
+      ]
+     ]
+    }
+   ],
+   "fixtureChanges": {
+    "crescentSofa": "REPLACED by two facing curved benches centred (70.5,30): outerR 4.2, innerR 2.6, spans 125-235 deg and -55-55 deg",
+    "collabBoard": {
+     "x0": 67.5,
+     "x1": 73.5,
+     "y0": 36.4,
+     "y1": 37.4,
+     "facing": "south"
+    },
+    "foosball": {
+     "x0": 69.25,
+     "x1": 71.75,
+     "y0": 42.5,
+     "y1": 47.5
+    },
+    "museumPlinths": {
+     "x0": 64.4,
+     "x1": 66.0,
+     "ys": [
+      22.4,
+      25.0,
+      27.6
+     ]
+    },
+    "selfieDisc": {
+     "x": 66.5,
+     "y": 58.6
+    },
+    "selfieTripod": {
+     "x": 66.5,
+     "y": 55.6
+    },
+    "readNoteStand": {
+     "x": 64.8,
+     "y": 56.0
+    },
+    "slatCeilingCloud": {
+     "x0": 64,
+     "x1": 77,
+     "y0": 23,
+     "y1": 40
+    },
+    "others": "Trail, Window Pause, Garage, landing display, kiosks unchanged"
+   },
+   "summary": "Garage 51 desks · Make strip 13 ft wide · play area about 970 sq ft"
+  },
+  "rejected": {
+   "desks": "projectODC (48) + garage (42)",
+   "glass": "same project split as recommended; NO Make Studio glass at x=58",
+   "zones": [
+    {
+     "id": "makeAtDoor",
+     "name": "Make + Feel at the door",
+     "polygon": [
+      [
+       20,
+       0
+      ],
+      [
+       57,
+       0
+      ],
+      [
+       57,
+       12
+      ],
+      [
+       20,
+       12
+      ]
+     ]
+    },
+    {
+     "id": "kioskStrip",
+     "name": "Kiosks along the windows",
+     "polygon": [
+      [
+       58,
+       21
+      ],
+      [
+       77,
+       21
+      ],
+      [
+       77,
+       51
+      ],
+      [
+       58,
+       51
+      ]
+     ]
+    },
+    {
+     "id": "windowPause",
+     "polygon": [
+      [
+       62,
+       12
+      ],
+      [
+       77,
+       12
+      ],
+      [
+       77,
+       21
+      ],
+      [
+       71,
+       21
+      ],
+      [
+       71,
+       17
+      ],
+      [
+       67,
+       17
+      ],
+      [
+       67,
+       21
+      ],
+      [
+       62,
+       21
+      ]
+     ]
+    },
+    {
+     "id": "memoryCorner",
+     "polygon": [
+      [
+       58,
+       51
+      ],
+      [
+       67,
+       51
+      ],
+      [
+       67,
+       55
+      ],
+      [
+       69,
+       55
+      ],
+      [
+       69,
+       60
+      ],
+      [
+       58,
+       60
+      ]
+     ]
+    },
+    {
+     "id": "garage",
+     "polygon": [
+      [
+       33,
+       17
+      ],
+      [
+       58,
+       17
+      ],
+      [
+       58,
+       58
+      ],
+      [
+       37,
+       58
+      ],
+      [
+       37,
+       54
+      ],
+      [
+       35,
+       54
+      ],
+      [
+       35,
+       58
+      ],
+      [
+       33,
+       58
+      ]
+     ]
+    }
+   ],
+   "fixtures": {
+    "crescentSofa": {
+     "center": [
+      47,
+      8.2
+     ],
+     "outerR": 6.0,
+     "innerR": 3.6,
+     "startDeg": 198,
+     "endDeg": 342
+    },
+    "collabBoard": {
+     "x0": 43.5,
+     "x1": 50.5,
+     "y0": 10.3,
+     "y1": 11.3,
+     "facing": "south"
+    },
+    "museumPlinths": {
+     "alongSouthWall": true,
+     "x0": 22,
+     "x1": 32,
+     "y0": 0.6,
+     "y1": 2.2,
+     "count": 5
+    },
+    "foosball": {
+     "x0": 23,
+     "x1": 28,
+     "y0": 6.5,
+     "y1": 9.0
+    },
+    "kiosks": [
+     {
+      "id": "K1",
+      "x0": 75.0,
+      "x1": 76.5,
+      "y": 24
+     },
+     {
+      "id": "K2",
+      "x0": 75.0,
+      "x1": 76.5,
+      "y": 30
+     },
+     {
+      "id": "K3",
+      "x0": 75.0,
+      "x1": 76.5,
+      "y": 36
+     },
+     {
+      "id": "K4",
+      "x0": 75.0,
+      "x1": 76.5,
+      "y": 42
+     }
+    ],
+    "kioskFacing": "west (backs to the glass)",
+    "landingDisplay": {
+     "wall": "north face of room6paxEast, y=12",
+     "x0": 67,
+     "x1": 76,
+     "widthFt": 9
+    },
+    "memoryCorner": "as recommended",
+    "noAppGalleria": true
+   },
+   "rejectionCard": "No daylight for the Make zone · loudest zone at the entry · kiosks backed onto the windows",
+   "summary": "Rejected: Make + Feel at the door"
+  }
+ }
+}

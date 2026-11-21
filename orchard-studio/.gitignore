@@ -1,0 +1,10 @@
+node_modules
+dist
+qa/latest
+test-results
+playwright-report
+.vite
+*.log
+public/hdri/*.hdr
+public/hdri/*.exr
+assets-raw

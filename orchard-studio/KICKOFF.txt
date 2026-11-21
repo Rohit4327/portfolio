@@ -1,0 +1,8 @@
+Read MASTER_PROMPT.md completely, then CLAUDE.md, then data/geometry.json, and look at all five images in reference/.
+
+Then:
+1. Write docs/PLAN.md (architecture, modules, risks, phase checklist from Section 20) and show me a 10-line summary of it.
+2. Start Phase 0 and continue through Phase 1 on your own.
+3. Stop at CHECKPOINT 1 exactly as Section 20 describes: show me the plan-check screenshots (geometry over the floor plan underlay), three walkthrough blockout screenshots and the test results.
+
+Rules: follow Section 0A for how you work, run npm run verify before calling any phase done, read every screenshot you take, commit at the end of each phase, and log every assumption in DECISIONS.md. Ask me only if a wrong guess would cost more than an hour of rework.
