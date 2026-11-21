@@ -7,7 +7,11 @@ import type { LayoutId } from '../config';
 import { box, group, instancePrototype, matrixFt, tag } from '../core/build';
 import { M } from '../core/materials';
 import { FT } from '../data/geometry';
-import { chairPos, DESKS, type Desk, type Side } from '../data/plan';
+import { chairPos, DESKS, sideVec, type Desk, type Side } from '../data/plan';
+import { screenMaterial } from '../core/materials';
+import { canvasTexture } from '../core/text';
+import { desktopArt } from '../core/art';
+import { buildDesk, buildDeskScreen, buildFlexiArm, buildLabRack, buildLaptop, buildMonitor, buildSucculent, buildTaskChair } from '../furniture/workstation';
 
 export interface PrefixGroup {
   group: THREE.Group;
@@ -82,8 +86,48 @@ export function buildWorkfloor(blockout: boolean): Workfloor {
   return buildWorkfloorFrom(detailedProtos());
 }
 
-/** Replaced in Phase 3 by the detailed furniture set (see zones/workfloorDetail.ts). */
-let detailedProtos: () => WorkfloorProtos = () => ({ desk: blockDesk(), chair: blockChair() });
-export function setDetailedProtos(f: () => WorkfloorProtos): void {
-  detailedProtos = f;
+let monitorMat: THREE.MeshStandardMaterial | null = null;
+/** One shared screen material for every desk monitor, with a privacy-filter falloff at oblique angles (8.2). */
+export function monitorMaterial(): THREE.MeshStandardMaterial {
+  if (monitorMat) return monitorMat;
+  const m = screenMaterial(canvasTexture(512, 288, desktopArt), 1.3);
+  m.name = 'monitorScreen';
+  m.onBeforeCompile = (sh) => {
+    sh.fragmentShader = sh.fragmentShader.replace(
+      '#include <emissivemap_fragment>',
+      `#include <emissivemap_fragment>
+       float privacy = smoothstep(0.42, 0.86, abs(dot(normalize(vViewPosition), normalize(vNormal))));
+       totalEmissiveRadiance *= mix(0.06, 1.0, privacy);`,
+    );
+  };
+  return (monitorMat = m);
+}
+
+const along: Record<Side, [number, number]> = { E: [0, 1], W: [0, -1], N: [-1, 0], S: [1, 0] };
+const DESK_H_FT = DESK_TOP_M / FT;
+
+function detailedProtos(): WorkfloorProtos {
+  const mat = monitorMaterial();
+  const isWork = (d: Desk) => d.set !== 'projectODC';
+  return {
+    desk: buildDesk(),
+    chair: buildTaskChair(),
+    extras(add) {
+      const at = (d: Desk, back: number, side: number, facing = sideDeg[d.side], h = DESK_H_FT) => {
+        const [cx, cy] = deskCentre(d);
+        const sv = sideVec[d.side];
+        const al = along[d.side];
+        return matrixFt(cx - sv[0] * back + al[0] * side, cy - sv[1] * back + al[1] * side, facing, h);
+      };
+      const all = DESKS.map((d, i) => ({ d, i }));
+      add('monitors', buildMonitor(mat), all.map(({ d, i }) => ({ desk: i, m: at(d, 0.45, 0) })));
+      add('deskScreens', buildDeskScreen(), all.map(({ d, i }) => ({ desk: i, m: at(d, 0.97, 0, sideDeg[d.side], 0) })));
+      add('laptops', buildLaptop(mat), all.filter(({ d }) => isWork(d) && d.index % 3 === 0).map(({ d, i }) => ({ desk: i, m: at(d, -0.25, 1.15, sideDeg[d.side] + 18) })));
+      add('succulents', buildSucculent(), all.filter(({ d }) => d.set !== 'strip' && d.side === 'E' && d.index % 4 === 1).map(({ d, i }) => ({ desk: i, m: at(d, 0.7, -1.6) })));
+      // Flexi displays at each cluster end, facing the central aisle (y 33 to 38); lab racks on the aisle-end desks.
+      const ends = all.filter(({ d }) => isWork(d) && d.w === 2 && (d.y === 29 || d.y === 38));
+      add('flexi', buildFlexiArm(mat), ends.filter(({ d }) => d.side === 'E' || d.set === 'nine').map(({ d, i }) => ({ desk: i, m: matrixFt(d.set === 'nine' ? d.x + 1 : d.x === 33 ? 33.5 : d.x, d.y === 29 ? 32.85 : 38.15, d.y === 29 ? 90 : 270, DESK_H_FT) })));
+      add('labRacks', buildLabRack(), ends.filter(({ d }) => d.side === 'W' && d.set === 'garage').map(({ d, i }) => ({ desk: i, m: matrixFt(d.x + 0.9, d.y === 29 ? 32.4 : 38.6, 180, DESK_H_FT) })));
+    },
+  };
 }

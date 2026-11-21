@@ -2,47 +2,58 @@
 import { useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Bloom, EffectComposer, N8AO, SMAA, ToneMapping } from '@react-three/postprocessing';
-import { ToneMappingMode } from 'postprocessing';
+import { ToneMappingMode, type EffectComposer as ComposerImpl, type Pass } from 'postprocessing';
 import { TIERS } from './quality';
 import { useStudio } from '../state/store';
 import { rt } from '../state/runtime';
 import { diveScale } from '../scenes/director';
 
-/** AO radius in metres at full scale; at 1:40 this becomes 0.025 (Section 4.4). */
-const AO_RADIUS_FULL = 1.0;
+/** AO radius in metres at full scale; at 1:40 this becomes 0.02 (Section 4.4). */
+const AO_RADIUS_FULL = 0.8;
 const AO_FALLOFF_FULL = 1.2;
 
-interface N8Config {
-  configuration: { aoRadius: number; distanceFalloff: number };
+interface N8Pass extends Pass {
+  configuration: { aoRadius: number; distanceFalloff: number; transparencyAware: boolean };
+  autoDetectTransparency: boolean;
 }
 
 export function PostFX() {
   const tier = useStudio((s) => s.tier);
   const spec = TIERS[tier];
-  const ao = useRef<N8Config>(null);
+  const composer = useRef<ComposerImpl>(null);
   useFrame(() => {
+    // The AO radius follows the model's scale: tiny on the table, room-sized in the walkthrough, continuous in the dive.
+    const ao = composer.current?.passes.find((p) => 'configuration' in p) as N8Pass | undefined;
+    if (!ao) return;
     const s = diveScale(rt.dive);
-    if (ao.current && Math.abs(ao.current.configuration.aoRadius - AO_RADIUS_FULL * s) > 1e-5) {
-      ao.current.configuration.aoRadius = AO_RADIUS_FULL * s;
-      ao.current.configuration.distanceFalloff = AO_FALLOFF_FULL * s;
+    if (Math.abs(ao.configuration.aoRadius - AO_RADIUS_FULL * s) > 1e-5) {
+      ao.configuration.aoRadius = AO_RADIUS_FULL * s;
+      ao.configuration.distanceFalloff = AO_FALLOFF_FULL * s;
+    }
+    // N8AO's transparency-aware mode re-draws every transparent mesh each frame (about 50 extra draw calls here).
+    // Glass does not write depth, so AO behind it is already correct without that pass.
+    if (ao.autoDetectTransparency || ao.configuration.transparencyAware) {
+      ao.autoDetectTransparency = false;
+      ao.configuration.transparencyAware = false;
+      ao.autoDetectTransparency = false;
     }
   });
   useEffect(() => {
     rt.invalidate();
   }, [tier]);
-  const samples = spec.ao === 'high' ? 16 : spec.ao === 'half' ? 8 : 6;
+  // Section 12 asks for 8 samples at half resolution on High; 12 hides mottling on large white walls at little cost.
+  const samples = spec.ao === 'high' ? 16 : spec.ao === 'half' ? 12 : 6;
   return (
-    <EffectComposer multisampling={0} enableNormalPass={false}>
+    <EffectComposer ref={composer} multisampling={0} enableNormalPass={false}>
       {spec.ao !== 'off' ? (
         <N8AO
-          ref={ao as never}
           halfRes={spec.ao !== 'high'}
           aoSamples={samples}
           denoiseSamples={spec.ao === 'low' ? 4 : 8}
-          denoiseRadius={12}
+          denoiseRadius={16}
           aoRadius={AO_RADIUS_FULL * diveScale(rt.dive)}
           distanceFalloff={AO_FALLOFF_FULL * diveScale(rt.dive)}
-          intensity={2.6}
+          intensity={3.4}
           color="#1b1a18"
         />
       ) : (

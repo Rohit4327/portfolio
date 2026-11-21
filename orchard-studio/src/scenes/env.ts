@@ -49,7 +49,7 @@ export function skyMaterial(sunDir: THREE.Vector3, forEnv = false): THREE.Shader
     depthWrite: false,
     fog: false,
     toneMapped: !forEnv,
-    uniforms: { sunDir: { value: sunDir.clone().normalize() }, gain: { value: forEnv ? 1.0 : 1.0 } },
+    uniforms: { sunDir: { value: sunDir.clone().normalize() }, gain: { value: forEnv ? 0.35 : 1.0 } },
     vertexShader: `varying vec3 vDir; void main(){ vDir = normalize(position); vec4 p = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * p; gl_Position.z = gl_Position.w * 0.99999; }`,
     fragmentShader: `
       varying vec3 vDir; uniform vec3 sunDir; uniform float gain;
@@ -74,7 +74,10 @@ export function skyMaterial(sunDir: THREE.Vector3, forEnv = false): THREE.Shader
         col += vec3(1.0, 0.93, 0.80) * (pow(sd, 350.0) * 6.0 + pow(sd, 12.0) * 0.22);
         // ground bounce below the horizon
         col = mix(col, vec3(0.42, 0.42, 0.40), smoothstep(0.0, -0.08, d.y));
-        gl_FragColor = vec4(col * gain, 1.0);
+        // The lighting version is pulled toward neutral so interiors do not pick up a blue cast.
+        float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+        col = mix(col, vec3(lum) * vec3(1.03, 1.0, 0.96), 1.0 - gain);
+        gl_FragColor = vec4(col, 1.0);
         #include <colorspace_fragment>
       }`,
   });

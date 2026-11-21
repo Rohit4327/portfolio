@@ -180,7 +180,7 @@ export function carpetTextures() {
       const tile = (Math.floor(u * 2) + Math.floor(v * 2)) % 2;
       const n = h(u, v);
       const seam = Math.abs(((u * 2) % 1) - 0.5) > 0.495 || Math.abs(((v * 2) % 1) - 0.5) > 0.495 ? 0.9 : 1;
-      const base = (150 + n * 34 + tile * 5) * seam;
+      const base = (124 + n * 34 + tile * 5) * seam;
       return [base, base - 5, base - 13];
     },
     true,
@@ -264,18 +264,17 @@ export function leafTexture(tone: 'ficus' | 'olive' | 'mixed') {
 
 /** Curtain-wall facade for the procedural city: glass grid, tileable. Emissive mask in a second texture. */
 export function facadeTextures() {
+  // 8 x 8 window bays per tile: pale mullion grid over softly varied glass. Low contrast so the city stays calm.
   const map = make(
     256,
-    (u, v, x, y) => {
+    (u, v) => {
       const cu = (u * 8) % 1;
       const cv = (v * 8) % 1;
-      const frame = cu < 0.08 || cv < 0.14;
+      const frame = cu < 0.1 || cv < 0.2;
       const k = hash(Math.floor(u * 8), Math.floor(v * 8), 3);
-      void x;
-      void y;
-      if (frame) return [176, 178, 180];
-      const g = 92 + k * 46;
-      return [g * 0.86, g * 0.96, g * 1.08];
+      if (frame) return [206, 205, 201];
+      const g = 152 + k * 22;
+      return [g * 0.93, g * 0.98, g * 1.04];
     },
     true,
     1,
@@ -285,7 +284,7 @@ export function facadeTextures() {
     (u, v) => {
       const cu = (u * 8) % 1;
       const cv = (v * 8) % 1;
-      const lit = hash(Math.floor(u * 8), Math.floor(v * 8), 9) > 0.7 && cu > 0.1 && cv > 0.18;
+      const lit = hash(Math.floor(u * 8), Math.floor(v * 8), 9) > 0.8 && cu > 0.12 && cv > 0.24;
       return lit ? [255, 236, 200] : [0, 0, 0];
     },
     true,

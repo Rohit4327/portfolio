@@ -112,8 +112,8 @@ export interface MergeOptions {
   receiveShadow?: boolean;
 }
 
-const isDynamic = (o: THREE.Object3D): boolean => {
-  for (let p: THREE.Object3D | null = o; p; p = p.parent) if (p.userData.dynamic) return true;
+const isDynamic = (o: THREE.Object3D, root: THREE.Object3D): boolean => {
+  for (let p: THREE.Object3D | null = o; p && p !== root; p = p.parent) if (p.userData.dynamic) return true;
   return false;
 };
 
@@ -130,7 +130,7 @@ export function mergeStatic(root: THREE.Object3D, o: MergeOptions = {}): THREE.O
   root.traverse((n) => {
     const mesh = n as THREE.Mesh;
     if (!mesh.isMesh || (mesh as unknown as THREE.InstancedMesh).isInstancedMesh || Array.isArray(mesh.material)) return;
-    if (isDynamic(mesh) || mesh.userData.noMerge || !mesh.visible) return;
+    if (isDynamic(mesh, root) || mesh.userData.noMerge || !mesh.visible) return;
     let g = mesh.geometry.clone();
     _m.multiplyMatrices(inv, mesh.matrixWorld);
     g.applyMatrix4(_m);
@@ -192,7 +192,9 @@ export function instancePrototype(proto: THREE.Object3D, matrices: readonly THRE
     const opaque = !NO_SHADOW.has(mat) && !mat.transparent;
     inst.castShadow = (o.castShadow ?? true) && opaque;
     inst.receiveShadow = (o.receiveShadow ?? true) && !NO_SHADOW.has(mat);
-    inst.frustumCulled = false; // instances span the floor; culling by the prototype's bounds would be wrong
+    // Cull by the bounds of all instances (a superset when a layout draws a prefix).
+    inst.computeBoundingSphere();
+    inst.computeBoundingBox();
     inst.userData.total = matrices.length;
     out.add(inst);
   }

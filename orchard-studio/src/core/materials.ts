@@ -62,7 +62,7 @@ export const M = {
   // Textiles and soft things
   fabricGrey: std({ color: 0xb4aca0, map: fabric.map, normalMap: fabric.normalMap, roughness: 1 }),
   fabricWhite: std({ color: 0xece9e2, map: fabric.map, normalMap: fabric.normalMap, roughness: 1 }),
-  rug: std({ color: 0xa9a297, map: fabric.map, normalMap: fabric.normalMap, roughness: 1 }),
+  rug: std({ color: 0xc2b9ab, map: fabric.map, normalMap: fabric.normalMap, roughness: 1 }),
   rugLight: std({ color: 0xcbc6bc, map: fabric.map, normalMap: fabric.normalMap, roughness: 1 }),
   felt: std({ color: 0x8d8982, roughness: 1 }),
   charcoal: std({ color: 0x2c2d30, roughness: 0.7 }),
@@ -106,7 +106,7 @@ export const M = {
   contextFloor: std({ color: 0xe6e8ea, roughness: 0.95 }),
   engrave: std({ color: 0xbfbfbd, roughness: 0.9 }),
   // City
-  facade: std({ map: facade.map, emissiveMap: facade.emissiveMap, emissive: 0xffffff, emissiveIntensity: 0.05, roughness: 0.35, metalness: 0.35 }),
+  facade: std({ map: facade.map, emissiveMap: facade.emissiveMap, emissive: 0xffffff, emissiveIntensity: 0.04, roughness: 0.5, metalness: 0.1 }),
   cityConcrete: std({ color: 0xb9b6b0, roughness: 0.95 }),
   cityRoad: std({ color: 0x55575a, roughness: 0.95 }),
   cityTree: std({ color: 0x4d6b45, roughness: 1 }),
@@ -122,7 +122,7 @@ export const NO_SHADOW = new Set<THREE.Material>([
 ]);
 
 /** An emissive screen showing a texture. Each screen with unique artwork owns one of these. */
-export function screenMaterial(tex: THREE.Texture | null, intensity = 1): THREE.MeshStandardMaterial {
+export function screenMaterial(tex: THREE.Texture | null, intensity = 1.55): THREE.MeshStandardMaterial {
   const m = new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: intensity, roughness: 0.25, metalness: 0 });
   m.name = 'screen';
   m.userData.screen = true;
