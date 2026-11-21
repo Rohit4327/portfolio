@@ -1,5 +1,7 @@
 {
- "media": [],
+ "media": [
+  "manifest.json"
+ ],
  "audio": [],
  "hdri": [],
  "textures": [],

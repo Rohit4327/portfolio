@@ -37,9 +37,11 @@
 ## Phase checklist (Section 20)
 - [x] **0 Bootstrap**: repo, tooling, scripts, plan, `window.__studio`, debug overlays, geometry check
 - [x] **1 Blockout**: shell, glass, pillars, doors, rooms, lift core, lobby, corridor, block desks for four layouts, collision, nav grid, walk controls, `?debug=plan`
-- [ ] **2 Look and performance foundation**: materials, colour management, sun and interior light, shadow policy, post, tiers, instancing, perf baseline
-- [ ] **3 Layouts, zones, components**: Sections 5, 7, 8 with interactions; Today and Rejected furniture
-- [ ] **4 Door labels, plants, sound**: Sections 9, 10, 16
-- [ ] **5 Presentation mode and the dive**: Sections 4 and 6
-- [ ] **6 Tour, minimap, dock, toasts**: Sections 13 and 14
-- [ ] **7 Polish**: city, path-traced stills, docs, final verify
+- [x] **2 Look and performance foundation**: materials, colour management, sun and interior light, shadow policy, post, tiers, instancing, perf baseline
+- [x] **3 Layouts, zones, components**: Sections 5, 7, 8 with interactions; Today and Rejected furniture
+- [x] **4 Door labels, plants, sound**: Sections 9, 10, 16
+- [x] **5 Presentation mode and the dive**: Sections 4 and 6
+- [x] **6 Tour, minimap, dock, toasts**: Sections 13 and 14
+- [x] **7 Polish**: city, path-traced stills, docs, final verify
+
+Phases 2 to 7 were built in one pass and verified together (owner instruction: no checkpoint stops). What was not built or could not be verified is listed in `qa/phase-N/REVIEW.md` and `DECISIONS.md` D-21.

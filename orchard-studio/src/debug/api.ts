@@ -8,6 +8,7 @@ import { doorsOpenAt, tourStops } from '../systems/tourStops';
 import { setDoor } from '../scenes/director';
 import { teleport } from '../scenes/walkthrough/WalkControls';
 import { controlsRef } from '../scenes/Stage';
+import { audio } from '../audio/engine';
 
 export interface CameraPose {
   /** Presentation: world metres. Walkthrough: plan feet + yaw/pitch degrees. */
@@ -19,6 +20,35 @@ export interface CameraPose {
 const raf = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
 
 export const extensions: Record<string, unknown> = {};
+
+/** Visible draw items per part, for chasing draw calls (debug only). */
+extensions.partsReport = () => {
+  const out: Record<string, string> = {};
+  const fr = new THREE.Frustum();
+  const cam = rt.camera;
+  if (cam) fr.setFromProjectionMatrix(new THREE.Matrix4().multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse));
+  for (const p of rt.studio?.parts ?? []) {
+    if (!p.group.visible) continue;
+    let n = 0;
+    let inView = 0;
+    let trans = 0;
+    p.group.traverseVisible((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      n++;
+      if (!m.frustumCulled || fr.intersectsObject(m)) {
+        inView++;
+        if (((m.material as THREE.MeshPhysicalMaterial).transmission ?? 0) > 0) trans++;
+      }
+    });
+    out[p.name] = `${inView}/${n}${trans ? ` T${trans}` : ''}`;
+  }
+  return out;
+};
+
+/** Audio state and the engine's event log (unlock, play, bed, duck, mute): how sound is verified without ears. */
+extensions.audio = () => ({ state: audio.getState(), events: audio.events.slice(-60) });
+extensions.audioDuck = (on: boolean) => audio.duck(on);
 
 export const api = {
   setLayout(id: LayoutId) {
@@ -48,7 +78,7 @@ export const api = {
     const pitch = s.lookH !== undefined ? (Math.atan2(s.lookH * 0.3048 - 1.6, dist) * 180) / Math.PI : 0;
     teleport(s.cam[0], s.cam[1], yaw, pitch);
     rt.shadowDirty = true;
-    touch(16);
+    touch(6);
     return s.name;
   },
   setCamera(pose: CameraPose) {
@@ -71,7 +101,7 @@ export const api = {
   },
   getRendererInfo() {
     const i = rt.gl?.info;
-    return i ? { calls: i.render.calls, triangles: i.render.triangles, textures: i.memory.textures, geometries: i.memory.geometries, programs: i.programs?.length ?? 0 } : null;
+    return i ? { calls: rt.info.calls, triangles: rt.info.triangles, textures: i.memory.textures, geometries: i.memory.geometries, programs: i.programs?.length ?? 0 } : null;
   },
   getFps() {
     const f = rt.frameMs;
@@ -92,7 +122,7 @@ export const api = {
     const t0 = performance.now();
     while (!useStudio.getState().loading.done && performance.now() - t0 < 120000) await raf();
     touch(extraFrames);
-    while ((rt.frame < rt.dirtyUntilFrame || rt.shadowDirty || rt.pathTracing) && performance.now() - t0 < 120000) {
+    while ((rt.frame < rt.dirtyUntilFrame || rt.shadowDirty || (rt.pathTracing && !rt.pathTracingDone)) && performance.now() - t0 < 120000) {
       rt.invalidate();
       await raf();
     }

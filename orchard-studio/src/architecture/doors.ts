@@ -84,7 +84,12 @@ function slideGlass(d: Door): DoorRig {
   const leaves = [-1, 1].map((sgn) => {
     const holder = new THREE.Group();
     const leaf = box(M.glassDoor, (w / 2) * FT, d.h * FT, 0.012);
-    leaf.userData.transmissive = true;
+    const far = box(M.glassClear, (w / 2) * FT, d.h * FT, 0.012);
+    leaf.userData.noMerge = far.userData.noMerge = true;
+    leaf.userData.transmissiveAlt = far;
+    leaf.userData.transmissiveRange = 9;
+    far.visible = false;
+    holder.add(far);
     const rail = box(M.aluminium, (w / 2) * FT, 0.05, 0.03, 0, (d.h / 2) * FT - 0.025, 0);
     const shoe = box(M.aluminium, (w / 2) * FT, 0.04, 0.03, 0, -(d.h / 2) * FT + 0.02, 0);
     const pull = handle(1.4);

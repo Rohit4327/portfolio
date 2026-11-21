@@ -21,6 +21,6 @@ if (js) {
   await page.evaluate(() => window.__studio.settle());
   lap('js+settle');
 }
-await page.screenshot({ path: out });
+await page.screenshot({ path: out, timeout: 240000 });
 lap('shot');
 await browser.close();

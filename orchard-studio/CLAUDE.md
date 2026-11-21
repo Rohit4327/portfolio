@@ -25,5 +25,8 @@ Full spec: `MASTER_PROMPT.md`. Geometry source of truth: `data/geometry.json` (p
 - Debug: `?debug=1` (perf overlay), `?debug=plan` (ortho plan camera + floor plan underlay at 45.26 px/ft, origin px 4299,2889)
 
 ## Status (keep updated)
-- Current phase: 0 (not started)
-- Open questions: room names (default Discussion Room A / B), music track (off until supplied), window orientation (assumed east)
+- Project root is `orchard-studio/` inside the owner's portfolio repo (do not touch the site files above it).
+- Phases 0 and 1 verified and committed. Phases 2 to 7 built in one pass at the owner's request (no checkpoint stops); see qa/phase-N/REVIEW.md for what was and was not verified.
+- Build environment has no GPU (software WebGL: seconds per frame), no Poly Haven access, no toktx, no Blender. Perf numbers from here are not representative.
+- For fast local iteration use `?quality=low` or `&lights=0`; `tools/shot.mjs` and `tools/probe.mjs` take ad-hoc screenshots and evaluate `window.__studio` calls.
+- Open questions for the owner: DECISIONS.md D-07 (kiosk K1 on the sightline), D-17 (reader position), D-19 (framing), room names, music track, window orientation (assumed east).

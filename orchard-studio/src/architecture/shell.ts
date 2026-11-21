@@ -83,7 +83,19 @@ export function buildGlassPane(gl: Glass): THREE.Group {
       break;
     case 'frosted': {
       if (gl.transmission) {
-        g.add(full(M.glassPrism));
+        // Three panes with their own bounds, so the costly transmission pass only runs when one is in view.
+        const n = 3;
+        for (let i = 0; i < n; i++) {
+          const [a, b] = sub((len * i) / n + (i ? 0.01 : 0), (len * (i + 1)) / n - (i < n - 1 ? 0.01 : 0));
+          const pane = segBox(M.glassPrism, a, b, GLASS_T, 0, gl.h0, gl.h1);
+          const far = segBox(M.glassFrosted, a, b, GLASS_T * 1.2, 0, gl.h0, gl.h1);
+          pane.userData.noMerge = far.userData.noMerge = true;
+          pane.userData.transmissiveAlt = far;
+          pane.userData.transmissiveRange = 5.0;
+          pane.userData.transmissiveRef = [15, 10];
+          far.visible = false;
+          g.add(pane, far);
+        }
         break;
       }
       g.add(full(M.glassClear));
