@@ -1,0 +1,138 @@
+{
+ "at": "2026-11-21T17:29:11.264Z",
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+ "representative": false,
+ "note": "NOT REPRESENTATIVE: software WebGL (no GPU in this environment). Run on the target Mac: STUDIO_GPU=1 npm run perf",
+ "sampleSeconds": 10,
+ "targets": {
+  "presentationFps": 60,
+  "walkthroughFps": 55,
+  "layoutSwitchMs": 150,
+  "drawCallsPresentation": 200,
+  "drawCallsWalkthrough": 300,
+  "triangles": 1500000
+ },
+ "layoutSwitchMs": [
+  21.8,
+  2057.7,
+  1887.7,
+  1297.2,
+  1292.2
+ ],
+ "results": [
+  {
+   "name": "presentation-idle",
+   "rafFpsMean": 60.1,
+   "rafFpsP5": 59.9,
+   "rafFrameMsP95": 16.7,
+   "rendered": {
+    "fps": 0,
+    "frames": 0
+   },
+   "info": {
+    "calls": 1,
+    "triangles": 1,
+    "textures": 36,
+    "geometries": 71,
+    "programs": 30
+   },
+   "longTasks": {
+    "count": 0,
+    "maxMs": 0
+   }
+  },
+  {
+   "name": "presentation-orbit",
+   "rafFpsMean": 60.1,
+   "rafFpsP5": 59.5,
+   "rafFrameMsP95": 16.8,
+   "rendered": {
+    "fps": 0,
+    "frames": 0
+   },
+   "info": {
+    "calls": 1,
+    "triangles": 1,
+    "textures": 36,
+    "geometries": 71,
+    "programs": 30
+   },
+   "longTasks": {
+    "count": 0,
+    "maxMs": 0
+   }
+  },
+  {
+   "name": "walkthrough-stop-6",
+   "rafFpsMean": 0.5,
+   "rafFpsP5": 0.4,
+   "rafFrameMsP95": 2616.5,
+   "rendered": {
+    "fps": 0.38436111495471953,
+    "frames": 5,
+    "frameMsMean": 2601.7200000000184,
+    "frameMsP95": 2655.399999999907,
+    "fpsP5": 0.376591097386471
+   },
+   "info": {
+    "calls": 1,
+    "triangles": 1,
+    "textures": 39,
+    "geometries": 88,
+    "programs": 47
+   },
+   "longTasks": {
+    "count": 4,
+    "maxMs": 2654
+   }
+  },
+  {
+   "name": "walkthrough-stop-14",
+   "rafFpsMean": 0.6,
+   "rafFpsP5": 0.5,
+   "rafFrameMsP95": 1916.6,
+   "rendered": {
+    "fps": 0.5439047700448175,
+    "frames": 7,
+    "frameMsMean": 1838.5571428571961,
+    "frameMsP95": 1909.7000000001863,
+    "fpsP5": 0.5236424569303568
+   },
+   "info": {
+    "calls": 1,
+    "triangles": 1,
+    "textures": 39,
+    "geometries": 88,
+    "programs": 47
+   },
+   "longTasks": {
+    "count": 6,
+    "maxMs": 1909
+   }
+  },
+  {
+   "name": "walkthrough-stop-19",
+   "rafFpsMean": 0.9,
+   "rafFpsP5": 0.7,
+   "rafFrameMsP95": 1349.9,
+   "rendered": {
+    "fps": 0.7952855472757141,
+    "frames": 10,
+    "frameMsMean": 1257.4100000000558,
+    "frameMsP95": 1363,
+    "fpsP5": 0.7336757153338225
+   },
+   "info": {
+    "calls": 1,
+    "triangles": 1,
+    "textures": 39,
+    "geometries": 88,
+    "programs": 47
+   },
+   "longTasks": {
+    "count": 10,
+    "maxMs": 1362
+   }
+  }
+ ]
+}
