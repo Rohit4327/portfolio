@@ -1,0 +1,71 @@
+{
+  "brandName": "Orchard Studio",
+  "roomNames": ["Discussion Room A · 6", "Discussion Room B · 6"],
+  "welcomeLoop": "media/welcome.mp4",
+  "corridorPosters": [
+    { "bay": "bayA", "items": ["media/tcs-poster-1.jpg", "media/tcs-poster-2.jpg", "media/tcs-poster-3.jpg"] },
+    { "bay": "bayB", "screen": "media/tcs-long-run.mp4", "items": ["media/tcs-poster-4.jpg"] },
+    { "bay": "bayC", "items": ["media/tcs-poster-5.jpg"] }
+  ],
+  "prism": "media/prism.jpg",
+  "kiosks": [
+    { "id": "K1", "title": "Tata", "pages": ["media/k1-1.jpg", "media/k1-2.jpg", "media/k1-3.jpg"] },
+    { "id": "K2", "title": "TCS", "pages": ["media/k2-1.jpg", "media/k2-2.jpg", "media/k2-3.jpg", "media/k2-4.jpg"] },
+    { "id": "K3", "title": "TCS and Orchard, West Coast", "pages": ["media/k3-1.jpg", "media/k3-2.jpg", "media/k3-3.jpg"] },
+    { "id": "K4", "title": "Pollinator", "pages": ["media/k4-1.jpg", "media/k4-2.jpg", "media/k4-3.jpg", "media/k4-4.jpg", "media/k4-5.jpg"] }
+  ],
+  "kioskProfiles": { "newManager": ["K3", "K2", "K1", "K4"], "coe": ["K4", "K2", "K3", "K1"] },
+  "journey": {
+    "chapters": ["Discover", "Design", "Build", "Connect", "Evolve"],
+    "milestones": [
+      { "year": "2001", "label": "Placeholder milestone" },
+      { "year": "2008", "label": "Placeholder milestone" },
+      { "year": "2015", "label": "Placeholder milestone" },
+      { "year": "2021", "label": "Placeholder milestone" },
+      { "year": "2026", "label": "Placeholder milestone" }
+    ]
+  },
+  "fivePoint": [
+    { "level": "L1", "name": "Placeholder level one", "text": "One line describing level one." },
+    { "level": "L2", "name": "Placeholder level two", "text": "One line describing level two." },
+    { "level": "L3", "name": "Placeholder level three", "text": "One line describing level three." },
+    { "level": "L4", "name": "Placeholder level four", "text": "One line describing level four." },
+    { "level": "L5", "name": "Placeholder level five", "text": "One line describing level five." }
+  ],
+  "appGalleria": [
+    { "name": "App 1", "screens": ["media/app1-1.png", "media/app1-2.png", "media/app1-3.png"], "url": "https://example.com", "tags": ["retail"] },
+    { "name": "App 2", "screens": ["media/app2-1.png", "media/app2-2.png", "media/app2-3.png"], "url": "https://example.com", "tags": ["retail", "payments"] },
+    { "name": "App 3", "screens": ["media/app3-1.png", "media/app3-2.png", "media/app3-3.png"], "url": "https://example.com", "tags": ["field"] },
+    { "name": "App 4", "screens": ["media/app4-1.png", "media/app4-2.png", "media/app4-3.png"], "url": "https://example.com", "tags": ["health"] },
+    { "name": "App 5", "screens": ["media/app5-1.png", "media/app5-2.png", "media/app5-3.png"], "url": "https://example.com", "tags": ["retail", "store"] },
+    { "name": "App 6", "screens": ["media/app6-1.png", "media/app6-2.png", "media/app6-3.png"], "url": "https://example.com", "tags": ["support"] },
+    { "name": "App 7", "screens": ["media/app7-1.png", "media/app7-2.png", "media/app7-3.png"], "url": "https://example.com", "tags": ["logistics"] }
+  ],
+  "headsetApps": [
+    { "name": "Tile 1", "media": "media/vr-1.jpg" },
+    { "name": "Tile 2", "media": "media/vr-2.jpg" },
+    { "name": "Tile 3", "media": "media/vr-3.jpg" },
+    { "name": "Tile 4", "media": "media/vr-4.jpg" },
+    { "name": "Tile 5", "media": "media/vr-5.jpg" },
+    { "name": "Tile 6", "media": "media/vr-6.jpg" }
+  ],
+  "museum": [
+    { "title": "Early desktop", "year": "1977", "text": "Placeholder line about the first desktops." },
+    { "title": "Compact all-in-one", "year": "1984", "text": "Placeholder line about the compact all-in-one." },
+    { "title": "Translucent all-in-one", "year": "1998", "text": "Placeholder line about colour and translucency." },
+    { "title": "Pocket music player", "year": "2001", "text": "Placeholder line about the click wheel." },
+    { "title": "Touchscreen phone", "year": "2007", "text": "Placeholder line about the first touchscreen phone." },
+    { "title": "Tablet", "year": "2010", "text": "Placeholder line about the first tablet." },
+    { "title": "Smartwatch", "year": "2015", "text": "Placeholder line about the smartwatch." },
+    { "title": "Spatial headset", "year": "2024", "text": "Placeholder line about spatial computing." }
+  ],
+  "voices": [
+    { "quote": "Placeholder quote about working with the team.", "by": "Name", "role": "Role", "video": "media/voice1.mp4" },
+    { "quote": "Placeholder quote about speed and craft.", "by": "Name", "role": "Role", "video": "media/voice2.mp4" },
+    { "quote": "Placeholder quote about trust over time.", "by": "Name", "role": "Role", "video": "media/voice3.mp4" },
+    { "quote": "Placeholder quote about shipping together.", "by": "Name", "role": "Role", "video": "media/voice4.mp4" },
+    { "quote": "Placeholder quote about the long run.", "by": "Name", "role": "Role", "video": "media/voice5.mp4" }
+  ],
+  "memories": [],
+  "readNote": { "title": "A note to take with you", "body": "Placeholder closing note. Thank you for visiting. What you saw today was built by the people who work here every day." }
+}
