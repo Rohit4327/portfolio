@@ -30,5 +30,5 @@ export async function open(page: Page, query = 'debug=1&quality=high', hash = ''
 export const settle = (page: Page) => page.evaluate(() => window.__studio.settle());
 export const shot = async (page: Page, name: string) => {
   await settle(page);
-  await page.screenshot({ path: `${OUT}/${name}.png` });
+  await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240_000 });
 };
